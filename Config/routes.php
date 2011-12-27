@@ -26,9 +26,7 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	
-	//Router::connectNamed(array('page'=>array('action'=>'index')));
-	Router::connect('/dud/:page/*', array('controller' => 'posts', 'action'=>'index'),array('named'=>array('page')));
-	//Router::connect('/', array('controller' => 'posts', 'action'=>'index', 'page'=>1));
+	Router::connect('/*', array('controller' => 'posts', 'action'=>'index', 'page'=>1));
 	
 /**
  * ...and connect the rest of 'Pages' controller's urls.

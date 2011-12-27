@@ -11,7 +11,6 @@ class PostsController extends AppController {
 	public $helpers = array('Paginator');
 	
 	public function index() {
-		print_r($this->request);
 		$this->set('posts',$this->paginate());
 	}
 }
