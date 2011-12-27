@@ -33,4 +33,10 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	
 	public $helpers = array('Site','Html','Paginator','Session');
+	
+	public function beforeFilter() {
+		ClassRegistry::init('Tumblr')->lazyCron();
+		
+		parent::beforeFilter();
+	}
 }

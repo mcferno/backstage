@@ -328,3 +328,12 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+
+// short cache
+Cache::config('short', array(
+	'engine' => $engine,
+	'prefix' => 'app_short_',
+	'path' => CACHE . 'persistent' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => '1 hour'
+));

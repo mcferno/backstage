@@ -7,7 +7,7 @@ class PostsController extends AppController {
 		'order' => 'date DESC',
 		'limit' => 10
 	);
-	
+		
 	public $helpers = array('Paginator');
 	
 	public function index() {

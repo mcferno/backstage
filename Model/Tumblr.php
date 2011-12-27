@@ -15,6 +15,14 @@ class Tumblr extends AppModel {
 		'inclusionCallback'=>'postableInclusion'
 	));
 	
+	public function lazyCron() {
+		
+		if(Cache::read('cron','short') === false) {
+			Cache::write('cron', 'x', 'short');
+			$this->refresh();
+		}
+	}
+	
 	/**
 	 * Pulls the latest post from the Tumblr source, saving or updating any 
 	 * records applicable.
@@ -96,8 +104,6 @@ class Tumblr extends AppModel {
 	 */
 	protected function _readJson($url, $args) {
 		$source = $url.'?'.http_build_query($args);
-		
-		print_r($source);
 		
 		$json = file_get_contents($source);
 		if($json === false) {
