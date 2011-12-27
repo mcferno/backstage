@@ -10,6 +10,13 @@
 	<?= $this->Html->css('theme'); ?>
 	
 	<?= $scripts_for_layout; ?>
+	
+	<?php 
+		// optionally load the Google Analytics on live site
+		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 
+			echo $this->element('ga');
+		}
+	?>
 </head>
 <body class="index">
 	<div class="wrap" id="wrap-main">
