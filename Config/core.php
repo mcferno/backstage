@@ -33,6 +33,10 @@
  * In development mode, you need to click the flash message to continue.
  */
 	Configure::write('debug', 2);
+	
+	if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
+		Configure::write('debug', 0);
+	}
 
 /**
  * Configure the Error handler used to handle errors for your application.  By default
