@@ -1,0 +1,3 @@
+[submodule "Plugin/Postable"]
+	path = Plugin/Postable
+	url = https://github.com/mcferno/cakephp-postable-behavior.git
