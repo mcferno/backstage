@@ -837,7 +837,7 @@ a.audio-download, .asker a:hover { color: #4CA69B }
 
 body, label, input, select, textarea, #header h1, .discussion-content h3, ol.notes blockquote{ font-family:Lucida Sans, Helvetica Neue, Arial, sans-serif; }
 h1, h2, h3, h4, h5, h6, .quote, blockquote{ font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif; }
-body{background:#fff url('body-bg.png') repeat 0 0 !important;}
+body{background:#fff none repeat 0 0 !important;}
 
 /* custom */
 
@@ -846,6 +846,11 @@ body{background:#fff url('body-bg.png') repeat 0 0 !important;}
 	margin: 0 auto;
 	padding-top: 5px;
 	padding-left: 38px;
+}
+
+.pagination {
+	float: right;
+	font-weight: bold;
 }
 
 #header p a{

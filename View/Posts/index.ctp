@@ -1,6 +1,8 @@
-<nav class="browse clearfix pagination">
-	<?= $this->Paginator->prev('&larr; Newer',array('escape'=>false),null,array('class'=>'hide')); ?>
-	<?= $this->Paginator->next('Older &rarr;',array('escape'=>false)); ?>
+<nav class="browse clearfix">
+	<div class="pagination">
+		<?= $this->Paginator->prev('&larr; Newer',array('escape'=>false),null,array('class'=>'hide')); ?>
+		<?= $this->Paginator->next('Older &rarr;',array('escape'=>false)); ?>
+	</div>
 </nav>
 
 <?php foreach($posts as $post) : $stripe = 0; ?>
@@ -25,7 +27,9 @@
 </article><!-- .post -->
 <?php endforeach; ?>
 
-<nav class="browse clearfix pagination">
-	<?= $this->Paginator->prev('&larr; Newer',array('escape'=>false),null,array('class'=>'hide')); ?>
-	<?= $this->Paginator->next('Older &rarr;',array('escape'=>false)); ?>
+<nav class="browse clearfix">
+	<div class="pagination">
+		<?= $this->Paginator->prev('&larr; Newer',array('escape'=>false),null,array('class'=>'hide')); ?>
+		<?= $this->Paginator->next('Older &rarr;',array('escape'=>false)); ?>
+	</div>
 </nav>

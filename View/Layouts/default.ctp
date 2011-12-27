@@ -7,9 +7,7 @@
 	<meta name="viewport" content="width=device-width"/>
 	
 	<?= $this->Html->meta('icon'); ?>
-	<!--<link rel="alternate" type="application/rss+xml" href="http://demo.tumblr.com/rss"/>-->
 	<?= $this->Html->css('theme'); ?>
-	<!--<script src="http://static.tumblr.com/8wirmq7/JXflrk46x/modernizr.2.0.6.min.js" type="text/javascript"></script>-->
 	
 	<?= $scripts_for_layout; ?>
 </head>
@@ -39,8 +37,8 @@
 	
 		<footer id="footer">
 			<div class="container">
-				<a href="#" title="/" title="Return to the Untitled homepage">Home</a> / <a href="#" title="/archive" title="Archives for Untitled">Archive</a> / <a href="#" title="http://demo.tumblr.com/rss" title="RSS feed for Untitled">RSS</a>
-				<a href="#" title="http://starkness-theme.tumblr.com/?utm_source=tumblr&amp;utm_medium=site-credit&amp;utm_term=theme&amp;utm_content=footer&amp;utm_campaign=starkness" id="credit" title="Install the Starkness Tumblr Theme">Starkness Tumblr Theme</a>
+				<a href="<?= $this->Html->url('/'); ?>" title="Home" title="Return to the homepage">Home</a>
+				<a href="http://starkness-theme.tumblr.com/" id="credit">Starkness Theme</a>
 			</div>
 		</footer>
 	
