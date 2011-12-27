@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Kenny Quote Machine</title>
-	<meta name="description" content="Description"/>    
+	<meta name="description" content=""/>    
 	<meta name="viewport" content="width=device-width"/>
 	
 	<?= $this->Html->meta('icon'); ?>
