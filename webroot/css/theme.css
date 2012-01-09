@@ -873,3 +873,73 @@ body{background:#fff none repeat 0 0 !important;}
 #header h1 a:hover {
 	color: #B8D3D0;
 }
+
+/**
+ * Adaptive smaller screen styling
+ */
+@media only screen and (max-device-width: 480px) {
+
+	.cake-sql-log {
+		display: none;
+	}
+
+	#header h1 a {
+		font-size: 250%;
+		font-weight: bold;
+		margin: 20px;
+	}
+	
+	.browse a {
+		font-size: 250%;
+		background-color: #4CA69B;
+		padding: 40px;
+		color: #fff;
+		margin: 10px;
+	}
+	
+	.browse .prev {
+		float: left;
+		display: block;
+	}
+	html, #footer { 
+		background: #FFF; 
+	}
+	
+	.post {
+		margin-bottom: 40px;
+	}
+	
+	.post-date {
+		font-size: 26px;
+		line-height: 26px;
+	}
+	
+	.post .short-quote {
+		font-size: 42px;
+	}
+	
+	.post .quote {
+		line-height: 52px;
+	}
+	
+	.source {
+		font-size: 225%;
+		line-height: 32px;
+	}
+	
+	#footer {
+		margin-top: 1.5em;
+		font-size: 200%;
+	}
+	
+	#footer a {
+		float: left;
+		margin-right: 2em;
+		color: #888
+	}
+	
+	#footer .container {
+		background: #111;
+		padding: 20px;
+	}
+}

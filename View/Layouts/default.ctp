@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width"/>
 	
 	<?= $this->Html->meta('icon'); ?>
+	<meta name="viewport" content="width=device-width" />
 	<?= $this->Html->css('theme'); ?>
 	
 	<?= $scripts_for_layout; ?>
