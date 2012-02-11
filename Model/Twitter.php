@@ -10,7 +10,8 @@ class Twitter extends AppModel {
 			'date'=>'created_at',
 			'permalink'=>'source',
 			'source'=>false
-		)
+		),
+		'inclusionCallback'=>'postableInclusion'
 	));
 	
 	public function lazyCron() {
@@ -60,5 +61,16 @@ class Twitter extends AppModel {
 				$this->save($post_data);
 			}
 		}
+	}
+	
+	/**
+	 * Postable Behavior callback to determine which Twitter messages are included
+	 * in the "Post" index.
+	 *
+	 * @param {Array} $data Model save data
+	 * @return {Boolean} Whether to include this post in the index.
+	 */
+	public function postableInclusion($data) {
+		return empty($data[$this->alias]['in_reply_to_user_id']);
 	}
 }
