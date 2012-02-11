@@ -36,6 +36,7 @@ class AppController extends Controller {
 	
 	public function beforeFilter() {
 		ClassRegistry::init('Tumblr')->lazyCron();
+		ClassRegistry::init('Twitter')->lazyCron();
 		
 		// compress all output
 		$this->response->compress();

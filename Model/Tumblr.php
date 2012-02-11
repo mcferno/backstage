@@ -17,8 +17,8 @@ class Tumblr extends AppModel {
 	
 	public function lazyCron() {
 		
-		if(Cache::read('cron','short') === false) {
-			Cache::write('cron', 'x', 'short');
+		if(Cache::read($this->alias.'_cron','short') === false) {
+			Cache::write($this->alias.'_cron', 'x', 'short');
 			$this->refresh();
 		}
 	}
@@ -92,24 +92,6 @@ class Tumblr extends AppModel {
 			
 			$this->save($post_data);
 		}
-	}
-	
-	/**
-	 * Pulls a JSON feed via URL and returns the decoded format. Simple wrapper
-	 * for GET-style API pulls.
-	 *
-	 * @param {String} $url Base URL to retrieve
-	 * @param {Array} $args GET-params
-	 * @return {Array} JSON-decoded results
-	 */
-	protected function _readJson($url, $args) {
-		$source = $url.'?'.http_build_query($args);
-		
-		$json = file_get_contents($source);
-		if($json === false) {
-			return array();
-		}
-		return json_decode($json,true);
 	}
 	
 	public function postableInclusion($data) {
