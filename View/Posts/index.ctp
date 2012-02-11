@@ -12,7 +12,14 @@
 			<?= $this->Site->profileImage($post); ?>
 			
 			<span class="post-date">
-				<span class="month-and-year"><?= date('F jS, Y',$post['Post']['date']); ?></span>
+				<span class="month-and-year"><?php
+					$title = date('F jS, Y',$post['Post']['date']);
+					if(!empty($post['Post']['permalink']) && $post['Post']['model'] == 'Twitter') {
+						echo $this->Html->link($title,$post['Post']['permalink']);
+					} else {
+						echo $title;
+					}
+				?></span>
 			</span>
 		</div>
 		<div class="span10 post-content">
