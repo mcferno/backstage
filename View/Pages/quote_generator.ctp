@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="span13 post-content" style="text-align: center;">
 			<div class="quote short-quote">
-				<?= $quote; ?>.
+				<?= $quote; ?>
 			</div>
 		</div>
 	</div>
