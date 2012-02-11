@@ -26,6 +26,7 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 
+	Router::connect('/generator', array('controller' => 'pages', 'action'=>'quote_generator'));
 	Router::connect('/', array('controller' => 'posts', 'action'=>'index', 'page'=>1));
 	Router::connect('/*', array('controller' => 'posts', 'action'=>'index'));
 	
