@@ -54,10 +54,7 @@ class PagesController extends AppController {
  *
  * @param mixed What page to display
  */
-	public function display() {
-		
-		$this->Tumblr->refresh();
-		
+	public function display() {		
 		$this->render('home');
 		return;
 				
