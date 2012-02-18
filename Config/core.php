@@ -34,7 +34,7 @@
  */
 	Configure::write('debug', 2);
 	
-	if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
+	if(isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
 		Configure::write('debug', 0);
 	}
 

@@ -30,7 +30,10 @@ class DATABASE_CONFIG {
 	);
 	
 	function __construct() {
-		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
+		
+		// detect the live server (web and console)
+		if((isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false)
+		|| (isset($_SERVER['HOSTNAME']) && stripos($_SERVER['HOSTNAME'],'hostgator.com') !== false)) {
 			$this->default = $this->live;
 		}
 	}

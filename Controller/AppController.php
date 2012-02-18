@@ -34,10 +34,7 @@ class AppController extends Controller {
 	
 	public $helpers = array('Site','Html','Paginator','Session');
 	
-	public function beforeFilter() {
-		ClassRegistry::init('Tumblr')->lazyCron();
-		ClassRegistry::init('Twitter')->lazyCron();
-		
+	public function beforeFilter() {		
 		// compress all output
 		$this->response->compress();
 		
