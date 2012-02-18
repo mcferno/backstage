@@ -80,6 +80,14 @@ class PagesController extends AppController {
 	}
 	
 	public function quote_generator() {
-		$this->set('quote',ClassRegistry::init('Quote')->generate());
+		$quote = ClassRegistry::init('Quote')->generate();
+		
+		if($this->request->isAjax()) {
+			header('Content-Type: application/json');
+			echo json_encode(compact('quote'));
+			die();
+		} else {
+			$this->set(compact('quote'));
+		}
 	}
 }

@@ -10,16 +10,21 @@
 	<meta name="viewport" content="width=device-width" />
 	<?= $this->Html->css('theme'); ?>
 	
-	<?= $scripts_for_layout; ?>
-	
-	<?php 
+	<?php
+		echo $this->Html->script(array(
+			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+			'jquery.site.js'
+		)); 
+		
+		echo $scripts_for_layout;
+
 		// optionally load the Google Analytics on live site
 		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 
 			echo $this->element('ga');
 		}
 	?>
 </head>
-<body class="index">
+<body class="index no-js">
 	<div class="wrap" id="wrap-main">
 		<header id="header">
 			<div class="row">

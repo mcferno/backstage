@@ -874,6 +874,26 @@ body{background:#fff none repeat 0 0 !important;}
 	color: #B8D3D0;
 }
 
+.generator {
+	margin-bottom: 4em;
+}
+
+.generator .post-content {
+	text-align: center;
+}
+
+.js .generator {
+	cursor: pointer;
+}
+
+.refresh {
+	float: right;
+}
+
+.no-js .jsShow {
+	display: none;
+}
+
 /**
  * Adaptive smaller screen styling
  */
