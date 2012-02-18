@@ -30,7 +30,7 @@ foreach ($paths as $path) {
 
 if (!$found && function_exists('ini_set')) {
 	$root = dirname(dirname(dirname(__FILE__)));
-	ini_set('include_path',  $ds . 'media' . $ds . 'sf_webroot' . $ds . 'CakePHP2.0' . $ds . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+	ini_set('include_path',  dirname(dirname(dirname(__FILE__))).$ds.'CakePHP2.0'.$ds.'lib' . PATH_SEPARATOR . ini_get('include_path'));
 }
 
 if (!include($dispatcher)) {
