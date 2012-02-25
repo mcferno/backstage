@@ -3,8 +3,6 @@
  */
 (function($) {
 	
-	var _gaq = _gaq || [];
-	
 	// ajax quote generator refresh
 	$('article.generator').live('click',function() {
 		var quote = $(this).find('.quote');

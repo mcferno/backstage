@@ -13,7 +13,9 @@
 	<?php
 		echo $this->Html->script(array(
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-			'jquery.site.js'
+			
+			// cache-busting site-wide js code.
+			'jquery.site.js?t='.filemtime(JS.'jquery.site.js')
 		)); 
 		
 		echo $scripts_for_layout;
@@ -21,6 +23,8 @@
 		// optionally load the Google Analytics on live site
 		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 
 			echo $this->element('ga');
+		} else {
+			echo $this->element('ga-empty');
 		}
 	?>
 </head>
