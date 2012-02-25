@@ -33,7 +33,8 @@ class DATABASE_CONFIG {
 		
 		// detect the live server (web and console)
 		if((isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false)
-		|| (isset($_SERVER['HOSTNAME']) && stripos($_SERVER['HOSTNAME'],'hostgator.com') !== false)) {
+		|| (isset($_SERVER['HOSTNAME']) && stripos($_SERVER['HOSTNAME'],'hostgator.com') !== false)
+		|| (isset($_SERVER['USER']) && stripos($_SERVER['USER'],'mcferno') !== false)) {
 			$this->default = $this->live;
 		}
 	}
