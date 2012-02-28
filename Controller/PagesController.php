@@ -89,5 +89,7 @@ class PagesController extends AppController {
 		} else {
 			$this->set(compact('quote'));
 		}
+		
+		$this->set('page_title','Quote Generator');
 	}
 }
