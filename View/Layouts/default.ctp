@@ -5,7 +5,7 @@
 	<meta name="description" content="A collection of original jokes and quotes ranging from funny, clever, outrageous, to wildly inappropriate. Updated often with fresh laughs and nonsense."/>    
 	<meta name="viewport" content="width=device-width"/>
 	<?= $this->Html->meta('icon'); ?>
-	<?= $this->Html->css('theme'); ?>
+	<?= $this->Html->css('theme.css?t='.filemtime(CSS.'theme.css')); ?>
 	
 	<?php
 		echo $this->Html->script(array(
