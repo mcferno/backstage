@@ -32,12 +32,16 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	
-	public $helpers = array('Site','Html','Paginator','Session');
+	public $helpers = array('Site','Html','Paginator','Session','Text');
 	
 	public function beforeFilter() {		
 		// compress all output
 		$this->response->compress();
 		
 		parent::beforeFilter();
+	}
+	
+	public function beforeRender() {
+		$this->set('breadcrumbs',array());
 	}
 }

@@ -4,7 +4,7 @@ App::uses('Helper', 'AppHelper');
 
 class SiteHelper extends AppHelper {
 	
-	public $helpers = array('Html');
+	public $helpers = array('Html','Text');
 	
 	/**
 	 * Inspects the Post Model data to determine the most appropriate profile
@@ -30,5 +30,29 @@ class SiteHelper extends AppHelper {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Produce an SEO-friendly slug from the Post body
+	 * 
+	 * @param {Array} $post Post model data
+	 * @return {String} Sluggified, truncated slug
+	 */
+	public function postSlug($post) {
+		// strip out fancy html characters
+		$text = strtr($post['Post']['body'],array(
+			'&#8217;' => '\'',
+			'&#160;' => ' '
+		));
+		return strtolower(
+			Inflector::slug(
+				$this->Text->truncate(
+					$text,
+					45,
+					array('exact'=>false,'ending'=>'')
+				),
+				'-'
+			)
+		);
 	}
 }

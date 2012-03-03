@@ -1,50 +1,28 @@
 <?php
-/**
- * Routes configuration
- *
- * In this file, you set up routes to your controllers and their actions.
- * Routes are very important mechanism that allows you to freely connect
- * different urls to chosen controllers and their actions (functions).
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-/**
- * Here, we are connecting '/' (base path) to controller called 'Pages',
- * its action called 'display', and we pass a param to select the view file
- * to use (in this case, /app/View/Pages/home.ctp)...
- */
-
-	Router::connect('/generator', array('controller' => 'pages', 'action'=>'quote_generator'));
-	Router::connect('/', array('controller' => 'posts', 'action'=>'index', 'page'=>1));
-	Router::connect('/*', array('controller' => 'posts', 'action'=>'index'));
-	
-/**
- * ...and connect the rest of 'Pages' controller's urls.
- */
-	//Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
 /**
- * Load all plugin routes.  See the CakePlugin documentation on 
- * how to customize the loading of plugin routes.
+ * Additional features of the site
  */
-	//CakePlugin::routes();
+Router::connect('/generator', array('controller' => 'pages', 'action'=>'quote_generator'));
+Router::connect('/refresh', array('controller' => 'posts', 'action'=>'refresh'));
 
 /**
- * Load the CakePHP default routes. Remove this if you do not want to use
- * the built-in default routes.
+ * Single post view pages, direct, and seo-friendly
  */
-	require CAKE . 'Config' . DS . 'routes.php';
-	
-	
+Router::connect('/post/:id', array('controller' => 'posts', 'action'=>'view'));
+Router::connect('/post/:slug/:id', 
+	array('controller' => 'posts', 'action'=>'view'),
+	array('slug'=>'[a-zA-Z0-9-_\/]+?')
+);
+
+/**
+ * Primary index pages, lists all content in paginated pages
+ */
+Router::connect('/', array('controller' => 'posts', 'action'=>'index', 'page'=>1));
+Router::connect('/*', array('controller' => 'posts', 'action'=>'index'));
+
+/**
+ * CakePHP specifc routes (unused at the moment)
+ */
+//CakePlugin::routes();
+//require CAKE . 'Config' . DS . 'routes.php';

@@ -29,21 +29,37 @@
 	<div class="wrap" id="wrap-main">
 		<header id="header">
 			<div class="row">
-				<h1><?= $this->Html->link('Kenny Quote Machine','/'); ?></h1>
+				<h1>
+					<span class="title"><?= $this->Html->link('Kenny Quote Machine','/'); ?></span>
+					<?php
+						foreach($breadcrumbs as $breadcrumb) {
+							echo "<span><a href=\"{$breadcrumb['url']}\">{$breadcrumb['title']}</a></span>";
+						}
+					?>
+				</h1>
 			</div>
 			<?php // <p class="subtitle">featuring <a href="http://twitter.com/fakeclouds" rel="external">@fakeclouds</a></p> ?>
 		</header>
 		<section class="content">
 		
 			<?= $this->Session->flash(); ?>
+			
 			<?= $content_for_layout; ?>
 			 
 		</section><!-- .content -->
 	
 		<footer id="footer">
 			<div class="container">
-				<a href="<?= $this->Html->url('/'); ?>" title="Return to the homepage">Home</a>
-				<a href="http://starkness-theme.tumblr.com/" id="credit">Starkness Theme</a>
+				<div class="row">
+					<div class="span6 nav">
+						<a href="<?= $this->Html->url('/'); ?>" title="Return to the homepage">Home</a>
+						<?= $this->Html->link('— Quote Generator', array('controller'=>'pages', 'action'=>'quote_generator')); ?>
+					</div>
+					
+					<div class="span7">
+						<a href="http://starkness-theme.tumblr.com/" id="credit">Starkness Theme</a>
+					</div>
+				</div>
 			</div>
 		</footer>
 	
