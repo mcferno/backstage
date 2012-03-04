@@ -16,7 +16,7 @@
 
 <?php foreach($posts as $post) : $stripe = 0; ?>
 <article class="post posttype-quote <?= (($stripe++ % 2) == 0)?'even':'odd'; ?>">
-<?= $this->element('../posts/_body',array('post'=>$post)); ?>
+<?= $this->element('post-body',array('post'=>$post)); ?>
 </article><!-- .post -->
 <?php endforeach; ?>
 

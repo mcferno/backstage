@@ -7,5 +7,5 @@
 ?>
 
 <article class="post posttype-quote focus">
-<?= $this->element('../posts/_body',array('post'=>$post)); ?>
+<?= $this->element('post-body',array('post'=>$post)); ?>
 </article>
