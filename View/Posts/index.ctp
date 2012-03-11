@@ -5,6 +5,7 @@
 			'url'=>$this->params->here
 		);
 		$this->set('breadcrumbs',$breadcrumbs);
+		$this->set('page_title',"Page {$this->params->paging['Post']['page']} - Posts");
 	}
 ?>
 <nav class="browse clearfix">
