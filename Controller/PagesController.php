@@ -81,15 +81,12 @@ class PagesController extends AppController {
 	
 	public function quote_generator() {
 		$quote = ClassRegistry::init('Quote')->generate();
+		$this->set(compact('quote'));
 		
-		if($this->request->isAjax()) {
-			header('Content-Type: application/json');
-			echo json_encode(compact('quote'));
-			die();
-		} else {
-			$this->set(compact('quote'));
+		if($this->request->is('ajax')) {
+			$this->disableCache(); // expire cache immediately
+			$this->RequestHandler->renderAs($this, 'json');
+			$this->set('_serialize', array('quote'));
 		}
-		
-		$this->set('page_title','Quote Generator');
 	}
 }

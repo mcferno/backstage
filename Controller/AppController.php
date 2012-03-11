@@ -34,6 +34,8 @@ class AppController extends Controller {
 	
 	public $helpers = array('Site','Html','Paginator','Session','Text');
 	
+	public $components = array('RequestHandler');
+	
 	public function beforeFilter() {		
 		// compress all output
 		$this->response->compress();

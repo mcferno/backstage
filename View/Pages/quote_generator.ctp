@@ -4,6 +4,8 @@
 		'url'=>$this->params->here
 	);
 	$this->set('breadcrumbs',$breadcrumbs);
+	$this->set('page_title','Quote Generator');
+	$this->set('meta_description',"Can't wait for fresh content? The random quote generator will construct a new original quote for you to enjoy.");
 ?>
 <div class="block">
 	<h1 class="title" style="margin-top:18px;">Quote Generator</h1>

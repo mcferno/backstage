@@ -2,7 +2,13 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>Kenny Quote Machine</title>
-	<meta name="description" content="A collection of original jokes and quotes ranging from funny, clever, outrageous, to wildly inappropriate. Updated often with fresh laughs and nonsense."/>    
+	
+	<?php if(!empty($meta_description)) : ?>
+	<meta name="description" content="<?= $meta_description; ?>"/>
+	<?php else : ?>
+	<meta name="description" content="A collection of original jokes and quotes ranging from funny, clever, outrageous, to wildly inappropriate. Updated often with fresh laughs and nonsense."/>
+	<?php endif; ?>
+	
 	<meta name="viewport" content="width=device-width"/>
 	<?= $this->Html->meta('icon'); ?>
 	<?= $this->Html->css('theme.css?t='.filemtime(CSS.'theme.css')); ?>
