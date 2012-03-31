@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 18, 2012 at 01:27 PM
+-- Generation Time: Mar 31, 2012 at 04:43 PM
 -- Server version: 5.1.52
 -- PHP Version: 5.3.2
 
@@ -91,6 +91,22 @@ CREATE TABLE IF NOT EXISTS `twitter` (
   `favorited` tinyint(1) unsigned NOT NULL,
   `user_id` varchar(64) NOT NULL,
   `data` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` char(36) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` char(65) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `role` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
