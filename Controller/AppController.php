@@ -34,13 +34,34 @@ class AppController extends Controller {
 	
 	public $helpers = array('Site','Html','Paginator','Session','Text');
 	
-	public $components = array('RequestHandler');
+	public $components = array('RequestHandler','Security','Session',
+		'Auth' => array(
+			'loginRedirect' => array('controller' => 'users', 'action'=>'dashboard')
+		)
+	);
 	
-	public function beforeFilter() {		
+	public function beforeFilter() {
+		Security::setHash('sha256');
+		
+		if(isset($this->request->params['prefix']) 
+		&& $this->request->params['prefix'] == 'admin'
+		&& $this->request->params['admin'] == '1') {
+			$this->adminBeforeFilter();
+		} else {
+			$this->siteBeforeFilter();
+		}
+		parent::beforeFilter();
+	}
+	
+	public function siteBeforeFilter() {
+		$this->Auth->allow('*');
+		
 		// compress all output
 		$this->response->compress();
-		
-		parent::beforeFilter();
+	}
+	
+	public function adminBeforeFilter() {
+		$this->layout = 'admin';
 	}
 	
 	public function beforeRender() {

@@ -46,11 +46,17 @@
 			</div>
 			<?php // <p class="subtitle">featuring <a href="http://twitter.com/fakeclouds" rel="external">@fakeclouds</a></p> ?>
 		</header>
-		<section class="content">
-		
-			<?= $this->Session->flash(); ?>
 			
-			<?= $content_for_layout; ?>
+	<div class="container">
+		<div class="content">
+			<?= $this->Session->flash(); ?>
+	    	<?php echo $this->fetch('content'); ?>		
+		</div>
+		<hr>
+		<footer>
+			<p>build v1.0</p>
+		</footer>
+	</div> <!-- /container -->
 			 
 		</section><!-- .content -->
 	

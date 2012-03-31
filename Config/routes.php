@@ -16,6 +16,16 @@ Router::connect('/post/:slug/:id',
 );
 
 /**
+ * Backstage, the administrative panel
+ */
+// Setting the admin urls manually, due to differing uri name
+Router::connect("/backstage", array('controller'=>'users', 'action' => 'login', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/backstage/dashboard", array('controller'=>'users', 'action' => 'dashboard', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/backstage/:controller", array('action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/backstage/:controller/:action/*", array('prefix' => 'admin', 'admin' => true));
+
+
+/**
  * Primary index pages, lists all content in paginated pages
  */
 Router::connect('/', array('controller' => 'posts', 'action'=>'index', 'page'=>1));
