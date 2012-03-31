@@ -7,8 +7,16 @@
 		<li class="span3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'dashboard')); ?>">
-					<img src="http://placehold.it/260x180" alt="">
-					<h3>Meme Generator!</h3>
+					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'')); ?>
+					<h5 class="text-right">version 0.1</h5>
+				</a>
+			</div>
+		</li>
+		<li class="span3">
+			<div class="thumbnail">
+				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
+					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'')); ?>
+					<h5 class="text-right">version 1.0</h5>
 				</a>
 			</div>
 		</li>

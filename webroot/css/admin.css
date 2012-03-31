@@ -51,3 +51,12 @@
 img {
 	max-width: 100%;
 }
+
+.posts .source {
+	color: #999;
+	margin-left: 1em;
+}
+
+.paging-summary {
+	text-align: center;
+}

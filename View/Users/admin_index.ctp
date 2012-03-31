@@ -1,5 +1,6 @@
 <div class="users index">
 	<h2><?php echo __('Users');?></h2>
+	<?= $this->element('Admin/pagination'); ?>
 	<table cellpadding="0" cellspacing="0" class="table table-bordered table-condensed">
 	<tr>
 		<th><?php echo $this->Paginator->sort('created');?></th>
@@ -26,18 +27,5 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-
-	<div class="paging">
-		<ul class="pager">
-			<li class=""><?= $this->Paginator->prev('<i class="icon icon-chevron-left"></i> previous', array('escape'=>false), null, array('escape'=>false, 'class' => 'prev disabled')); ?></li>
-			<li class=""><?= $this->Paginator->numbers(array('separator' => '')); ?></li>
-			<li class=""><?= $this->Paginator->next('next <i class="icon icon-chevron-right"></i>', array('escape'=>false,'class'=>''), null, array('escape'=>false,'class' => 'next disabled')); ?></li>
-		</ul>
-	</div>
+	<?= $this->element('Admin/pagination',array('show_summary'=>true)); ?>
 </div>

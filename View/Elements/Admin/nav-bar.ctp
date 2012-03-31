@@ -6,7 +6,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
-			<a class="brand" href="#">backstage</a>
+			<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'brand')); ?>
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-home icon-white"></i> Home',array('controller'=>'users','action'=>'dashboard'),array('escape'=>false)); ?></li>
@@ -14,6 +14,7 @@
 					<?php if($this->Session->check('Auth.User')) : ?>
 					
 					<li <?php if($this->request->controller == 'generator' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-picture icon-white"></i> Meme Generator',array('controller'=>'users','action'=>'dashboard'),array('escape'=>false)); ?></li>
+					<li <?php if($this->request->controller == 'posts') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-comment icon-white"></i> Quotes',array('controller'=>'posts','action'=>'index'),array('escape'=>false)); ?></li>
 				
 					<?php endif; // authenticated ?>
 				</ul>

@@ -6,8 +6,6 @@ App::uses('AppController', 'Controller');
  * @property User $User
  */
 class UsersController extends AppController {
-	
-	public $helpers = array('Form');
 	public $paginate = array(
 		'User'=>array()
 	);

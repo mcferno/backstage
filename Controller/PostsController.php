@@ -58,4 +58,13 @@ class PostsController extends AppController {
 		$accounts = ClassRegistry::init('Account')->find('all',array('fields'=>array('handle','profile_image')));
 		$this->set('accounts',Set::combine($accounts,'/Account/handle','/Account/profile_image'));
 	}
+	
+	public function admin_index() {
+		$this->Post->recursive = 0;
+		$this->paginate['limit'] = 20;
+		$this->set('posts', $this->paginate());
+		
+		$types = $this->Post->find('all',array('fields'=>'model','group'=>'model'));
+		$this->set('types',Set::extract('/Post/model',$types));
+	}
 }
