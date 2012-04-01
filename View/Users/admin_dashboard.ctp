@@ -9,16 +9,16 @@
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'dashboard')); ?>">
 					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'')); ?>
-					<h5 class="text-right">version 0.1</h5>
 				</a>
+				<h5 class="text-right"><em>in development</em></h5>
 			</div>
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'')); ?>
-					<h5 class="text-right">version 1.0</h5>
 				</a>
+				<h5 class="text-right">version 1.0</h5>
 			</div>
 		</li>
 	</ul>
@@ -26,16 +26,14 @@
 
 <div class="row">
 <div class="span6">
-	<h4 class="text-right">newsticker</h4>
+	<h4 class="text-right">site updates</h4>
 	<table class="table table-striped">
 	<tr>
 		<th>date</th>
 		<th>news</th>
 	</tr>
-	<tr>
-		<td>2012.03.31</td>
-		<td>Admin panel launched. Meme generator being worked on.</td>
-	</tr>
+	<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
+	<tr><td>2012.03.31</td><td>Admin panel launched. Meme generator being worked on.</td></tr>
 	</table>
 </div>
 
