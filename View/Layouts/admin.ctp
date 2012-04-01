@@ -9,54 +9,46 @@
 	<meta name="description" content="A collection of original jokes and quotes ranging from funny, clever, outrageous, to wildly inappropriate. Updated often with fresh laughs and nonsense."/>
 	<?php endif; ?>
 	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<?= $this->Html->meta('icon'); ?>
-	<?= $this->Html->css('bootstrap.min.css?t='.filemtime(CSS.'bootstrap.min.css')); ?>
-	<?= $this->Html->css('bootstrap-responsive.min.css?t='.filemtime(CSS.'bootstrap-responsive.min.css')); ?>
-	<?= $this->Html->css('admin.css?t='.filemtime(CSS.'admin.css')); ?>
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
 	<?php
+		echo $this->Html->meta('icon');
+		
 		echo $this->Html->script(array(
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
 			'bootstrap.min',
 			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
 		)); 
 		
-		echo $scripts_for_layout;
+		echo $this->fetch('script');
+		
+		echo $this->Html->css(array(
+			'bootstrap.min.css?t='.filemtime(CSS.'bootstrap.min.css'),
+			'bootstrap-responsive.min.css?t='.filemtime(CSS.'bootstrap-responsive.min.css'),
+			'admin.css?t='.filemtime(CSS.'admin.css')
+		));
+		
+		echo $this->fetch('css');
+		
+		// grid width in units for main content block
+		$contentSpan = 12;
 	?>
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
-		<?= $this->element('Admin/nav-bar'); ?>
-		<div class="container">
+		<?= $this->element('admin/nav-bar'); ?>
+		<div class="container-fluid">
 			<div class="content">
-				<div class="row">
-					<div class="span2">
-						<ul class="nav nav-list">
-							<li class="nav-header"><?= $this->request->controller; ?></li>
-							<?php 
-								if($this->Session->check('Auth.User')) {
-									switch($this->request->controller) {
-										case 'users': 
-											if($this->request->action == 'admin_dashboard') {
-												break;
-											}
-										?>
-											<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
-											<li <?php if($this->request->action == 'admin_add') { echo 'class="active"'; } ?>><?= $this->Html->link('Add New',array('action'=>'add')); ?></li>
-										<?	break;
-										case 'posts':
-										?>
-											<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
-										<?	
-											break;											
-									}
-								}
-							?>
-						</ul>
+				<div class="row-fluid">
+					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): $contentSpan = 10; ?>
+					
+					<div class="span2 subnav">
+						<?= $this->element('admin/subnav'); ?>
 					</div>
-					<div class="span10">
+					
+					<?php endif; ?>
+					
+					<div class="span<?= $contentSpan; ?> main">
 						<?= $this->Session->flash(); ?>
-						<?php echo $this->fetch('content'); ?>	
+						<?php echo $this->fetch('content'); ?>
 					</div>
 				</div>
 			</div>

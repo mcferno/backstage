@@ -1,7 +1,7 @@
 <div class="posts index">
 	<h2>Quotes</h2>
 	<p>Aggregated posts from <?= implode(', ',$types); ?></p>
-	<?= $this->element('Admin/pagination'); ?>
+	<?= $this->element('admin/pagination'); ?>
 	<table cellpadding="0" cellspacing="0" class="table table-bordered table-condensed">
 	<tr>
 		<th><?php echo $this->Paginator->sort('date');?></th>
@@ -22,5 +22,5 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<?= $this->element('Admin/pagination',array('show_summary'=>true)); ?>
+	<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
 </div>

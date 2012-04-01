@@ -1,5 +1,7 @@
+<?php $this->set('suppressSubnav', true); ?>
 <h1>Login</h1>
-<?php echo $this->Session->flash('auth'); ?>
+<?= $this->Session->flash(); ?>
+<?= $this->Session->flash('auth'); ?>
 <div class="users form">
 <?php echo $this->Form->create('User');?>
 	<fieldset>

@@ -32,11 +32,23 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	
-	public $helpers = array('Site','Html','Paginator','Session','Text','Form');
+	public $helpers = array(
+		'Site','Html','Paginator','Session','Text',
+		'Form' => array(
+			'className' => 'AppForm'
+		)
+	);
 	
-	public $components = array('RequestHandler','Security','Session',
+	public $components = array(
+		'RequestHandler','Security','Session',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'users', 'action'=>'dashboard')
+			'loginRedirect' => array('controller' => 'users', 'action'=>'dashboard'),
+			'authError' => 'You must be logged in to continue',
+			'flash' => array(
+				'element' => 'messaging/alert',
+				'key' => 'auth',
+				'params' => array()
+			)
 		)
 	);
 	
@@ -66,5 +78,16 @@ class AppController extends Controller {
 	
 	public function beforeRender() {
 		$this->set('breadcrumbs',array());
+	}
+	
+	/**
+	 * Determines if the passed key matches that of the currently authenticated
+	 * user.
+	 *
+	 * @param {String} $id
+	 * @return {Boolean} Whether the id matches the current auth user
+	 */
+	protected function _isUser($id) {
+		return $this->Auth->user('id') === $id;
 	}
 }

@@ -21,7 +21,8 @@
 			'jquery.site.js?t='.filemtime(JS.'jquery.site.js')
 		)); 
 		
-		echo $scripts_for_layout;
+		echo $this->fetch('script');
+		echo $this->fetch('css');
 
 		// optionally load the Google Analytics on live site
 		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 

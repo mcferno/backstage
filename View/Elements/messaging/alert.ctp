@@ -1,0 +1,1 @@
+<div class="<?= isset($alert_class)?"alert $alert_class":'alert'; ?>"><?= $message; ?><a class="close" data-dismiss="alert" href="#">&times;</a></div>

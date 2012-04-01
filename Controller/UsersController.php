@@ -24,7 +24,7 @@ class UsersController extends AppController {
 			if ($this->Auth->login()) {
 				$this->redirect($this->Auth->redirect());
 			} else {
-				$this->Session->setFlash(__('Invalid username or password, try again'));
+				$this->Session->setFlash('Invalid username or password, try again','messaging/alert-error');
 			}
 		}
 	}
@@ -74,20 +74,20 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
+				$this->Session->setFlash('The user has been saved','messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash('The user could not be saved. Please, try again.','messaging/alert-error');
 			}
 		}
 	}
 
-/**
- * admin_edit method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_edit method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -101,10 +101,12 @@ class UsersController extends AppController {
 				unset($this->User->validate['password']);
 			}
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$msg = $this->_isUser($id)?'Your account has been updated.':'The user has been updated.';
+				$this->Session->setFlash($msg,'messaging/alert-success');
+				$this->redirect($this->referer(array('action' => 'index')));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$msg = $this->_isUser($id)?'Your account could not be saved. Please, try again.':'The user could not be saved. Please, try again.';
+				$this->Session->setFlash($msg,'messaging/alert-error');
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
@@ -126,10 +128,10 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->User->delete()) {
-			$this->Session->setFlash(__('User deleted'));
+			$this->Session->setFlash('User deleted','messaging/alert-success');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('User was not deleted'));
+		$this->Session->setFlash('User was not deleted','messaging/alert-error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

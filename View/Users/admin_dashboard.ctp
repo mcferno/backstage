@@ -1,3 +1,4 @@
+<?php $this->set('suppressSubnav', true); ?>
 <div class="hero-unit">
 	<h1>dashboard</h1>
 	<p>Welcome <?= $this->Session->read('Auth.User.username'); ?>.</p>

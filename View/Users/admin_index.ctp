@@ -1,6 +1,6 @@
 <div class="users index">
 	<h2><?php echo __('Users');?></h2>
-	<?= $this->element('Admin/pagination'); ?>
+	<?= $this->element('admin/pagination'); ?>
 	<table cellpadding="0" cellspacing="0" class="table table-bordered table-condensed">
 	<tr>
 		<th><?php echo $this->Paginator->sort('created');?></th>
@@ -27,5 +27,5 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<?= $this->element('Admin/pagination',array('show_summary'=>true)); ?>
+	<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
 </div>
