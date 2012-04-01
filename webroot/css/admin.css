@@ -4,7 +4,6 @@
  * - Switched the nav adjustment jump point from 980px -> 786px
  */
 
-
 .pager .disabled, .pager .current {
 	display: inline-block;
 	padding: 5px 14px;
@@ -59,4 +58,11 @@ img {
 
 .paging-summary {
 	text-align: center;
+}
+
+a {
+	color: #FC6626;
+}
+.nav-list > .active > a, .nav-list > .active > a:hover {
+	background-color: #FC6626;
 }

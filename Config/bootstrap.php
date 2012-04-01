@@ -28,6 +28,9 @@ Cache::config('default', array('engine' => 'File'));
 
 CakePlugin::load('Postable');
 
+define('ROLES_GENERAL',0);
+define('ROLES_ADMIN',1);
+
 // Tumblr OAuth Consumer Key
 // sRZhuUQgFJ5vArAbDrf9nglWzsPnu5vXKwKLDspeuGXvABEqw9
 
