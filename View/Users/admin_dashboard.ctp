@@ -10,7 +10,7 @@
 				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
 					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'')); ?>
 				</a>
-				<h5 class="text-right"><em>in development</em></h5>
+				<h5 class="text-right">version 0.5</h5>
 			</div>
 		</li>
 		<li class="span3">
@@ -32,6 +32,7 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>
 	<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
 	<tr><td>2012.03.31</td><td>Admin panel launched. Meme generator being worked on.</td></tr>
 	</table>

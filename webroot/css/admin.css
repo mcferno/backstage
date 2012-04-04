@@ -30,22 +30,6 @@
 	color: #FC6626;
 }
 
-@media (max-width:767px) {
-	/* force responsive nav submenus to use white when compacted */
-	.navbar .dropdown-menu i.icon {
-		background-image: url("../img/glyphicons-halflings-white.png");
-	}
-}
-
-@media (max-width:480px) {
-	.hero-unit h1 {
-		font-size: 40px;
-	}
-	.hero-unit {
-		padding: 30px;
-	}
-}
-
 /* flex images */
 img {
 	max-width: 100%;
@@ -67,9 +51,44 @@ a {
 	background-color: #FC6626;
 }
 
-.trigger-edit, .save-image {
-	font-size: 18pt;
-	padding: 0.5em 0.5em 0.5em;
-	margin-top: 0.5em;
+.route-action-admin-meme-generator .main {
+	text-align: center;
+}
+
+.meme-generator button {
+	padding: 1em 1em 1em;
 	margin-bottom: 0.5em;
 }
+
+.meme-generator .output {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+}
+
+#workspace {
+	display: none;
+}
+
+.tips li {
+	margin-bottom: 0.5em;
+}
+
+@media (max-width:767px) {
+	/* force responsive nav submenus to use white when compacted */
+	.navbar .dropdown-menu i.icon {
+		background-image: url("../img/glyphicons-halflings-white.png");
+	}
+}
+
+@media (max-width:480px) {
+	.hero-unit h1 {
+		font-size: 40px;
+	}
+	.hero-unit {
+		padding: 30px;
+	}
+	.meme-generator .actions button {
+		padding: 0.75em 0.75em 0.75em;
+	}
+}
+

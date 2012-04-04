@@ -52,10 +52,12 @@
 					</div>
 				</div>
 			</div>
+			<!--
 			<hr>
 			<footer>
-				<p>build v1.0</p>
+				<p></p>
 			</footer>
+			-->
 		</div> <!-- /container -->
 	<?= $this->element('sql_dump'); ?>
 </body>

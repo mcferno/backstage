@@ -1,6 +1,7 @@
 ;
 var generator = {
-	lastRender : 0
+	lastRender : 0,
+	liveMode : false
 };
 (function() {
 	"use strict";
@@ -8,24 +9,8 @@ var generator = {
 	$(document)
 		.on('click','.save-image',function(e) {
 			e.preventDefault();
-			
-			var dataURL = generator.canvas.toDataURL();
-			
-			var image = $('#rendered');
-			
-			if(image.length == 0) {
-				var image = $('<img id="rendered" />');
-				$(generator.canvas).parent().append(image);
-			}
-			
-			image.get(0).src = dataURL;	
-			$(generator.canvas).hide();		
-			image.show();
-			
-			generator.saveButtons.hide();
-			generator.resumeButtons.show();
-			$('.save-help').show();
-			
+			generator.render();
+			generator.canvasToImage();
 		})
 		.on('click','.trigger-edit',function(e) {
 			e.preventDefault();
@@ -37,8 +22,53 @@ var generator = {
 			$('.save-help').hide();
 		})
 		.on('keyup','#first-line, #last-line',function() {
-			generator.render();
+			if(generator.liveMode === true) {
+				generator.render();
+				generator.canvasToImage();
+			}
 		})
+		.on('click','.live-mode',function(e){
+			e.preventDefault();
+			
+			generator.toggleLiveMode();
+			generator.render();
+			if(generator.liveMode === true) {
+				generator.canvasToImage();
+			}
+		})
+		.on('change','.canvasSize',function() {
+			var newSize = $(this).find('option:selected');
+			$(generator.canvas)
+				.attr('width',newSize.data('width'))
+				.attr('height',newSize.data('height'));
+			generator.render();
+			generator.canvasToImage();
+		})
+		.on('click','.reset',function(e){
+			e.preventDefault();
+			window.location.reload();
+		});
+		
+	generator.canvasToImage = function() {	
+		var image = $('#rendered');
+		
+		if(image.length == 0) {
+			var image = $('<img id="rendered" />');
+			$(generator.canvas).parent().append(image);
+		}
+		
+		image.get(0).src = generator.canvas.toDataURL();
+	}
+	
+	generator.toggleLiveMode = function() {
+		generator.liveMode = !generator.liveMode;
+		$('button.live-mode')
+			.toggleClass('btn-inverse')
+			.toggleClass('btn-success')
+			.find('i')
+				.toggleClass('icon-remove')
+				.toggleClass('icon-ok');
+	}
 	
 	generator.render = function() {
 		var canvas = generator.canvas;
@@ -81,13 +111,12 @@ var generator = {
 	generator.init = function() {
 		generator.canvas = $('#workspace').get(0); // dom object
 		generator.context = generator.canvas.getContext('2d');
-		generator.saveButtons = $('.save-image');
-		generator.resumeButtons = $('.trigger-edit');
 	}
 
 	$(document).ready(function() {
 		generator.init();
 		generator.render();
+		generator.canvasToImage();
 	});
 	
-})(jQuery,window,document);
+})(jQuery);
