@@ -13,7 +13,7 @@
 					
 					<?php if($this->Session->check('Auth.User')) : ?>
 					
-					<li <?php if($this->request->controller == 'generator' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-picture icon-white"></i> Meme Generator',array('controller'=>'users','action'=>'dashboard'),array('escape'=>false)); ?></li>
+					<li <?php if($this->request->controller == 'generator' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-picture icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
 					<li <?php if($this->request->controller == 'posts') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-comment icon-white"></i> Quotes',array('controller'=>'posts','action'=>'index'),array('escape'=>false)); ?></li>
 				
 					<?php endif; // authenticated ?>
