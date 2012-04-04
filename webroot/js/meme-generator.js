@@ -1,5 +1,7 @@
 ;
-var generator = {};
+var generator = {
+	lastRender : 0
+};
 (function() {
 	"use strict";
 	
@@ -72,17 +74,19 @@ var generator = {};
 			x : canvas.width/2,
 			y : canvas.height/2
 		};
+		
+		generator.lastRender = new Date().getTime();
+	}
+	
+	generator.init = function() {
+		generator.canvas = $('#workspace').get(0); // dom object
+		generator.context = generator.canvas.getContext('2d');
+		generator.saveButtons = $('.save-image');
+		generator.resumeButtons = $('.trigger-edit');
 	}
 
 	$(document).ready(function() {
-		var canvas = $('#workspace').get(0); // dom object
-		var context = canvas.getContext('2d');
-		
-		generator.canvas = canvas;
-		generator.context = context;
-		generator.saveButtons = $('.save-image');
-		generator.resumeButtons = $('.trigger-edit');
-		
+		generator.init();
 		generator.render();
 	});
 	
