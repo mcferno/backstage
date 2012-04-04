@@ -89,4 +89,11 @@ class PagesController extends AppController {
 			$this->set('_serialize', array('quote'));
 		}
 	}
+	
+	/**
+	 * Presents the interface for the js-driven meme generator tool.
+	 */
+	public function admin_meme_generator() {
+		
+	}
 }

@@ -7,7 +7,7 @@
 	<ul class="thumbnails">
 		<li class="span3">
 			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'dashboard')); ?>">
+				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
 					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'')); ?>
 				</a>
 				<h5 class="text-right"><em>in development</em></h5>

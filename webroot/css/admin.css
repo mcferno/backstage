@@ -66,3 +66,10 @@ a {
 .nav-list > .active > a, .nav-list > .active > a:hover {
 	background-color: #FC6626;
 }
+
+.trigger-edit, .save-image {
+	font-size: 18pt;
+	padding: 0.5em 0.5em 0.5em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
