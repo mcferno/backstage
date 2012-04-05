@@ -32,6 +32,7 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.04.05</td><td>Custom backgrounds added, more coming soon.</td></tr>
 	<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>
 	<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
 	<tr><td>2012.03.31</td><td>Admin panel launched. Meme generator being worked on.</td></tr>
