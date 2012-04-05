@@ -1,7 +1,9 @@
 ;
 var generator = {
 	lastRender : 0,
-	liveMode : false
+	liveMode : false,
+	currentImage : false,
+	imageOffset : -1
 };
 (function() {
 	"use strict";
@@ -47,7 +49,29 @@ var generator = {
 		.on('click','.reset',function(e){
 			e.preventDefault();
 			window.location.reload();
+		})
+		.on('click','.choose-background',function(e){
+			e.preventDefault();
+			generator.swapImages();
+			generator.render();
+			generator.canvasToImage();
 		});
+		
+	generator.swapImages = function() {
+		generator.imageOffset = (generator.imageOffset + 1) % generator.images.length;
+		var obj = generator.images[generator.imageOffset];
+		
+		if(!obj.image) {
+			obj.image = new Image();
+			obj.image.onload = function() {
+				generator.render();
+				generator.canvasToImage();
+			};
+			obj.image.src = $(obj).attr('src');
+		}
+		
+		generator.currentImage = obj.image;
+	}
 		
 	generator.canvasToImage = function() {	
 		var image = $('#rendered');
@@ -73,18 +97,27 @@ var generator = {
 	generator.render = function() {
 		var canvas = generator.canvas;
 		var context = generator.context;
-		var backdrop = context.createLinearGradient(0, 0, canvas.width, canvas.height);
 		
-		backdrop.addColorStop(0, "black");
-		backdrop.addColorStop(1, "#FC6626");
-		context.fillStyle = backdrop;
-		context.fillRect(0, 0,canvas.width, canvas.height);
-		
+		if(generator.currentImage === false) {
+			var backdrop = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+			backdrop.addColorStop(0, "black");
+			backdrop.addColorStop(1, "#FC6626");
+			context.fillStyle = backdrop;
+			context.fillRect(0, 0,canvas.width, canvas.height);
+		} else {
+			context.drawImage(generator.currentImage, 0, 0, canvas.width, canvas.height);
+		}
+
 		context.textAlign = "center";
 		context.fillStyle="#FFF";
 		context.lineStyle="#000";
-		context.font="bold 32pt Impact";
-		context.lineWidth = 5;
+		if(canvas.height > 500) {
+			context.font="42pt Impact";
+			context.lineWidth = 7;
+		} else {
+			context.font="32pt Impact";
+			context.lineWidth = 5;
+		}
 		
 		var firstLine = {
 			x : canvas.width/2,
@@ -111,10 +144,20 @@ var generator = {
 	generator.init = function() {
 		generator.canvas = $('#workspace').get(0); // dom object
 		generator.context = generator.canvas.getContext('2d');
+		generator.images = $('#backgrounds img').sort(function() { return 0.5 - Math.random() });
 	}
 
 	$(document).ready(function() {
 		generator.init();
+		if(window.outerWidth > 850) {
+			$('.canvasSize option:selected').removeAttr('selected');
+			var larger = $('.canvasSize [data-width=800]');
+			larger.attr('selected','selected');
+			$(generator.canvas)
+				.attr('width',larger.data('width'))
+				.attr('height',larger.data('height'));
+		}
+		generator.swapImages();
 		generator.render();
 		generator.canvasToImage();
 	});
