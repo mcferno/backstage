@@ -69,6 +69,10 @@ a {
 	display: none;
 }
 
+#rendered {
+	border: 2px solid #DDD;
+}
+
 .tips li {
 	margin-bottom: 0.5em;
 }

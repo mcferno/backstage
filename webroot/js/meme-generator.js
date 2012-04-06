@@ -1,91 +1,106 @@
 ;
-var generator = {
+/**
+ * Meme Generator App
+ * @author Patrick McFern <mcferno AT gmail.com>
+ */
+var MemeGenerator = {
+	
+	// timestamp of the last canvas render
 	lastRender : 0,
+	
+	// whether to update the rendering at every keypress
 	liveMode : false,
+	
+	// current backdrop
 	currentImage : false,
-	imageOffset : -1
+	
+	// image in use based on series of backdrop options
+	imageOffset : -1,
+	
+	// font size coefficient to scale accordingly to height
+	fontToHeightScale : (16 / 225), // 0.0711+, from 32pt @ 450px
+	
+	// font stroke size coefficient to scale accordingly to width
+	fontStrokeWidthScale : (7 / 800),
+	
+	// series of coordinates within the canvas
+	coords : {}
 };
-(function() {
+
+(function($, ns) {
 	"use strict";
 	
 	$(document)
-		.on('click','.save-image',function(e) {
-			e.preventDefault();
-			generator.render();
-			generator.canvasToImage();
+		.on('click','.meme-generator button', function(e) {
+			e.preventDefault(); // disable all buttons's defaults
 		})
-		.on('click','.trigger-edit',function(e) {
-			e.preventDefault();
-			
-			$(generator.canvas).show();		
-			$('#rendered').hide();
-			generator.saveButtons.show();
-			generator.resumeButtons.hide();
-			$('.save-help').hide();
+		.on('click','.save-image',function(e) {
+			ns.render();
+			ns.canvasToImage();
 		})
 		.on('keyup','#first-line, #last-line',function() {
-			if(generator.liveMode === true) {
-				generator.render();
-				generator.canvasToImage();
+			if(ns.liveMode === true) {
+				ns.render();
+				ns.canvasToImage();
 			}
 		})
-		.on('click','.live-mode',function(e){
-			e.preventDefault();
-			
-			generator.toggleLiveMode();
-			generator.render();
-			if(generator.liveMode === true) {
-				generator.canvasToImage();
+		.on('click','.live-mode',function(e) {
+			ns.toggleLiveMode();
+			ns.render();
+			if(ns.liveMode === true) {
+				ns.canvasToImage();
 			}
 		})
 		.on('change','.canvasSize',function() {
-			var newSize = $(this).find('option:selected');
-			$(generator.canvas)
-				.attr('width',newSize.data('width'))
-				.attr('height',newSize.data('height'));
-			generator.render();
-			generator.canvasToImage();
+			ns.adaptToScale();
+			ns.render();
+			ns.canvasToImage();
 		})
-		.on('click','.reset',function(e){
-			e.preventDefault();
+		.on('click','.reset',function(e) {
 			window.location.reload();
 		})
-		.on('click','.choose-background',function(e){
-			e.preventDefault();
-			generator.swapImages();
-			generator.render();
-			generator.canvasToImage();
+		.on('click','.choose-background',function(e) {
+			ns.swapImages();
+			ns.render();
+			ns.canvasToImage();
 		});
-		
-	generator.swapImages = function() {
-		generator.imageOffset = (generator.imageOffset + 1) % generator.images.length;
-		var obj = generator.images[generator.imageOffset];
-		
+	
+	/**
+	 * Cycles to the next backdrop option in the series (wraps at end)
+	 */
+	ns.swapImages = function() {
+		ns.imageOffset = (ns.imageOffset + 1) % ns.images.length;
+		var obj = ns.images[ns.imageOffset];
 		if(!obj.image) {
 			obj.image = new Image();
 			obj.image.onload = function() {
-				generator.render();
-				generator.canvasToImage();
+				ns.render();
+				ns.canvasToImage();
 			};
 			obj.image.src = $(obj).attr('src');
 		}
-		
-		generator.currentImage = obj.image;
+		ns.currentImage = obj.image;
 	}
-		
-	generator.canvasToImage = function() {	
+	
+	/**
+	 * Converts the canvas to an inline downloadable PNG. Expensive operation.
+	 */
+	ns.canvasToImage = function() {
 		var image = $('#rendered');
 		
 		if(image.length == 0) {
 			var image = $('<img id="rendered" />');
-			$(generator.canvas).parent().append(image);
+			$(ns.canvas).parent().append(image);
 		}
 		
-		image.get(0).src = generator.canvas.toDataURL();
+		image.get(0).src = ns.canvas.toDataURL();
 	}
 	
-	generator.toggleLiveMode = function() {
-		generator.liveMode = !generator.liveMode;
+	/**
+	 * Enable/disable on-the-fly image-generation mode
+	 */
+	ns.toggleLiveMode = function() {
+		ns.liveMode = !ns.liveMode;
 		$('button.live-mode')
 			.toggleClass('btn-inverse')
 			.toggleClass('btn-success')
@@ -94,72 +109,102 @@ var generator = {
 				.toggleClass('icon-ok');
 	}
 	
-	generator.render = function() {
-		var canvas = generator.canvas;
-		var context = generator.context;
+	/**
+	 * Paints all data to the canvas.
+	 */
+	ns.render = function() {
+		var canvas = ns.canvas;
+		var context = ns.context;
 		
-		if(generator.currentImage === false) {
+		if(ns.currentImage === false) {
 			var backdrop = context.createLinearGradient(0, 0, canvas.width, canvas.height);
-			backdrop.addColorStop(0, "black");
+			backdrop.addColorStop(0, "#000");
 			backdrop.addColorStop(1, "#FC6626");
 			context.fillStyle = backdrop;
 			context.fillRect(0, 0,canvas.width, canvas.height);
 		} else {
-			context.drawImage(generator.currentImage, 0, 0, canvas.width, canvas.height);
-		}
-
-		context.textAlign = "center";
-		context.fillStyle="#FFF";
-		context.lineStyle="#000";
-		if(canvas.height > 500) {
-			context.font="42pt Impact";
-			context.lineWidth = 7;
-		} else {
-			context.font="32pt Impact";
-			context.lineWidth = 5;
+			context.drawImage(ns.currentImage, 0, 0, canvas.width, canvas.height);
 		}
 		
-		var firstLine = {
-			x : canvas.width/2,
-			y : canvas.height/2
-		}
+		var firstLineText = ns.firstLineText.attr('value').toUpperCase();
+		var lastLineText = ns.lastLineText.attr('value').toUpperCase();
 		
-		var firstLineText = $('#first-line').attr('value').toUpperCase();
-		var lastLineText = $('#last-line').attr('value').toUpperCase();
+		context.strokeText(firstLineText, ns.coords.firstLine.x, ns.coords.firstLine.y);
+		context.fillText(firstLineText, ns.coords.firstLine.x, ns.coords.firstLine.y);
 		
-		context.strokeText(firstLineText, firstLine.x, firstLine.y - canvas.height/2 * 0.7);
-		context.fillText(firstLineText, firstLine.x, firstLine.y - canvas.height/2 * 0.7);
+		context.strokeText(lastLineText, ns.coords.lastLine.x, ns.coords.lastLine.y);
+		context.fillText(lastLineText, ns.coords.lastLine.x, ns.coords.lastLine.y);
 		
-		context.strokeText(lastLineText, firstLine.x, firstLine.y + canvas.height/2 * 0.8);
-		context.fillText(lastLineText, firstLine.x, firstLine.y + canvas.height/2 * 0.8);
-		
-		var canvasCenter = { 
-			x : canvas.width/2,
-			y : canvas.height/2
-		};
-		
-		generator.lastRender = new Date().getTime();
+		ns.lastRender = new Date().getTime();
 	}
 	
-	generator.init = function() {
-		generator.canvas = $('#workspace').get(0); // dom object
-		generator.context = generator.canvas.getContext('2d');
-		generator.images = $('#backgrounds img').sort(function() { return 0.5 - Math.random() });
+	/**
+	 * Initialize the app by attaching DOM elements
+	 */
+	ns.init = function() {
+		ns.canvas = $('#workspace').get(0); // dom object
+		ns.context = ns.canvas.getContext('2d');
+		ns.images = $('#backgrounds img');
+		ns.firstLineText = $('#first-line');
+		ns.lastLineText = $('#last-line');
+		
+		ns.adaptToScale();
+	}
+	
+	/**
+	 * Calculates all sizing & placements which are relative to the canvas dimensions
+	 */
+	ns.adaptToScale = function() {
+		var sizing = $('.canvasSize option:selected');
+		
+		// verify that the canvas size matches the selected option
+		if(ns.canvas.height != sizing.data('height') || ns.canvas.width != sizing.data('width')) {
+			ns.canvas.height = sizing.data('height');
+			ns.canvas.width = sizing.data('width');
+		}
+		
+		ns.context.textAlign = "center";
+		ns.context.fillStyle = "#FFF";
+		ns.context.lineStyle = "#000";
+		
+		// scale font relative to canvas, avoiding sub-pixel
+		ns.context.font = parseInt(ns.fontToHeightScale * ns.canvas.height) + "pt Impact";
+		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * ns.canvas.width);
+		
+		// calculate the relative placement of text
+		ns.coords.center = {
+			x : ns.canvas.width/2,
+			y : ns.canvas.height/2
+		};
+		ns.coords.firstLine = {
+			x : ns.coords.center.x,
+			y : parseInt(ns.coords.center.y * 0.3)
+		};
+		ns.coords.lastLine = {
+			x : ns.coords.center.x,
+			y : parseInt(ns.coords.center.y * 1.85)
+		};
 	}
 
 	$(document).ready(function() {
-		generator.init();
+		// pre-select the larger meme size based on available screen real estate
 		if(window.outerWidth > 850) {
 			$('.canvasSize option:selected').removeAttr('selected');
 			var larger = $('.canvasSize [data-width=800]');
 			larger.attr('selected','selected');
-			$(generator.canvas)
-				.attr('width',larger.data('width'))
-				.attr('height',larger.data('height'));
 		}
-		generator.swapImages();
-		generator.render();
-		generator.canvasToImage();
+		
+		ns.init();
+		
+		// randomly shuffle the available backdrops
+		ns.images.sort(function() { return 0.5 - Math.random(); });
+		
+		// choose the first image (random) to display
+		ns.swapImages();
+		
+		// first paint of the interface
+		ns.render();
+		ns.canvasToImage();
 	});
 	
-})(jQuery);
+})(jQuery, MemeGenerator);
