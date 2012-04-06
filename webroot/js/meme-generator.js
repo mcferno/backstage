@@ -75,12 +75,27 @@ var MemeGenerator = {
 		if(!obj.image) {
 			obj.image = new Image();
 			obj.image.onload = function() {
+				ns.matchOrientationToImage();				
 				ns.render();
 				ns.canvasToImage();
 			};
 			obj.image.src = $(obj).attr('src');
 		}
 		ns.currentImage = obj.image;
+		ns.matchOrientationToImage();
+	}
+	
+	ns.matchOrientationToImage = function() {
+		var imageOrientation = (ns.currentImage.height > ns.currentImage.width)?'vertical':'horizontal';
+		var currentSize = $('.canvasSize option:selected');
+		var canvasOrientation = currentSize.closest('optgroup').data('orientation');
+		
+		if(canvasOrientation != imageOrientation) {
+			currentSize.removeAttr('selected');
+			var selection = '.'+imageOrientation+' option[data-height="'+currentSize.data('width')+'"]';
+			currentSize.closest('select').find(selection).attr('selected','selected');
+			ns.adaptToScale();
+		}
 	}
 	
 	/**
@@ -162,7 +177,7 @@ var MemeGenerator = {
 		var sizing = $('.canvasSize option:selected');
 		
 		// verify that the canvas size matches the selected option
-		if(ns.canvas.height != sizing.data('height') || ns.canvas.width != sizing.data('width')) {
+		if(sizing.length != 0 && ns.canvas.height != sizing.data('height') || ns.canvas.width != sizing.data('width')) {
 			ns.canvas.height = sizing.data('height');
 			ns.canvas.width = sizing.data('width');
 		}
@@ -173,8 +188,10 @@ var MemeGenerator = {
 		
 		// scale font relative to canvas, avoiding sub-pixel
 		var fontScale = navigator.userAgent.match(/(iPhone|iPod)/i)?ns.fontToHeightScaleiOS:ns.fontToHeightScale;
-		ns.context.font = parseInt(fontScale * ns.canvas.height) + "pt Impact, Futura-CondensedExtraBold, sans-serif";
-		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * ns.canvas.width);
+		var canvasHeight = (ns.canvas.width > ns.canvas.height)?ns.canvas.height:ns.canvas.width;
+		var canvasWidth = (ns.canvas.width > ns.canvas.height)?ns.canvas.width:ns.canvas.height;
+		ns.context.font = parseInt(fontScale * canvasHeight) + "pt Impact, Futura-CondensedExtraBold, sans-serif";
+		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * canvasWidth);
 		
 		// calculate the relative placement of text
 		ns.coords.center = {

@@ -59,8 +59,14 @@
 		<div class="span12">
 			<h3>Image Size</h3>
 			<select name="canvasSize" class="canvasSize">
-				<option data-width="600" data-height="450" selected="selected">Regular (600 x 450)</option>
-				<option data-width="800" data-height="600">Large (800 x 600)</option>
+				<optgroup label="Horizontal" class="horizontal" data-orientation="horizontal">
+					<option data-width="600" data-height="450" selected="selected">Regular (600 x 450)</option>
+					<option data-width="800" data-height="600">Large (800 x 600)</option>
+				</optgroup>
+				<optgroup label="Vertical" class="vertical" data-orientation="vertical">
+					<option data-width="450" data-height="600">Regular (600 x 450)</option>
+					<option data-width="600" data-height="800">Large (600 x 800)</option>
+				</optgroup>
 			</select>
 		</div>
 	</div>
