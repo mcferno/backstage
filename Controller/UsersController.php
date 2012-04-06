@@ -12,7 +12,7 @@ class UsersController extends AppController {
 	
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
-		$this->Auth->allow('admin_login');
+		$this->Auth->allow(array('admin_login', 'admin_setup'));
 	}
 
 	public function admin_login() {
@@ -39,6 +39,18 @@ class UsersController extends AppController {
 	
 	public function admin_logout() {
 		$this->redirect($this->Auth->logout());
+	}
+
+	/**
+	 * admin_setup()
+	 * =============
+	 * Only called during application setup, in order to create an initial user
+	 **/
+	public function admin_setup() {
+		if(Configure::read('setup') != 1) {
+			$this->redirect('/');
+		}
+		$this->admin_add();
 	}
 	
 /**
