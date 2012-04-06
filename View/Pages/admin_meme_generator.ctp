@@ -4,6 +4,15 @@
 ?>
 <h1>Meme Generator</h1>
 <form class="meme-generator">
+	<div class="row no-canvas" style="display:none;">
+		<div class="span12">
+			<div class="alert alert-error">
+				<h2>Your device does not support HTML5 Canvas!</h2>
+				<p>Please consider using a more modern browser, such as <a href="https://www.google.com/chrome" target="_blank">Google Chrome</a>.</p>
+			</div>
+		</div>
+	</div>
+	
 	<div class="row">
 		<div class="span12">
 			<input type="text" name="first-line" id="first-line" class="span5" value="First line of text"></input>

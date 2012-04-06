@@ -185,8 +185,20 @@ var MemeGenerator = {
 			y : parseInt(ns.coords.center.y * 1.85)
 		};
 	}
+	
+	function isCanvasSupported(){
+		var elem = document.createElement('canvas');
+		return !!(elem.getContext && elem.getContext('2d'));
+	}
 
 	$(document).ready(function() {
+		
+		// early exit if canvas is not supported
+		if(!isCanvasSupported()) {
+			$('.no-canvas').show().siblings().hide();
+			return;
+		}
+		
 		// pre-select the larger meme size based on available screen real estate
 		if(window.outerWidth > 850) {
 			$('.canvasSize option:selected').removeAttr('selected');
