@@ -15,13 +15,13 @@
 	
 	<div class="row">
 		<div class="span12">
-			<input type="text" name="first-line" id="first-line" class="span5" value="First line of text"></input>
+			<input type="text" name="first-line" id="first-line" class="span5" value="" placeholder="First line of text"></input>
 		</div>
 	</div>
 	
 	<div class="row">
 		<div class="span12">
-			<input type="text" name="last-line" id="last-line" class="span5" value="Last line of text"></input>
+			<input type="text" name="last-line" id="last-line" class="span5" value="" placeholder="Last line of text"></input>
 		</div>
 	</div>
 	
