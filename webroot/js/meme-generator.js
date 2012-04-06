@@ -107,6 +107,9 @@ var MemeGenerator = {
 			.find('i')
 				.toggleClass('icon-remove')
 				.toggleClass('icon-ok');
+		$('button.save-image')
+			.toggleClass('btn-inverse')
+			.toggleClass('btn-primary');
 	}
 	
 	/**

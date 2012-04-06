@@ -28,7 +28,7 @@
 	<div class="row actions">
 		<div class="span12">
 			<button class="btn btn-primary save-image"><i class="icon-white icon-refresh"></i> Refresh Image</button>
-			<button class="btn btn-inverse live-mode"><i class="icon-white icon-remove"></i> Live-Mode</button>
+			<button class="btn btn-inverse live-mode"><i class="icon-white icon-remove"></i> Auto Refresh</button>
 		</div>
 	</div>
 	
