@@ -18,7 +18,8 @@ var MemeGenerator = {
 	imageOffset : -1,
 	
 	// font size coefficient to scale accordingly to height
-	fontToHeightScale : (16 / 225), // 0.0711+, from 32pt @ 450px
+	fontToHeightScale    : (32 / 450), // 0.0711+, from 32pt @ 450px
+	fontToHeightScaleiOS : (29 / 450), // to adjust for a different font on iOS
 	
 	// font stroke size coefficient to scale accordingly to width
 	fontStrokeWidthScale : (7 / 800),
@@ -171,7 +172,8 @@ var MemeGenerator = {
 		ns.context.lineStyle = "#000";
 		
 		// scale font relative to canvas, avoiding sub-pixel
-		ns.context.font = parseInt(ns.fontToHeightScale * ns.canvas.height) + "pt Impact";
+		var fontScale = navigator.userAgent.match(/(iPhone|iPod)/i)?ns.fontToHeightScaleiOS:ns.fontToHeightScale;
+		ns.context.font = parseInt(fontScale * ns.canvas.height) + "pt Impact, Futura-CondensedExtraBold, sans-serif";
 		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * ns.canvas.width);
 		
 		// calculate the relative placement of text
