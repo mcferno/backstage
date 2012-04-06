@@ -93,7 +93,7 @@ var MemeGenerator = {
 			$(ns.canvas).parent().append(image);
 		}
 		
-		image.get(0).src = ns.canvas.toDataURL();
+		image.get(0).src = ns.canvas.toDataURL('image/jpeg');
 	}
 	
 	/**

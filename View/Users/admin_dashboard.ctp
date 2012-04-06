@@ -32,6 +32,7 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
 	<tr><td>2012.04.05</td><td>Custom backgrounds added, more coming soon.</td></tr>
 	<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>
 	<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
