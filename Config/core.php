@@ -177,7 +177,9 @@
  *
  */
 	Configure::write('Session', array(
-		'defaults' => 'php'
+		'defaults' => 'php',
+		'cookie' => 'KQMsess',
+		'timeout' => 10080 // 7 days in minutes
 	));
 
 /**

@@ -27,8 +27,9 @@
 	
 	<div class="row actions">
 		<div class="span12">
-			<button class="btn btn-primary save-image"><i class="icon-white icon-refresh"></i> Refresh Image</button>
-			<button class="btn btn-inverse live-mode"><i class="icon-white icon-remove"></i> Auto Refresh</button>
+			<button class="btn btn-primary save-image"><i class="icon-white icon-refresh"></i> Refresh<span class="extra"> Image</span></button>
+			<button class="btn btn-inverse live-mode"><i class="icon-white icon-remove"></i> Auto<span class="extra"> Refresh</span></button>
+			<button class="btn choose-background"><i class="icon icon-picture"></i><span class="extra"> Change Image</span></button>
 		</div>
 	</div>
 	
@@ -39,7 +40,7 @@
 	</div>
 	<div class="row">
 		<div class="span12">
-			<button class="btn choose-background"><i class="icon icon-picture"></i> Change Image</button>
+			
 		</div>
 	</div>
 	<div class="row">
