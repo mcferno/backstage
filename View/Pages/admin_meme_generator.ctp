@@ -1,7 +1,14 @@
 <?php 
 	$this->set('suppressSubnav', true); 
 	$this->Html->script(array('meme-generator'),false);
+	
+	foreach ($base_images as &$image) {
+		$image = $this->Html->webroot('img/'.$image);
+	}
 ?>
+<script>
+var memeBaseImages = <?php echo json_encode($base_images); ?>;
+</script>
 <h1>Meme Generator</h1>
 <form class="meme-generator">
 	<div class="row no-canvas" style="display:none;">
@@ -43,6 +50,7 @@
 			
 		</div>
 	</div>
+	<?php /*
 	<div class="row">
 		<div class="span12" style="display:none;">
 			<div id="backgrounds" class="carousel">
@@ -56,6 +64,7 @@
 			</div>
 		</div>
 	</div>
+	*/ ?>
 	<div class="row">
 		<div class="span12">
 			<h3>Image Size</h3>

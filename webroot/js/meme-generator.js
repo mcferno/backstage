@@ -73,13 +73,16 @@ var MemeGenerator = {
 		ns.imageOffset = (ns.imageOffset + 1) % ns.images.length;
 		var obj = ns.images[ns.imageOffset];
 		if(!obj.image) {
+			obj = {
+				href : obj
+			}
 			obj.image = new Image();
 			obj.image.onload = function() {
 				ns.matchOrientationToImage();				
 				ns.render();
 				ns.canvasToImage();
 			};
-			obj.image.src = $(obj).attr('src');
+			obj.image.src = obj.href;
 		}
 		ns.currentImage = obj.image;
 		ns.matchOrientationToImage();
@@ -163,7 +166,7 @@ var MemeGenerator = {
 	ns.init = function() {
 		ns.canvas = $('#workspace').get(0); // dom object
 		ns.context = ns.canvas.getContext('2d');
-		ns.images = $('#backgrounds img');
+		ns.images = memeBaseImages;
 		ns.firstLineText = $('#first-line');
 		ns.lastLineText = $('#last-line');
 		
@@ -214,7 +217,6 @@ var MemeGenerator = {
 	}
 
 	$(document).ready(function() {
-		
 		// early exit if canvas is not supported
 		if(!isCanvasSupported()) {
 			$('.no-canvas').show().siblings().hide();
