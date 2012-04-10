@@ -20,6 +20,15 @@
  */
 
 /**
+ * Setup Mode
+ *
+ * When true, this allows you to visit the admin_setup action to create
+ * an initial user.
+ **/
+	Configure::write('setup', 0);
+
+
+/**
  * CakePHP Debug Level:
  *
  * Production Mode:
