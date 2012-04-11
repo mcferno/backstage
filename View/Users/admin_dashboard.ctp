@@ -11,7 +11,7 @@
 					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'')); ?>
 				</a>
 				<h4 class="text-right">Total Images: <span class="badge badge-custom"><?= $meme_count; ?></span></h4>
-				<h5 class="text-right">version 0.6</h5>
+				<h5 class="text-right">app version 0.6</h5>
 			</div>
 		</li>
 		<li class="span3">
@@ -19,7 +19,8 @@
 				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'')); ?>
 				</a>
-				<h5 class="text-right">version 1.0</h5>
+				<h4 class="text-right">Total Quotes: <span class="badge badge-custom"><?= $quotes_count; ?></span></h4>
+				<h5 class="text-right">app version 1.0</h5>
 			</div>
 		</li>
 	</ul>

@@ -36,6 +36,7 @@ class UsersController extends AppController {
 		));
 		$this->set('recent_users',$users);
 		$this->set('meme_count',count(glob(IMAGES.'base-meme'.DS.'*.*')));
+		$this->set('quotes_count',ClassRegistry::init('Post')->find('count'));
 	}
 	
 	public function admin_logout() {
