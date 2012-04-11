@@ -17,9 +17,12 @@ var MemeGenerator = {
 	// image in use based on series of backdrop options
 	imageOffset : -1,
 	
+	// main font + fallbacks for various devices
+	fontFamily : 'Impact, Futura-CondensedExtraBold, sans-serif',
+	
 	// font size coefficient to scale accordingly to height
-	fontToHeightScale    : (32 / 450), // 0.0711+, from 32pt @ 450px
-	fontToHeightScaleiOS : (29 / 450), // to adjust for a different font on iOS
+	fontToHeightScale    : (60 / 450), // 0.0711+, from 32pt @ 450px
+	fontToHeightScaleiOS : (57 / 450), // to adjust for a different font on iOS
 	
 	// font stroke size coefficient to scale accordingly to width
 	fontStrokeWidthScale : (7 / 800),
@@ -86,8 +89,12 @@ var MemeGenerator = {
 		}
 		ns.currentImage = obj.image;
 		ns.matchOrientationToImage();
-	}
+	};
 	
+	/**
+	 * Selects the Image Size dropdown which matches the orientation of the
+	 * current image.
+	 */
 	ns.matchOrientationToImage = function() {
 		var imageOrientation = (ns.currentImage.height > ns.currentImage.width)?'vertical':'horizontal';
 		var currentSize = $('.canvasSize option:selected');
@@ -99,10 +106,10 @@ var MemeGenerator = {
 			currentSize.closest('select').find(selection).attr('selected','selected');
 			ns.adaptToScale();
 		}
-	}
+	};
 	
 	/**
-	 * Converts the canvas to an inline downloadable PNG. Expensive operation.
+	 * Converts the canvas to an inline downloadable JPEG. Expensive operation.
 	 */
 	ns.canvasToImage = function() {
 		var image = $('#rendered');
@@ -113,7 +120,7 @@ var MemeGenerator = {
 		}
 		
 		image.get(0).src = ns.canvas.toDataURL('image/jpeg');
-	}
+	};
 	
 	/**
 	 * Enable/disable on-the-fly image-generation mode
@@ -129,7 +136,7 @@ var MemeGenerator = {
 		$('button.save-image')
 			.toggleClass('btn-inverse')
 			.toggleClass('btn-primary');
-	}
+	};
 	
 	/**
 	 * Paints all data to the canvas.
@@ -151,14 +158,89 @@ var MemeGenerator = {
 		var firstLineText = ns.firstLineText.attr('value').toUpperCase();
 		var lastLineText = ns.lastLineText.attr('value').toUpperCase();
 		
-		context.strokeText(firstLineText, ns.coords.firstLine.x, ns.coords.firstLine.y);
-		context.fillText(firstLineText, ns.coords.firstLine.x, ns.coords.firstLine.y);
-		
-		context.strokeText(lastLineText, ns.coords.lastLine.x, ns.coords.lastLine.y);
-		context.fillText(lastLineText, ns.coords.lastLine.x, ns.coords.lastLine.y);
+		ns.writeText(firstLineText, true);
+		ns.writeText(lastLineText);
 		
 		ns.lastRender = new Date().getTime();
-	}
+	};
+	
+	/**
+	 * Writes text to the canvas, auto-adjusting for word-wrap
+	 *
+	 * @param {String} text: Text to print on the canvas
+	 * @param {Boolean} top: Whether this is top or bottom text
+	 */
+	ns.writeText = function(text, top) {
+		ns.context.save();
+		
+		top = (top === true);
+		var lineWidth = parseInt(ns.canvas.width * 0.97); // slight width padding
+		var textWidth = ns.context.measureText(text).width;
+
+		ns.context.font = parseInt(ns.fontSize) + "pt " + ns.fontFamily;
+		var lines = ns.breakTextIntoLines(text, lineWidth);
+		
+		if(lines.length > 1) {	
+			// determine the optimal font-size	
+			for(var i=1;i<3;i++) {
+				ns.context.font = parseInt(ns.fontSize * (1 - 0.25*i)) + "pt " + ns.fontFamily;
+				lines = ns.breakTextIntoLines(text, lineWidth);
+				
+				if(lines.length < 2) {
+					break;
+				}
+			}
+		}
+		
+		var emWidth = parseInt(ns.context.measureText('M').width*1.4);
+		var offsetY = (top)?emWidth:parseInt(ns.canvas.height * 0.97 - ((lines.length - 1) * emWidth));
+		
+		// write out each line, respecting inner spacing
+		for(var i = 0;i<lines.length;i++) {
+			var line = lines[i].join(' ');
+			ns.context.strokeText(line, ns.coords.center.x,offsetY + i*emWidth);
+			ns.context.fillText(line, ns.coords.center.x, offsetY + i*emWidth);
+		}
+		
+		ns.context.restore(); 
+	};
+	
+	/**
+	 * Breaks a string into an array of substrings, all of which fit within
+	 * the provided width maximum. The font size of the current canvas is used 
+	 * in text width calculations.
+	 *
+	 * @param {String} text: Text to break into smaller substrings
+	 * @param {Integer} lineWidth: Maximum width in pixels any line can span
+	 * @return {Array} Substrings of the text, respecting the width
+	 */
+	ns.breakTextIntoLines = function(text, lineWidth) {
+		var lines = new Array();
+		var words = text.replace(/^\s+|\s+$/,'').replace(/\s\s*/g,' ').split(' '); //'
+		var row = 0;
+		
+		while(words.length != 0) {
+			var word = words.shift();
+			
+			if(typeof lines[row] == 'undefined') {
+				lines[row] = new Array();
+				lines[row].push(word);
+				continue;
+			}
+			
+			// text is too long with this word, push to next line
+			if(ns.context.measureText(lines[row].join(' ')+ ' ' + word).width > lineWidth) {
+				words.unshift(word);
+				row++;
+				
+			// text + this word fits, add it to this line
+			} else {
+				lines[row].push(word);
+			}				
+		}
+		return lines;
+	};
+	
 	
 	/**
 	 * Initialize the app by attaching DOM elements
@@ -171,10 +253,11 @@ var MemeGenerator = {
 		ns.lastLineText = $('#last-line');
 		
 		ns.adaptToScale();
-	}
+	};
 	
 	/**
-	 * Calculates all sizing & placements which are relative to the canvas dimensions
+	 * Calculates all sizing & placements which are relative to the canvas
+	 * dimensions. Must be ran after every change in canvas size.
 	 */
 	ns.adaptToScale = function() {
 		var sizing = $('.canvasSize option:selected');
@@ -193,28 +276,21 @@ var MemeGenerator = {
 		var fontScale = navigator.userAgent.match(/(iPhone|iPod)/i)?ns.fontToHeightScaleiOS:ns.fontToHeightScale;
 		var canvasHeight = (ns.canvas.width > ns.canvas.height)?ns.canvas.height:ns.canvas.width;
 		var canvasWidth = (ns.canvas.width > ns.canvas.height)?ns.canvas.width:ns.canvas.height;
-		ns.context.font = parseInt(fontScale * canvasHeight) + "pt Impact, Futura-CondensedExtraBold, sans-serif";
+		ns.fontSize = parseInt(fontScale * canvasHeight);
+		ns.context.font = ns.fontSize + "pt " + ns.fontFamily;
 		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * canvasWidth);
 		
-		// calculate the relative placement of text
+		// calculate the canvas centerpoint
 		ns.coords.center = {
 			x : ns.canvas.width/2,
 			y : ns.canvas.height/2
 		};
-		ns.coords.firstLine = {
-			x : ns.coords.center.x,
-			y : parseInt(ns.coords.center.y * 0.3)
-		};
-		ns.coords.lastLine = {
-			x : ns.coords.center.x,
-			y : parseInt(ns.coords.center.y * 1.85)
-		};
-	}
+	};
 	
 	function isCanvasSupported(){
 		var elem = document.createElement('canvas');
 		return !!(elem.getContext && elem.getContext('2d'));
-	}
+	};
 
 	$(document).ready(function() {
 		// early exit if canvas is not supported
