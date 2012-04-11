@@ -32,9 +32,10 @@ class UsersController extends AppController {
 	public function admin_dashboard() {
 		$users = $this->User->find('all',array(
 			'order'=>'created DESC',
-			'limit'=>3
+			'limit'=>5
 		));
 		$this->set('recent_users',$users);
+		$this->set('meme_count',count(glob(IMAGES.'base-meme'.DS.'*.*')));
 	}
 	
 	public function admin_logout() {
@@ -42,8 +43,6 @@ class UsersController extends AppController {
 	}
 
 	/**
-	 * admin_setup()
-	 * =============
 	 * Only called during application setup, in order to create an initial user
 	 **/
 	public function admin_setup() {

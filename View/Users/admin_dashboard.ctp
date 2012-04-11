@@ -10,7 +10,8 @@
 				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
 					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'')); ?>
 				</a>
-				<h5 class="text-right">version 0.5</h5>
+				<h4 class="text-right">Total Images: <span class="badge badge-custom"><?= $meme_count; ?></span></h4>
+				<h5 class="text-right">version 0.6</h5>
 			</div>
 		</li>
 		<li class="span3">
@@ -32,6 +33,7 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.04.11</td><td>Memes now have text wordwrap. Bunch more images added.</td></tr>
 	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
 	<tr><td>2012.04.05</td><td>Custom backgrounds added, more coming soon.</td></tr>
 	<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>

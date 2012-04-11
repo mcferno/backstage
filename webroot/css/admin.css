@@ -77,6 +77,13 @@ a {
 	margin-bottom: 0.5em;
 }
 
+.badge-custom {
+	background-color: #FC6626;
+}
+.badge-custom:hover { 
+	background-color: #d95821;
+}
+
 @media (max-width:767px) {
 	/* force responsive nav submenus to use white when compacted */
 	.navbar .dropdown-menu i.icon {
