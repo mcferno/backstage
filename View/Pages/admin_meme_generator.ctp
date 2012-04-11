@@ -1,6 +1,6 @@
 <?php 
 	$this->set('suppressSubnav', true); 
-	$this->Html->script(array('meme-generator'),false);
+	$this->Html->script(array('meme-generator.js?t='.filemtime(JS.'meme-generator.js')),false);
 	
 	foreach ($base_images as &$image) {
 		$image = $this->Html->webroot('img/'.$image);
