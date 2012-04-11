@@ -4,7 +4,7 @@
 	<p>Welcome <?= $this->Session->read('Auth.User.username'); ?>.</p>
 	<p>Get started on your choice of site features:</p>
 	
-	<ul class="thumbnails">
+	<ul class="row thumbnails">
 		<li class="span3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
@@ -21,6 +21,15 @@
 				</a>
 				<h4 class="text-right">Total Quotes: <span class="badge badge-custom"><?= $quotes_count; ?></span></h4>
 				<h5 class="text-right">app version 1.0</h5>
+			</div>
+		</li>
+		<li class="span3">
+			<div class="thumbnail">
+				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'group_chat')); ?>">
+					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'')); ?>
+				</a>
+				<h4 class="text-right"><em>in development</em></h4>
+				<h5 class="text-right">app version 0.1</h5>
 			</div>
 		</li>
 	</ul>

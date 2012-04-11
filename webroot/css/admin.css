@@ -84,6 +84,56 @@ a {
 	background-color: #d95821;
 }
 
+.chat-bar .navbar-inner {
+	background: #E5E5E5; /* old browsers */
+	background: -moz-linear-gradient(top, #E5E5E5 0%, #C4C4C4 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E5E5E5), color-stop(100%,#C4C4C4)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E5E5E5', endColorstr='#C4C4C4',GradientType=0 ); /* ie */
+	border:1px solid #757575;
+	/*border-bottom:3px solid #A30000;*/
+	/*
+	-moz-border-radius:10px 10px 10px 10px;
+	-webkit-border-radius:10px 10px 10px 10px;
+	border-radius:10px 10px 10px 10px;
+	*/
+}
+.chat-bar .container { 
+	margin-left: 0.2em;
+}
+
+.chat-bar h3, .chat-bar form {
+	float: left;
+	padding: 0.5em;
+}
+
+.chat-bar .msg input {
+	margin-top: 0;
+	font-size: 1.2em;
+	padding: 0.5em;
+}
+
+.chat-bar .navbar-inner button {
+	margin-top: 0;
+	padding: 0.5em 0.5em 0.5em;
+}
+
+.chat-window .time {
+	color: #888;
+	width: 10em;
+}
+
+.chat-window .handle {
+	font-weight: bold;
+	color: #666;
+	width: 9em;
+}
+
+.nav-bar .badge {
+	float: right;
+	padding: 1px 7px 2px;
+	display: none;
+}
+
 @media (max-width:767px) {
 	/* force responsive nav submenus to use white when compacted */
 	.navbar .dropdown-menu i.icon {
