@@ -22,10 +22,11 @@ Router::connect('/post/:slug/:id',
 Router::connect("/backstage", array('controller'=>'users', 'action' => 'login', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/backstage/dashboard", array('controller'=>'users', 'action' => 'dashboard', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/backstage/meme-generator", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/group-chat", array('controller'=>'pages', 'action' => 'group_chat', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/backstage/chat", array('controller'=>'pages', 'action' => 'group_chat', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/backstage/setup", array('controller' => 'users', 'action' => 'setup', 'prefix', 'admin', 'admin' => true));
 
 Router::connect("/backstage/:controller", array('action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/backstage/:controller/:action/", array('prefix' => 'admin', 'admin' => true));
 Router::connect("/backstage/:controller/:action/*", array('prefix' => 'admin', 'admin' => true));
 
 

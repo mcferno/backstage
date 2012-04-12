@@ -1,9 +1,14 @@
 <?php 
 	$this->set('suppressSubnav', true);
-	$this->Html->script(array('utilities','group-chat.js?t='.filemtime(JS.'group-chat.js')),false);
+	$this->Html->script(array('utilities'),false);
 ?>
 <div class="row">
 	<div class="span12"><h1>Group Chat.</h1></div>
+</div>
+<div class="row">
+	<div class="span12">
+		<div class="loading">Loading ...</div>
+	</div>
 </div>
 <div class="row chat-window">
 	<div class="span9">
@@ -21,6 +26,8 @@
 				<input type="text" class="span6" placeholder="Type something…">
 				<button type="submit" class="btn btn-primary"><strong>Send</strong></button>
 			</form>
+			
+			<?= $this->element('admin/loading-animation'); ?>
 			
 			<!-- Everything you want hidden at 940px or less, place within here -->
 			<div class="nav-collapse">

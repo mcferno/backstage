@@ -128,10 +128,16 @@ a {
 	width: 9em;
 }
 
-.nav-bar .badge {
-	float: right;
-	padding: 1px 7px 2px;
-	display: none;
+.chat-window {
+	padding-top: 1em;
+}
+
+.loading {
+	font-size: 1.1em;
+	color: #CCC;
+	font-weight: bold;
+	padding-top: 1em;
+	padding-left: 1em;
 }
 
 @media (max-width:767px) {
@@ -158,3 +164,153 @@ a {
 	}
 }
 
+/* CSS3 Animated loading bar */
+
+#loaderAnim {
+	position:absolute;
+	right: 1em;
+	top: 0.5em;
+	width:26px;
+	height:32px
+}
+.blockG {
+	position:absolute;
+	background-color:#BBBBBB;
+	width:4px;
+	height:9px;
+	-moz-border-radius:4px 4px 0 0;
+	-webkit-border-radius:4px 4px 0 0;
+	-webkit-transform:scale(0.4);
+	-webkit-animation-name:fadeG;
+	-webkit-animation-duration:0.96s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-direction:linear;
+	-moz-transform:scale(0.4);
+	-moz-animation-name:fadeG;
+	-moz-animation-duration:0.96s;
+	-moz-animation-iteration-count:infinite;
+	-moz-animation-direction:linear;
+	border-radius:4px 4px 0 0;
+	-o-transform:scale(0.4);
+	-o-animation-name:fadeG;
+	-o-animation-duration:0.96s;
+	-o-animation-iteration-count:infinite;
+	-o-animation-direction:linear;
+	-ms-transform:scale(0.4);
+	-ms-animation-name:fadeG;
+	-ms-animation-duration:0.96s;
+	-ms-animation-iteration-count:infinite;
+	-ms-animation-direction:linear;
+}
+#rotateG_01 {
+	left:0;
+	top:12px;
+	-webkit-animation-delay:0.36s;
+	-webkit-transform:rotate(-90deg);
+	-moz-animation-delay:0.36s;
+	-moz-transform:rotate(-90deg);
+	-o-animation-delay:0.36s;
+	-o-transform:rotate(-90deg);
+	-ms-animation-delay:0.36s;
+	-ms-transform:rotate(-90deg);
+}
+#rotateG_02 {
+	left:3px;
+	top:4px;
+	-webkit-animation-delay:0.48s;
+	-webkit-transform:rotate(-45deg);
+	-moz-animation-delay:0.48s;
+	-moz-transform:rotate(-45deg);
+	-o-animation-delay:0.48s;
+	-o-transform:rotate(-45deg);
+	-ms-animation-delay:0.48s;
+	-ms-transform:rotate(-45deg);
+}
+#rotateG_03 {
+	left:11px;
+	top:1px;
+	-webkit-animation-delay:0.6s;
+	-webkit-transform:rotate(0deg);
+	-moz-animation-delay:0.6s;
+	-moz-transform:rotate(0deg);
+	-o-animation-delay:0.6s;
+	-o-transform:rotate(0deg);
+	-ms-animation-delay:0.6s;
+	-ms-transform:rotate(0deg);
+}
+#rotateG_04 {
+	right:3px;
+	top:4px;
+	-webkit-animation-delay:0.72s;
+	-webkit-transform:rotate(45deg);
+	-moz-animation-delay:0.72s;
+	-moz-transform:rotate(45deg);
+	-o-animation-delay:0.72s;
+	-o-transform:rotate(45deg);
+	-ms-animation-delay:0.72s;
+	-ms-transform:rotate(45deg);
+}
+#rotateG_05 {
+	right:0;
+	top:12px;
+	-webkit-animation-delay:0.8400000000000001s;
+	-webkit-transform:rotate(90deg);
+	-moz-animation-delay:0.8400000000000001s;
+	-moz-transform:rotate(90deg);
+	-o-animation-delay:0.8400000000000001s;
+	-o-transform:rotate(90deg);
+	-ms-animation-delay:0.8400000000000001s;
+	-ms-transform:rotate(90deg);
+}
+#rotateG_06 {
+	right:3px;
+	bottom:3px;
+	-webkit-animation-delay:0.96s;
+	-webkit-transform:rotate(135deg);
+	-moz-animation-delay:0.96s;
+	-moz-transform:rotate(135deg);
+	-o-animation-delay:0.96s;
+	-o-transform:rotate(135deg);
+	-ms-animation-delay:0.96s;
+	-ms-transform:rotate(135deg);
+}
+#rotateG_07 {
+	bottom:0;
+	left:11px;
+	-webkit-animation-delay:1.0799999999999998s;
+	-webkit-transform:rotate(180deg);
+	-moz-animation-delay:1.0799999999999998s;
+	-moz-transform:rotate(180deg);
+	-o-animation-delay:1.0799999999999998s;
+	-o-transform:rotate(180deg);
+	-ms-animation-delay:1.0799999999999998s;
+	-ms-transform:rotate(180deg);
+}
+#rotateG_08 {
+	left:3px;
+	bottom:3px;
+	-webkit-animation-delay:1.2s;
+	-webkit-transform:rotate(-135deg);
+	-moz-animation-delay:1.2s;
+	-moz-transform:rotate(-135deg);
+	-o-animation-delay:1.2s;
+	-o-transform:rotate(-135deg);
+	-ms-animation-delay:1.2s;
+	-ms-transform:rotate(-135deg);
+}
+@-webkit-keyframes fadeG {
+	0%{ 	background-color:#FC6626 }
+	100%{ 	background-color:#BBBBBB }
+}
+@-moz-keyframes fadeG {
+	0%{		background-color:#FC6626 }
+	100%{	background-color:#BBBBBB }
+}
+@-o-keyframes fadeG {
+	0%{		background-color:#FC6626 }
+	100%{	background-color:#BBBBBB }
+}
+@-ms-keyframes fadeG {
+	0%{		background-color:#FC6626 }
+	100%{ 	background-color:#BBBBBB }
+}
