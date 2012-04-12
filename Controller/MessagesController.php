@@ -31,11 +31,8 @@ class MessagesController extends AppController {
 			'conditions'=>array(
 				'Message.created >='=>date('Y-m-d H:i:s',strtotime('now -1 day'))
 			),
-			'order'=>'Message.created ASC'
+			'order'=>'Message.created DESC'
 		));
-//		foreach($messages as &$message) {
-//			$message['Message']['timestamp'] = strtotime($message['Message']['created']);
-//		}
 		$this->set('messages',$messages);
 		$this->set('_serialize', array('messages'));
 	}

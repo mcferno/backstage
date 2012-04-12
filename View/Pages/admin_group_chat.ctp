@@ -37,3 +37,9 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/template" id="chatRowTemplate">
+<td class="time"><%= date %></td>
+<td class="handle"><%= username %></td>
+<td class="message"><%= message %></td>
+</script>
