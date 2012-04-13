@@ -25,7 +25,7 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'group_chat')); ?>">
+				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
 					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'')); ?>
 				</a>
 				<h4 class="text-right"><em>in development</em></h4>

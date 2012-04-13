@@ -100,8 +100,4 @@ class PagesController extends AppController {
 		}
 		$this->set('base_images',$images);
 	}
-	
-	public function admin_group_chat() {
-		
-	}
 }

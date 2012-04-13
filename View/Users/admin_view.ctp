@@ -1,42 +1,40 @@
 <div class="users view">
-<h2><?php  echo __('User');?></h2>
-	<dl class="dl-horizontal">
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($user['User']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Username'); ?></dt>
-		<dd>
-			<?php echo h($user['User']['username']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Password'); ?></dt>
-		<dd>
-			<?php echo h($user['User']['password']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Created'); ?></dt>
-		<dd>
-			<?php echo h($user['User']['created']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
-		<dd>
-			<?php echo h($user['User']['modified']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Role'); ?></dt>
-		<dd>
-			<?php echo h($user['User']['role']); ?>
-			&nbsp;
-		</dd>
-	</dl>
+	<h2><?php  echo __('User');?></h2>
+	<table class="table table-striped">
+		<tr>
+			<td>id<td>
+			<td><?= h($user['User']['id']); ?>&nbsp;
+		</tr>
+		<tr>
+			<td>Username<td>
+			<td><?= h($user['User']['username']); ?>&nbsp;
+		</tr>
+		<tr>
+			<td>Created<td>
+			<td><?= h($user['User']['created']); ?>&nbsp;
+		</tr>
+		<tr>
+			<td>Modified<td>
+			<td><?= h($user['User']['modified']); ?>&nbsp;
+		</tr>
+		<tr>
+			<td>Role<td>
+			<td><?= h($user['User']['role']); ?>&nbsp;
+		</tr>
+		<tr>
+			<td>Last Login<td>
+			<td><?= h($user['User']['last_login']); ?>&nbsp;
+		</tr>
+		<tr>
+			<td>Last Seen<td>
+			<td><?= h($user['User']['last_seen']); ?>&nbsp;
+		</tr>
+	</table>
 </div>
 <div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3>Actions</h3>
 	<ul class="nav nav-pills">
-		<li><?php echo $this->Html->link(__('Edit User'), array('action' => 'edit', $user['User']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete User'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?> </li>
+		<li><?= $this->Html->link(__('Edit User'), array('action' => 'edit', $user['User']['id'])); ?> </li>
+		<li><?= $this->Form->postLink(__('Delete User'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?> </li>
 	</ul>
 </div>

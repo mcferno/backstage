@@ -97,13 +97,24 @@ a {
 	border-radius:10px 10px 10px 10px;
 	*/
 }
+/*
+.chat-bar {
+	margin-left: 0;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+}
+*/
 .chat-bar .container { 
 	margin-left: 0.2em;
 }
 
-.chat-bar h3, .chat-bar form {
+.chat-bar h3, .chat-bar h4, .chat-bar form {
 	float: left;
-	padding: 0.5em;
+	padding: 0.2em;
+}
+
+.chat-bar h4 {
+	line-height: 30px;
 }
 
 .chat-bar .msg input {
@@ -119,17 +130,13 @@ a {
 
 .chat-window .time {
 	color: #888;
-	width: 10em;
+	width: 7em;
 }
 
 .chat-window .handle {
 	font-weight: bold;
 	color: #666;
 	width: 9em;
-}
-
-.chat-window {
-	padding-top: 1em;
 }
 
 .loading {
@@ -140,10 +147,22 @@ a {
 	padding-left: 1em;
 }
 
+div.tooltip {
+	z-index: 1500;
+}
+
 @media (max-width:767px) {
 	/* force responsive nav submenus to use white when compacted */
 	.navbar .dropdown-menu i.icon {
 		background-image: url("../img/glyphicons-halflings-white.png");
+	}
+	
+	.navbar-form {
+		border: none;
+		margin: 0;
+	}
+	.chat-bar .handle {
+		font-size: 1em;
 	}
 }
 
@@ -159,8 +178,31 @@ a {
 		padding: 0.65em 0.65em 0.65em;
 	}
 	*/
-	button .extra {
+	.extra {
 		display: none;
+	}
+	
+	.chat-bar h3, .chat-bar h4, .chat-bar form {
+		padding: 0.1em;
+	}
+	
+	.chat-bar .navbar-inner {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	
+	.chat-bar .navbar-inner button {
+		position: absolute;
+		right: 4em;
+	}
+	
+	.chat-window .handle {
+		width: 5em;
+	}
+	
+	.chat-window .time {
+		font-size: 0.8em;
+		width: 7em;
 	}
 }
 

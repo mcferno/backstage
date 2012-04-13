@@ -20,6 +20,11 @@
  */
 
 /**
+ * Timestamp of the start of the application
+ */
+	Configure::write('App.start', time());
+
+/**
  * Setup Mode
  *
  * When true, this allows you to visit the admin_setup action to create
@@ -351,4 +356,12 @@ Cache::config('short', array(
 	'path' => CACHE . 'persistent' . DS,
 	'serialize' => ($engine === 'File'),
 	'duration' => '5 minutes'
+));
+
+Cache::config('online_status', array(
+	'engine' => $engine,
+	'prefix' => 'app_online_status_',
+	'path' => CACHE . 'persistent' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => '20 seconds'
 ));

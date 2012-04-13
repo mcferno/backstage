@@ -7,7 +7,8 @@ var GroupChat = {
 	dateFormat : 'mmm-dd, h:MM:ss TT',
 	templates : {
 		chatRowTemplate : false
-	}
+	},
+	lastAck : 0
 };
 
 (function($, ns) {
@@ -33,7 +34,6 @@ var GroupChat = {
 		},
 		initialize : function() {
 			this.view = new ns.ChatMsgView({ model : this });
-			this.set({ timestamp : Date.parse(this.get('date')) });
 		}
 	});
 
@@ -47,8 +47,10 @@ var GroupChat = {
 			this.render();
 		},
 		render : function() {
+			var timestamp = this.model.get('timestamp');
+			var date = new Date(timestamp * 1000);
 			var rendered = _.template(ns.templates.chatRowTemplate.html(), {
-				date : this.model.get('date'),
+				date : ns.formatDate(date),
 				username : this.model.get('handle'),
 				message : this.model.get('text')
 			});
@@ -67,7 +69,7 @@ var GroupChat = {
 		
 		// reverse chronological sort for newest-on-top
 		comparator : function(chatMsgModel) {
-			return -1 * chatMsgModel.get('timestamp');
+			return -1 * parseInt(chatMsgModel.get('timestamp'));
 		}
 	});
 	
@@ -106,12 +108,13 @@ var GroupChat = {
 	
 	ns.submitMessage = function() {
 		var text = ns.msgBar.attr('value');
-		var now = new Date();		
-		ns.addMessage(now.format(ns.dateFormat),text,ns.handle);
+		var now = new Date();
+		var date = ns.formatDate(now);		
+		ns.addMessage(date,now.getTime(),text,ns.handle);
 		
 		$.ajax({
 			type: 'POST',
-  			url: '/kennyquotemachine.com/backstage/messages/add',
+  			url: AppBaseURL+'backstage/messages/add',
   			data: {
   				'Message':{
   					'text':text
@@ -123,11 +126,84 @@ var GroupChat = {
 		ns.msgBar.attr('value','');
 	}
 	
-	ns.addMessage = function(date,text,handle) {
-		var row = $('<tr><td class="time">'+date+'</td><td class="handle">'+handle+'</td><td class="message">'+text+'</td></tr>')
+	ns.addMessage = function(date,timestamp,text,handle) {
+		var rowData = _.template(ns.templates.chatRowTemplate.html(), {
+			date : date,
+			timestamp : timestamp,
+			username : handle,
+			message : text
+		});
+		var row = $('<tr>').addClass('chat-row').html(rowData);
 		row.hide();
 		ns.chatWindow.prepend(row);
 		row.show(500);
+	}
+	
+	ns.sendHeartbeat = function() {
+		var data = {};
+		
+		if(typeof ns.chatWindow != 'undefined') {
+			data.ack = ns.lastAck;
+		}
+		$.ajax({
+			data : data,
+			url : AppBaseURL+'backstage/users/heartbeat',
+			success : ns.processHeartbeat
+		});
+	}
+	
+	ns.processHeartbeat = function(data) {
+		$('.online-count')
+			.text(data.online.length)
+			.data('title',_.reduce(data.online,function(memo, num){
+				return memo.User.username +', '+ num.User.username
+			}))
+			.tooltip();
+
+		// not on chat, alert them of possible new messages
+		if(typeof ns.chatWindow == 'undefined') {
+			if(data.new_messages == 0) {
+				ns.msgNotifier.hide();
+			} else {
+				ns.msgNotifier.text(data.new_messages).show();
+			}
+		} else {
+			if(data.ack > ns.lastAck) {
+				ns.lastAck = data.ack;
+			}
+			
+			if(data.messages.length > 0) {
+				ns.processMessages(data.messages);
+			}
+		}
+	}
+	
+	ns.processMessages = function(data) {
+		
+		$(data).each(function(){
+			var message = this;
+			var date = this.Message.created;
+			
+			ns.chatLog.add(new ns.ChatMsg({
+				date : date,
+				timestamp :  message.Message.timestamp,
+				text : message.Message.text,
+				handle : message.User.username
+			}));
+		});
+	}
+	
+	ns.formatDate = function(dateObj) {
+		var date = ns.padNumber((dateObj.getMonth() + 1))
+			+ '/' + ns.padNumber(dateObj.getDate())
+			+ ' ' + ns.padNumber(dateObj.getHours())
+			+ ':' + ns.padNumber(dateObj.getMinutes())
+			+ ':' + ns.padNumber(dateObj.getSeconds());
+		return date;
+	}
+	
+	ns.padNumber = function(str) {
+		return String('00'+str).match(/[0-9]{2}$/);
 	}
 	
 	ns.init = function() {
@@ -146,27 +222,18 @@ var GroupChat = {
 		ns.chatLogView = new ns.ChatLogView();
 		
 		$('.loading').hide();
-		
-		$.getJSON('/kennyquotemachine.com/backstage/messages/getLatest',function(response) {
-			$(response.messages).each(function(){
-				
-				var message = this;
-				var date = new Date(Date.parse(this.Message.created));
-				
-				ns.chatLog.add(new ns.ChatMsg({
-					date : date.format(ns.dateFormat),
-					text : message.Message.text,
-					handle : message.User.username
-				}));
-			});
-		});
 	}
 		
 	$(document).ready(function() {
 		ns.init();
 		if($('body').hasClass('route-action-admin-group-chat')) {
 			ns.initChat();
+			ns.heartbeat = setInterval(ns.sendHeartbeat,5000);
+		} else {
+			ns.heartbeat = setInterval(ns.sendHeartbeat,25000);
 		}
+		
+		ns.sendHeartbeat();
 	});
 	
 })(jQuery, GroupChat);

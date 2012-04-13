@@ -42,4 +42,67 @@ class User extends AppModel {
 	    }
 	    return true;
 	}
+	
+	/**
+	 * Tracks the last time the user authenticated with the server.
+	 *
+	 * @param {UUID} $user_id User to update
+	 * @param {Integer} $timestamp Unix timestamp of the visit
+	 * @return {Boolean} Update status
+	 */
+	public function setLastLogin($user_id, $timestamp) {
+		return $this->updateAll(
+			array("{$this->alias}.last_login" => '\''.date(MYSQL_DATE_FORMAT,$timestamp).'\''),
+			array("{$this->alias}.{$this->primaryKey}" => $user_id)
+		);
+	}
+	
+	/**
+	 * Tracks the last time the user made any activity with the server.
+	 *
+	 * @param {UUID} $user_id User to update
+	 * @param {Integer} $timestamp Unix timestamp of the visit
+	 * @return {Boolean} Update status
+	 */
+	public function setLastSeen($user_id, $timestamp) {
+		return $this->updateAll(
+			array("{$this->alias}.last_seen" => '\''.date(MYSQL_DATE_FORMAT,$timestamp).'\''),
+			array("{$this->alias}.{$this->primaryKey}" => $user_id)
+		);
+	}
+	
+	/**
+	 * Tracks the last time the user made any activity with the server.
+	 *
+	 * @param {UUID} $user_id User to update
+	 * @param {Integer} $timestamp Unix timestamp of the visit
+	 * @return {Boolean} Update status
+	 */
+	public function setLastAck($user_id, $timestamp) {
+		$datetime = date(MYSQL_DATE_FORMAT,$timestamp);
+		return $this->updateAll(
+			array("{$this->alias}.last_ack" => '\''.$datetime.'\''),
+			array(
+				"{$this->alias}.{$this->primaryKey}" => $user_id,
+				"{$this->alias}.last_ack <" => $datetime
+			)
+		);
+	}
+	
+	public function getOnlineUsers() {
+		$users = Cache::read('onlineUsers','online_status');
+		
+		// cache-miss
+		if($users === false) {
+			$users = $this->find('all',array(
+				'fields'=>array('username','last_seen'),
+				'conditions'=>array(
+					'last_seen >='=>date(MYSQL_DATE_FORMAT,strtotime('now - 10 minutes'))
+				)
+			));
+			Cache::write('onlineUsers', $users, 'online_status');
+		}
+		
+		return $users;
+	}
 }

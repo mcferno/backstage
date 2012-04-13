@@ -35,6 +35,9 @@
 		// grid width in units for main content block
 		$contentSpan = 12;
 	?>
+	<script>
+		var AppBaseURL = <?= $this->Js->value($this->Html->url('/',true)); ?>;
+	</script>
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
 		<?= $this->element('admin/nav-bar'); ?>

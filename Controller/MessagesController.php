@@ -22,18 +22,6 @@ class MessagesController extends AppController {
 		}
 		
 		$this->set('response',array('success'=>true));
-		$this->set('_serialize', array('response','body'));
-	}
-	
-	public function admin_getLatest() {
-		$messages = $this->Message->find('all',array(
-			'contain'=>'User',
-			'conditions'=>array(
-				'Message.created >='=>date('Y-m-d H:i:s',strtotime('now -1 day'))
-			),
-			'order'=>'Message.created DESC'
-		));
-		$this->set('messages',$messages);
-		$this->set('_serialize', array('messages'));
+		$this->set('_serialize', array('response'));
 	}
 }

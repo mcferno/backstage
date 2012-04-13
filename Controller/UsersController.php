@@ -10,6 +10,8 @@ class UsersController extends AppController {
 		'User'=>array()
 	);
 	
+	public $uses = array('User','Message');
+	
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
 		$this->Auth->allow(array('admin_login', 'admin_setup'));
@@ -22,6 +24,7 @@ class UsersController extends AppController {
 		
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
+				$this->User->setLastLogin($this->Auth->user('id'),time());
 				$this->redirect($this->Auth->redirect());
 			} else {
 				$this->Session->setFlash('Invalid username or password, try again','messaging/alert-error');
@@ -53,22 +56,57 @@ class UsersController extends AppController {
 		$this->admin_add();
 	}
 	
-/**
- * admin_index method
- *
- * @return void
- */
+	/**
+	 * Tracks periodic "live" status of the user, returning useful data
+	 */
+	public function admin_heartbeat() {
+		$this->cacheAction = false;
+		$this->disableCache(); // expire cache immediately
+		$this->RequestHandler->renderAs($this, 'json');
+		
+		$currentUser = $this->Auth->user('id');
+		
+		$data['online'] = $this->User->getOnlineUsers();
+		$data['ack'] = time();
+		
+		if(isset($this->request->query['ack'])) {
+			$clientAck = (int)$this->request->query['ack'];
+			if($clientAck === 0) {
+				$since = date(MYSQL_DATE_FORMAT,strtotime('now - 1 day'));
+				$data['messages'] = $this->Message->getNewMessages($since);
+			} else {
+				$since = date(MYSQL_DATE_FORMAT,$clientAck);
+				$this->User->setLastAck($currentUser, $clientAck);
+				$data['messages'] = $this->Message->getNewMessages($since, $currentUser);
+			}
+		}
+		
+		$data['new_messages'] = $this->Message->countNewMessages($currentUser);
+
+		$this->set($data);
+		$this->set('_serialize', array_keys($data));
+	}
+	
+	public function admin_group_chat() {
+		$this->User->setLastAck($this->Auth->user('id'),Configure::read('App.start'));
+	}
+	
+	/**
+	 * admin_index method
+	 *
+	 * @return void
+	 */
 	public function admin_index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
 
-/**
- * admin_view method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_view method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_view($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -77,11 +115,11 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->read(null, $id));
 	}
 
-/**
- * admin_add method
- *
- * @return void
- */
+	/**
+	 * admin_add method
+	 *
+	 * @return void
+	 */
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
@@ -125,12 +163,12 @@ class UsersController extends AppController {
 		}
 	}
 
-/**
- * admin_delete method
- *
- * @param string $id
- * @return void
- */
+	/**
+	 * admin_delete method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function admin_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
