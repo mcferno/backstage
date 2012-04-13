@@ -159,8 +159,10 @@ var GroupChat = {
 		if(typeof ns.chatWindow == 'undefined') {
 			if(data.new_messages == 0) {
 				ns.msgNotifier.hide();
+				document.title = ns.originalTitle;
 			} else {
 				ns.msgNotifier.text(data.new_messages).show();
+				document.title = '(' + data.new_messages + ') ' + ns.originalTitle;
 			}
 		} else {
 			if(data.ack > ns.lastAck) {
@@ -220,6 +222,7 @@ var GroupChat = {
 	}
 		
 	$(document).ready(function() {
+		ns.originalTitle = document.title;
 		ns.init();
 		if($('body').hasClass('route-action-admin-group-chat')) {
 			ns.initChat();
