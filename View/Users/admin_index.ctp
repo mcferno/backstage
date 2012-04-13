@@ -7,7 +7,8 @@
 			<th><?php echo $this->Paginator->sort('username');?></th>
 			<th><?php echo $this->Paginator->sort('modified');?></th>
 			<th><?php echo $this->Paginator->sort('role');?></th>
-			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('last_login');?></th>
+			<th><?php echo $this->Paginator->sort('last_seen');?></th>
 			<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
@@ -17,8 +18,9 @@
 		
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['modified']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['role']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['id']); ?>&nbsp;</td>
+		<td><?php echo h(($user['User']['role'] == ROLES_GENERAL)?'General':'Admin'); ?>&nbsp;</td>
+		<td><?php echo h($user['User']['last_login']); ?>&nbsp;</td>
+		<td><?php echo h($user['User']['last_seen']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>

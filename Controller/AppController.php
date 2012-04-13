@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	
 	public $helpers = array(
-		'Site','Html','Paginator','Session','Text','Cache',
+		'Site','Html','Js','Paginator','Session','Text','Cache',
 		'Form' => array(
 			'className' => 'AppForm'
 		)
@@ -78,6 +78,17 @@ class AppController extends Controller {
 	
 	public function beforeRender() {
 		$this->set('breadcrumbs',array());
+	}
+	
+	/**
+	 * Post-processing which should not hold up a request
+	 */
+	public function afterFilter() {
+		if($this->Auth->loggedIn()) {
+			
+			// track the time of the last activity from a specific user
+			ClassRegistry::init('User')->setLastSeen($this->Auth->user('id'),Configure::read('App.start'));
+		}
 	}
 	
 	/**

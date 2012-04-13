@@ -34,6 +34,8 @@ class AppModel extends Model {
 	
 	public $recursive = -1;
 	
+	public $actsAs = array('Containable');
+	
 	/**
 	 * Pulls a JSON feed via URL and returns the decoded format. Simple wrapper
 	 * for GET-style API pulls.

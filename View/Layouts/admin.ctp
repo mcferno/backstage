@@ -15,8 +15,11 @@
 		
 		echo $this->Html->script(array(
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+			'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js',
+			'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js',			
 			'bootstrap.min',
 			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
+			'group-chat.js?t='.filemtime(JS.'group-chat.js')
 		)); 
 		
 		echo $this->fetch('script');
@@ -32,6 +35,9 @@
 		// grid width in units for main content block
 		$contentSpan = 12;
 	?>
+	<script>
+		var AppBaseURL = <?= $this->Js->value($this->Html->url('/',true)); ?>;
+	</script>
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
 		<?= $this->element('admin/nav-bar'); ?>
