@@ -100,4 +100,21 @@ class PagesController extends AppController {
 		}
 		$this->set('base_images',$images);
 	}
+	
+	/**
+	 * Clears the view cache.
+	 */
+	public function admin_clear_cache() {
+		if($this->Auth->user('role') >= ROLES_ADMIN) {
+			if(clearCache() === true) {
+				$msg = 'View cache has been cleared successfully!';
+				$type = 'messaging/alert-success';
+			} else {
+				$msg = 'View cache could not be cleared!';
+				$type = 'messaging/alert-error';
+			}
+			$this->Session->setFlash($msg,$type);
+		}
+		$this->redirect($this->referer(array('controller'=>'users','action'=>'dashboard')));
+	}
 }

@@ -30,7 +30,7 @@
 							<li><?= $this->Html->link('<i class="icon-plus-sign icon"></i> Add New User',array('controller'=>'users','action'=>'add'),array('escape'=>false)); ?></li>
 							<li><?= $this->Html->link('<i class="icon-th-list icon"></i> List Users',array('controller'=>'users','action'=>'index'),array('escape'=>false)); ?></li>
 							<li class="divider"></li>
-							<li><a href="#"><i class="icon-cog icon"></i> Settings</a></li>
+							<li><?= $this->Html->link('<i class="icon-refresh icon"></i> Clear Cache',array('controller'=>'pages','action'=>'clear_cache'),array('escape'=>false)); ?></li>
 							<li></li>
 						</ul>
 					</li>
