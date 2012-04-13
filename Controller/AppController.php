@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	
 	public $helpers = array(
-		'Site','Html','Paginator','Session','Text',
+		'Site','Html','Paginator','Session','Text','Cache',
 		'Form' => array(
 			'className' => 'AppForm'
 		)

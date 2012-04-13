@@ -31,7 +31,11 @@ Router::connect("/backstage/:controller/:action/*", array('prefix' => 'admin', '
 /**
  * Primary index pages, lists all content in paginated pages
  */
-Router::connect('/', array('controller' => 'posts', 'action'=>'index', 'page'=>1));
+
+// Isolate the homepage
+Router::connect('/', array('controller' => 'posts', 'action'=>'home', 'page'=>1));
+Router::connect('/', array('controller' => 'posts', 'action'=>'index', 'page'=>1)); // reverse-routing only (dupped)
+
 Router::connect('/*', array('controller' => 'posts', 'action'=>'index'));
 
 /**

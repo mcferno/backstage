@@ -42,10 +42,6 @@
  * In development mode, you need to click the flash message to continue.
  */
 	Configure::write('debug', 1);
-	
-	if(isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
-		Configure::write('debug', 0);
-	}
 
 /**
  * Configure the Error handler used to handle errors for your application.  By default
@@ -352,3 +348,9 @@ Cache::config('short', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => '5 minutes'
 ));
+
+if(isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
+	Configure::write('debug', 0);
+	Configure::write('Cache.disable', false);
+	Configure::write('Cache.check', true);
+}

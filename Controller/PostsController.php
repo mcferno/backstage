@@ -7,8 +7,18 @@ class PostsController extends AppController {
 		'order' => 'date DESC',
 		'limit' => 10
 	);
+	
+	public $cacheAction = array(
+		'view'=>'+1 hour'
+	);
 		
-	public $helpers = array('Paginator');
+	/**
+	 * Isolating the homepage for finer-grain cache control 
+	 */
+	public function home() {
+		$this->cacheAction = '+10 minutes';
+		$this->setAction('index');
+	}
 	
 	/**
 	 * Primary index of all aggregated posts.
