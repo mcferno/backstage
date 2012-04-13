@@ -11,7 +11,7 @@
 		<div class="container">
 			<div class="span8 msg">
 				<form class="navbar-form pull-left">
-					<input type="text" class="span4" placeholder="Type something…">
+					<input type="text" class="span7" placeholder="Type something…">
 					<button type="submit" class="btn btn-primary"><strong>Send</strong></button>
 				</form>
 				
