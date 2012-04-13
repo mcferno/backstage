@@ -46,7 +46,8 @@ class Message extends AppModel {
 			'conditions'=>array(
 				'Message.created >='=>$since
 			),
-			'order'=>'Message.created DESC'
+			'order'=>'Message.created DESC',
+			'limit'=>50
 		);
 		if($exclude_from !== false) {
 			$query['conditions']['NOT']['Message.user_id'] = $exclude_from;

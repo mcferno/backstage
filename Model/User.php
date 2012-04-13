@@ -97,7 +97,7 @@ class User extends AppModel {
 			$users = $this->find('all',array(
 				'fields'=>array('username','last_seen'),
 				'conditions'=>array(
-					'last_seen >='=>date(MYSQL_DATE_FORMAT,strtotime('now - 10 minutes'))
+					'last_seen >='=>date(MYSQL_DATE_FORMAT,strtotime('now - 5 minutes'))
 				)
 			));
 			Cache::write('onlineUsers', $users, 'online_status');
