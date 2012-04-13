@@ -86,7 +86,6 @@ var GroupChat = {
 		addSingle : function(chatMsgModel) {
 			if(ns.chatLog.length > 1) {
 				var idx = ns.chatLog.sortedIndex(chatMsgModel, ns.chatLog.comparator);
-				
 				// new view belongs at the front
 				if(idx == 0) {
 					this.$el.prepend(chatMsgModel.view.el);
@@ -136,7 +135,7 @@ var GroupChat = {
 		var row = $('<tr>').addClass('chat-row').html(rowData);
 		row.hide();
 		ns.chatWindow.prepend(row);
-		row.show(500);
+		row.show().css('display','table-row');
 	}
 	
 	ns.sendHeartbeat = function() {
