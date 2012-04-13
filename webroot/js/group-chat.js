@@ -152,7 +152,12 @@ var GroupChat = {
 	}
 	
 	ns.processHeartbeat = function(data) {
+		var allUsers = '';
+		for(var i=0;i<data.online.length;i++) {
+			allUsers += data.online[i].User.username + ' ';
+		}
 		$('.online-count')
+			.data('title',allUsers)
 			.text(data.online.length);
 
 		// not on chat, alert them of possible new messages
