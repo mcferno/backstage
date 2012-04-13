@@ -164,24 +164,6 @@ div.tooltip {
 	.chat-bar .handle {
 		font-size: 1em;
 	}
-}
-
-@media (max-width:480px) {
-	.hero-unit h1 {
-		font-size: 40px;
-	}
-	.hero-unit {
-		padding: 30px;
-	}
-	/*
-	.meme-generator .actions button {
-		padding: 0.65em 0.65em 0.65em;
-	}
-	*/
-	.extra {
-		display: none;
-	}
-	
 	.chat-bar h3, .chat-bar h4, .chat-bar form {
 		padding: 0.1em;
 	}
@@ -203,6 +185,23 @@ div.tooltip {
 	.chat-window .time {
 		font-size: 0.8em;
 		width: 7em;
+	}
+}
+
+@media (max-width:480px) {
+	.hero-unit h1 {
+		font-size: 40px;
+	}
+	.hero-unit {
+		padding: 30px;
+	}
+	/*
+	.meme-generator .actions button {
+		padding: 0.65em 0.65em 0.65em;
+	}
+	*/
+	.extra {
+		display: none;
 	}
 }
 

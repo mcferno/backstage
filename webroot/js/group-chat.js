@@ -154,11 +154,7 @@ var GroupChat = {
 	
 	ns.processHeartbeat = function(data) {
 		$('.online-count')
-			.text(data.online.length)
-			.data('title',_.reduce(data.online,function(memo, num){
-				return memo.User.username +', '+ num.User.username
-			}))
-			.tooltip();
+			.text(data.online.length);
 
 		// not on chat, alert them of possible new messages
 		if(typeof ns.chatWindow == 'undefined') {
