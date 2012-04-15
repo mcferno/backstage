@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 31, 2012 at 04:43 PM
+-- Generation Time: Apr 15, 2012 at 06:06 PM
 -- Server version: 5.1.52
--- PHP Version: 5.3.2
+-- PHP Version: 5.3.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -35,6 +35,22 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `profile_image` varchar(255) DEFAULT NULL,
   `data` text NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `created` datetime NOT NULL,
+  `text` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `id` (`id`,`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -107,6 +123,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `role` tinyint(4) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `last_seen` datetime DEFAULT NULL,
+  `last_ack` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
