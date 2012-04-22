@@ -21,7 +21,7 @@ Router::connect('/post/:slug/:id',
 // Setting the admin urls manually, due to differing uri name
 Router::connect("/backstage", array('controller'=>'users', 'action' => 'login', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/backstage/dashboard", array('controller'=>'users', 'action' => 'dashboard', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/meme-generator", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/backstage/meme-generator/*", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/backstage/chat", array('controller'=>'users', 'action' => 'group_chat', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/backstage/setup", array('controller' => 'users', 'action' => 'setup', 'prefix', 'admin', 'admin' => true));
 

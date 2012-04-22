@@ -34,6 +34,13 @@
 		
 		// grid width in units for main content block
 		$contentSpan = 12;
+		
+		// optionally load the Google Analytics on live site
+		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 
+			echo $this->element('ga');
+		} else {
+			echo $this->element('ga-empty');
+		}
 	?>
 	<script>
 		var AppBaseURL = <?= $this->Js->value($this->Html->url('/',true)); ?>;
