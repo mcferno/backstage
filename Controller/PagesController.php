@@ -94,7 +94,13 @@ class PagesController extends AppController {
 	 * Presents the interface for the js-driven meme generator tool.
 	 */
 	public function admin_meme_generator() {
-		$images = glob(IMAGES.'base-meme'.DS.'*.*');
+		if(!empty($this->request->pass[0])) {
+			$images = glob(IMAGES.'user'.DS.$this->request->pass[0].'*');
+			$images = array_merge($images, glob(IMAGES.'base-meme'.DS.$this->request->pass[0].'*'));
+		}
+		if(empty($images)) {
+			$images = glob(IMAGES.'base-meme'.DS.'*.*');
+		}
 		foreach ($images as &$image) {
 			$image = substr($image,strlen(IMAGES));
 		}

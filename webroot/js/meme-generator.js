@@ -96,6 +96,28 @@ var MemeGenerator = {
 	 * current image.
 	 */
 	ns.matchOrientationToImage = function() {
+		if(ns.currentImage.height != 0 && ns.currentImage.width != 0) {
+			// verify we have the correct aspect-ratio
+			var sizing = $('.canvasSize option[data-width="'+ns.currentImage.width+'"][data-height="'+ns.currentImage.height+'"]');
+			if(sizing.length === 0) {
+				if($('.canvasSize optgroup[label="custom"]').length === 0) {
+					var group = $('<optgroup label="Custom" class="custom">');
+					$('.canvasSize').append(group);
+				}
+				
+				$('.canvasSize option:selected').removeAttr('selected');
+				var newSize = $('<option>');
+				newSize.data('height',ns.currentImage.height)
+					.data('width',ns.currentImage.width)
+					.attr('selected','selected')
+					.text(ns.currentImage.width + ' x ' + ns.currentImage.height);
+				$('.canvasSize .custom').append(newSize);
+				ns.adaptToScale();
+				
+				return;
+			}
+		}		
+		
 		var imageOrientation = (ns.currentImage.height > ns.currentImage.width)?'vertical':'horizontal';
 		var currentSize = $('.canvasSize option:selected');
 		var canvasOrientation = currentSize.closest('optgroup').data('orientation');
@@ -253,6 +275,10 @@ var MemeGenerator = {
 		ns.lastLineText = $('#last-line');
 		
 		ns.adaptToScale();
+		
+		if(ns.images.length < 2) {
+			$('.choose-background').hide();
+		}
 	};
 	
 	/**
