@@ -231,9 +231,9 @@ var GroupChat = {
 		ns.init();
 		if($('body').hasClass('route-action-admin-group-chat')) {
 			ns.initChat();
-			ns.heartbeat = setInterval(ns.sendHeartbeat,5000);
+			ns.heartbeat = setInterval(ns.sendHeartbeat,3000);
 		} else {
-			ns.heartbeat = setInterval(ns.sendHeartbeat,25000);
+			ns.heartbeat = setInterval(ns.sendHeartbeat,60000);
 		}
 		
 		ns.sendHeartbeat();
