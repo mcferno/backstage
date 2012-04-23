@@ -78,6 +78,7 @@ class AppController extends Controller {
 	
 	public function beforeRender() {
 		$this->set('breadcrumbs',array());
+		$this->set('contentSpan',8);
 	}
 	
 	/**

@@ -36,7 +36,7 @@
 </div>
 
 <div class="row">
-<div class="span6">
+<div class="span4">
 	<h4 class="text-right">site updates</h4>
 	<table class="table table-striped">
 	<tr>
@@ -52,7 +52,7 @@
 	</table>
 </div>
 
-<div class="span6">
+<div class="span4">
 	<h4 class="text-right">user activity</h4>
 	<table class="table">
 		<tr>

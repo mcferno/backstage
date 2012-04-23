@@ -31,10 +31,7 @@
 		));
 		
 		echo $this->fetch('css');
-		
-		// grid width in units for main content block
-		$contentSpan = 12;
-		
+				
 		// optionally load the Google Analytics on live site
 		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 
 			echo $this->element('ga');
@@ -51,12 +48,12 @@
 		<div class="container-fluid">
 			<div class="content">
 				<div class="row-fluid">
-					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): $contentSpan = 10; ?>
-					
+					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): ?>
 					<div class="span2 subnav">
 						<?= $this->element('admin/subnav'); ?>
 					</div>
-					
+					<?php else: ?>
+					<div class="span2">&nbsp;</div>
 					<?php endif; ?>
 					
 					<div class="span<?= $contentSpan; ?> main">

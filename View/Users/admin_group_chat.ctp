@@ -3,7 +3,7 @@
 	$this->Html->script(array('utilities'),false);
 ?>
 <div class="row">
-	<div class="span12"><h1>Group Chat.</h1></div>
+	<div class="span8"><h1>Group Chat.</h1></div>
 </div>
 <div class="row">
 <div class="navbar chat-bar">
@@ -34,7 +34,7 @@
 	</div>
 </div>
 <div class="row chat-window">
-	<div class="span12">
+	<div class="span8">
 		<table class="table table-striped chat table-condensed"></table>
 	</div>
 </div>
