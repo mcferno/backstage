@@ -24,12 +24,7 @@
 		echo $this->fetch('script');
 		echo $this->fetch('css');
 
-		// optionally load the Google Analytics on live site
-		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 
-			echo $this->element('ga');
-		} else {
-			echo $this->element('ga-empty');
-		}
+		echo $this->element('ga');
 	?>
 </head>
 <body class="index no-js">
