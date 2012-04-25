@@ -2,25 +2,25 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>KQM Backstage</title>
-	
-	<?php if(!empty($meta_description)) : ?>
-	<meta name="description" content="<?= $this->Text->truncate(strip_tags(strtr($meta_description,'"',"'")),175); ?>"/>
-	<?php else : ?>
-	<meta name="description" content="A collection of original jokes and quotes ranging from funny, clever, outrageous, to wildly inappropriate. Updated often with fresh laughs and nonsense."/>
-	<?php endif; ?>
-	
+	<meta name="description" content=""/>	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
 	<?php
 		echo $this->Html->meta('icon');
 		
-		echo $this->Html->script(array(
+		// base js libraries
+		$scripts = array(
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
 			'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js',
-			'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js',			
+			'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js',
 			'bootstrap.min',
-			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
-			'group-chat.js?t='.filemtime(JS.'group-chat.js')
-		)); 
+			'jquery.site.js?t='.filemtime(JS.'jquery.site.js')
+		);
+		
+		if($this->Session->check('Auth.User.id')) {
+			$scripts[] = 'group-chat.js?t='.filemtime(JS.'group-chat.js');
+		}
+		
+		echo $this->Html->script($scripts);
 		
 		echo $this->fetch('script');
 		
@@ -31,13 +31,7 @@
 		));
 		
 		echo $this->fetch('css');
-				
-		// optionally load the Google Analytics on live site
-		if(stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) { 
-			echo $this->element('ga');
-		} else {
-			echo $this->element('ga-empty');
-		}
+		echo $this->element('ga');
 	?>
 	<script>
 		var AppBaseURL = <?= $this->Js->value($this->Html->url('/',true)); ?>;
