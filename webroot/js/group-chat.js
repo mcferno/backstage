@@ -21,6 +21,18 @@ var GroupChat = {
 		.on('click','.chat-bar .msg button[type="submit"]', function(e) {
 			e.preventDefault(); // disable all buttons's defaults
 			ns.submitMessage();
+		})
+		.on('click','.slideout .close',function(e){
+			e.preventDefault(); // disable all buttons's defaults
+			$('.slideout').animate({left:-1*($('.slideout').width() + 75)},650);
+		})
+		.on('click','.online-count',function(e){
+			e.preventDefault(); // disable all buttons's defaults
+			if($('.slideout').offset().left < 0 || !$('.slideout').is(':visible')) {
+				$('.slideout').css('left',-1*($('.slideout').width() + 75)).show().animate({left:'0',easing:'easeOutExpo'},650);
+			} else {
+				$('.slideout').show().animate({left:-1*($('.slideout').width() + 75),easing:'easeOutExpo'},650);
+			}
 		});
 
 	/**
@@ -154,22 +166,28 @@ var GroupChat = {
 	ns.processHeartbeat = function(data) {
 		var allUsers = '';
 		for(var i=0;i<data.online.length;i++) {
-			allUsers += data.online[i].User.username + ' ';
+			allUsers += data.online[i].User.username;
+			if(i != data.online.length - 1) {
+				allUsers += ', ';
+			}
 		}
 		$('.online-count')
 			.data('title',allUsers)
 			.text(data.online.length);
-
-		// not on chat, alert them of possible new messages
-		if(typeof ns.chatWindow == 'undefined') {
-			if(data.new_messages == 0) {
-				ns.msgNotifier.hide();
-				document.title = ns.originalTitle;
-			} else {
-				ns.msgNotifier.text(data.new_messages).show();
-				document.title = '(' + data.new_messages + ') ' + ns.originalTitle;
-			}
+		$('.slideout .names').text(allUsers);
+		
+		if(data.new_messages == 0) {
+			ns.msgNotifier.addClass('badge-off');
+			document.title = ns.originalTitle;
+			ns.msgNotifier.text(data.new_messages);
 		} else {
+			ns.msgNotifier.removeClass('badge-off');
+			ns.msgNotifier.text(data.new_messages);
+			document.title = '(' + data.new_messages + ') ' + ns.originalTitle;
+		}
+
+		// on chat, process new messages
+		if(typeof ns.chatWindow !== 'undefined') {
 			if(data.ack > ns.lastAck) {
 				ns.lastAck = data.ack;
 			}
@@ -209,8 +227,8 @@ var GroupChat = {
 	}
 	
 	ns.init = function() {
-		ns.msgNotifier = $('<span class="badge badge-custom"></span>').text(0).hide();
-		$('.chat-link').append(ns.msgNotifier);
+		ns.msgNotifier = $('.navbar .message-count');
+		ns.userCount = $('.navbar .online-count');
 	}
 	
 	ns.initChat = function() {
@@ -233,7 +251,7 @@ var GroupChat = {
 			ns.initChat();
 			ns.heartbeat = setInterval(ns.sendHeartbeat,3000);
 		} else {
-			ns.heartbeat = setInterval(ns.sendHeartbeat,60000);
+			ns.heartbeat = setInterval(ns.sendHeartbeat,45000);
 		}
 		
 		ns.sendHeartbeat();

@@ -7,6 +7,12 @@
 				<span class="icon-bar"></span>
 			</a>
 			<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'brand')); ?>
+			<?php if($this->Session->check('Auth.User')) : ?>
+			<span class="status">
+				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count"></span></a>
+				<i class="icon-user icon-white"></i><span class="badge badge-info online-count"></span>
+			</span>
+			<?php endif; // authenticated ?>
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-home icon-white"></i> Home',array('controller'=>'users','action'=>'dashboard'),array('escape'=>false)); ?></li>
@@ -53,3 +59,8 @@
 		</div>
 	</div>
 </div>
+<?php if($this->Session->check('Auth.User')) : ?>
+<div class="slideout alert alert-info" style="display:none;">
+	<a class="close" href="#">×</a><strong>users</strong>: <span class="names"></span>
+</div>
+<?php endif; // authenticated ?>

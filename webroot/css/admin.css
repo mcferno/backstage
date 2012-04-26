@@ -83,12 +83,38 @@ a {
 .badge-custom:hover { 
 	background-color: #d95821;
 }
+span.badge-off {
+	background-color: #666;
+}
+
+.chat-link .icon-white {
+	margin-left: 0.5em;
+}
+.status .badge {
+	margin-left: 0.3em;
+}
+
+.navbar .status {
+	float: left;
+	display: block;
+	padding: 10px 20px 12px;
+	margin-left: -20px;
+}
+
+.slideout {
+	position: absolute;
+	left: 0;
+	font-weight: 400;
+	max-width: 220px;
+	font-size: 1em;
+*/
+}
 
 .chat-bar .navbar-inner {
-	background: #E5E5E5; /* old browsers */
-	background: -moz-linear-gradient(top, #E5E5E5 0%, #C4C4C4 100%); /* firefox */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E5E5E5), color-stop(100%,#C4C4C4)); /* webkit */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E5E5E5', endColorstr='#C4C4C4',GradientType=0 ); /* ie */
+	background: #F2F2F2; /* old browsers */
+	background: -moz-linear-gradient(top, #F2F2F2 0%, #C4C4C4 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F2F2F2), color-stop(100%,#C4C4C4)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F2F2F2', endColorstr='#C4C4C4',GradientType=0 ); /* ie */
 	border:1px solid #757575;
 	/*border-bottom:3px solid #A30000;*/
 	/*
@@ -97,13 +123,6 @@ a {
 	border-radius:10px 10px 10px 10px;
 	*/
 }
-/*
-.chat-bar {
-	margin-left: 0;
-	margin-top: 0.5em;
-	margin-bottom: 0;
-}
-*/
 .chat-bar .container { 
 	margin-left: 0.2em;
 }
