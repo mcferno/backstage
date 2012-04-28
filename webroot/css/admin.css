@@ -2,24 +2,128 @@
  * bootstrap-responsive.css tweaks (nav bar @ 768px +)
  * - Switched compact nav jump point from 979px -> 767px
  * - Switched the nav adjustment jump point from 980px -> 786px
+ *
+ * Color Scheme
+ *   #FC6626 - Branding and accent
+ *   #DDDDDD - feature unit background-color
+ *   #DDDDDD - default body color
+ *   #EEEEEE - active links
+ *   #888888 - pane
+ *   #666666 - border-color
  */
 
 body {
-	background:#ffffff url('../img/ui/lightmesh.png');
+	background:#ffffff url('../img/ui/darkdenim3.png');
+	color: #DDD;
+}
+
+legend, label {
+	color: #DDD;
+}
+
+a {
+	color: #FC6626;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover {
+	background-color: #FC6626;
+}
+
+.hero-unit {
+	color: #333;
+}
+
+.hero-unit {
+	background-color: #DDD;
+}
+
+.dropdown-menu {
+	background-color: #666;
+}
+.navbar .dropdown-menu::after {
+	border-bottom: 6px solid #666;
+}
+
+.dropdown-menu li>a:hover,.dropdown-menu .active>a,.dropdown-menu .active>a:hover{
+	background-color:#FC6626;
+}
+
+.dropdown-menu a {
+	color: #EEE;
 }
 
 .table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
-	background-color: #F2F2F2;
+	background-color: #444;
 }
- 
+
+.navbar .brand {
+	color: #FC6626;
+}
+
+.navbar .nav .active > a, .navbar .nav .active > a:hover {
+	color: #EEE;
+}
+
+div.login {
+	margin-left: 0;
+}
+
+.hero-unit .thumbnail {
+	background-color: #888;
+	border: 5px solid #666;
+	border-radius: 7px;
+	padding: 0px;
+	margin-top: 1em;
+	color: #EEE;
+}
+
+.hero-unit .thumbnail h4, .hero-unit .thumbnail h5 {
+	padding-right: 0.5em;
+}
+
+#UserAdminLoginForm fieldset {
+	border: 0;
+}
+
+.table-bordered {
+	border: 1px solid #888;
+	border-radius: 7px;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+	background-color: #888;
+	color: #DDD;
+}
+
+.table th, .table td {
+	border-top: none;
+}
+
 .pager .disabled, .pager .current {
 	display: inline-block;
 	padding: 5px 14px;
-	background-color: white;
-	border: 1px solid #DDD;
+	background-color: #444;
+	border: 3px solid #666;
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
+}
+
+.pager a {
+	background-color: #444;
+	border: 3px solid #666;
+	font-size: 1.1em;
+}
+
+.pager a:hover {
+	text-decoration:none;
+	background-color:#888;
+	color: #FC6626;
+}
+
+.tips {
+	font-size: 1.2em;
+	padding-bottom: 1em;
 }
 
 .actions .nav-pills {
@@ -30,12 +134,12 @@ body {
 	text-align: center;
 }
 
-.text-right {
-	text-align: right;
+.text-center {
+	text-align: center;
 }
 
-.navbar .brand {
-	color: #FC6626;
+.text-right {
+	text-align: right;
 }
 
 /* flex images */
@@ -52,13 +156,6 @@ img {
 	text-align: center;
 }
 
-a {
-	color: #FC6626;
-}
-.nav-list > .active > a, .nav-list > .active > a:hover {
-	background-color: #FC6626;
-}
-
 .meme-generator {
 	text-align: center;
 }
@@ -73,12 +170,21 @@ a {
 	margin-bottom: 1em;
 }
 
+.meme-generator input {
+	font-size: 1.2em;
+	padding: 0.5em;
+}
+.meme-generator select {
+	font-size: 1.2em;
+}
+
 #workspace {
 	display: none;
 }
 
 #rendered {
-	border: 2px solid #DDD;
+	border: 5px solid #666;
+	border-radius: 7px;
 }
 
 .tips li {
@@ -162,8 +268,7 @@ span.badge-off {
 
 .chat-window .handle {
 	font-weight: bold;
-	color: #666;
-	width: 9em;
+	width: 1em;
 }
 
 .loading {
@@ -176,6 +281,10 @@ span.badge-off {
 
 div.tooltip {
 	z-index: 1500;
+}
+
+.navbar-form {
+	margin-top: 0.5em;
 }
 
 @media (max-width:767px) {
@@ -229,6 +338,19 @@ div.tooltip {
 	*/
 	.extra {
 		display: none;
+	}
+	
+	.navbar .brand {
+		margin-left: -18px;
+	}
+	
+	.navbar .btn-navbar {
+		margin-right: -10px;
+	}
+	
+	.chat-window .time, .posts .time {
+		font-size: 0.8em;
+		width: 1em;
 	}
 }
 

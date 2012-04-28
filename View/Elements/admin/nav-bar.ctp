@@ -8,10 +8,10 @@
 			</a>
 			<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'brand')); ?>
 			<?php if($this->Session->check('Auth.User')) : ?>
-			<span class="status">
+			<div class="status">
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count"></span></a>
 				<i class="icon-user icon-white"></i><span class="badge badge-info online-count"></span>
-			</span>
+			</div>
 			<?php endif; // authenticated ?>
 			<div class="nav-collapse">
 				<ul class="nav">
@@ -34,10 +34,10 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><?= $this->Html->link('<i class="icon-plus-sign icon"></i> Add New User',array('controller'=>'users','action'=>'add'),array('escape'=>false)); ?></li>
-							<li><?= $this->Html->link('<i class="icon-th-list icon"></i> List Users',array('controller'=>'users','action'=>'index'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-plus-sign icon-white"></i> Add New User',array('controller'=>'users','action'=>'add'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-th-list icon-white"></i> List Users',array('controller'=>'users','action'=>'index'),array('escape'=>false)); ?></li>
 							<li class="divider"></li>
-							<li><?= $this->Html->link('<i class="icon-refresh icon"></i> Clear Cache',array('controller'=>'pages','action'=>'clear_cache'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-refresh icon-white"></i> Clear Cache',array('controller'=>'pages','action'=>'clear_cache'),array('escape'=>false)); ?></li>
 							<li></li>
 						</ul>
 					</li>
@@ -47,9 +47,9 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $this->Session->read('Auth.User.username');?> <i class="icon-user icon-white"></i><b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><?= $this->Html->link('<i class="icon-pencil icon"></i> Edit Account',array('controller'=>'users','action'=>'edit',$this->Session->read('Auth.User.id')),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-pencil icon-white"></i> Edit Account',array('controller'=>'users','action'=>'edit',$this->Session->read('Auth.User.id')),array('escape'=>false)); ?></li>
 							<li class="divider"></li>
-							<li><?= $this->Html->link('<i class="icon-off icon"></i> Logout',array('controller'=>'users','action'=>'logout'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-off icon-white"></i> Logout',array('controller'=>'users','action'=>'logout'),array('escape'=>false)); ?></li>
 						</ul>
 					</li>
 				</ul>

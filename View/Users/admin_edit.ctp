@@ -15,7 +15,8 @@
 		if((int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN) {
 			echo $this->Form->input('role');
 		}
+		echo $this->Form->button('Submit',array('class'=>'btn btn-primary'));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit'));?>
+<?php echo $this->Form->end();?>
 </div>

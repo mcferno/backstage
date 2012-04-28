@@ -1,7 +1,7 @@
 <div class="users index">
 	<h2><?php echo __('Users');?></h2>
 	<?= $this->element('admin/pagination'); ?>
-	<table cellpadding="0" cellspacing="0" class="table table-bordered table-condensed">
+	<table cellpadding="0" cellspacing="0" class="table table-striped table-condensed">
 	<tr>
 		<th><?php echo $this->Paginator->sort('created');?></th>
 			<th><?php echo $this->Paginator->sort('username');?></th>

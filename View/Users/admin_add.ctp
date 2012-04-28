@@ -6,7 +6,8 @@
 		echo $this->Form->input('username');
 		echo $this->Form->input('password');
 		echo $this->Form->input('role');
+		echo $this->Form->button('Submit',array('class'=>'btn btn-primary'));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit'));?>
+<?php echo $this->Form->end();?>
 </div>
