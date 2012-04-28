@@ -3,7 +3,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>Backstage</title>
 	<meta name="description" content=""/>	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:image" content="http://<?= env('HTTP_HOST').$this->Html->webroot('img/emblem-large.png'); ?>">
 	<?php
 		echo $this->Html->meta('icon',$this->Html->webroot('img/emblem.png'));
 		
