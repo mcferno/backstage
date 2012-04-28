@@ -8,7 +8,8 @@ var GroupChat = {
 	templates : {
 		chatRowTemplate : false
 	},
-	lastAck : 0
+	lastAck : 0,
+	windowFocus : false
 };
 
 (function($, ns) {
@@ -33,6 +34,14 @@ var GroupChat = {
 			} else {
 				$('.slideout').show().animate({left:-1*($('.slideout').width() + 75),easing:'easeOutExpo'},650);
 			}
+		});
+	$(window)
+		// track window focus for notifications
+		.on('focus',function(){
+			ns.windowFocus = true;
+		})
+		.on('blur',function() {
+			ns.windowFocus = false;
 		});
 
 	/**
@@ -185,18 +194,20 @@ var GroupChat = {
 		$('.slideout .names').text(allUsers);
 		
 		if(data.new_messages == 0) {
-			ns.msgNotifier.addClass('badge-off');
-			document.title = ns.originalTitle;
-			ns.msgNotifier.text(data.new_messages);
+			if(ns.windowFocus) {
+				ns.msgNotifier.addClass('badge-off');
+				document.title = ns.originalTitle;
+				ns.msgNotifier.text(data.new_messages);
+			}
 		} else {
 			ns.msgNotifier.removeClass('badge-off');
 			ns.msgNotifier.text(data.new_messages);
 			document.title = '(' + data.new_messages + ') ' + ns.originalTitle;
-		}
+		}	
 
 		// on chat, process new messages
 		if(typeof ns.chatWindow !== 'undefined') {
-			if(data.ack > ns.lastAck) {
+			if(data.ack > ns.lastAck && ns.windowFocus) {
 				ns.lastAck = data.ack;
 			}
 			

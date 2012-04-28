@@ -359,7 +359,7 @@ Cache::config('online_status', array(
 	'prefix' => 'app_online_status_',
 	'path' => CACHE . 'persistent' . DS,
 	'serialize' => ($engine === 'File'),
-	'duration' => '20 seconds'
+	'duration' => '10 seconds'
 ));
 
 if(isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
