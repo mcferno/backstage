@@ -6,7 +6,7 @@
 <div class="paging">
 	<ul class="pager">
 		<li class=""><?= $this->Paginator->prev('<i class="icon icon-chevron-left"></i> previous', array('escape'=>false), null, array('escape'=>false, 'class' => 'prev disabled')); ?></li>
-		<li class=""><?= $this->Paginator->numbers(array('separator' => '')); ?></li>
+		<li class=""><?= $this->Paginator->numbers(array('separator' => '', 'modulus'=>4)); ?></li>
 		<li class=""><?= $this->Paginator->next('next <i class="icon icon-chevron-right"></i>', array('escape'=>false,'class'=>''), null, array('escape'=>false,'class' => 'next disabled')); ?></li>
 	</ul>
 </div>

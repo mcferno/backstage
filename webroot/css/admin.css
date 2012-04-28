@@ -1,16 +1,21 @@
 /** 
+ * Backstage App
+ *
+ * Color Scheme
+ *   #FC6626 > branding and accent
+ *   #DDDDDD > feature unit background-color
+ *   #DDDDDD > default body color
+ *   #EEEEEE > active links
+ *   #888888 > pane
+ *   #666666 > border-color
+ *   #444444 > dark alternate background-color
+ *
  * bootstrap-responsive.css tweaks (nav bar @ 768px +)
  * - Switched compact nav jump point from 979px -> 767px
  * - Switched the nav adjustment jump point from 980px -> 786px
- *
- * Color Scheme
- *   #FC6626 - Branding and accent
- *   #DDDDDD - feature unit background-color
- *   #DDDDDD - default body color
- *   #EEEEEE - active links
- *   #888888 - pane
- *   #666666 - border-color
  */
+
+/* @start color-treatment ================================================== */
 
 body {
 	background:#ffffff url('../img/ui/darkdenim3.png');
@@ -37,6 +42,11 @@ a {
 	background-color: #DDD;
 }
 
+.hero-unit .thumbnail {
+	background-color: #888;
+	color: #EEE;
+}
+
 .dropdown-menu {
 	background-color: #666;
 }
@@ -52,6 +62,11 @@ a {
 	color: #EEE;
 }
 
+.dropdown-menu .divider {
+	background-color: #888;
+	border-bottom: 1px solid #888;
+}
+
 .table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
 	background-color: #444;
 }
@@ -64,49 +79,103 @@ a {
 	color: #EEE;
 }
 
+.table tbody tr:hover td, .table tbody tr:hover th {
+	background-color: #888;
+	color: #DDD;
+}
+
+.badge-custom {
+	background-color: #FC6626;
+}
+
+.badge-custom:hover {
+	background-color: #d95821;
+}
+
+span.badge-off {
+	background-color: #666;
+}
+
+/* @end color-treatment ==================================================== */
+
+/* @start misc-ui-elements ================================================= */
+
 div.login {
 	margin-left: 0;
 }
 
+img {
+	max-width: 100%;
+}
+
 .hero-unit .thumbnail {
-	background-color: #888;
 	border: 5px solid #666;
 	border-radius: 7px;
 	padding: 0px;
 	margin-top: 1em;
-	color: #EEE;
 }
 
 .hero-unit .thumbnail h4, .hero-unit .thumbnail h5 {
 	padding-right: 0.5em;
 }
 
+.hero-unit ul.thumbnails h3 {
+	text-align: center;
+}
+
 #UserAdminLoginForm fieldset {
 	border: 0;
 }
 
-.table-bordered {
-	border: 1px solid #888;
-	border-radius: 7px;
+.actions .nav-pills {
+	font-weight: bold;
 }
 
-.table tbody tr:hover td, .table tbody tr:hover th {
-	background-color: #888;
-	color: #DDD;
+.text-center {
+	text-align: center;
 }
 
-.table th, .table td {
-	border-top: none;
+.text-right {
+	text-align: right;
 }
 
-.pager .disabled, .pager .current {
-	display: inline-block;
-	padding: 5px 14px;
-	background-color: #444;
-	border: 3px solid #666;
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
+.status .badge {
+	margin-left: 0.3em;
+}
+
+.navbar .status {
+	float: left;
+	display: block;
+	padding: 10px 20px 12px;
+	margin-left: -20px;
+}
+
+.slideout {
+	position: absolute;
+	left: 0;
+	font-weight: 400;
+	max-width: 220px;
+	font-size: 1em;
+}
+
+.loading {
+	font-size: 1.1em;
+	color: #CCC;
+	font-weight: bold;
+	padding-top: 1em;
+	padding-left: 1em;
+}
+
+.navbar-form {
+	margin-top: 0.5em;
+}
+
+/* @end misc-ui-elements =================================================== */
+
+/* @start tabulation-and-pagination ======================================== */
+
+.paging-summary {
+	text-align: center;
 }
 
 .pager a {
@@ -121,30 +190,14 @@ div.login {
 	color: #FC6626;
 }
 
-.tips {
-	font-size: 1.2em;
-	padding-bottom: 1em;
-}
-
-.actions .nav-pills {
-	font-weight: bold;
-}
-
-.hero-unit ul.thumbnails h3 {
-	text-align: center;
-}
-
-.text-center {
-	text-align: center;
-}
-
-.text-right {
-	text-align: right;
-}
-
-/* flex images */
-img {
-	max-width: 100%;
+.pager .disabled, .pager .current {
+	display: inline-block;
+	padding: 5px 14px;
+	background-color: #444;
+	border: 3px solid #666;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
 }
 
 .posts .source {
@@ -152,9 +205,24 @@ img {
 	margin-left: 1em;
 }
 
-.paging-summary {
-	text-align: center;
+.posts .time {
+	color: #888;
+	font-size: 0.9em;
+	width: 1em;
 }
+
+.table-bordered {
+	border: 1px solid #888;
+	border-radius: 7px;
+}
+
+.table th, .table td {
+	border-top: none;
+}
+
+/* @end tabulation-and-pagination ========================================== */
+
+/* @start meme-generator =================================================== */
 
 .meme-generator {
 	text-align: center;
@@ -187,41 +255,21 @@ img {
 	border-radius: 7px;
 }
 
+.tips {
+	font-size: 1.2em;
+	padding-bottom: 1em;
+}
+
 .tips li {
 	margin-bottom: 0.5em;
 }
 
-.badge-custom {
-	background-color: #FC6626;
-}
-.badge-custom:hover { 
-	background-color: #d95821;
-}
-span.badge-off {
-	background-color: #666;
-}
+/* @end meme-generator ===================================================== */
+
+/* @start chat-module ====================================================== */
 
 .chat-link .icon-white {
 	margin-left: 0.5em;
-}
-.status .badge {
-	margin-left: 0.3em;
-}
-
-.navbar .status {
-	float: left;
-	display: block;
-	padding: 10px 20px 12px;
-	margin-left: -20px;
-}
-
-.slideout {
-	position: absolute;
-	left: 0;
-	font-weight: 400;
-	max-width: 220px;
-	font-size: 1em;
-*/
 }
 
 .chat-bar .navbar-inner {
@@ -230,12 +278,6 @@ span.badge-off {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F2F2F2), color-stop(100%,#C4C4C4)); /* webkit */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F2F2F2', endColorstr='#C4C4C4',GradientType=0 ); /* ie */
 	border:1px solid #757575;
-	/*border-bottom:3px solid #A30000;*/
-	/*
-	-moz-border-radius:10px 10px 10px 10px;
-	-webkit-border-radius:10px 10px 10px 10px;
-	border-radius:10px 10px 10px 10px;
-	*/
 }
 .chat-bar .container { 
 	margin-left: 0.2em;
@@ -271,28 +313,12 @@ span.badge-off {
 	width: 1em;
 }
 
-.loading {
-	font-size: 1.1em;
-	color: #CCC;
-	font-weight: bold;
-	padding-top: 1em;
-	padding-left: 1em;
-}
+/* @end chat-module ======================================================== */
 
-div.tooltip {
-	z-index: 1500;
-}
-
-.navbar-form {
-	margin-top: 0.5em;
-}
+/* @start responsive-adjustments =========================================== */
 
 @media (max-width:767px) {
-	/* force responsive nav submenus to use white when compacted */
-	.navbar .dropdown-menu i.icon {
-		background-image: url("../img/glyphicons-halflings-white.png");
-	}
-	
+
 	.navbar-form {
 		border: none;
 		margin: 0;
@@ -324,18 +350,18 @@ div.tooltip {
 	}
 }
 
+/* smallest screen-size, tighten up spacing */
+
 @media (max-width:480px) {
+
 	.hero-unit h1 {
 		font-size: 40px;
 	}
+	
 	.hero-unit {
 		padding: 30px;
 	}
-	/*
-	.meme-generator .actions button {
-		padding: 0.65em 0.65em 0.65em;
-	}
-	*/
+	
 	.extra {
 		display: none;
 	}
@@ -354,7 +380,9 @@ div.tooltip {
 	}
 }
 
-/* CSS3 Animated loading bar */
+/* @end responsive-adjustments ============================================= */
+
+/* @start animated-loading-bar ============================================= */
 
 #loaderAnim {
 	position:absolute;
@@ -504,3 +532,5 @@ div.tooltip {
 	0%{		background-color:#FC6626 }
 	100%{ 	background-color:#BBBBBB }
 }
+
+/* @end animated-loading-bar =============================================== */
