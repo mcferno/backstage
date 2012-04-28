@@ -10,7 +10,7 @@
 			<?php if($this->Session->check('Auth.User')) : ?>
 			<div class="status">
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count">0</span></a>
-				<i class="icon-user icon-white"></i><span class="badge badge-info online-count">1</span>
+				<i class="icon-user icon-white"></i><span class="badge badge-info online-count"><?= count($onlineUsers); ?></span>
 			</div>
 			<?php endif; // authenticated ?>
 			<div class="nav-collapse">
@@ -61,6 +61,6 @@
 </div>
 <?php if($this->Session->check('Auth.User')) : ?>
 <div class="slideout alert alert-info" style="display:none;">
-	<a class="close" href="#">×</a><strong>users</strong>: <span class="names"></span>
+	<a class="close" href="#">×</a><i class="icon-white icon-user"></i> <span class="names"></span>
 </div>
 <?php endif; // authenticated ?>

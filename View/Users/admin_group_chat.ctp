@@ -20,7 +20,7 @@
 			
 			<div class="span4">
 				<h3 class="handle"><?= $this->Session->read('Auth.User.username'); ?></h3>
-				<h4><i class="icon-user icon"></i> <span class="extra">Users online</span>: <span class="badge online-count" data-title="<?= $this->Session->read('Auth.User.username'); ?>" rel="tooltip">1</span></h4>
+				<h4><i class="icon-user icon"></i> <span class="extra">Users online</span>: <span class="badge online-count" data-title="<?= $this->Session->read('Auth.User.username'); ?>" rel="tooltip"><?= count($onlineUsers); ?></span></h4>
 			</div>
 		</div>
 	</div>

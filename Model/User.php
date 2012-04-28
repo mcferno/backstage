@@ -89,6 +89,12 @@ class User extends AppModel {
 		);
 	}
 	
+	/**
+	 * The users currently logged in (based on the last activity). Results are
+	 * cached as this is often requested, yet infrequently changes.
+	 *
+	 * @return {Array} User model data of active users
+	 */
 	public function getOnlineUsers() {
 		$users = Cache::read('onlineUsers','online_status');
 		

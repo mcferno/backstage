@@ -32,6 +32,8 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	
+	public $uses = array('User');
+	
 	public $helpers = array(
 		'Site','Html','Js','Paginator','Session','Text','Cache',
 		'Form' => array(
@@ -80,6 +82,7 @@ class AppController extends Controller {
 		if(!$this->request->is('ajax')) {
 			$this->set('breadcrumbs',array());
 			$this->set('contentSpan',8);
+			$this->set('onlineUsers',$this->User->getOnlineUsers());
 		}
 	}
 	

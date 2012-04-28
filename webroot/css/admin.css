@@ -84,6 +84,10 @@ a {
 	color: #DDD;
 }
 
+.table a:hover {
+	color: #EEE;
+}
+
 .badge-custom {
 	background-color: #FC6626;
 }
@@ -94,6 +98,12 @@ a {
 
 span.badge-off {
 	background-color: #666;
+}
+
+.slideout {
+	background-color: #666;
+	border-color: #666;
+	color: #EEE;
 }
 
 /* @end color-treatment ==================================================== */
@@ -147,6 +157,10 @@ img {
 	margin-left: 0.3em;
 }
 
+a:hover {
+	text-decoration: none;
+}
+
 .navbar .status {
 	float: left;
 	display: block;
@@ -155,11 +169,14 @@ img {
 }
 
 .slideout {
-	position: absolute;
+	position: fixed;
 	left: 0;
-	font-weight: 400;
 	max-width: 220px;
 	font-size: 1em;
+}
+
+.slideout .names {
+	text-shadow: none;
 }
 
 .loading {
