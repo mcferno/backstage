@@ -28,8 +28,8 @@
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
 					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'')); ?>
 				</a>
-				<h4 class="text-right"><em>in development</em></h4>
-				<h5 class="text-right">app version 0.1</h5>
+				<h4 class="text-right">Chat with other online users</h4>
+				<h5 class="text-right">app version 0.7</h5>
 			</div>
 		</li>
 	</ul>
@@ -43,7 +43,8 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
-	<tr><td>2012.04.28</td><td>New dark theme, UI overhaul.</td></tr>
+	<tr><td>2012.04.28</td><td>Chat is stable now, fixed a few bugs.</td></tr>
+	<tr><td>2012.04.27</td><td>New dark theme, UI overhaul.</td></tr>
 	<tr><td>2012.04.26</td><td>Group chat is fairly functional now. Status bar added to nav.</td></tr>
 	<tr><td>2012.04.11</td><td>Memes now have text wordwrap. Bunch more images added.</td></tr>
 	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
