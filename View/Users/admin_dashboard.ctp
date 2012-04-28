@@ -43,6 +43,7 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.04.28</td><td>New dark theme, UI overhaul.</td></tr>
 	<tr><td>2012.04.26</td><td>Group chat is fairly functional now. Status bar added to nav.</td></tr>
 	<tr><td>2012.04.11</td><td>Memes now have text wordwrap. Bunch more images added.</td></tr>
 	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>

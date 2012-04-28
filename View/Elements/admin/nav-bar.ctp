@@ -9,8 +9,8 @@
 			<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'brand')); ?>
 			<?php if($this->Session->check('Auth.User')) : ?>
 			<div class="status">
-				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count"></span></a>
-				<i class="icon-user icon-white"></i><span class="badge badge-info online-count"></span>
+				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count">0</span></a>
+				<i class="icon-user icon-white"></i><span class="badge badge-info online-count">1</span>
 			</div>
 			<?php endif; // authenticated ?>
 			<div class="nav-collapse">
@@ -45,7 +45,7 @@
 					<?php endif; // admin-only ?>
 
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $this->Session->read('Auth.User.username');?> <i class="icon-user icon-white"></i><b class="caret"></b></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $this->Session->read('Auth.User.username');?> <?= $this->Html->image('emblem.png'); ?><b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><?= $this->Html->link('<i class="icon-pencil icon-white"></i> Edit Account',array('controller'=>'users','action'=>'edit',$this->Session->read('Auth.User.id')),array('escape'=>false)); ?></li>
 							<li class="divider"></li>

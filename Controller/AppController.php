@@ -77,8 +77,10 @@ class AppController extends Controller {
 	}
 	
 	public function beforeRender() {
-		$this->set('breadcrumbs',array());
-		$this->set('contentSpan',8);
+		if(!$this->request->is('ajax')) {
+			$this->set('breadcrumbs',array());
+			$this->set('contentSpan',8);
+		}
 	}
 	
 	/**

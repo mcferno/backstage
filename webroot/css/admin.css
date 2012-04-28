@@ -100,6 +100,10 @@ span.badge-off {
 
 /* @start misc-ui-elements ================================================= */
 
+body {
+	padding-bottom: 4em;
+}
+
 div.login {
 	margin-left: 0;
 }

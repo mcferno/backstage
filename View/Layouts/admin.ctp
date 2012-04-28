@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>KQM Backstage</title>
+	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>Backstage</title>
 	<meta name="description" content=""/>	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
 	<?php
-		echo $this->Html->meta('icon');
+		echo $this->Html->meta('icon',$this->Html->webroot('img/emblem.png'));
 		
 		// base js libraries
 		$scripts = array(
@@ -56,12 +56,6 @@
 					</div>
 				</div>
 			</div>
-			<!--
-			<hr>
-			<footer>
-				<p></p>
-			</footer>
-			-->
 		</div> <!-- /container -->
 	<?= $this->element('sql_dump'); ?>
 </body>
