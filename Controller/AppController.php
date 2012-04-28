@@ -104,4 +104,34 @@ class AppController extends Controller {
 	protected function _isUser($id) {
 		return $this->Auth->user('id') === $id;
 	}
+	
+	/**
+	 * Set of data needed by the front-end application to maintain state and 
+	 * user interactivity.
+	 */
+	protected function _getHeartbeatData() {
+		$MessageModel = ClassRegistry::init('Message');
+		$UserModel = ClassRegistry::init('User');
+		$currentUser = $this->Auth->user('id');
+		
+		$data = array();
+		$data['online'] = $UserModel->getOnlineUsers();
+		$data['ack'] = time();
+		
+		if(isset($this->request->query['ack'])) {
+			$clientAck = (int)$this->request->query['ack'];
+			if($clientAck === 0) {
+				$since = date(MYSQL_DATE_FORMAT,strtotime('now - 1 day'));
+				$data['messages'] = $MessageModel->getNewMessages($since);
+			} else {
+				$since = date(MYSQL_DATE_FORMAT,$clientAck);
+				$UserModel->setLastAck($currentUser, $clientAck);
+				$data['messages'] = $MessageModel->getNewMessages($since, $currentUser);
+			}
+		}
+		
+		$data['new_messages'] = $MessageModel->countNewMessages($currentUser);
+		
+		return $data;
+	}
 }

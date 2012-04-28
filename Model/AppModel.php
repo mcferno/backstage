@@ -52,6 +52,5 @@ class AppModel extends Model {
 			return array();
 		}
 		return json_decode($json,true);
-	}
-	
+	}	
 }

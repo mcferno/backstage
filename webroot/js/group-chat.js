@@ -61,6 +61,7 @@ var GroupChat = {
 		render : function() {
 			var timestamp = this.model.get('timestamp');
 			var date = new Date(timestamp * 1000);
+			
 			var rendered = _.template(ns.templates.chatRowTemplate.html(), {
 				date : ns.formatDate(date),
 				username : this.model.get('handle'),
@@ -120,18 +121,25 @@ var GroupChat = {
 	ns.submitMessage = function() {
 		var text = ns.msgBar.attr('value');
 		var now = new Date();
-		var date = ns.formatDate(now);		
-		ns.addMessage(date,now.getTime(),text,ns.handle);
+		var date = ns.formatDate(now);
+		
+		var postData = {
+			'Message':{
+				'text':text
+			}
+		};
+		if(ns.lastAck != 0) {
+			postData.ack = ns.lastAck;
+		}
 		
 		$.ajax({
 			type: 'POST',
   			url: AppBaseURL+'backstage/messages/add',
-  			data: {
-  				'Message':{
-  					'text':text
-  				}
-  			},
-  			dataType: 'json'
+  			data: postData,
+  			dataType: 'json',
+  			success : function(data) {
+  				ns.processHeartbeat(data);
+  			}
 		});
 		
 		ns.msgBar.attr('value','');
@@ -205,6 +213,7 @@ var GroupChat = {
 			var date = this.Message.created;
 			
 			ns.chatLog.add(new ns.ChatMsg({
+				id : message.Message.id,
 				date : date,
 				timestamp :  message.Message.timestamp,
 				text : message.Message.text,

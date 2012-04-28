@@ -31,7 +31,7 @@ class Message extends AppModel {
 			if($since === false) {
 				$since = date(MYSQL_DATE_FORMAT,strtotime('now - 1 day'));
 			}
-		}		
+		}	
 		return $this->find('count',array(
 			'conditions'=>array(
 				'user_id <>' => $user_id,

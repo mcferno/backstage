@@ -64,25 +64,8 @@ class UsersController extends AppController {
 		$this->disableCache(); // expire cache immediately
 		$this->RequestHandler->renderAs($this, 'json');
 		
-		$currentUser = $this->Auth->user('id');
+		$data = $this->_getHeartbeatData();
 		
-		$data['online'] = $this->User->getOnlineUsers();
-		$data['ack'] = time();
-		
-		if(isset($this->request->query['ack'])) {
-			$clientAck = (int)$this->request->query['ack'];
-			if($clientAck === 0) {
-				$since = date(MYSQL_DATE_FORMAT,strtotime('now - 1 day'));
-				$data['messages'] = $this->Message->getNewMessages($since);
-			} else {
-				$since = date(MYSQL_DATE_FORMAT,$clientAck);
-				$this->User->setLastAck($currentUser, $clientAck);
-				$data['messages'] = $this->Message->getNewMessages($since, $currentUser);
-			}
-		}
-		
-		$data['new_messages'] = $this->Message->countNewMessages($currentUser);
-
 		$this->set($data);
 		$this->set('_serialize', array_keys($data));
 	}
