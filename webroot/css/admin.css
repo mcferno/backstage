@@ -4,6 +4,14 @@
  * - Switched the nav adjustment jump point from 980px -> 786px
  */
 
+body {
+	background:#ffffff url('../img/ui/lightmesh.png');
+}
+
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+	background-color: #F2F2F2;
+}
+ 
 .pager .disabled, .pager .current {
 	display: inline-block;
 	padding: 5px 14px;

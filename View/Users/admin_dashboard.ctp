@@ -57,7 +57,7 @@
 
 <div class="span4">
 	<h4 class="text-right">user activity</h4>
-	<table class="table">
+	<table class="table table-striped">
 		<tr>
 			<th>time</th>
 			<th>status</th>
