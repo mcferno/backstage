@@ -19,7 +19,7 @@
 		<li class="span2 text-center">
 			<div class="thumbnail">
 				<?= $this->Html->link($this->Html->image($user_dir . '200/' . $image['Asset']['filename']),array('action'=>'view',$image['Asset']['id']),array('escape'=>false)); ?>
-				<h5><?= date('Y.m.d H:m:s',strtotime($image['Asset']['created'])); ?><h5>
+				<p class="date"><?= date('Y.m.d H:m:s',strtotime($image['Asset']['created'])); ?></p>
 			</div>
 		</li>
 	<?php endforeach; ?>

@@ -3,6 +3,7 @@
 class Asset extends AppModel {
 	
 	public $displayField = 'filename';
+	public $belongsTo = array('User');
 	
 	// recognized dataURL image types
 	public $headers = array(

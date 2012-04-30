@@ -43,11 +43,7 @@
 		<div class="container-fluid">
 			<div class="content">
 				<div class="row-fluid">
-					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): ?>
-					<div class="span2 subnav">
-						<?= $this->element('admin/subnav'); ?>
-					</div>
-					<?php else: ?>
+					<?php if($contentSpan <= 8) : ?>
 					<div class="span2">&nbsp;</div>
 					<?php endif; ?>
 					
@@ -55,6 +51,14 @@
 						<?= $this->Session->flash(); ?>
 						<?php echo $this->fetch('content'); ?>
 					</div>
+					
+					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): ?>
+					<div class="span2 subnav">
+						<?= $this->element('admin/subnav'); ?>
+					</div>
+					<?php else: ?>
+					<div class="span2">&nbsp;</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div> <!-- /container -->

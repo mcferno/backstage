@@ -112,6 +112,10 @@ span.badge-off {
 	color: #EEE;
 }
 
+.thumbnails .date {
+	color: #888;
+}
+
 /* @end color-treatment ==================================================== */
 
 /* @start misc-ui-elements ================================================= */
@@ -149,6 +153,10 @@ img {
 
 .actions .nav-pills {
 	font-weight: bold;
+}
+
+.text-left {
+	text-align: left;
 }
 
 .text-center {
@@ -221,6 +229,19 @@ a:hover {
 
 .asset-view .actions li {
 	margin-top: 1em;
+}
+
+.asset-view .actions a {
+	padding: 0.8em;
+}
+
+.asset-view .actions .delete {
+	padding: 0.3em;
+	margin-top: 1em;
+}
+
+.thumbnails .date {
+	font-size: 0.8em;
 }
 
 

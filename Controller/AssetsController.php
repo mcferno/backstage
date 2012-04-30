@@ -55,6 +55,7 @@ class AssetsController extends AppController {
 	 */
 	public function admin_view($id = null) {
 		$asset = $this->Asset->find('first',array(
+			'contain' => 'User',
 			'conditions' => array(
 				'Asset.id' => $id,
 				'Asset.user_id'=>$this->Auth->user('id')
