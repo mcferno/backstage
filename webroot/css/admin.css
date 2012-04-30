@@ -50,9 +50,6 @@ a {
 .dropdown-menu {
 	background-color: #666;
 }
-.navbar .dropdown-menu::after {
-	border-bottom: 6px solid #666;
-}
 
 .dropdown-menu li>a:hover,.dropdown-menu .active>a,.dropdown-menu .active>a:hover{
 	background-color:#FC6626;
@@ -73,6 +70,15 @@ a {
 
 .navbar .brand {
 	color: #FC6626;
+}
+
+.navbar .dropdown-menu::after {
+	border-bottom: 6px solid #666;
+}
+
+.nav > li > a:hover {
+	background-color: #444;
+	color: #EEE;
 }
 
 .navbar .nav .active > a, .navbar .nav .active > a:hover {
@@ -168,6 +174,14 @@ a:hover {
 	margin-left: -20px;
 }
 
+.nav-list > li > a, .nav-list .nav-header { 
+	text-shadow: none;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover {
+	text-shadow: none;
+}
+
 .slideout {
 	position: fixed;
 	left: 0;
@@ -190,6 +204,25 @@ a:hover {
 .navbar-form {
 	margin-top: 0.5em;
 }
+
+.image-list .thumbnail {
+	border: 5px solid #666;
+	padding: 0;
+	height: 170px;
+}
+
+.image-list .thumbnail img {
+	max-height: 150px;
+}
+
+.image-list .thumbnails > li {
+	margin: 0 0 10px 20px;
+}
+
+.asset-view .actions li {
+	margin-top: 1em;
+}
+
 
 /* @end misc-ui-elements =================================================== */
 
@@ -283,6 +316,14 @@ a:hover {
 
 .tips li {
 	margin-bottom: 0.5em;
+}
+
+.meme-generator .save {
+	margin-right: 4em;
+}
+
+.meme-generator .reset {
+	padding: 0.5em;
 }
 
 /* @end meme-generator ===================================================== */

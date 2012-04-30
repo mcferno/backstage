@@ -1,5 +1,4 @@
-<?php 
-	$this->set('suppressSubnav', true); 
+<?php
 	$this->Html->script(array('meme-generator.js?t='.filemtime(JS.'meme-generator.js')),false);
 	
 	foreach ($base_images as &$image) {
@@ -67,6 +66,12 @@ var memeBaseImages = <?php echo json_encode($base_images); ?>;
 	*/ ?>
 	<div class="row">
 		<div class="span8">
+			<button class="btn btn-success save" data-loading-text="Saving ..."><i class="icon-white icon-download"></i> Save on Server</button>
+			<button class="btn btn-danger reset"><i class="icon-white icon-ban-circle"></i> Start Over</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span8">
 			<h3>Image Size</h3>
 			<select name="canvasSize" class="canvasSize">
 				<optgroup label="Horizontal" class="horizontal" data-orientation="horizontal">
@@ -88,7 +93,6 @@ var memeBaseImages = <?php echo json_encode($base_images); ?>;
 				<li><strong>iPhone users</strong> : press and hold on the image and you will be prompted to "<strong>Save Image</strong>".</li>
 				<li>Do not use <strong>Live-Mode</strong> if your device is slower, the interface may lag.</li>
 			</ul>
-			<button class="btn btn-danger reset"><i class="icon-white icon-repeat"></i> Start Over</button>
 		</div>
 	</div>
 </form>

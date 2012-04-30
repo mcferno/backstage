@@ -19,9 +19,16 @@
 					
 					<?php if($this->Session->check('Auth.User')) : ?>
 					
-					<li <?php if($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-picture icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
+					<li <?= (($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') || $this->request->controller == 'assets')?'class="active dropdown"':'class="dropdown"'; ?>>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-picture icon-white"></i> Images <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><?= $this->Html->link('<i class="icon-edit icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-th-large icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
+						</ul>
+					</li>
+					
 					<li <?php if($this->request->controller == 'posts') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-comment icon-white"></i> Quotes',array('controller'=>'posts','action'=>'index'),array('escape'=>false)); ?></li>
-					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-list icon-white"></i> Group Chat ',array('controller'=>'users','action'=>'group_chat'),array('escape'=>false,'class'=>'chat-link')); ?></li>
+					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-list icon-white"></i> Chat ',array('controller'=>'users','action'=>'group_chat'),array('escape'=>false,'class'=>'chat-link')); ?></li>
 				
 					<?php endif; // authenticated ?>
 				</ul>

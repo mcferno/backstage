@@ -38,7 +38,7 @@ var MemeGenerator = {
 		.on('click','.meme-generator button', function(e) {
 			e.preventDefault(); // disable all buttons's defaults
 		})
-		.on('click','.save-image',function(e) {
+		.on('click','.save-image',function() {
 			ns.render();
 			ns.canvasToImage();
 		})
@@ -48,7 +48,7 @@ var MemeGenerator = {
 				ns.canvasToImage();
 			}
 		})
-		.on('click','.live-mode',function(e) {
+		.on('click','.live-mode',function() {
 			ns.toggleLiveMode();
 			ns.render();
 			if(ns.liveMode === true) {
@@ -60,15 +60,20 @@ var MemeGenerator = {
 			ns.render();
 			ns.canvasToImage();
 		})
-		.on('click','.reset',function(e) {
+		.on('click','.reset',function() {
 			window.location.reload();
 		})
-		.on('click','.choose-background',function(e) {
+		.on('click','.choose-background',function() {
 			ns.swapImages();
 			ns.render();
 			ns.canvasToImage();
+		})
+		.on('click','.meme-generator .save',function() {
+			$(this).button('loading');
+			ns.sendImageToServer();
 		});
-	
+		
+
 	/**
 	 * Cycles to the next backdrop option in the series (wraps at end)
 	 */
@@ -142,6 +147,22 @@ var MemeGenerator = {
 		}
 		
 		image.get(0).src = ns.canvas.toDataURL('image/jpeg');
+	};
+	
+	ns.sendImageToServer = function() {
+		if(ns.currentImage.height > 0 && ns.currentImage.width > 0) {
+			$.post(
+				AppBaseURL+'backstage/assets/save', 
+				{
+					image : ns.canvas.toDataURL('image/jpeg')
+				},
+				function(data) {
+					if(data.image_saved) {
+						$('.meme-generator .save').button('reset');
+					}
+				}
+			);
+		}
 	};
 	
 	/**

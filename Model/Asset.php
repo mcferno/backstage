@@ -110,4 +110,30 @@ class Asset extends AppModel {
 		}
 		return true;
 	}
+	
+	/**
+	 * Clean up files before a record is deleted
+	 *
+	 * @param {Boolean} $cascade
+	 * @return {Boolean}
+	 */
+	public function beforeDelete($cascade) {
+		$res = parent::beforeDelete($cascade);
+		if($res) {
+			$record = $this->findById($this->id);
+			$base_path = "{$this->folderPath}{$record['Asset']['user_id']}/";
+			
+			if(!empty($record)) {
+				foreach($this->imageThumbs as $width) {
+					$path = "{$base_path}{$width}/{$record['Asset']['filename']}";
+					if(file_exists($path)) {
+						unlink($path);
+					}
+				}
+				unlink("{$base_path}{$record['Asset']['filename']}");
+			}
+			return true;
+		}
+		return false;
+	}
 }

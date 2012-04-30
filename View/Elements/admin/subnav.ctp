@@ -1,18 +1,24 @@
 <ul class="nav nav-list">
-	<li class="nav-header"><?= $this->request->controller; ?></li>
 	<?php 
 		if($this->Session->check('Auth.User')) {
-			switch($this->request->controller) {
-				case 'users': 
+			switch(true) {
+				case ($this->request->controller == 'users'): 
 				?>
+					<li class="nav-header"><?= $this->request->controller; ?></li>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
 					<li <?php if($this->request->action == 'admin_add') { echo 'class="active"'; } ?>><?= $this->Html->link('Add New',array('action'=>'add')); ?></li>
 				<?	break;
-				case 'posts':
+				case ($this->request->controller == 'posts'): 
 				?>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
-				<?	
-					break;											
+				<?	break;
+				case ($this->request->controller == 'assets')
+					|| ($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator'): 
+				?>
+					<li class="nav-header">Images</li>
+					<li <?php if($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-edit icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
+					<li <?php if($this->request->controller == 'assets' && $this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-th-large icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
+				<?	break;
 			}
 		}
 	?>

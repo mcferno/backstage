@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 15, 2012 at 06:06 PM
+-- Generation Time: Apr 29, 2012 at 09:06 PM
 -- Server version: 5.1.52
 -- PHP Version: 5.3.3
 
@@ -35,6 +35,25 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `profile_image` varchar(255) DEFAULT NULL,
   `data` text NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assets`
+--
+
+CREATE TABLE IF NOT EXISTS `assets` (
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `type` varchar(10) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `ext` varchar(10) NOT NULL,
+  `checksum` varchar(100) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
