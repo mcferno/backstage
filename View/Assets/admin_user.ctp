@@ -1,14 +1,12 @@
-<h1>Your Images</h1>
+<h1><?= $user['User']['username']; ?>'s images</h1>
+<p><?= $user['User']['username']; ?> has a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> images</p>
 
-<?php if(!empty($images)) : ?>
-<p>You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> images</p>
-<?php endif; ?>
 
 <?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
 
 <div class="image-list">
 	<?php if(empty($images)) : ?>
-	<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a> No images saved.</div>
+	<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a> <?= $user['User']['username']; ?> does not yet have saved images.</div>
 	<?php endif; ?>
 	<ul class="row thumbnails">
 	<?php foreach ($images as $image) : ?>

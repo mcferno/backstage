@@ -6,7 +6,7 @@
 class AssetsController extends AppController {
 
 	public $paginate = array(
-		'order' => 'created DESC',
+		'order' => 'Asset.created DESC',
 		'limit' => 12
 	);
 	
@@ -24,8 +24,34 @@ class AssetsController extends AppController {
 	 * Personalized asset index (for the current user)
 	 */
 	public function admin_index() {
+		$this->paginate['conditions']['Asset.user_id'] = $this->Auth->user('id');
 		$this->set('images',$this->paginate());
 		$this->set('user_dir','user/'.$this->Auth->user('id').'/');
+	}
+	
+	/**
+	 * Personalized asset index (for a specific user)
+	 */
+	public function admin_user($user_id = null) {
+		if(empty($user_id)) {
+			$this->redirect('admin_users');
+		}
+		$this->paginate['conditions']['Asset.user_id'] = $user_id;
+		
+		$this->set('user',$this->Asset->User->findById($user_id));
+		$this->set('images',$this->paginate());
+		$this->set('user_dir','user/'.$user_id.'/');
+	}
+	
+	public function admin_users() {
+		$paginate = array(
+			'contain' => 'User',
+			'group' => 'Asset.user_id',
+			'order' => 'Asset.created DESC'
+		);
+		$this->paginate = array_merge($this->paginate, $paginate);
+		$this->set('images',$this->paginate());
+		$this->set('user_dir','user/');
 	}
 	
 	/**
@@ -58,7 +84,7 @@ class AssetsController extends AppController {
 			'contain' => 'User',
 			'conditions' => array(
 				'Asset.id' => $id,
-				'Asset.user_id'=>$this->Auth->user('id')
+				// 'Asset.user_id'=>$this->Auth->user('id')
 			)
 		));
 		if(empty($asset)) {
@@ -66,7 +92,7 @@ class AssetsController extends AppController {
 			$this->redirect($this->referer('index'));
 		}
 		$this->set('asset',$asset);	
-		$this->set('user_dir','user/'.$this->Auth->user('id').'/');
+		$this->set('user_dir','user/'.$asset['Asset']['user_id'].'/');
 	}
 	
 	/**

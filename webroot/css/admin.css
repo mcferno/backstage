@@ -34,6 +34,11 @@ a {
 	background-color: #FC6626;
 }
 
+.nav-list .divider {
+	background-color: #666;
+	border-bottom: 1px solid #666;
+}
+
 .hero-unit {
 	color: #333;
 }

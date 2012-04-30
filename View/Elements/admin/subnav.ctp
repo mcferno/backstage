@@ -12,12 +12,12 @@
 				?>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
 				<?	break;
-				case ($this->request->controller == 'assets')
-					|| ($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator'): 
+				default:
 				?>
 					<li class="nav-header">Images</li>
 					<li <?php if($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-edit icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
 					<li <?php if($this->request->controller == 'assets' && $this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-th-large icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
+					<li <?php if($this->request->controller == 'assets' && in_array($this->request->action,array('admin_user','admin_users'))) { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-user icon-white"></i> From All Users',array('controller'=>'assets','action'=>'users'),array('escape'=>false)); ?></li>
 				<?	break;
 			}
 		}
