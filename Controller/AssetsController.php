@@ -37,7 +37,7 @@ class AssetsController extends AppController {
 		
 		// process upload
 		if(!empty($this->request->data['image'])) {
-			$status = $this->Asset->saveImage($this->request->data['image'],$this->Auth->user('id'));
+			$status = $this->Asset->saveEncodedImage($this->request->data['image'],$this->Auth->user('id'),'Meme');
 			
 			if($status === true) {
 				$response['image_saved'] = true;

@@ -39,7 +39,15 @@ class Asset extends AppModel {
 		return $path;
 	}
 	
-	public function saveImage(&$data, $user_id) {
+	/**
+	 * Saves and processes an base64 encoded image.
+	 *
+	 * @param {String} $data Base64 encoded image data
+	 * @param {UUID} $user_id User ownership
+	 * @param {String} $type String classification
+	 * @return {Boolean}
+	 */
+	public function saveEncodedImage(&$data, $user_id, $type = 'Image') {
 		
 		// skim the header data to avoid searching over large data strings
 		$header = substr($data,0,30);
@@ -64,7 +72,7 @@ class Asset extends AppModel {
 			}
 			
 			$data = array(
-				'type'=>'Image',
+				'type' => $type,
 				'filename' => $image_name,
 				'ext' => 'jpg',
 				'checksum' => sha1($image_data),
