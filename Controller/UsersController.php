@@ -34,8 +34,8 @@ class UsersController extends AppController {
 	
 	public function admin_dashboard() {
 		$users = $this->User->find('all',array(
-			'order'=>'created DESC',
-			'limit'=>5
+			'order'=>'last_seen DESC',
+			'limit'=>7
 		));
 		$asset_count = $this->User->Asset->find('count',array(
 			'conditions'=>array(

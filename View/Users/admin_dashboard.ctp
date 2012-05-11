@@ -54,19 +54,22 @@
 </div>
 
 <div class="row">
-<div class="span4">
+<div class="span8">
 	<h4 class="text-right">site updates</h4>
 	<table class="table table-striped">
 	<tr>
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.05.11</td><td>Images can now be uploaded and used in the Meme Generator.</td></tr>
+	<tr><td>2012.05.11</td><td>Meme Generator images can now be saved on the server.</td></tr>
+	<tr><td>2012.05.11</td><td>You can view other user's images, and make memes with them.</td></tr>
 	<tr><td>2012.04.28</td><td>Chat is stable now, fixed a few bugs.</td></tr>
 	<tr><td>2012.04.27</td><td>New dark theme, UI overhaul.</td></tr>
 	<tr><td>2012.04.26</td><td>Group chat is fairly functional now. Status bar added to nav.</td></tr>
 	<tr><td>2012.04.11</td><td>Memes now have text wordwrap. Bunch more images added.</td></tr>
-	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
 <?php /*
+	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
 	<tr><td>2012.04.05</td><td>Custom backgrounds added, more coming soon.</td></tr>
 	<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>
 	<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
@@ -75,6 +78,7 @@
 	</table>
 </div>
 
+<?php if($this->Session->read('Auth.User.role') >= 1): ?>
 <div class="span4">
 	<h4 class="text-right">user activity</h4>
 	<table class="table table-striped">
@@ -84,10 +88,11 @@
 		</tr>
 		<?php foreach($recent_users as $user) : ?>
 		<tr>
-			<td><?= date('Y.m.d H:i:s',strtotime($user['User']['created'])); ?></td>
-			<td><?= $user['User']['username']; ?> has joined the site.</td>
+			<td><?= date('Y.m.d H:i:s',strtotime($user['User']['last_seen'])); ?></td>
+			<td><?= $user['User']['username']; ?> was last seen online.</td>
 		</tr>
 		<?php endforeach; ?>
 	</table>
 </div>
+<?php endif; ?>
 </div>
