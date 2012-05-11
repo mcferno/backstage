@@ -51,9 +51,10 @@ a:hover {
 	background-color: #DDD;
 }
 
-.hero-unit .thumbnail {
+.features .thumbnail {
 	background-color: #888;
 	color: #EEE;
+	border: 3px solid #888;
 }
 
 .dropdown-menu {
@@ -150,6 +151,14 @@ img {
 	border-radius: 7px;
 	padding: 0px;
 	margin-top: 1em;
+}
+
+.features {
+	text-align: center;
+}
+
+.features .span3 {
+	min-height: 240px;
 }
 
 .hero-unit .thumbnail h4, .hero-unit .thumbnail h5 {
@@ -412,6 +421,12 @@ a:hover {
 /* @end chat-module ======================================================== */
 
 /* @start responsive-adjustments =========================================== */
+
+@media (min-width:768px) and (max-width:979px) {
+	.features .span3 {
+		min-height: 180px;
+	}
+}
 
 @media (max-width:767px) {
 

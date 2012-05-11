@@ -2,9 +2,9 @@
 <div class="hero-unit">
 	<h1>dashboard</h1>
 	<p>Welcome <?= $this->Session->read('Auth.User.username'); ?>.</p>
-	<p>Get started on your choice of site features:</p>
+	<p>Get started on your choice of site features</p>
 	
-	<ul class="row thumbnails">
+	<ul class="row thumbnails features">
 		<li class="span3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
