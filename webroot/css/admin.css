@@ -126,7 +126,7 @@ span.badge-off {
 	color: #888;
 }
 
-.modal, legend, label {
+.modal, .modal legend, .modal label {
 	color: #444
 }
 
