@@ -1,5 +1,5 @@
 <?php
-
+App::uses('Folder', 'Utility');
 class Asset extends AppModel {
 	
 	public $displayField = 'filename';
@@ -79,7 +79,11 @@ class Asset extends AppModel {
 		if(stripos($header,$this->headers['jpg']) !== false) {
 			
 			$image_name = String::uuid().'.jpg';
-			$new_path = $this->folderPath . $user_id . DS . $image_name;
+			$folder = $this->folderPath . $user_id . DS;
+			if(!file_exists($folder)) {
+				$dir = new Folder($folder, true, 0755);
+			}
+			$new_path =  $folder . $image_name;
 			
 			$new_image = fopen($new_path,'w');
 			if($new_image === false) {
@@ -137,7 +141,11 @@ class Asset extends AppModel {
 		}
 		
 		$image_name = String::uuid().'.jpg';
-		$new_path = $this->folderPath . $user_id . DS . $image_name;
+		$folder = $this->folderPath . $user_id . DS;
+		if(!file_exists($folder)) {
+			$dir = new Folder($folder, true, 0755);
+		}
+		$new_path =  $folder . $image_name;
 		
 		$cropped = $image->resize($this->maxDimensions['w'],$this->maxDimensions['h']);
 		$cropped->saveToFile($new_path, $this->jpegQuality);
@@ -178,10 +186,19 @@ class Asset extends AppModel {
 		
 		$base_path = dirname($imagePath).DS;
 		$filename = substr($imagePath,strlen($base_path));
-		
+				
 		foreach($this->imageThumbs as $width) {
 			$cropped = $image->resize($width,$width);
-			$cropped->saveToFile($base_path . DS . $width . DS . $filename, $this->jpegQuality);
+			
+			$folder = $base_path . DS . $width . DS;
+			if(!file_exists($folder)) {
+				$dir = new Folder($folder, true, 0755);
+				unset($dir);
+			}
+			
+			$cropped->saveToFile($folder . $filename, $this->jpegQuality);
+			
+			unset($cropped);
 		}
 		return true;
 	}
