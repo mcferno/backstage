@@ -37,7 +37,7 @@
 				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
 					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
 				</a>
-				<h4 class="text-right">Images added by all users <span class="badge badge-custom"><?= $asset_count; ?></span></h4>
+				<h4 class="text-right">Images added by all users <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4>
 				<h5 class="text-right">&nbsp;</h5>
 			</div>
 		</li>

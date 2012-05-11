@@ -30,6 +30,10 @@ a {
 	color: #FC6626;
 }
 
+a:hover {
+	color: #EEEEEE;
+}
+
 .nav-list > .active > a, .nav-list > .active > a:hover {
 	background-color: #FC6626;
 }

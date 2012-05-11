@@ -36,6 +36,9 @@ class AssetsController extends AppController {
 		if(empty($user_id)) {
 			$this->redirect('admin_users');
 		}
+		if($user_id == $this->Auth->user('id')) {
+			$this->redirect(array('action'=>'admin_index'));
+		}
 		$this->paginate['conditions']['Asset.user_id'] = $user_id;
 		
 		$this->set('user',$this->Asset->User->findById($user_id));
@@ -49,6 +52,7 @@ class AssetsController extends AppController {
 			'order' => 'Asset.created DESC'
 		);
 		$contributingUsers = $this->Asset->find('all',array(
+			'contain' => 'User',
 			'group' => 'Asset.user_id'
 		));
 		$this->paginate = array_merge($this->paginate, $paginate);
@@ -107,6 +111,8 @@ class AssetsController extends AppController {
 				}
 			}
 		}
+		
+		$this->redirect(array('action'=>'index'));
 	}
 	
 	/**

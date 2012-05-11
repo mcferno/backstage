@@ -13,8 +13,8 @@
 			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success image-upload-btn','escape'=>false)); ?></li>
 		</ul>
 	</div>
-	<div class="span8 text-center">
-		<h1 class="text-left">Your Images</h1>
+	<div class="span8">
+		<h1>Your Images</h1>
 		<?php if(!empty($images)) : ?>
 		<p>You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> images</p>
 		<?php endif; ?>

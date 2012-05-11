@@ -23,8 +23,8 @@ class Asset extends AppModel {
 	
 	public function __construct() {
 		parent::__construct();
-		$this->folderPathRelative = 'img'.DS.'user'.DS;
-		$this->folderPath = WWW_ROOT . $this->folderPathRelative;
+		$this->folderPathRelative = 'user' . DS;
+		$this->folderPath = WWW_ROOT . 'img' . DS . $this->folderPathRelative;
 	}
 	
 	/**
@@ -43,6 +43,24 @@ class Asset extends AppModel {
 			$path .= $cluster . DS;
 		}
 		return $path;
+	}
+
+	/**
+	 * Determins the server path to a specific asset
+	 *
+	 * @param {UUID} $asset_id
+	 * @return {String} Server path, relative to the weboot image folder
+	 */
+	public function getPath($asset_id) {
+		
+		$asset = $this->findById($asset_id);
+		
+		if(!empty($asset['Asset']['filename'])) {
+			
+			return $this->folderPathRelative . $asset['Asset']['user_id'] . DS . $asset['Asset']['filename'];
+		}
+		
+		return '';
 	}
 	
 	/**
