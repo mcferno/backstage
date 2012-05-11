@@ -46,11 +46,14 @@ class AssetsController extends AppController {
 	public function admin_users() {
 		$paginate = array(
 			'contain' => 'User',
-			'group' => 'Asset.user_id',
 			'order' => 'Asset.created DESC'
 		);
+		$contributingUsers = $this->Asset->find('all',array(
+			'group' => 'Asset.user_id'
+		));
 		$this->paginate = array_merge($this->paginate, $paginate);
 		$this->set('images',$this->paginate());
+		$this->set('contributingUsers',$contributingUsers);
 		$this->set('user_dir','user/');
 	}
 	

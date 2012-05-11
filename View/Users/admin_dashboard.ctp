@@ -16,11 +16,11 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'Quotes')); ?>
+				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'index')); ?>">
+					<?= $this->Html->image('ui/my-images-callout.jpg',array('alt'=>'My Images')); ?>
 				</a>
-				<h4 class="text-right">Total Quotes <span class="badge badge-custom"><?= $quotes_count; ?></span></h4>
-				<h5 class="text-right">app version 1.0</h5>
+				<h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4>
+				<h5 class="text-right">app version 0.3</h5>
 			</div>
 		</li>
 		<li class="span3">
@@ -34,11 +34,20 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/my-images-callout.jpg',array('alt'=>'My Images')); ?>
+				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
+					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
 				</a>
-				<h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4>
-				<h5 class="text-right">app version 0.3</h5>
+				<h4 class="text-right">Images added by all users <span class="badge badge-custom"><?= $asset_count; ?></span></h4>
+				<h5 class="text-right">&nbsp;</h5>
+			</div>
+		</li>
+		<li class="span3">
+			<div class="thumbnail">
+				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
+					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'Quotes')); ?>
+				</a>
+				<h4 class="text-right">Total Quotes <span class="badge badge-custom"><?= $quotes_count; ?></span></h4>
+				<h5 class="text-right">app version 1.0</h5>
 			</div>
 		</li>
 	</ul>
