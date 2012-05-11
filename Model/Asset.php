@@ -121,6 +121,22 @@ class Asset extends AppModel {
 	}
 	
 	/**
+	 * Prepare a single asset to post to Facebook
+	 *
+	 * @param {UUID} $asset_id Asset primary key to post
+	 * @return {Array}
+	 */
+	public function castToFacebook($asset_id) {
+		$asset = $this->findById($asset_id);
+		if(!empty($asset)) {
+			return array(
+				'source' => '@' . $this->folderPath . $asset['Asset']['user_id'] . DS . $asset['Asset']['filename']
+			);
+		}
+		return false;
+	}
+	
+	/**
 	 * Clean up files before a record is deleted
 	 *
 	 * @param {Boolean} $cascade

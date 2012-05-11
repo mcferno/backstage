@@ -6,6 +6,8 @@ class User extends AppModel {
 
 	public $displayField = 'username';
 	public $hasMany = array('Asset');
+	
+	protected $facebookObj = false;
 
 	public $validate = array(
 		'username' => array(
@@ -111,5 +113,62 @@ class User extends AppModel {
 		}
 		
 		return $users;
+	}
+	
+	/**
+	 * Obtains the Facebook SDK object, used for User interactions with the 
+	 * Facebook service.
+	 * 
+	 * @return {Facebook object | false}
+	 */
+	public function getFacebookObject() {
+		if($this->facebookObj !== false) {
+			return $this->facebookObject;
+		}
+		
+		App::import('Vendor', 'Facebook-PHP-SDK/src/facebook');
+		$settings = $this->_getFacebookSettings();
+		
+		if(!class_exists('Facebook') || $settings === false) {
+			$this->log('Could not create a Facebook SDK object');
+			return false;
+		}
+		
+		$this->facebookObj = new Facebook($settings);
+		return $this->facebookObj;
+	}
+	
+	/**
+	 * Obtains the configuration settings for the Facebook SDK
+	 *
+	 * @return {Array | fase} Settings array or false on failure
+	 */
+	protected function _getFacebookSettings() {
+		try {
+			Configure::load('Facebook');
+		} catch (ConfigureException $e) {
+			$this->log('Could not load the Facebook app settings');
+			return false;
+		}
+		
+		return array(
+			'appId'  => Configure::read('FB_App.id'),
+			'secret' => Configure::read('FB_App.secret'),
+			'fileUpload' => true
+		);
+	}
+	
+	/**
+	 * Returns the minimum necessary FB user permissions needed to properly
+	 * integrate site features with the service.
+	 *
+	 * https://developers.facebook.com/docs/authentication/permissions/
+	 * 
+	 * @return {Array} Facebook user permissions
+	 */
+	public function getFacebookPermissions() {
+		return array(
+			'user_groups', 'publish_stream'
+		);
 	}
 }

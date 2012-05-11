@@ -23,6 +23,9 @@
 		<ul class="unstyled actions">
 			<?php if($this->Session->read('Auth.User.id') == $asset['Asset']['user_id']) : ?>
 			<li><?= $this->Html->link('<i class="icon icon-chevron-left"></i> Return to My Images',array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
+			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
+			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to Facebook',array('action'=>'post',$asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
+			<?php endif; ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-remove"></i> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false),'Are you sure you wish to permanently delete this image?'); ?></li>
 			<?php else : ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-user"></i> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false)); ?></li>
