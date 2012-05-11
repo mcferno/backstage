@@ -14,7 +14,8 @@
 			'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js',
 			'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js',
 			'bootstrap.min',
-			'jquery.site.js?t='.filemtime(JS.'jquery.site.js')
+			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
+			'backstage.js?t='.filemtime(JS.'backstage.js')
 		);
 		
 		if($this->Session->check('Auth.User.id')) {

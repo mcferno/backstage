@@ -10,11 +10,16 @@ class Asset extends AppModel {
 		'jpg' => 'data:image/jpeg;base64,'
 	);
 	
+	public $maxDimensions = array(
+		'w' => 1200,
+		'h' => 1200
+	);
+	
 	// thumbnail generation size widths
 	public $imageThumbs = array(75, 200);
 	
 	// default quality (out of 100) for image transformations
-	public $jpegQuality = 70;
+	public $jpegQuality = 85;
 	
 	public function __construct() {
 		parent::__construct();
@@ -93,6 +98,49 @@ class Asset extends AppModel {
 		
 		$this->log("No asset handler found.");
 		return false;
+	}
+	
+	/**
+	 * Saves and processes a file upload.
+	 *
+	 * @param {String} $data Base64 encoded image data
+	 * @param {UUID} $user_id User ownership
+	 * @param {String} $type String classification
+	 * @return {Boolean}
+	 */
+	public function saveImage($data, $user_id, $type = 'Image') {
+		App::import('Vendor', 'WideImage/WideImage');
+		
+		$image = WideImage::load($data['tmp_name']);
+		
+		if($image === false) {
+			$this->log('Could not open file upload.');
+			return false;
+		}
+		
+		$image_name = String::uuid().'.jpg';
+		$new_path = $this->folderPath . $user_id . DS . $image_name;
+		
+		$cropped = $image->resize($this->maxDimensions['w'],$this->maxDimensions['h']);
+		$cropped->saveToFile($new_path, $this->jpegQuality);
+		
+		$data = array(
+			'type' => $type,
+			'filename' => $image_name,
+			'ext' => 'jpg',
+			'checksum' => -1,
+			'user_id' => $user_id
+		);
+		
+		$save_status = $this->save($data);
+		if($write_status === false) {
+			$this->log("Can't record image {$new_path} meta to db.");
+			return false;
+		}
+		
+		// process image into multiple subsizes
+		$this->saveThumbs($new_path);
+		return $this->id;
 	}
 	
 	/**

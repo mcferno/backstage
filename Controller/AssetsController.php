@@ -78,6 +78,38 @@ class AssetsController extends AppController {
 	}
 	
 	/**
+	 * Saves single file uploads
+	 */
+	public function admin_upload() {
+		
+		// file has been posted
+		if(!empty($this->request->data['Asset']['image'])) {
+			
+			// upload error
+			if($this->request->data['Asset']['image']['error'] !== 0 || !file_exists($this->request->data['Asset']['image']['tmp_name'])) {
+				$this->Session->setFlash('Image upload has failed, please try again.','messaging/alert-error');
+				
+			// mine-type error
+			} elseif(!in_array($this->request->data['Asset']['image']['type'],array('image/jpeg','image/png'))){
+				$this->Session->setFlash('Sorry, JPEG and PNG uploads only.','messaging/alert-error');
+				
+			// no errors found, process image
+			} else {
+				$save = $this->Asset->saveImage($this->request->data['Asset']['image'],$this->Auth->user('id'),'Upload');
+				
+				if($save === false) {
+					$this->Session->setFlash('Image processing has failed, please try again.','messaging/alert-error');
+					
+				// save is the new model ID
+				} else {
+					$this->Session->setFlash('The image has been uploaded successfully!','messaging/alert-success');
+					$this->redirect(array('action'=>'view', $save));
+				}
+			}
+		}
+	}
+	
+	/**
 	 * View an individual asset
 	 *
 	 * @param {UUID} $id Primary key of the desired asset

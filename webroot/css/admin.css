@@ -121,6 +121,10 @@ span.badge-off {
 	color: #888;
 }
 
+.modal, legend, label {
+	color: #444
+}
+
 /* @end color-treatment ==================================================== */
 
 /* @start misc-ui-elements ================================================= */
