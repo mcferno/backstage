@@ -14,7 +14,8 @@
 			'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js',
 			'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js',
 			'bootstrap.min',
-			'jquery.site.js?t='.filemtime(JS.'jquery.site.js')
+			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
+			'backstage.js?t='.filemtime(JS.'backstage.js')
 		);
 		
 		if($this->Session->check('Auth.User.id')) {
@@ -35,7 +36,7 @@
 		echo $this->element('ga');
 	?>
 	<script>
-		var AppBaseURL = <?= $this->Js->value($this->Html->url('/',true)); ?>;
+		var AppBaseURL = <?= json_encode($this->Html->url('/',true)); ?>;
 	</script>
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
@@ -43,11 +44,7 @@
 		<div class="container-fluid">
 			<div class="content">
 				<div class="row-fluid">
-					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): ?>
-					<div class="span2 subnav">
-						<?= $this->element('admin/subnav'); ?>
-					</div>
-					<?php else: ?>
+					<?php if($contentSpan <= 8) : ?>
 					<div class="span2">&nbsp;</div>
 					<?php endif; ?>
 					
@@ -55,6 +52,14 @@
 						<?= $this->Session->flash(); ?>
 						<?php echo $this->fetch('content'); ?>
 					</div>
+					
+					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): ?>
+					<div class="span2 subnav">
+						<?= $this->element('admin/subnav'); ?>
+					</div>
+					<?php else: ?>
+					<div class="span2">&nbsp;</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div> <!-- /container -->

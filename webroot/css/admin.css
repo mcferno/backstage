@@ -30,8 +30,17 @@ a {
 	color: #FC6626;
 }
 
+a:hover {
+	color: #EEEEEE;
+}
+
 .nav-list > .active > a, .nav-list > .active > a:hover {
 	background-color: #FC6626;
+}
+
+.nav-list .divider {
+	background-color: #666;
+	border-bottom: 1px solid #666;
 }
 
 .hero-unit {
@@ -49,9 +58,6 @@ a {
 
 .dropdown-menu {
 	background-color: #666;
-}
-.navbar .dropdown-menu::after {
-	border-bottom: 6px solid #666;
 }
 
 .dropdown-menu li>a:hover,.dropdown-menu .active>a,.dropdown-menu .active>a:hover{
@@ -73,6 +79,15 @@ a {
 
 .navbar .brand {
 	color: #FC6626;
+}
+
+.navbar .dropdown-menu::after {
+	border-bottom: 6px solid #666;
+}
+
+.nav > li > a:hover {
+	background-color: #444;
+	color: #EEE;
 }
 
 .navbar .nav .active > a, .navbar .nav .active > a:hover {
@@ -104,6 +119,14 @@ span.badge-off {
 	background-color: #666;
 	border-color: #666;
 	color: #EEE;
+}
+
+.thumbnails .date {
+	color: #888;
+}
+
+.modal, legend, label {
+	color: #444
 }
 
 /* @end color-treatment ==================================================== */
@@ -145,6 +168,10 @@ img {
 	font-weight: bold;
 }
 
+.text-left {
+	text-align: left;
+}
+
 .text-center {
 	text-align: center;
 }
@@ -166,6 +193,14 @@ a:hover {
 	display: block;
 	padding: 10px 20px 12px;
 	margin-left: -20px;
+}
+
+.nav-list > li > a, .nav-list .nav-header { 
+	text-shadow: none;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover {
+	text-shadow: none;
 }
 
 .slideout {
@@ -190,6 +225,38 @@ a:hover {
 .navbar-form {
 	margin-top: 0.5em;
 }
+
+.image-list .thumbnail {
+	border: 5px solid #666;
+	padding: 0;
+	height: 170px;
+}
+
+.image-list .thumbnail img {
+	max-height: 150px;
+}
+
+.image-list .thumbnails > li {
+	margin: 0 0 10px 20px;
+}
+
+.asset-view .actions li {
+	margin-top: 1em;
+}
+
+.asset-view .actions a {
+	padding: 0.8em;
+}
+
+.asset-view .actions .delete {
+	padding: 0.3em;
+	margin-top: 1em;
+}
+
+.thumbnails .date {
+	font-size: 0.8em;
+}
+
 
 /* @end misc-ui-elements =================================================== */
 
@@ -283,6 +350,14 @@ a:hover {
 
 .tips li {
 	margin-bottom: 0.5em;
+}
+
+.meme-generator .save {
+	margin-right: 4em;
+}
+
+.meme-generator .reset {
+	padding: 0.5em;
 }
 
 /* @end meme-generator ===================================================== */

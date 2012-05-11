@@ -97,13 +97,23 @@ class PagesController extends AppController {
 		if(!empty($this->request->pass[0])) {
 			$images = glob(IMAGES.'user'.DS.$this->request->pass[0].'*');
 			$images = array_merge($images, glob(IMAGES.'base-meme'.DS.$this->request->pass[0].'*'));
+		
+		// meme of a specific user-uploaded image
+		} elseif(!empty($this->request->params['named']['asset'])) {
+			$path = ClassRegistry::init('Asset')->getPath($this->request->params['named']['asset']);
+			
+			if(!empty($path)) {
+				$images[] = $path;
+			}
 		}
+		
 		if(empty($images)) {
 			$images = glob(IMAGES.'base-meme'.DS.'*.*');
+			foreach ($images as &$image) {
+				$image = substr($image,strlen(IMAGES));
+			}
 		}
-		foreach ($images as &$image) {
-			$image = substr($image,strlen(IMAGES));
-		}
+
 		$this->set('base_images',$images);
 	}
 	

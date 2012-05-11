@@ -38,7 +38,7 @@ var MemeGenerator = {
 		.on('click','.meme-generator button', function(e) {
 			e.preventDefault(); // disable all buttons's defaults
 		})
-		.on('click','.save-image',function(e) {
+		.on('click','.save-image',function() {
 			ns.render();
 			ns.canvasToImage();
 		})
@@ -48,7 +48,7 @@ var MemeGenerator = {
 				ns.canvasToImage();
 			}
 		})
-		.on('click','.live-mode',function(e) {
+		.on('click','.live-mode',function() {
 			ns.toggleLiveMode();
 			ns.render();
 			if(ns.liveMode === true) {
@@ -56,77 +56,83 @@ var MemeGenerator = {
 			}
 		})
 		.on('change','.canvasSize',function() {
-			ns.adaptToScale();
+			ns.matchCanvasToImage();
 			ns.render();
 			ns.canvasToImage();
 		})
-		.on('click','.reset',function(e) {
+		.on('click','.reset',function() {
 			window.location.reload();
 		})
-		.on('click','.choose-background',function(e) {
+		.on('click','.choose-background',function() {
 			ns.swapImages();
-			ns.render();
-			ns.canvasToImage();
+		})
+		.on('click','.meme-generator .save',function() {
+			$(this).button('loading');
+			ns.sendImageToServer();
 		});
-	
+		
+
 	/**
 	 * Cycles to the next backdrop option in the series (wraps at end)
 	 */
 	ns.swapImages = function() {
 		ns.imageOffset = (ns.imageOffset + 1) % ns.images.length;
 		var obj = ns.images[ns.imageOffset];
+		
+		// image is not yet loaded
 		if(!obj.image) {
+			$('.choose-background').button('loading');
 			obj = {
 				href : obj
 			}
 			obj.image = new Image();
 			obj.image.onload = function() {
-				ns.matchOrientationToImage();				
+				ns.matchCanvasToImage();
 				ns.render();
 				ns.canvasToImage();
+				$('.choose-background').button('reset');
 			};
 			obj.image.src = obj.href;
+			ns.currentImage = obj.image;
+		
+		// set the image and refresh the canvas
+		} else {
+			ns.currentImage = obj.image;
+			ns.matchCanvasToImage();
+			ns.render();
+			ns.canvasToImage();
 		}
-		ns.currentImage = obj.image;
-		ns.matchOrientationToImage();
 	};
 	
 	/**
 	 * Selects the Image Size dropdown which matches the orientation of the
 	 * current image.
 	 */
-	ns.matchOrientationToImage = function() {
+	ns.matchCanvasToImage = function() {
+		var sizing = $('.canvasSize option:selected');
+		
 		if(ns.currentImage.height != 0 && ns.currentImage.width != 0) {
-			// verify we have the correct aspect-ratio
-			var sizing = $('.canvasSize option[data-width="'+ns.currentImage.width+'"][data-height="'+ns.currentImage.height+'"]');
-			if(sizing.length === 0) {
-				if($('.canvasSize optgroup[label="custom"]').length === 0) {
-					var group = $('<optgroup label="Custom" class="custom">');
-					$('.canvasSize').append(group);
-				}
-				
-				$('.canvasSize option:selected').removeAttr('selected');
-				var newSize = $('<option>');
-				newSize.data('height',ns.currentImage.height)
-					.data('width',ns.currentImage.width)
-					.attr('selected','selected')
-					.text(ns.currentImage.width + ' x ' + ns.currentImage.height);
-				$('.canvasSize .custom').append(newSize);
-				ns.adaptToScale();
-				
-				return;
+			var max = sizing.data('max');
+			
+			// keep the image in its original form
+			if(max == 'full') {
+				var desiredWidth = ns.currentImage.width;
+				var desiredHeight = ns.currentImage.height;
+			} else if(ns.currentImage.width > ns.currentImage.height) {
+				var desiredWidth = max;
+				var desiredHeight = parseInt(max / ns.currentImage.width * ns.currentImage.height);
+			} else {
+				var desiredHeight = max;
+				var desiredWidth = parseInt(max / ns.currentImage.height * ns.currentImage.width);
 			}
-		}		
-		
-		var imageOrientation = (ns.currentImage.height > ns.currentImage.width)?'vertical':'horizontal';
-		var currentSize = $('.canvasSize option:selected');
-		var canvasOrientation = currentSize.closest('optgroup').data('orientation');
-		
-		if(canvasOrientation != imageOrientation) {
-			currentSize.removeAttr('selected');
-			var selection = '.'+imageOrientation+' option[data-height="'+currentSize.data('width')+'"]';
-			currentSize.closest('select').find(selection).attr('selected','selected');
-			ns.adaptToScale();
+			
+			// verify that the canvas size matches the selected option
+			if(ns.canvas.height != desiredHeight || ns.canvas.width != desiredWidth) {
+				ns.canvas.height = desiredHeight;
+				ns.canvas.width = desiredWidth;
+				
+				ns.adaptToScale();
+			}
 		}
 	};
 	
@@ -142,6 +148,22 @@ var MemeGenerator = {
 		}
 		
 		image.get(0).src = ns.canvas.toDataURL('image/jpeg');
+	};
+	
+	ns.sendImageToServer = function() {
+		if(ns.currentImage.height > 0 && ns.currentImage.width > 0) {
+			$.post(
+				AppBaseURL+'backstage/assets/save', 
+				{
+					image : ns.canvas.toDataURL('image/jpeg')
+				},
+				function(data) {
+					if(data.image_saved) {
+						$('.meme-generator .save').button('reset');
+					}
+				}
+			);
+		}
 	};
 	
 	/**
@@ -274,8 +296,6 @@ var MemeGenerator = {
 		ns.firstLineText = $('#first-line');
 		ns.lastLineText = $('#last-line');
 		
-		ns.adaptToScale();
-		
 		if(ns.images.length < 2) {
 			$('.choose-background').hide();
 		}
@@ -286,14 +306,6 @@ var MemeGenerator = {
 	 * dimensions. Must be ran after every change in canvas size.
 	 */
 	ns.adaptToScale = function() {
-		var sizing = $('.canvasSize option:selected');
-		
-		// verify that the canvas size matches the selected option
-		if(sizing.length != 0 && ns.canvas.height != sizing.data('height') || ns.canvas.width != sizing.data('width')) {
-			ns.canvas.height = sizing.data('height');
-			ns.canvas.width = sizing.data('width');
-		}
-		
 		ns.context.textAlign = "center";
 		ns.context.fillStyle = "#FFF";
 		ns.context.lineStyle = "#000";
@@ -328,7 +340,7 @@ var MemeGenerator = {
 		// pre-select the larger meme size based on available screen real estate
 		if(window.outerWidth > 850) {
 			$('.canvasSize option:selected').removeAttr('selected');
-			var larger = $('.canvasSize [data-width=800]');
+			var larger = $('.canvasSize [data-max=800]');
 			larger.attr('selected','selected');
 		}
 		
@@ -339,10 +351,6 @@ var MemeGenerator = {
 		
 		// choose the first image (random) to display
 		ns.swapImages();
-		
-		// first paint of the interface
-		ns.render();
-		ns.canvasToImage();
 	});
 	
 })(jQuery, MemeGenerator);

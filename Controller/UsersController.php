@@ -37,9 +37,17 @@ class UsersController extends AppController {
 			'order'=>'created DESC',
 			'limit'=>5
 		));
+		$asset_count = $this->User->Asset->find('count',array(
+			'conditions'=>array(
+				'user_id'=>$this->Auth->user('id')
+			)
+		));
+		$asset_count_all = $this->User->Asset->find('count');
 		$this->set('recent_users',$users);
 		$this->set('meme_count',count(glob(IMAGES.'base-meme'.DS.'*.*')));
 		$this->set('quotes_count',ClassRegistry::init('Post')->find('count'));
+		$this->set('asset_count',$asset_count);
+		$this->set('asset_count_all',$asset_count_all);
 	}
 	
 	public function admin_logout() {
