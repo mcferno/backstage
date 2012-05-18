@@ -159,7 +159,7 @@ class Asset extends AppModel {
 		);
 		
 		$save_status = $this->save($data);
-		if($write_status === false) {
+		if($save_status === false) {
 			$this->log("Can't record image {$new_path} meta to db.");
 			return false;
 		}

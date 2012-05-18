@@ -145,7 +145,7 @@ class User extends AppModel {
 	 */
 	protected function _getFacebookSettings() {
 		try {
-			Configure::load('Facebook');
+			Configure::load('facebook');
 		} catch (ConfigureException $e) {
 			$this->log('Could not load the Facebook app settings');
 			return false;
