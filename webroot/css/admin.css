@@ -266,6 +266,11 @@ a:hover {
 	font-size: 0.8em;
 }
 
+#fbPostModal .fb {
+	background: url('../img/ui/facebook.png') no-repeat left center;
+	padding-left: 1.5em;
+}
+
 
 /* @end misc-ui-elements =================================================== */
 

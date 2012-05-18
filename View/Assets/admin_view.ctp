@@ -24,9 +24,9 @@
 			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> Meme This Image',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
 			<?php if($this->Session->read('Auth.User.id') == $asset['Asset']['user_id']) : ?>
 			<li><?= $this->Html->link('<i class="icon icon-chevron-left"></i> Return to My Images',array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
-			<?php /* if($this->Session->check('Auth.User.fb_target')) : ?>
-			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to Facebook',array('action'=>'post',$asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
-			<?php endif; */ ?>
+			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
+			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal')); ?></li>
+			<?php endif; ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-remove"></i> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false),'Are you sure you wish to permanently delete this image?'); ?></li>
 			<?php else : ?>
 			
@@ -38,3 +38,27 @@
 		<?= $this->Html->image($user_dir.$asset['Asset']['filename']); ?>
 	</div>
 </div>
+
+<?php if($this->Session->check('Auth.User.fb_target')) : ?>
+<div class="modal" id="fbPostModal" style="display:none;">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3 class="fb">Post to Facebook</h3>
+	</div>
+	<?= $this->Form->create('Asset',array('url'=>array('action'=>'post',$asset['Asset']['id']),'type' => 'get')); ?>
+	<div class="modal-body">
+		<h4>Do you wish to upload this image and post it to the TYS group?</h4>
+		<p>The post will be private, and only viewable by the members of the group.</p>
+		<?php if(!empty($asset['Asset']['fb_id'])) : ?>
+		<p class="alert alert-warning">This image has been previously posted.</p>
+		<?php endif; ?>
+		<br>
+		<?= $this->Form->input('message',array('type'=>'text','label'=>'Message to post with image (optional)', 'class' => 'span5', 'placeholder' => 'Check this shit out')); ?>
+	</div>
+	<div class="modal-footer">
+		<?= $this->Form->button('<i class="icon-white icon-upload"></i> Upload', array('class' => 'btn btn-primary')); ?>
+		<a href="#" class="btn btn-danger" data-dismiss="modal">Cancel</a>
+	</div>
+	<?= $this->Form->end(); ?>
+</div>
+<?php endif; ?>

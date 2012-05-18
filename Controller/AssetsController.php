@@ -137,6 +137,70 @@ class AssetsController extends AppController {
 	}
 	
 	/**
+	 * Posts a single image to a specific Facebook group
+	 *
+	 * @param {UUID} $id Primary key of the actionable asset
+	 */
+	public function admin_post($id = null) {
+		$asset = $this->Asset->hasAny(array(
+			'Asset.id' => $id,
+			'Asset.user_id' => $this->Auth->user('id')
+		));
+		
+		// only owners of the image and users who are cleared for fb integration can continue
+		if($asset !== true || $this->Session->check('Auth.User.fb_target') === false) {
+			$this->Session->setFlash('Sorry, you can\'t post this image at this time.','messaging/alert-error');
+			$this->redirect($this->referer(array('action'=>'index')));
+		}
+		
+		$fbSDK = $this->User->getFacebookObject();
+		
+		// verify active FB user session
+		if($fbSDK->getUser()) {
+			
+			$imagePost = $this->Asset->castToFacebook($id);
+			
+			// attach optional message
+			if(!empty($this->request->query['message'])) {
+				$imagePost['message'] = $this->request->query['message'];
+			}
+			
+			try {
+				// post to the api (upload)
+				$fbSDK->setFileUploadSupport(true);
+				$res = $fbSDK->api('/'.$this->Session->read('Auth.User.fb_target').'/photos','POST',$imagePost);
+				
+				// post was successful, record the id for reference
+				if(!empty($res['id'])) {
+					$this->Asset->id = $id;
+					$this->Asset->saveField('fb_id',$res['id']);
+					
+					$this->Session->setFlash('This image has been posted to Facebook.','messaging/alert-success');
+					$this->redirect($this->referer(array('action'=>'view',$id)));
+				}
+			} catch (FacebookApiException $e) {}
+			
+			$this->Session->setFlash('An error occurred while attempting to post to Facebook.','messaging/alert-error');
+			$this->redirect($this->referer(array('action'=>'view',$id)));
+		}
+		
+		$redirectParams = array(
+			'action'=>'post', $id
+		);
+		if(!empty($this->request->query['message'])) {
+			$redirectParams['?'] = array('message' => $this->request->query['message']);
+		}
+		
+		// send the user away to authenticate
+		$login_params = array(
+			'scope' => $this->User->getFacebookPermissions(),
+			'redirect_uri' => Router::url($redirectParams,true)
+		);
+		
+		$this->redirect($fbSDK->getLoginUrl($login_params));
+	}
+	
+	/**
 	 * Delete a user's image
 	 *
 	 * @param {UUID} $id Primary key of the desired asset
