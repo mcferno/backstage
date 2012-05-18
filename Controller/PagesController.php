@@ -54,10 +54,7 @@ class PagesController extends AppController {
  *
  * @param mixed What page to display
  */
-	public function display() {		
-		$this->render('home');
-		return;
-				
+	public function display() {				
 		$path = func_get_args();
 
 		$count = count($path);

@@ -16,6 +16,12 @@ Router::connect('/post/:slug/:id',
 );
 
 /**
+ * TOS and Privacy Statements
+ */
+Router::connect('/terms', array('controller' => 'pages', 'action'=>'display', 'terms'));
+Router::connect('/privacy-policy', array('controller' => 'pages', 'action'=>'display', 'privacy_policy'));
+
+/**
  * Backstage, the administrative panel
  */
 // Setting the admin urls manually, due to differing uri name
