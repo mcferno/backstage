@@ -224,13 +224,16 @@ var MemeGenerator = {
 		ns.context.font = parseInt(ns.fontSize) + "pt " + ns.fontFamily;
 		var lines = ns.breakTextIntoLines(text, lineWidth);
 		
-		if(lines.length > 1) {	
+		if(lines.length > 1) {
+			var idealLines = (lines.length < 3) ? 1 : 2;
+			
 			// determine the optimal font-size	
-			for(var i=1;i<3;i++) {
-				ns.context.font = parseInt(ns.fontSize * (1 - 0.25*i)) + "pt " + ns.fontFamily;
+			for(var i=1;i<5;i++) {
+				
+				ns.context.font = parseInt(ns.fontSize * (1 - 0.1*i)) + "pt " + ns.fontFamily;
 				lines = ns.breakTextIntoLines(text, lineWidth);
 				
-				if(lines.length < 2) {
+				if(lines.length <= idealLines) {
 					break;
 				}
 			}
@@ -254,6 +257,9 @@ var MemeGenerator = {
 	 * the provided width maximum. The font size of the current canvas is used 
 	 * in text width calculations.
 	 *
+	 * Attempts to balance the widths of the strings by moving words between the
+	 * lines, in an attempt to wrap the text evenly (giving the greatest font size)
+	 *
 	 * @param {String} text: Text to break into smaller substrings
 	 * @param {Integer} lineWidth: Maximum width in pixels any line can span
 	 * @return {Array} Substrings of the text, respecting the width
@@ -261,27 +267,54 @@ var MemeGenerator = {
 	ns.breakTextIntoLines = function(text, lineWidth) {
 		var lines = new Array();
 		var words = text.replace(/^\s+|\s+$/,'').replace(/\s\s*/g,' ').split(' '); //'
-		var row = 0;
-		
-		while(words.length != 0) {
-			var word = words.shift();
+		var row = -1;
+		var rowSum = 0;
+		var gapWidth = ns.context.measureText(' ').width;
+		var idealWidth = lineWidth / 4;
+
+		// iterate through the words, collecting length and the greedy-wrap max line count.
+		for(var i = 0; i < words.length ; i++) {
 			
-			if(typeof lines[row] == 'undefined') {
+			var cost = ns.context.measureText(words[i]).width;
+			
+			// word falls on a new line, 
+			if(typeof lines[row] == 'undefined' || rowSum + gapWidth + cost > lineWidth) {
+				row++;
+				rowSum = 0;
 				lines[row] = new Array();
-				lines[row].push(word);
-				continue;
 			}
 			
-			// text is too long with this word, push to next line
-			if(ns.context.measureText(lines[row].join(' ')+ ' ' + word).width > lineWidth) {
-				words.unshift(word);
-				row++;
-				
-			// text + this word fits, add it to this line
-			} else {
-				lines[row].push(word);
-			}				
+			lines[row].push(words[i]);
+			rowSum = (rowSum == 0) ? cost : rowSum + gapWidth + cost;
 		}
+		
+		// balance rows lengths if there are more than one
+		if(row > 0) {
+			
+			// iterate backwards through the lines, balancing their widths pairwise
+			for(var i = lines.length - 1; i > 0; i--) {
+				var j = i-1;
+				
+				for(var k = lines[j].length - 1; k > 0; k--) {
+					
+					// difference in row lengths before word is moved
+					var deltaBefore = Math.abs(ns.context.measureText(lines[j].join(' ')).width - ns.context.measureText(lines[i].join(' ')).width);
+
+					// move a word down 
+					lines[i].unshift(lines[j].pop());
+					
+					// difference in row lengths after word is moved
+					var deltaAfter = Math.abs(ns.context.measureText(lines[j].join(' ')).width - ns.context.measureText(lines[i].join(' ')).width);
+					
+					// restore if difference is now worse, skip the remainder of the words on the line
+					if(deltaAfter >= deltaBefore) {
+						lines[j].push(lines[i].shift());
+						break;
+					}
+				}
+			}
+		}
+		
 		return lines;
 	};
 	
