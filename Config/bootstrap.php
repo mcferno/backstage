@@ -24,3 +24,11 @@ define('ROLES_GENERAL',0);
 define('ROLES_ADMIN',1);
 
 define('MYSQL_DATE_FORMAT','Y-m-d H:i:s');
+
+/**
+ * Load any environment-specific configurations
+ */
+$bootstrap_environment = APP . 'Config' . DS . 'bootstrap.env.php';
+if(file_exists($bootstrap_environment)) {
+	include($bootstrap_environment);
+}

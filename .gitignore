@@ -1,4 +1,5 @@
 Config/facebook.php
+Config/bootstrap.env.php
 tmp/
 webroot/img/profile/twitter/
 webroot/img/base-meme/

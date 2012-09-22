@@ -87,7 +87,7 @@ class AppController extends Controller {
 				$user = $this->User->findById($user_id);
 
 				if(!$user || !$this->Auth->login($user['User'])) {
-					$this->Cookie->delete('KQMpersist');
+					$this->Cookie->delete('persist');
 				}
 				$this->User->setLastLogin($this->Auth->user('id'),time());
 			}
