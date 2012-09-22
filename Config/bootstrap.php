@@ -18,7 +18,7 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-CakePlugin::load('Postable');
+CakePlugin::load(array('Postable'));
 
 define('ROLES_GENERAL',0);
 define('ROLES_ADMIN',1);

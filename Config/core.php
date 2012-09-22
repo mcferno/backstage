@@ -187,9 +187,9 @@
  *
  */
 	Configure::write('Session', array(
-		'defaults' => 'php',
+		'defaults' => 'cake',
 		'cookie' => 'KQMsess',
-		'timeout' => 10080 // 7 days in minutes
+		'timeout' => 180 // 3 hours in minutes
 	));
 
 /**
@@ -204,6 +204,11 @@
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */	Configure::write('Security.cipherSeed', '386236323765333362626237656162');
+
+/**
+ * Cookie encryption key, used by rijndael
+ */
+	Configure::write('Cookie.key', 'c665EchA*w6MeswabAMuW_e7axET5$?Ha2ra!esW5p*JaT*&');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).

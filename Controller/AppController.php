@@ -42,7 +42,7 @@ class AppController extends Controller {
 	);
 	
 	public $components = array(
-		'RequestHandler','Session',
+		'RequestHandler', 'Session', 'Cookie',
 		'Auth' => array(
 			'loginRedirect' => array('controller' => 'users', 'action'=>'dashboard'),
 			'authError' => 'You must be logged in to continue',
@@ -51,11 +51,14 @@ class AppController extends Controller {
 				'key' => 'auth',
 				'params' => array()
 			)
+		),
+		'Security' => array(
+			'csrfCheck' => false
 		)
 	);
 	
 	public function beforeFilter() {
-		Security::setHash('sha256');
+		$this->setSecurity();
 		
 		if(isset($this->request->params['prefix']) 
 		&& $this->request->params['prefix'] == 'admin'
@@ -68,7 +71,7 @@ class AppController extends Controller {
 	}
 	
 	public function siteBeforeFilter() {
-		$this->Auth->allow('*');
+		$this->Auth->allow();
 		
 		// compress all output
 		$this->response->compress();
@@ -76,6 +79,19 @@ class AppController extends Controller {
 	
 	public function adminBeforeFilter() {
 		$this->layout = 'admin';
+
+		if(!$this->request->isPost() && !$this->Auth->loggedIn() && $this->Cookie->read('persist')) {
+
+			$user_id = $this->Cookie->read('persist');
+			if(!empty($user_id)) {
+				$user = $this->User->findById($user_id);
+
+				if(!$user || !$this->Auth->login($user['User'])) {
+					$this->Cookie->delete('KQMpersist');
+				}
+				$this->User->setLastLogin($this->Auth->user('id'),time());
+			}
+		}
 	}
 	
 	public function beforeRender() {
@@ -95,6 +111,17 @@ class AppController extends Controller {
 			// track the time of the last activity from a specific user
 			ClassRegistry::init('User')->setLastSeen($this->Auth->user('id'),Configure::read('App.start'));
 		}
+	}
+
+	/**
+	 * Configures settings relating to overall app security
+	 */
+	protected function setSecurity() {
+		Security::setHash('sha256');
+		$this->Cookie->name = 'KQM';
+		$this->Cookie->type('rijndael');
+		$this->Cookie->key = Configure::read('Cookie.key');
+		$this->Cookie->httpOnly = true;
 	}
 	
 	/**

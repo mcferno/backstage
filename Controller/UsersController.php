@@ -25,11 +25,20 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$this->User->setLastLogin($this->Auth->user('id'),time());
+				$this->persistSession();
 				$this->redirect($this->Auth->redirect());
 			} else {
 				$this->Session->setFlash('Invalid username or password, try again','messaging/alert-error');
 			}
 		}
+	}
+
+	/**
+	 * Persists a user's session after login for repeat visits.
+	 */
+	protected function persistSession() {
+		// store user information in an encrypted cookie
+		$this->Cookie->write('persist', $this->Auth->user('id'), true, '+1 month');
 	}
 	
 	public function admin_dashboard() {
@@ -51,6 +60,7 @@ class UsersController extends AppController {
 	}
 	
 	public function admin_logout() {
+		$this->Cookie->delete('persist');
 		$this->redirect($this->Auth->logout());
 	}
 
