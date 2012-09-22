@@ -42,7 +42,7 @@ class AppController extends Controller {
 	);
 	
 	public $components = array(
-		'RequestHandler','Security','Session',
+		'RequestHandler','Session',
 		'Auth' => array(
 			'loginRedirect' => array('controller' => 'users', 'action'=>'dashboard'),
 			'authError' => 'You must be logged in to continue',
