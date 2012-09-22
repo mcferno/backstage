@@ -61,6 +61,7 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.09.22</td><td>User sessions now persist up to a month. Login bugs fixed.</td></tr>
 	<tr><td>2012.05.11</td><td>Images can now be uploaded and used in the Meme Generator.</td></tr>
 	<tr><td>2012.05.11</td><td>Meme Generator images can now be saved on the server.</td></tr>
 	<tr><td>2012.05.11</td><td>You can view other user's images, and make memes with them.</td></tr>

@@ -4,10 +4,14 @@
 	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>Backstage</title>
 	<meta name="description" content=""/>	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta property="og:image" content="http://<?= env('HTTP_HOST').$this->Html->webroot('img/emblem-large.jpg'); ?>">
+	<link rel="apple-touch-icon-precomposed" href="http://<?= env('HTTP_HOST') . $this->Html->webroot('img/emblem/emblem-large-x144.jpg'); ?>" sizes="144x144">
+	<link rel="apple-touch-icon-precomposed" href="http://<?= env('HTTP_HOST') . $this->Html->webroot('img/emblem/emblem-large-x114.jpg'); ?>" sizes="114x114">
+	<link rel="apple-touch-icon-precomposed" href="http://<?= env('HTTP_HOST') . $this->Html->webroot('img/emblem/emblem-large-x72.jpg'); ?>" sizes="72x72">
+	<link rel="apple-touch-icon-precomposed" href="http://<?= env('HTTP_HOST') . $this->Html->webroot('img/emblem/emblem-large-x57.jpg'); ?>">
+	<meta property="og:image" content="http://<?= env('HTTP_HOST') . $this->Html->webroot('img/emblem-large.jpg'); ?>">
 	<?php
 		echo $this->Html->meta('icon',$this->Html->webroot('img/emblem.png'));
-		
+
 		// base js libraries
 		$scripts = array(
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
