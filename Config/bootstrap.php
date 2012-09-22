@@ -2,6 +2,22 @@
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
+Configure::write('Dispatcher.filters', array(
+	//'AssetDispatcher',
+	'CacheDispatcher'
+));
+
+CakeLog::config('debug', array(
+	'engine' => 'FileLog',
+	'types' => array('notice', 'info', 'debug'),
+	'file' => 'debug',
+));
+CakeLog::config('error', array(
+	'engine' => 'FileLog',
+	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+	'file' => 'error',
+));
+
 CakePlugin::load('Postable');
 
 define('ROLES_GENERAL',0);
