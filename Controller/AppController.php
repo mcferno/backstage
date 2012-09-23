@@ -80,11 +80,12 @@ class AppController extends Controller {
 	public function adminBeforeFilter() {
 		$this->layout = 'admin';
 
+		// attempt a "remember me"
 		if(!$this->request->isPost() && !$this->Auth->loggedIn() && $this->Cookie->read('persist')) {
 
-			$user_id = $this->Cookie->read('persist');
-			if(!empty($user_id)) {
-				$user = $this->User->findById($user_id);
+			$user_key = $this->Cookie->read('persist');
+			if(!empty($user_key)) {
+				$user = $this->User->getBySessionIdentifier($user_key);
 
 				if(!$user || !$this->Auth->login($user['User'])) {
 					$this->Cookie->delete('persist');

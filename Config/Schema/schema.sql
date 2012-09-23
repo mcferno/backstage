@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 10, 2012 at 10:58 PM
--- Server version: 5.1.52
+-- Generation Time: Sep 23, 2012 at 09:55 AM
+-- Server version: 5.1.61
 -- PHP Version: 5.3.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `assets` (
   `checksum` varchar(100) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `fb_id` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -140,5 +141,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` datetime DEFAULT NULL,
   `last_seen` datetime DEFAULT NULL,
   `last_ack` datetime NOT NULL,
+  `session_key` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

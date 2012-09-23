@@ -37,8 +37,13 @@ class UsersController extends AppController {
 	 * Persists a user's session after login for repeat visits.
 	 */
 	protected function persistSession() {
-		// store user information in an encrypted cookie
-		$this->Cookie->write('persist', $this->Auth->user('id'), true, '+1 month');
+
+		$identifier = $this->User->getSessionIdentifier($this->Auth->user('id'));
+		
+		if($identifier !== false) {
+			// store user information in an encrypted cookie
+			$this->Cookie->write('persist', $identifier, true, '+1 month');
+		}
 	}
 	
 	public function admin_dashboard() {

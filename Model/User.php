@@ -171,4 +171,38 @@ class User extends AppModel {
 			'user_groups', 'publish_stream'
 		);
 	}
+
+	/**
+	 * Obtains the key used in session persistence for this specific user
+	 *
+	 * @param {UUID} $user_id User primary key
+	 * @return {String|false} Identifier key or false on error
+	 */
+	public function getSessionIdentifier($user_id) {
+
+		if(!$this->exists($user_id)) {
+			return false;
+		}
+
+		$this->id = $user_id;
+		$key = $this->field('session_key');
+
+		// set a new key if one does not exist
+		if(empty($key)) {
+			$key = String::uuid();
+			$this->saveField('session_key', $key);
+		}
+
+		return $key;
+	}
+
+	/**
+	 * Obtains a user record from a session identifier
+	 *
+	 * @param {String} $identifier Unique user session identifier
+	 * @return {User} Matching user record
+	 */
+	public function getBySessionIdentifier($identifier) {
+		return $this->findBySessionKey($identifier);
+	}
 }
