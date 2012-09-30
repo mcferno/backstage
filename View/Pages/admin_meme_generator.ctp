@@ -9,7 +9,12 @@
 var memeBaseImages = <?php echo json_encode($base_images); ?>;
 </script>
 <form class="meme-generator">
-<h1>Meme Generator</h1>
+	<div class="row">
+		<div class="span8">
+			<h1>Meme Generator</h1>
+		</div>
+	</div>
+
 	<div class="row no-canvas" style="display:none;">
 		<div class="span8">
 			<div class="alert alert-error">
