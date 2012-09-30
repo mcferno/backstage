@@ -262,6 +262,10 @@ a:hover {
 	margin-top: 1em;
 }
 
+.asset-url {
+	width: 95%;
+}
+
 .thumbnails .date {
 	font-size: 0.8em;
 }
@@ -269,6 +273,10 @@ a:hover {
 #fbPostModal .fb {
 	background: url('../img/ui/facebook.png') no-repeat left center;
 	padding-left: 1.5em;
+}
+
+.full {
+	width: 100%;
 }
 
 

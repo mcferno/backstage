@@ -3,7 +3,6 @@ Backstage = {};
 (function($, ns) {
 	"use strict";
 	
-	// ajax quote generator refresh
 	$('.image-upload-btn').live('click',function(e) {
 		e.preventDefault();
 		

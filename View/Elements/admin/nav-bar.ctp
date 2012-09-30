@@ -25,6 +25,7 @@
 							<li><?= $this->Html->link('<i class="icon-edit icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
 							<li><?= $this->Html->link('<i class="icon-th-large icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
 							<li><?= $this->Html->link('<i class="icon-th icon-white"></i> From All Users',array('controller'=>'assets','action'=>'admin_users'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-upload icon-white"></i> Upload New Image',array('controller'=>'assets','action'=>'index'),array('escape'=>false, 'class' => 'image-upload-btn')); ?></li>
 						</ul>
 					</li>
 					

@@ -40,7 +40,3 @@
 		<?= $this->element('admin/pagination'); ?>
 	</div>
 </div>
-
-<div class="asset-upload-popin modal" style="display:none;">
-<?= $this->element('common/asset-upload'); ?>
-</div>

@@ -61,15 +61,16 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.09.30</td><td>Image upload via URL now available. Supported types: PNG, JPG, GIF</td></tr>
 	<tr><td>2012.09.22</td><td>User sessions now persist up to a month. Login bugs fixed.</td></tr>
 	<tr><td>2012.05.11</td><td>Images can now be uploaded and used in the Meme Generator.</td></tr>
 	<tr><td>2012.05.11</td><td>Meme Generator images can now be saved on the server.</td></tr>
 	<tr><td>2012.05.11</td><td>You can view other user's images, and make memes with them.</td></tr>
 	<tr><td>2012.04.28</td><td>Chat is stable now, fixed a few bugs.</td></tr>
+<?php /*
 	<tr><td>2012.04.27</td><td>New dark theme, UI overhaul.</td></tr>
 	<tr><td>2012.04.26</td><td>Group chat is fairly functional now. Status bar added to nav.</td></tr>
 	<tr><td>2012.04.11</td><td>Memes now have text wordwrap. Bunch more images added.</td></tr>
-<?php /*
 	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
 	<tr><td>2012.04.05</td><td>Custom backgrounds added, more coming soon.</td></tr>
 	<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>

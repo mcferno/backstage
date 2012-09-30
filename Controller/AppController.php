@@ -165,4 +165,48 @@ class AppController extends Controller {
 		
 		return $data;
 	}
+
+	/**
+	 * Captures a URL, saving the contents to a temporary file
+	 *
+	 * @param {String} $url HTTP/s url to a file
+	 * @param {Array} $mimeTypes Permitted mime-types to verify after download
+	 * @return {String | false} System path the to downloaded asset
+	 */
+	protected function saveURLtoTemp($url, $mimeTypes = false) {
+
+		$tempFile = tempnam(TMP , 'urlsave_');
+		$fileHandle = fopen($tempFile, "w");
+		$result = false;
+
+		if($fileHandle !== false) {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+			curl_setopt($ch, CURLOPT_FILE, $fileHandle);
+			
+			// successful save from url
+			if(curl_exec($ch) !== false) {
+
+				fflush($fileHandle);
+				fclose($fileHandle);
+
+				// restrict the file mime-types if provided
+				if($mimeTypes === false || in_array(strtolower(mime_content_type($tempFile)), $mimeTypes)) {
+					$result = $tempFile;
+				}
+
+			// failure to curl, scrap the temp file
+			} else {
+				fclose($fileHandle);
+				unlink($tempFile);
+			}
+
+			curl_close($ch);
+		}
+
+		return $result;
+	}
 }

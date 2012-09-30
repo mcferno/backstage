@@ -2,12 +2,21 @@
 /**
  * Handles all tasks related to manipulation and management a user's site assets
  */
+App::uses('Validation', 'Utility');
 
 class AssetsController extends AppController {
 
 	public $paginate = array(
 		'order' => 'Asset.created DESC',
 		'limit' => 12
+	);
+
+	// image formats permitted by image manipulation functions
+	public $permittedImageTypes = array(
+		'png' => 'image/png',
+		'gif' => 'image/gif',
+		'jpg' => 'image/jpeg',
+		'jpeg' => 'image/jpeg'
 	);
 	
 	public function adminBeforeFilter() {		
@@ -70,7 +79,7 @@ class AssetsController extends AppController {
 		
 		// process upload
 		if(!empty($this->request->data['image'])) {
-			$status = $this->Asset->saveEncodedImage($this->request->data['image'],$this->Auth->user('id'),'Meme');
+			$status = $this->Asset->saveEncodedImage($this->request->data['image'], $this->Auth->user('id'), 'Meme');
 			
 			if($status === true) {
 				$response['image_saved'] = true;
@@ -85,9 +94,9 @@ class AssetsController extends AppController {
 	 * Saves single file uploads
 	 */
 	public function admin_upload() {
-		
+
 		// file has been posted
-		if(!empty($this->request->data['Asset']['image'])) {
+		if(!empty($this->request->data['Asset']['image']['name'])) {
 			
 			// upload error
 			if($this->request->data['Asset']['image']['error'] !== 0 || !file_exists($this->request->data['Asset']['image']['tmp_name'])) {
@@ -99,7 +108,7 @@ class AssetsController extends AppController {
 				
 			// no errors found, process image
 			} else {
-				$save = $this->Asset->saveImage($this->request->data['Asset']['image'],$this->Auth->user('id'),'Upload');
+				$save = $this->Asset->saveImage($this->request->data['Asset']['image']['tmp_name'], $this->Auth->user('id'), 'Upload');
 				
 				if($save === false) {
 					$this->Session->setFlash('Image processing has failed, please try again.','messaging/alert-error');
@@ -109,6 +118,47 @@ class AssetsController extends AppController {
 					$this->Session->setFlash('The image has been uploaded successfully!','messaging/alert-success');
 					$this->redirect(array('action'=>'view', $save));
 				}
+			}
+
+		// url to scrape
+		} elseif (!empty($this->request->data['Asset']['url'])) {
+			
+			$target_url = $this->request->data['Asset']['url'];
+
+			if(Validation::url($target_url)) {
+
+				$url_parts = parse_url($target_url);
+				$extension_regex = implode('|', array_keys($this->permittedImageTypes));
+
+				// restrict url capture to image formats
+				if(preg_match('/\.(' . $extension_regex . ')$/i', $url_parts['path'])) {
+
+					// attempt download
+					$file = $this->saveURLtoTemp($target_url, array_values($this->permittedImageTypes));
+
+					if($file !== false) {
+						$asset_id = $this->Asset->saveImage($file, $this->Auth->user('id'), 'URLgrab');
+						unlink($file);
+
+						if($asset_id !== false) {
+							$this->Session->setFlash('The image has been downloaded successfully!','messaging/alert-success');
+							$this->redirect(array('action'=>'view', $asset_id));
+						} else {
+							$this->Session->setFlash('Image processing has failed, please try again.','messaging/alert-error');
+						}
+
+					} else {
+						unlink($file);
+						$this->Session->setFlash('The URL could not be downloaded, please try again.','messaging/alert-error');
+					}
+
+				// non-image url provided
+				} else {
+					$this->Session->setFlash('Only png, gif, and jpg/jpeg are accepted via URL, please try a different URL.','messaging/alert-error');
+				}
+
+			} else {
+				$this->Session->setFlash('Invalid image URL, please try again.','messaging/alert-error');
 			}
 		}
 		

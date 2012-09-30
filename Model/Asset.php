@@ -125,15 +125,15 @@ class Asset extends AppModel {
 	/**
 	 * Saves and processes a file upload.
 	 *
-	 * @param {String} $data Base64 encoded image data
+	 * @param {String} $file_path System path to image source
 	 * @param {UUID} $user_id User ownership
 	 * @param {String} $type String classification
 	 * @return {Boolean}
 	 */
-	public function saveImage($data, $user_id, $type = 'Image') {
+	public function saveImage($file_path, $user_id, $type = 'Image') {
 		App::import('Vendor', 'WideImage/WideImage');
 		
-		$image = WideImage::load($data['tmp_name']);
+		$image = WideImage::load($file_path);
 		
 		if($image === false) {
 			$this->log('Could not open file upload.');
