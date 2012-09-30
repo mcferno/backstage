@@ -130,6 +130,12 @@ span.badge-off {
 	color: #444
 }
 
+input.copier {
+	background-color: #444;
+	color: #EEE;
+	border-color: #666;
+}
+
 /* @end color-treatment ==================================================== */
 
 /* @start misc-ui-elements ================================================= */
@@ -278,7 +284,6 @@ a:hover {
 .full {
 	width: 100%;
 }
-
 
 /* @end misc-ui-elements =================================================== */
 

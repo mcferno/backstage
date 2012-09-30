@@ -35,7 +35,9 @@
 		</ul>	
 	</div>
 	<div class="span8 text-center">
-		<?= $this->Html->image($user_dir.$asset['Asset']['filename']); ?>
+		<p><?= $this->Html->image($user_dir.$asset['Asset']['filename']); ?></p>
+
+		<p>Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $user_dir . $asset['Asset']['filename']; ?>"></p>
 	</div>
 </div>
 

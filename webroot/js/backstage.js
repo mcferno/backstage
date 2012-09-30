@@ -8,6 +8,14 @@ Backstage = {};
 		
 		$('.asset-upload-popin').modal();
 	});
+
+	$(document)
+		.on('focus', '.copier', function() {
+			this.select();
+		})
+		.on('mouseup', '.copier', function(e) {
+			e.preventDefault();
+		});
 	
 	$(document).ready(function() {		
 		// mouseover icon-color inversion
