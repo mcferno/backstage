@@ -285,6 +285,10 @@ a:hover {
 	width: 100%;
 }
 
+.asset-upload-popin form {
+	margin: 0;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
