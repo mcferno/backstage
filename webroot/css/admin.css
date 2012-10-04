@@ -34,6 +34,11 @@ a:hover {
 	color: #EEEEEE;
 }
 
+hr {
+	border-top: 1px solid #888;
+	border-bottom: 1px solid #666;
+}
+
 .nav-list > .active > a, .nav-list > .active > a:hover {
 	background-color: #FC6626;
 }

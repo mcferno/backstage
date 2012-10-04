@@ -2,7 +2,12 @@
 	$this->set('contentSpan',10);
 ?>	
 <div class="row">
-	<div class="span2">&nbsp;</div>
+	<div class="span2">
+		&nbsp;
+		<?php if(!empty($activeContests)) : ?>
+		<p><i class="icon-white icon-info-sign"></i> To start a caption battle of your own, pick an image from <?= $this->Html->link('Your Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?>.</p>
+		<?php endif; ?>
+	</div>
 	<div class="span8">
 		<h1>Caption Battles</h1>
 		<p>There have been <span class="badge <?= (count($contests))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> battles.<p>
@@ -34,16 +39,16 @@
 			</ul>
 		</div>
 
+		<hr>
+
 		<?php else : ?>
 
 		<h3 class="alert alert-info">There are no active battles. To start one, pick an image from <?= $this->Html->link('Your Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?>.</h3>
 
 		<?php endif; ?>
-
-		<?php if(!empty($images)) : ?>
-		<p>You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> images</p>
-		<?php endif; ?>
 		
+		<h2>Past Battles</h2>
+
 		<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
 		
 		<div class="image-list">
