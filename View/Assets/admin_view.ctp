@@ -22,6 +22,7 @@
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
 			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> Meme This Image',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-play-circle"></i> Start Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false)); ?></li>
 			<?php if($this->Session->read('Auth.User.id') == $asset['Asset']['user_id']) : ?>
 			<li><?= $this->Html->link('<i class="icon icon-chevron-left"></i> Return to My Images',array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
 			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
@@ -64,3 +65,5 @@
 	<?= $this->Form->end(); ?>
 </div>
 <?php endif; ?>
+
+<?= $this->element('common/contest-start'); ?>

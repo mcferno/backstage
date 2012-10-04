@@ -57,6 +57,10 @@ a:hover {
 	border: 3px solid #888;
 }
 
+.active-contests .thumbnail {
+	border: 3px solid #888;
+}
+
 .dropdown-menu {
 	background-color: #666;
 }
@@ -285,8 +289,12 @@ a:hover {
 	width: 100%;
 }
 
-.asset-upload-popin form {
+.modal form {
 	margin: 0;
+}
+
+.contest-start-popin .image {
+	padding-left: 0.5em;
 }
 
 /* @end misc-ui-elements =================================================== */

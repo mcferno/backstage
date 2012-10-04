@@ -9,6 +9,12 @@ Backstage = {};
 		$('.asset-upload-popin').modal();
 	});
 
+	$('.contest-start').live('click',function(e) {
+		e.preventDefault();
+		
+		$('.contest-start-popin').modal();
+	});
+
 	$(document)
 		.on('focus', '.copier', function() {
 			this.select();

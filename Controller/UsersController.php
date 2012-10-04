@@ -57,11 +57,12 @@ class UsersController extends AppController {
 			)
 		));
 		$asset_count_all = $this->User->Asset->find('count');
-		$this->set('recent_users',$users);
-		$this->set('meme_count',count(glob(IMAGES.'base-meme'.DS.'*.*')));
-		$this->set('quotes_count',ClassRegistry::init('Post')->find('count'));
-		$this->set('asset_count',$asset_count);
-		$this->set('asset_count_all',$asset_count_all);
+		$this->set('recent_users', $users);
+		$this->set('meme_count', count(glob(IMAGES.'base-meme'.DS.'*.*')));
+		$this->set('contest_count', ClassRegistry::init('Contest')->find('count'));
+		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));
+		$this->set('asset_count', $asset_count);
+		$this->set('asset_count_all', $asset_count_all);
 	}
 	
 	public function admin_logout() {

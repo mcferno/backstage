@@ -4,6 +4,12 @@ class Asset extends AppModel {
 	
 	public $displayField = 'filename';
 	public $belongsTo = array('User');
+	public $hasOne = array(
+		'ContestWin' => array(
+			'className' => 'Contest',
+			'foreignKey' => 'winning_asset_id'
+	));
+	public $hasMany = array('Contest');
 	
 	// recognized dataURL image types
 	public $headers = array(

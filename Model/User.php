@@ -5,7 +5,7 @@ App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel {
 
 	public $displayField = 'username';
-	public $hasMany = array('Asset');
+	public $hasMany = array('Asset', 'Contest');
 	
 	protected $facebookObj = false;
 
