@@ -28,10 +28,13 @@ var MemeGenerator = {
 	fontStrokeWidthScale : (7 / 800),
 	
 	// series of coordinates within the canvas
-	coords : {}
+	coords : {},
+
+	// set of external configurations
+	config : {}
 };
 
-/*global AppBaseURL, memeBaseImages */
+/*global AppBaseURL */
 (function($, ns) {
 	"use strict";
 	
@@ -167,7 +170,7 @@ var MemeGenerator = {
 
 			if(contest) {
 				payload.type = 'Contest';
-				payload.contestId = contestEntryId;
+				payload.contestId = ns.config.contestEntryId;
 			}
 
 			$.post(
@@ -345,7 +348,7 @@ var MemeGenerator = {
 	ns.init = function() {
 		ns.canvas = $('#workspace').get(0); // dom object
 		ns.context = ns.canvas.getContext('2d');
-		ns.images = memeBaseImages;
+		ns.images = ns.config.baseImages;
 		ns.firstLineText = $('#first-line');
 		ns.lastLineText = $('#last-line');
 		

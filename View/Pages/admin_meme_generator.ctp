@@ -11,9 +11,9 @@
 	}
 ?>
 <script>
-var memeBaseImages = <?php echo json_encode($base_images); ?>;
+MemeGenerator.config.baseImages = <?php echo json_encode($base_images); ?>;
 <?php if(!empty($contest['Contest']['id'])) : ?>
-var contestEntryId = <?php echo json_encode($contest['Contest']['id']); ?>;
+MemeGenerator.config.contestEntryId = <?php echo json_encode($contest['Contest']['id']); ?>;
 <?php endif; ?>
 </script>
 <form class="meme-generator">
