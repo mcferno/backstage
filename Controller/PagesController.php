@@ -47,7 +47,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Tumblr');
+	public $uses = array('Tumblr', 'Contest', 'Asset');
 
 /**
  * Displays a view
@@ -91,19 +91,35 @@ class PagesController extends AppController {
 	 * Presents the interface for the js-driven meme generator tool.
 	 */
 	public function admin_meme_generator() {
+
+		// specific subset of images specified
 		if(!empty($this->request->pass[0])) {
 			$images = glob(IMAGES.'user'.DS.$this->request->pass[0].'*');
 			$images = array_merge($images, glob(IMAGES.'base-meme'.DS.$this->request->pass[0].'*'));
 		
 		// meme of a specific user-uploaded image
 		} elseif(!empty($this->request->params['named']['asset'])) {
-			$path = ClassRegistry::init('Asset')->getPath($this->request->params['named']['asset']);
+			$path = $this->Asset->getPath($this->request->params['named']['asset']);
 			
 			if(!empty($path)) {
 				$images[] = $path;
 			}
+
+		// caption contest
+		} elseif(!empty($this->request->params['named']['contest'])) {
+			$contest = $this->Contest->getActiveContest($this->request->params['named']['contest']);
+
+			if($contest === false) {
+				$this->Session->setFlash('Sorry, the contest is either done, or could not be found.', 'messaging/alert-error');
+				$this->redirect(array('controller' => 'contests', 'action' => 'index'));
+			}
+
+			$images[] = $this->Asset->getPath($contest['Asset']['id']);
+
+			$this->set('contest', $contest);
 		}
 		
+		// fallback set of images
 		if(empty($images)) {
 			$images = glob(IMAGES.'base-meme'.DS.'*.*');
 			foreach ($images as &$image) {

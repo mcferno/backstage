@@ -14,7 +14,7 @@ class Contest extends AppModel {
 	public $belongsTo = array(
 		
 		// the creator of the contest
-		'User' ,
+		'User',
 		
 		// the base image for this contest
 		'Asset',
@@ -34,13 +34,37 @@ class Contest extends AppModel {
 		)
 	);
 
+	/**
+	 * Obtains a single active contest
+	 *
+	 * @param {UUID} Primary key of the desired contest
+	 * @return {Asset} Active contest matching $id, or false
+	 */
+	public function getActiveContest($id) {
+
+		return $this->find('first', array(
+			'contain' => array('User', 'Asset'),
+			'conditions' => array(
+				"{$this->alias}.winning_asset_id IS NULL",
+				"{$this->alias}.id" => $id
+			)
+		));
+
+	}
+
+	/**
+	 * Obtains the set of all active contests
+	 * 
+	 * @return {Asset[]} All active contests
+	 */
 	public function getActiveContests() {
 
 		return $this->find('all' , array(
 			'contain' => array('User', 'Asset'),
 			'conditions' => array(
 				"{$this->alias}.winning_asset_id IS NULL"
-			)
+			),
+			'order' => "{$this->alias}.created DESC"
 		));
 
 	}

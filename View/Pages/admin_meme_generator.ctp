@@ -4,14 +4,31 @@
 	foreach ($base_images as &$image) {
 		$image = $this->Html->webroot('img/'.$image);
 	}
+
+	$title = 'Meme Generator';
+	if(!empty($contest)) {
+		$title = 'Caption Battle';
+	}
 ?>
 <script>
 var memeBaseImages = <?php echo json_encode($base_images); ?>;
+<?php if(!empty($contest['Contest']['id'])) : ?>
+var contestEntryId = <?php echo json_encode($contest['Contest']['id']); ?>;
+<?php endif; ?>
 </script>
 <form class="meme-generator">
 	<div class="row">
 		<div class="span8">
-			<h1>Meme Generator</h1>
+			<h1><?= $title; ?></h1>
+
+			<?php 
+				if(!empty($contest['User'])) {
+					echo $this->Html->tag('p', "Started by <i class=\"icon-white icon-user\"></i> {$contest['User']['username']}");
+				}
+				if(!empty($contest['Contest']['message'])) {
+					echo $this->Html->tag('p', nl2br($contest['Contest']['message']));
+				}
+			?>
 		</div>
 	</div>
 
@@ -41,6 +58,11 @@ var memeBaseImages = <?php echo json_encode($base_images); ?>;
 			<button class="btn btn-primary save-image"><i class="icon-white icon-refresh"></i> Refresh<span class="extra"> Image</span></button>
 			<button class="btn btn-inverse live-mode"><i class="icon-white icon-remove"></i> Auto<span class="extra"> Refresh</span></button>
 			<button class="btn choose-background" data-loading-text='<i class="icon icon-refresh"></i><span class="extra"> Change Image</span>'><i class="icon icon-picture"></i><span class="extra"> Change Image</span></button>
+			<?php 
+				if(!empty($contest['Contest']['id'])) {
+					echo $this->Html->link('<i class="icon icon-search"></i> View Battle', array('controller' => 'contests', 'action' => 'view', $contest['Contest']['id']), array('class' => 'btn', 'escape' => false));
+				}
+			?>
 		</div>
 	</div>
 	
@@ -71,7 +93,11 @@ var memeBaseImages = <?php echo json_encode($base_images); ?>;
 	*/ ?>
 	<div class="row">
 		<div class="span8">
+			<?php if(!empty($contest['Contest']['id'])) : ?>
+			<button class="btn-large btn-success save-to-contest" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save Entry</button>
+			<?php else : ?>
 			<button class="btn btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save on Server</button>
+			<?php endif; ?>
 			<button class="btn btn-danger reset"><i class="icon-white icon-ban-circle"></i> Start Over</button>
 		</div>
 	</div>

@@ -70,6 +70,10 @@ var MemeGenerator = {
 		.on('click','.meme-generator .save',function() {
 			$(this).button('loading');
 			ns.sendImageToServer();
+		})
+		.on('click','.meme-generator .save-to-contest',function() {
+			$(this).button('loading');
+			ns.sendImageToServer('contest');
 		});
 		
 
@@ -154,14 +158,28 @@ var MemeGenerator = {
 	
 	ns.sendImageToServer = function() {
 		if(ns.currentImage.height > 0 && ns.currentImage.width > 0) {
+
+			var payload = {
+				image : ns.canvas.toDataURL('image/jpeg')
+			};
+
+			var contest = (typeof arguments[0] == 'string' && arguments[0] == 'contest');
+
+			if(contest) {
+				payload.type = 'Contest';
+				payload.contestId = contestEntryId;
+			}
+
 			$.post(
-				AppBaseURL+'backstage/assets/save',
-				{
-					image : ns.canvas.toDataURL('image/jpeg')
-				},
+				AppBaseURL + 'backstage/assets/save',
+				payload,
 				function(data) {
 					if(data.image_saved) {
-						$('.meme-generator .save').button('reset');
+						if(contest) {
+							$('.meme-generator .save-to-contest').button('reset');
+						} else {
+							$('.meme-generator .save').button('reset');
+						}
 					}
 				}
 			);

@@ -360,7 +360,7 @@ a:hover {
 	text-align: center;
 }
 
-.meme-generator button {
+.meme-generator button, .meme-generator .btn {
 	padding: 1em 1em 1em;
 	margin-bottom: 0.5em;
 }
@@ -396,7 +396,7 @@ a:hover {
 	margin-bottom: 0.5em;
 }
 
-.meme-generator .save {
+.meme-generator .save, .save-to-contest {
 	margin-right: 4em;
 }
 
