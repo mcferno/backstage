@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="span2 text-right">
 		<h3>Contributing Users</h3>
-		<ul class="unstyled actions">
+		<ul class="unstyled">
 			<?php foreach($contributingUsers as $user) : ?>
 			<li><strong><?= $this->Html->link($user['User']['username'],array('action'=>'user', $user['User']['id']),array('escape'=>false)); ?></strong> <i class="icon-white icon-user"></i></li>
 			<?php endforeach; ?>
