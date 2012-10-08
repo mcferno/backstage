@@ -69,4 +69,59 @@ class Contest extends AppModel {
 
 	}
 
+	/**
+	 * Determines whether the Contest is owned by a specific user.
+	 * 
+	 * @param {UUID} $contest_id Contest to determine ownership
+	 * @param {UUID} $user_id User in question
+	 * @return {Boolean} Whether or not the User provided is the Contest owner
+	 */
+	public function isOwner($contest_id, $user_id) {
+		if(empty($contest_id) || empty($user_id)) {
+			return false;
+		}
+
+		return $this->hasAny(array(
+			'id' => $contest_id,
+			'user_id' => $user_id
+		));
+	}
+
+	/**
+	 * Determines if a Contest is newer than a specific time period
+	 * 
+	 * @param {UUID} $contest_id Contest to determine freshness
+	 * @param {Integer} $duration Length in seconds by which the Contest must be older
+	 * @return {Boolean} Whether or not the contest is considered recent
+	 */
+	public function isRecent($contest_id, $duration = DAY) {
+		$this->id = $contest_id;
+		$created = $this->field('created');
+
+		if($created !== false) {
+			return time() - strtotime($created) <= $duration;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Sets the winning Asset for a specific Contest
+	 * 
+	 * @param {UUID} $contest_id Contest to set the winner for
+	 * @param {UUID} $asset_id Asset to set as the winner
+	 * @param {Boolean} $force Whether or not to override an existing winner
+	 * @return {Boolean} Save status
+	 */
+	public function setWinningAsset($contest_id, $asset_id, $force = false) {
+		
+		// verify that this Contest has no existing winner
+		if(!$force && !$this->hasAny(array('id' => $contest_id, 'winning_asset_id IS NULL'))) {
+			return false;
+		}
+
+		$this->create();
+		$this->id = $contest_id;
+		return $this->saveField('winning_asset_id', $asset_id);
+	}
 }

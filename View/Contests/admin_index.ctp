@@ -47,7 +47,7 @@
 
 		<?php endif; ?>
 		
-		<h2>Past Battles</h2>
+		<h2>All Battles</h2>
 
 		<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
 		
