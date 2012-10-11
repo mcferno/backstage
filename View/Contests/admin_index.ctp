@@ -1,14 +1,14 @@
 <?php
 	$this->set('contentSpan',10);
 ?>	
-<div class="row">
+<div class="row-fluid">
 	<div class="span2">
 		&nbsp;
 		<?php if(!empty($activeContests)) : ?>
 		<p><i class="icon-white icon-info-sign"></i> To start a caption battle of your own, pick an image from <?= $this->Html->link('Your Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?>.</p>
 		<?php endif; ?>
 	</div>
-	<div class="span8">
+	<div class="span10">
 		<h1>Caption Battles</h1>
 		<p>There have been <span class="badge <?= (count($contests))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> battles.<p>
 

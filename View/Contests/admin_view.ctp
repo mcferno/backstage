@@ -2,12 +2,12 @@
 	$this->set('contentSpan',10);
 	$landing_page = (empty($this->request->params['named']['page']));
 ?>	
-<div class="row">
+<div class="row-fluid">
 	<div class="span12">
 		<h1>Caption Battle</h1>
 	</div>
 </div>
-<div class="row">
+<div class="row-fluid">
 	<div class="span2 text-right">
 		<ul class="unstyled">
 			<li><strong><?= $contest['User']['username']; ?></strong> <i class="icon-white icon-user"></i></li>
@@ -47,7 +47,7 @@
 			<li><?= $this->Html->link('<i class="icon icon-chevron-left"></i> View Caption Battles', array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
 		</ul>
 	</div>
-	<div class="span8">
+	<div class="span10">
 
 		<?php if($landing_page) : ?>
 
@@ -92,14 +92,14 @@
 
 		<?= $this->element('admin/pagination'); ?>
 
-		<p>
+		<p class="text-center">
 		<?php if($contest['Contest']['winning_asset_id'] === $assets[0]['Asset']['id']) {
 			echo $this->Html->image('ui/trophy.png') . " <strong>Winning</strong> ";
 		}
 		?>
 			Entry by <i class="icon-white icon-user"></i> <strong><?= $assets[0]['User']['username']; ?></strong> on <i class="icon-white icon-time"></i> <?= $assets[0]['Asset']['created']; ?>
 		</p>
-		<?= $this->Html->image('user/' . $assets[0]['User']['id'] . '/' .$assets[0]['Asset']['filename']); ?>
+		<p class="text-center"><?= $this->Html->image('user/' . $assets[0]['User']['id'] . '/' .$assets[0]['Asset']['filename']); ?></p>
 
 		<br><br>
 		<?= $this->element('admin/pagination'); ?>
