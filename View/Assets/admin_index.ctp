@@ -1,7 +1,7 @@
 <?php
 	$this->set('contentSpan',10);
 ?>	
-<div class="row">
+<div class="row-fluid">
 	<div class="span2 text-right">
 		<h3>Specs</h3>
 		<ul class="unstyled">
@@ -13,7 +13,7 @@
 			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success image-upload-btn','escape'=>false)); ?></li>
 		</ul>
 	</div>
-	<div class="span8">
+	<div class="span10">
 		<h1>Your Images</h1>
 		<?php if(!empty($images)) : ?>
 		<p>You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> images</p>

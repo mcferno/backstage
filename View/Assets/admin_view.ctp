@@ -4,13 +4,13 @@
 	$filesize = filesize($rel_path);
 	$this->set('contentSpan',10);
 ?>
-<div class="row">
+<div class="row-fluid">
 	<div class="span12">
 		<h1>Saved Image</h1>
 	</div>
 </div>
 	
-<div class="row">
+<div class="row-fluid">
 	<div class="span2 asset-view text-right">
 		<ul class="unstyled">
 			<li><strong><?= $asset['User']['username']; ?></strong> <i class="icon-white icon-user"></i></li>
@@ -34,7 +34,7 @@
 			<?php endif; ?>
 		</ul>	
 	</div>
-	<div class="span8 text-center">
+	<div class="span10 text-center">
 		<p><?= $this->Html->image($user_dir.$asset['Asset']['filename']); ?></p>
 
 		<p>Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $user_dir . $asset['Asset']['filename']; ?>"></p>

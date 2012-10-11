@@ -53,8 +53,8 @@
 	</ul>
 </div>
 
-<div class="row">
-<div class="span8">
+<div class="row-fluid">
+<div class="span12">
 	<h4 class="text-right">site updates</h4>
 	<table class="table table-striped">
 	<tr>
@@ -79,9 +79,11 @@
 */ ?>
 	</table>
 </div>
+</div>
 
 <?php if($this->Session->read('Auth.User.role') >= 1): ?>
-<div class="span4">
+<div class="row-fluid">
+<div class="span12">
 	<h4 class="text-right">user activity</h4>
 	<table class="table table-striped">
 		<tr>
@@ -96,5 +98,5 @@
 		<?php endforeach; ?>
 	</table>
 </div>
-<?php endif; ?>
 </div>
+<?php endif; ?>

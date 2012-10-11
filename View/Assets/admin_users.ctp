@@ -1,7 +1,7 @@
 <?php
 	$this->set('contentSpan',10);
 ?>	
-<div class="row">
+<div class="row-fluid">
 	<div class="span2 text-right">
 		<h3>Contributing Users</h3>
 		<ul class="unstyled actions">
@@ -10,7 +10,7 @@
 			<?php endforeach; ?>
 		</ul>	
 	</div>
-	<div class="span8">
+	<div class="span10">
 
 		<h1>Images From All Users</h1>
 		<p>We have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count((int)$this->Paginator->counter('{:count}')))?'badge-custom':''; ?>"><?= $this->Paginator->counter('{:count}'); ?></span> images.</p>
