@@ -47,7 +47,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Tumblr');
+	public $uses = array('Tumblr', 'Asset');
 
 /**
  * Displays a view
@@ -91,23 +91,48 @@ class PagesController extends AppController {
 	 * Presents the interface for the js-driven meme generator tool.
 	 */
 	public function admin_meme_generator() {
+
+		$img_path_count = strlen(IMAGES);
+
+		// load images by filename
 		if(!empty($this->request->pass[0])) {
+
+			// find any images matching the parameter (absolute paths)
 			$images = glob(IMAGES.'user'.DS.$this->request->pass[0].'*');
 			$images = array_merge($images, glob(IMAGES.'base-meme'.DS.$this->request->pass[0].'*'));
+
+			// convert paths to make them relative to the image folder
+			foreach($images as &$image) {
+				$image = substr($image, $img_path_count);
+			}
 		
 		// meme of a specific user-uploaded image
 		} elseif(!empty($this->request->params['named']['asset'])) {
-			$path = ClassRegistry::init('Asset')->getPath($this->request->params['named']['asset']);
+			$path = $this->Asset->getPath($this->request->params['named']['asset']);
 			
 			if(!empty($path)) {
 				$images[] = $path;
 			}
 		}
 		
+		// if not images match, used a default set
 		if(empty($images)) {
 			$images = glob(IMAGES.'base-meme'.DS.'*.*');
 			foreach ($images as &$image) {
-				$image = substr($image,strlen(IMAGES));
+				$image = substr($image, $img_path_count);
+			}
+
+			// get all user images without text
+			$plain_images = $this->Asset->find('all', array(
+				'fields' => array('user_id', 'filename'),
+				'conditions' => array(
+					'type' => array('URLgrab', 'Upload')
+				)
+			));
+
+			// add to pool of images
+			foreach ($plain_images as $asset) {
+				$images[] = $this->Asset->folderPathRelative . $asset['Asset']['user_id'] . DS . $asset['Asset']['filename'];
 			}
 		}
 
