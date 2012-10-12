@@ -87,10 +87,15 @@ class AppController extends Controller {
 			if(!empty($user_key)) {
 				$user = $this->User->getBySessionIdentifier($user_key);
 
+				// re-authentication failed
 				if(!$user || !$this->Auth->login($user['User'])) {
 					$this->Cookie->delete('persist');
+
+				// re-authentication succeeds
+				} else {
+					$this->User->setLastLogin($this->Auth->user('id'), time());
+					$this->persistSession();
 				}
-				$this->User->setLastLogin($this->Auth->user('id'),time());
 			}
 		}
 	}
@@ -142,11 +147,10 @@ class AppController extends Controller {
 	 */
 	protected function _getHeartbeatData() {
 		$MessageModel = ClassRegistry::init('Message');
-		$UserModel = ClassRegistry::init('User');
 		$currentUser = $this->Auth->user('id');
 		
 		$data = array();
-		$data['online'] = $UserModel->getOnlineUsers();
+		$data['online'] = $this->User->getOnlineUsers();
 		$data['ack'] = time();
 		
 		if(isset($this->request->query['ack'])) {
@@ -156,7 +160,7 @@ class AppController extends Controller {
 				$data['messages'] = $MessageModel->getNewMessages($since);
 			} else {
 				$since = date(MYSQL_DATE_FORMAT,$clientAck);
-				$UserModel->setLastAck($currentUser, $clientAck);
+				$this->User->setLastAck($currentUser, $clientAck);
 				$data['messages'] = $MessageModel->getNewMessages($since, $currentUser);
 			}
 		}
@@ -209,4 +213,18 @@ class AppController extends Controller {
 
 		return $result;
 	}
+
+	/**
+	 * Persists a user's session after login for repeat visits.
+	 */
+	protected function persistSession() {
+
+		$identifier = $this->User->getSessionIdentifier($this->Auth->user('id'));
+		
+		if($identifier !== false) {
+			// store user information in an encrypted cookie
+			$this->Cookie->write('persist', $identifier, true, '+1 month');
+		}
+	}
+
 }
