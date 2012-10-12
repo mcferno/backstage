@@ -34,8 +34,8 @@ class AssetsController extends AppController {
 	 */
 	public function admin_index() {
 		$this->paginate['conditions']['Asset.user_id'] = $this->Auth->user('id');
-		$this->set('images',$this->paginate());
-		$this->set('user_dir','user/'.$this->Auth->user('id').'/');
+		$this->set('images', $this->paginate());
+		$this->set('user_dir', $this->Asset->folderPathRelative . $this->Auth->user('id').'/');
 	}
 	
 	/**
@@ -52,7 +52,7 @@ class AssetsController extends AppController {
 		
 		$this->set('user',$this->Asset->User->findById($user_id));
 		$this->set('images',$this->paginate());
-		$this->set('user_dir','user/'.$user_id.'/');
+		$this->set('user_dir', $this->Asset->folderPathRelative . $user_id . DS);
 	}
 	
 	public function admin_users() {
@@ -67,7 +67,7 @@ class AssetsController extends AppController {
 		$this->paginate = array_merge($this->paginate, $paginate);
 		$this->set('images',$this->paginate());
 		$this->set('contributingUsers',$contributingUsers);
-		$this->set('user_dir','user/');
+		$this->set('user_dir', $this->Asset->folderPathRelative);
 	}
 	
 	/**
@@ -171,19 +171,24 @@ class AssetsController extends AppController {
 	 * @param {UUID} $id Primary key of the desired asset
 	 */
 	public function admin_view($id = null) {
+
 		$asset = $this->Asset->find('first',array(
 			'contain' => 'User',
 			'conditions' => array(
-				'Asset.id' => $id,
-				// 'Asset.user_id'=>$this->Auth->user('id')
+				'Asset.id' => $id
 			)
 		));
+
 		if(empty($asset)) {
 			$this->Session->setFlash('Image could not be found.','messaging/alert-error');
 			$this->redirect($this->referer('index'));
 		}
-		$this->set('asset',$asset);	
-		$this->set('user_dir','user/'.$asset['Asset']['user_id'].'/');
+
+		$this->request->data = $asset;
+
+		$this->set('asset', $asset);
+		$this->set('types', $this->Asset->getTypes());
+		$this->set('user_dir', $this->Asset->folderPathRelative . $asset['Asset']['user_id'].'/');
 	}
 	
 	/**
@@ -248,6 +253,17 @@ class AssetsController extends AppController {
 		);
 		
 		$this->redirect($fbSDK->getLoginUrl($login_params));
+	}
+
+	public function admin_edit($id) {
+		if(!empty($this->request->data)) {
+			if($this->Asset->save($this->request->data, false)) {
+				$this->Session->setFlash('Asset type successfully updated.', 'messaging/alert-success');
+			} else {
+				$this->Session->setFlash('An error occured while saving. Please try again.', 'messaging/alert-error');
+			}
+		}
+		$this->redirect($this->referer(array('action' => 'admin_view', $id)));
 	}
 	
 	/**

@@ -32,6 +32,21 @@
 			
 			<li><?= $this->Html->link('<i class="icon-white icon-user"></i> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false)); ?></li>
 			<?php endif; ?>
+
+			<?php if((int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
+
+			<li>
+			<p>Change Type <i class="icon-white icon-question-sign"></i></p>
+			<?php 
+				echo $this->Form->create('Asset', array('url' => array('action' => 'edit'), 'class' => 'asset-type-form'));
+				echo $this->Form->input('id', array('value' => $asset['Asset']['id']));
+				echo $this->Form->input('type', array('label' => false, 'class' => 'asset-type'));
+				echo $this->Form->submit('Save', array('class' => 'asset-type-submit btn-small btn-primary'));
+				echo $this->Form->end();
+			?>
+			</li>
+
+			<?php endif; ?>
 		</ul>	
 	</div>
 	<div class="span10 text-center">

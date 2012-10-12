@@ -244,4 +244,19 @@ class Asset extends AppModel {
 		}
 		return false;
 	}
+
+	/**
+	 * Obtains the list of Asset types
+	 *
+	 * @return {Array} Set of existing Asset types
+	 */
+	public function getTypes() {
+		$types = $this->find('list', array(
+			'fields' => 'type',
+			'group' => "{$this->alias}.type",
+			'order' => "{$this->alias}.type ASC"
+		));
+
+		return array_combine($types, $types);
+	}
 }

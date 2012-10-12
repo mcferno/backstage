@@ -289,6 +289,22 @@ a:hover {
 	margin: 0;
 }
 
+.asset-type {
+	width: 6em;
+}
+
+.asset-type-form .input, .asset-type-form .submit {
+	display: inline-block;
+}
+
+.asset-type-form .submit {
+	margin-left: 0.5em;
+}
+
+.asset-type-form .control-group {
+	margin-bottom: 0;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
