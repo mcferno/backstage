@@ -84,9 +84,9 @@ var memeBaseImages = <?php echo json_encode($base_images); ?>;
 		<div class="span12">
 			<h3>Tips</h3>
 			<ul class="unstyled tips">
-				<li><strong>Save</strong> your meme at any time.</li>
-				<li><strong>iPhone users</strong> : press and hold on the image and you will be prompted to "<strong>Save Image</strong>".</li>
-				<li>Do not use <strong>Live-Mode</strong> if your device is slower, the interface may lag.</li>
+				<li>If you "<strong>Save on Server</strong>", it will automatically appear in "<strong>My Images</strong>" afterwards.</li>
+				<li><strong>iPhone users</strong> : To save a meme on your phone, press and hold on the image and you will be prompted to "<strong>Save Image</strong>".</li>
+				<li>Disable <strong>Live-Mode</strong> if your device is slower, and the interface is lagging.</li>
 			</ul>
 		</div>
 	</div>

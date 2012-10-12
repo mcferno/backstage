@@ -384,6 +384,9 @@ var MemeGenerator = {
 		
 		// choose the first image (random) to display
 		ns.swapImages();
+
+		// toggle live-mode on by default
+		ns.toggleLiveMode();
 	});
 	
 })(jQuery, MemeGenerator);
