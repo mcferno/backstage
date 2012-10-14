@@ -79,10 +79,21 @@ class AssetsController extends AppController {
 		
 		// process upload
 		if(!empty($this->request->data['image'])) {
-			$status = $this->Asset->saveEncodedImage($this->request->data['image'], $this->Auth->user('id'), 'Meme');
+
+			$type = (!empty($this->request->data['type'])) ? $this->request->data['type'] : 'Meme';
+			$status = $this->Asset->saveEncodedImage($this->request->data['image'], $this->Auth->user('id'), $type);
 			
 			if($status === true) {
 				$response['image_saved'] = true;
+				$response['asset_id'] = $this->Asset->id;
+
+				// if a Contest entry, set the association
+				if($type == 'Contest' && !empty($this->request->data['contestId'])) {
+					ClassRegistry::init('AssetsContest')->save(array(
+						'asset_id' => $this->Asset->id,
+						'contest_id' => $this->request->data['contestId']
+					));
+				}
 			}
 		}
 		
@@ -172,7 +183,7 @@ class AssetsController extends AppController {
 	 */
 	public function admin_view($id = null) {
 
-		$asset = $this->Asset->find('first',array(
+		$asset = $this->Asset->find('first', array(
 			'contain' => 'User',
 			'conditions' => array(
 				'Asset.id' => $id

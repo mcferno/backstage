@@ -4,6 +4,12 @@ class Asset extends AppModel {
 	
 	public $displayField = 'filename';
 	public $belongsTo = array('User');
+	public $hasOne = array(
+		'ContestWin' => array(
+			'className' => 'Contest',
+			'foreignKey' => 'winning_asset_id'
+	));
+	public $hasMany = array('Contest');
 	
 	// recognized dataURL image types
 	public $headers = array(
@@ -51,13 +57,17 @@ class Asset extends AppModel {
 	 * @param {UUID} $asset_id
 	 * @return {String} Server path, relative to the weboot image folder
 	 */
-	public function getPath($asset_id) {
+	public function getPath($asset_id, $size = false) {
 		
 		$asset = $this->findById($asset_id);
 		
 		if(!empty($asset['Asset']['filename'])) {
 			
-			return $this->folderPathRelative . $asset['Asset']['user_id'] . DS . $asset['Asset']['filename'];
+			$base = $this->folderPathRelative . $asset['Asset']['user_id'] . DS;
+			if($size) {
+				$base .= $size . DS;
+			}
+			return $base . $asset['Asset']['filename'];
 		}
 		
 		return '';

@@ -47,7 +47,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
-	public $uses = array('Tumblr', 'Asset');
+	public $uses = array('Tumblr', 'Contest', 'Asset');
 
 /**
  * Displays a view
@@ -94,7 +94,7 @@ class PagesController extends AppController {
 
 		$img_path_count = strlen(IMAGES);
 
-		// load images by filename
+		// specific subset of images specified
 		if(!empty($this->request->pass[0])) {
 
 			// find any images matching the parameter (absolute paths)
@@ -113,9 +113,22 @@ class PagesController extends AppController {
 			if(!empty($path)) {
 				$images[] = $path;
 			}
+
+		// caption contest
+		} elseif(!empty($this->request->params['named']['contest'])) {
+			$contest = $this->Contest->getActiveContest($this->request->params['named']['contest']);
+
+			if($contest === false) {
+				$this->Session->setFlash('Sorry, the contest is either done, or could not be found.', 'messaging/alert-error');
+				$this->redirect(array('controller' => 'contests', 'action' => 'index'));
+			}
+
+			$images[] = $this->Asset->getPath($contest['Asset']['id']);
+
+			$this->set('contest', $contest);
 		}
 		
-		// if not images match, used a default set
+		// fallback set of images
 		if(empty($images)) {
 			$images = glob(IMAGES.'base-meme'.DS.'*.*');
 			foreach ($images as &$image) {

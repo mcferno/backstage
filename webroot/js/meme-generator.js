@@ -28,9 +28,13 @@ var MemeGenerator = {
 	fontStrokeWidthScale : (7 / 800),
 	
 	// series of coordinates within the canvas
-	coords : {}
+	coords : {},
+
+	// set of external configurations
+	config : {}
 };
 
+/*global AppBaseURL */
 (function($, ns) {
 	"use strict";
 	
@@ -69,6 +73,10 @@ var MemeGenerator = {
 		.on('click','.meme-generator .save',function() {
 			$(this).button('loading');
 			ns.sendImageToServer();
+		})
+		.on('click','.meme-generator .save-to-contest',function() {
+			$(this).button('loading');
+			ns.sendImageToServer('contest');
 		});
 		
 
@@ -84,7 +92,7 @@ var MemeGenerator = {
 			$('.choose-background').button('loading');
 			obj = {
 				href : obj
-			}
+			};
 			obj.image = new Image();
 			obj.image.onload = function() {
 				ns.matchCanvasToImage();
@@ -111,19 +119,20 @@ var MemeGenerator = {
 	ns.matchCanvasToImage = function() {
 		var sizing = $('.canvasSize option:selected');
 		
-		if(ns.currentImage.height != 0 && ns.currentImage.width != 0) {
+		if(ns.currentImage.height !== 0 && ns.currentImage.width !== 0) {
 			var max = sizing.data('max');
+			var desiredWidth, desiredHeight;
 			
 			// keep the image in its original form
 			if(max == 'full') {
-				var desiredWidth = ns.currentImage.width;
-				var desiredHeight = ns.currentImage.height;
+				desiredWidth = ns.currentImage.width;
+				desiredHeight = ns.currentImage.height;
 			} else if(ns.currentImage.width > ns.currentImage.height) {
-				var desiredWidth = max;
-				var desiredHeight = parseInt(max / ns.currentImage.width * ns.currentImage.height);
+				desiredWidth = max;
+				desiredHeight = parseInt(max / ns.currentImage.width * ns.currentImage.height, 10);
 			} else {
-				var desiredHeight = max;
-				var desiredWidth = parseInt(max / ns.currentImage.height * ns.currentImage.width);
+				desiredHeight = max;
+				desiredWidth = parseInt(max / ns.currentImage.height * ns.currentImage.width, 10);
 			}
 			
 			// verify that the canvas size matches the selected option
@@ -142,8 +151,8 @@ var MemeGenerator = {
 	ns.canvasToImage = function() {
 		var image = $('#rendered');
 		
-		if(image.length == 0) {
-			var image = $('<img id="rendered" />');
+		if(image.length === 0) {
+			image = $('<img id="rendered" />');
 			$(ns.canvas).parent().append(image);
 		}
 		
@@ -152,14 +161,28 @@ var MemeGenerator = {
 	
 	ns.sendImageToServer = function() {
 		if(ns.currentImage.height > 0 && ns.currentImage.width > 0) {
+
+			var payload = {
+				image : ns.canvas.toDataURL('image/jpeg')
+			};
+
+			var contest = (typeof arguments[0] == 'string' && arguments[0] == 'contest');
+
+			if(contest) {
+				payload.type = 'Contest';
+				payload.contestId = ns.config.contestEntryId;
+			}
+
 			$.post(
-				AppBaseURL+'backstage/assets/save', 
-				{
-					image : ns.canvas.toDataURL('image/jpeg')
-				},
+				AppBaseURL + 'backstage/assets/save',
+				payload,
 				function(data) {
 					if(data.image_saved) {
-						$('.meme-generator .save').button('reset');
+						if(contest) {
+							$('.meme-generator .save-to-contest').button('reset');
+						} else {
+							$('.meme-generator .save').button('reset');
+						}
 					}
 				}
 			);
@@ -218,19 +241,19 @@ var MemeGenerator = {
 		ns.context.save();
 		
 		top = (top === true);
-		var lineWidth = parseInt(ns.canvas.width * 0.97); // slight width padding
+		var lineWidth = parseInt(ns.canvas.width * 0.97, 10); // slight width padding
 		var textWidth = ns.context.measureText(text).width;
 
-		ns.context.font = parseInt(ns.fontSize) + "pt " + ns.fontFamily;
+		ns.context.font = parseInt(ns.fontSize, 10) + "pt " + ns.fontFamily;
 		var lines = ns.breakTextIntoLines(text, lineWidth);
 		
 		if(lines.length > 1) {
 			var idealLines = (lines.length < 3) ? 1 : 2;
 			
-			// determine the optimal font-size	
+			// determine the optimal font-size
 			for(var i=1;i<5;i++) {
 				
-				ns.context.font = parseInt(ns.fontSize * (1 - 0.1*i)) + "pt " + ns.fontFamily;
+				ns.context.font = parseInt(ns.fontSize * (1 - 0.1 * i), 10) + "pt " + ns.fontFamily;
 				lines = ns.breakTextIntoLines(text, lineWidth);
 				
 				if(lines.length <= idealLines) {
@@ -239,22 +262,22 @@ var MemeGenerator = {
 			}
 		}
 		
-		var emWidth = parseInt(ns.context.measureText('M').width*1.4);
-		var offsetY = (top)?emWidth:parseInt(ns.canvas.height * 0.97 - ((lines.length - 1) * emWidth));
+		var emWidth = parseInt(ns.context.measureText('M').width * 1.4, 10);
+		var offsetY = (top) ? emWidth : parseInt(ns.canvas.height * 0.97 - ((lines.length - 1) * emWidth), 10);
 		
 		// write out each line, respecting inner spacing
-		for(var i = 0;i<lines.length;i++) {
-			var line = lines[i].join(' ');
-			ns.context.strokeText(line, ns.coords.center.x,offsetY + i*emWidth);
-			ns.context.fillText(line, ns.coords.center.x, offsetY + i*emWidth);
+		for(var iter = 0; iter < lines.length; iter++) {
+			var line = lines[iter].join(' ');
+			ns.context.strokeText(line, ns.coords.center.x,offsetY + iter * emWidth);
+			ns.context.fillText(line, ns.coords.center.x, offsetY + iter * emWidth);
 		}
 		
-		ns.context.restore(); 
+		ns.context.restore();
 	};
 	
 	/**
 	 * Breaks a string into an array of substrings, all of which fit within
-	 * the provided width maximum. The font size of the current canvas is used 
+	 * the provided width maximum. The font size of the current canvas is used
 	 * in text width calculations.
 	 *
 	 * Attempts to balance the widths of the strings by moving words between the
@@ -265,7 +288,7 @@ var MemeGenerator = {
 	 * @return {Array} Substrings of the text, respecting the width
 	 */
 	ns.breakTextIntoLines = function(text, lineWidth) {
-		var lines = new Array();
+		var lines = [];
 		var words = text.replace(/^\s+|\s+$/,'').replace(/\s\s*/g,' ').split(' '); //'
 		var row = -1;
 		var rowSum = 0;
@@ -273,19 +296,19 @@ var MemeGenerator = {
 		var idealWidth = lineWidth / 4;
 
 		// iterate through the words, collecting length and the greedy-wrap max line count.
-		for(var i = 0; i < words.length ; i++) {
+		for(var iter = 0; iter < words.length ; iter++) {
 			
-			var cost = ns.context.measureText(words[i]).width;
+			var cost = ns.context.measureText(words[iter]).width;
 			
-			// word falls on a new line, 
+			// word falls on a new line
 			if(typeof lines[row] == 'undefined' || rowSum + gapWidth + cost > lineWidth) {
 				row++;
 				rowSum = 0;
-				lines[row] = new Array();
+				lines[row] = [];
 			}
 			
-			lines[row].push(words[i]);
-			rowSum = (rowSum == 0) ? cost : rowSum + gapWidth + cost;
+			lines[row].push(words[iter]);
+			rowSum = (rowSum === 0) ? cost : rowSum + gapWidth + cost;
 		}
 		
 		// balance rows lengths if there are more than one
@@ -300,7 +323,7 @@ var MemeGenerator = {
 					// difference in row lengths before word is moved
 					var deltaBefore = Math.abs(ns.context.measureText(lines[j].join(' ')).width - ns.context.measureText(lines[i].join(' ')).width);
 
-					// move a word down 
+					// move a word down
 					lines[i].unshift(lines[j].pop());
 					
 					// difference in row lengths after word is moved
@@ -325,7 +348,7 @@ var MemeGenerator = {
 	ns.init = function() {
 		ns.canvas = $('#workspace').get(0); // dom object
 		ns.context = ns.canvas.getContext('2d');
-		ns.images = memeBaseImages;
+		ns.images = ns.config.baseImages;
 		ns.firstLineText = $('#first-line');
 		ns.lastLineText = $('#last-line');
 		
@@ -347,9 +370,9 @@ var MemeGenerator = {
 		var fontScale = navigator.userAgent.match(/(iPhone|iPod)/i)?ns.fontToHeightScaleiOS:ns.fontToHeightScale;
 		var canvasHeight = (ns.canvas.width > ns.canvas.height)?ns.canvas.height:ns.canvas.width;
 		var canvasWidth = (ns.canvas.width > ns.canvas.height)?ns.canvas.width:ns.canvas.height;
-		ns.fontSize = parseInt(fontScale * canvasHeight);
+		ns.fontSize = parseInt(fontScale * canvasHeight, 10);
 		ns.context.font = ns.fontSize + "pt " + ns.fontFamily;
-		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * canvasWidth);
+		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * canvasWidth, 10);
 		
 		// calculate the canvas centerpoint
 		ns.coords.center = {
@@ -358,10 +381,10 @@ var MemeGenerator = {
 		};
 	};
 	
-	function isCanvasSupported(){
+	function isCanvasSupported() {
 		var elem = document.createElement('canvas');
 		return !!(elem.getContext && elem.getContext('2d'));
-	};
+	}
 
 	$(document).ready(function() {
 		// early exit if canvas is not supported

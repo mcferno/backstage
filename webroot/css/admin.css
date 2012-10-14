@@ -30,8 +30,17 @@ a {
 	color: #FC6626;
 }
 
+.alert a, .alert a:hover {
+	color: inherit;
+}
+
 a:hover {
 	color: #EEEEEE;
+}
+
+hr {
+	border-top: 1px solid #888;
+	border-bottom: 1px solid #666;
 }
 
 .nav-list > .active > a, .nav-list > .active > a:hover {
@@ -54,6 +63,10 @@ a:hover {
 .features .thumbnail {
 	background-color: #888;
 	color: #EEE;
+	border: 3px solid #888;
+}
+
+.active-contests .thumbnail {
 	border: 3px solid #888;
 }
 
@@ -150,6 +163,10 @@ div.login {
 
 img {
 	max-width: 100%;
+}
+
+.alert a {
+	font-weight: bold;
 }
 
 .hero-unit .thumbnail {
@@ -255,15 +272,15 @@ a:hover {
 	margin: 0 0 10px 20px;
 }
 
-.asset-view .actions li {
+.actions li {
 	margin-top: 1em;
 }
 
-.asset-view .actions a {
+.actions a {
 	padding: 0.8em;
 }
 
-.asset-view .actions .delete {
+.actions .delete {
 	padding: 0.3em;
 	margin-top: 1em;
 }
@@ -285,7 +302,7 @@ a:hover {
 	width: 100%;
 }
 
-.asset-upload-popin form {
+.modal form {
 	margin: 0;
 }
 
@@ -305,6 +322,18 @@ a:hover {
 	margin-bottom: 0;
 }
 
+.contest-start-popin .image {
+	padding-left: 0.5em;
+}
+
+li .icon-white.pull-right {
+	margin-left: 0.5em;
+}
+
+li.comment .text {
+	padding-right: 1.5em;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
@@ -316,7 +345,6 @@ a:hover {
 .pager a {
 	background-color: #444;
 	border: 3px solid #666;
-	font-size: 1.1em;
 }
 
 .pager a:hover {
@@ -363,7 +391,7 @@ a:hover {
 	text-align: center;
 }
 
-.meme-generator button {
+.meme-generator button, .meme-generator .btn {
 	padding: 1em 1em 1em;
 	margin-bottom: 0.5em;
 }
@@ -399,7 +427,7 @@ a:hover {
 	margin-bottom: 0.5em;
 }
 
-.meme-generator .save {
+.meme-generator .save, .save-to-contest {
 	margin-right: 4em;
 }
 

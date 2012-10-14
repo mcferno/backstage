@@ -3,12 +3,18 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 23, 2012 at 09:55 AM
+-- Generation Time: Oct 03, 2012 at 11:54 PM
 -- Server version: 5.1.61
 -- PHP Version: 5.3.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `kennyquotemachine`
@@ -46,9 +52,44 @@ CREATE TABLE IF NOT EXISTS `assets` (
   `checksum` varchar(100) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
-  `fb_id` varchar(25) DEFAULT NULL,
+  `fb_id` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assets_contests`
+--
+
+CREATE TABLE IF NOT EXISTS `assets_contests` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `asset_id` char(36) DEFAULT NULL,
+  `contest_id` char(36) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `asset_id` (`asset_id`),
+  KEY `contest_id` (`contest_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contests`
+--
+
+CREATE TABLE IF NOT EXISTS `contests` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `user_id` char(36) DEFAULT NULL,
+  `asset_id` char(36) DEFAULT NULL,
+  `winning_asset_id` char(36) DEFAULT NULL,
+  `message` text,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `asset_id` (`asset_id`),
+  KEY `winning_asset_id` (`winning_asset_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -144,3 +185,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `session_key` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

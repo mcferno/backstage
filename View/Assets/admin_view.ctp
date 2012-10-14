@@ -21,15 +21,17 @@
 		</ul>
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
+			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab'))) : ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> Meme This Image',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-play-circle"></i> Start Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false)); ?></li>
+			<?php endif; // upload or url download ?>
 			<?php if($this->Session->read('Auth.User.id') == $asset['Asset']['user_id']) : ?>
 			<li><?= $this->Html->link('<i class="icon icon-chevron-left"></i> Return to My Images',array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
 			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal')); ?></li>
-			<?php endif; ?>
+			<?php endif; // user's own image ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-remove"></i> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false),'Are you sure you wish to permanently delete this image?'); ?></li>
-			<?php else : ?>
-			
+			<?php else : // someone else's image ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-user"></i> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false)); ?></li>
 			<?php endif; ?>
 
@@ -79,3 +81,5 @@
 	<?= $this->Form->end(); ?>
 </div>
 <?php endif; ?>
+
+<?= $this->element('common/contest-start'); ?>
