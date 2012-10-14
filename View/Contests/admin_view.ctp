@@ -101,7 +101,8 @@
 		</p>
 		<p class="text-center"><?= $this->Html->image('user/' . $assets[0]['User']['id'] . '/' .$assets[0]['Asset']['filename']); ?></p>
 
-		<br><br>
+		<p class="text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . "user/{$assets[0]['Asset']['user_id']}/{$assets[0]['Asset']['filename']}"); ?>"></p>
+
 		<?= $this->element('admin/pagination'); ?>
 
 		<?php endif; ?>
