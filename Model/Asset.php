@@ -250,6 +250,10 @@ class Asset extends AppModel {
 				}
 				unlink("{$base_path}{$record['Asset']['filename']}");
 			}
+
+			// remove any contest entries, if applicable
+			ClassRegistry::init('AssetsContest')->deleteAll(array('asset_id' => $this->id));
+
 			return true;
 		}
 		return false;
