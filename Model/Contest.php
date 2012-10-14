@@ -34,6 +34,14 @@ class Contest extends AppModel {
 		)
 	);
 
+	// strings used in Facebook integration following specific actions
+	public $fbStrings = array(
+		'new_title' => 'New Caption Battle Started!',
+		'new_desc' => 'Submit your entries via Backstage, and a winner will be chosen by the end.',
+		'winner_title' => 'Caption Battle Winner!',
+		'winner_desc' => 'The caption battle has ended, and this entry was chosen as the winner.',
+	);
+
 	/**
 	 * Obtains a single active contest
 	 *

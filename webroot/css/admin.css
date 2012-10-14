@@ -30,6 +30,10 @@ a {
 	color: #FC6626;
 }
 
+.alert a, .alert a:hover {
+	color: inherit;
+}
+
 a:hover {
 	color: #EEEEEE;
 }
@@ -159,6 +163,10 @@ div.login {
 
 img {
 	max-width: 100%;
+}
+
+.alert a {
+	font-weight: bold;
 }
 
 .hero-unit .thumbnail {
