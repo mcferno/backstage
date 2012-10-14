@@ -100,7 +100,7 @@ class ContestsController extends AppController {
 		// send the user away to authenticate
 		$login_params = array(
 			'scope' => $this->User->getFacebookPermissions(),
-			'redirect_uri' => Router::url(array('action' => 'announce_new', $id), true)
+			'redirect_uri' => Router::url(array('action' => 'announce', $id), true)
 		);
 		
 		$this->redirect($fbSDK->getLoginUrl($login_params));

@@ -24,7 +24,7 @@
 
 		<?php if(!$landing_page) : ?>
 
-		<p><strong>Original</strong><br><?= $this->Html->image('user/' . $contest['User']['id'] . "/200/" .$contest['Asset']['filename'], array('url' => array('action' => 'view', $contest['Contest']['id']), 'title' => 'Caption Battle overview')); ?></p>
+		<p><strong>Original</strong><br><?= $this->Html->image('user/' . $contest['Asset']['user_id'] . "/200/" .$contest['Asset']['filename'], array('url' => array('action' => 'view', $contest['Contest']['id']), 'title' => 'Caption Battle overview')); ?></p>
 
 		<?php if(empty($contest['Contest']['winning_asset_id']) && !empty($assets) && $this->Session->read('Auth.User.id') === $contest['Contest']['user_id']) : ?>
 
@@ -55,7 +55,7 @@
 		<h2><?= nl2br($contest['Contest']['message']); ?></h2>
 		<?php endif; ?>
 
-		<p><?= $this->Html->image('user/' . $contest['User']['id'] . '/' .$contest['Asset']['filename']); ?></p>
+		<p><?= $this->Html->image('user/' . $contest['Asset']['user_id'] . '/' .$contest['Asset']['filename']); ?></p>
 
 		<?php if(empty($assets)) : ?>
 
