@@ -79,8 +79,8 @@ class ContestsController extends AppController {
 			);
 			
 			// attach optional message
-			if(!empty($contest['Contest']['message'])) {
-				$fbPost['message'] .= $contest['Contest']['message'];
+			if(!empty($contest['Contest']['message']) && trim($contest['Contest']['message']) != '') {
+				$fbPost['message'] = $contest['Contest']['message'];
 			}
 
 			try {
