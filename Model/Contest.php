@@ -99,7 +99,7 @@ class Contest extends AppModel {
 	 * Determines if a Contest is newer than a specific time period
 	 * 
 	 * @param {UUID} $contest_id Contest to determine freshness
-	 * @param {Integer} $duration Length in seconds by which the Contest must be older
+	 * @param {Integer} $duration Length in seconds by which the Contest must be older (default: 24hrs)
 	 * @return {Boolean} Whether or not the contest is considered recent
 	 */
 	public function isRecent($contest_id, $duration = DAY) {

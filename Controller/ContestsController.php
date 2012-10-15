@@ -181,8 +181,8 @@ class ContestsController extends AppController {
 		}
 
 		// enforce that a Contest not be closed too quickly
-		if($this->Contest->isRecent($contest_id)) {
-			$this->Session->setFlash('Sorry, the Caption Battle is too new, please allow a day or more for everyone to have a chance to submit entries.', 'messaging/alert-error');
+		if($this->Contest->isRecent($contest_id, 12 * HOUR)) {
+			$this->Session->setFlash('Sorry, the Caption Battle is too new, please allow 12 hrs or more for everyone to have a chance to submit entries.', 'messaging/alert-error');
 			$this->redirect($this->referer(array('action' => 'view', $contest_id)));
 		}
 
