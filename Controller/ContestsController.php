@@ -235,7 +235,7 @@ class ContestsController extends AppController {
 			if($this->Auth->user('id') == $contest['Winner']['User']['id']) {
 				$winner = $this->Auth->user('username') . ' has chosen himself as the winner.';
 			} else {
-				$this->Auth->user('username') . " has chosen {$contest['Winner']['User']['username']} as the winner.";
+				$winner = $this->Auth->user('username') . " has chosen {$contest['Winner']['User']['username']} as the winner.";
 			}
 
 			$fbPost = array(
