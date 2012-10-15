@@ -175,7 +175,7 @@ class ContestsController extends AppController {
 		));
 
 		// enforce ownership of the contest
-		if(!$this->Contest->isOwner($contest_id, $asset['User']['id'])) {
+		if(!$this->Contest->isOwner($contest_id, $this->Auth->user('id'))) {
 			$this->Session->setFlash('Sorry, only the Caption Battle creator can declare the winner.', 'messaging/alert-error');
 			$this->redirect($this->referer(array('action' => 'view', $contest_id)));
 		}
