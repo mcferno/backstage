@@ -17,7 +17,7 @@
 			<h2>Active Battles!</h2>
 
 			<ul class="row thumbnails">
-				<?php foreach ($activeContests as $contest) : ?>
+				<?php foreach ($activeContests as $idx => $contest) : ?>
 				<li class="span4">
 					<div class="thumbnail text-center">
 						<?= $this->Html->link($this->Html->image("user/{$contest['Asset']['user_id']}/200/{$contest['Asset']['filename']}"),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false, 'class' => '')); ?>
@@ -34,6 +34,10 @@
 						</p>
 					</div>
 				</li>
+				<?php if($idx % 2 === 1) : ?>
+				<div class="clearfix"></div>
+				<?php endif; ?>
+
 				<?php endforeach; ?>
 
 			</ul>

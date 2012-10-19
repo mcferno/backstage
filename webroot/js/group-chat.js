@@ -71,10 +71,12 @@ var GroupChat = {
 			var timestamp = this.model.get('timestamp');
 			var date = new Date(timestamp * 1000);
 			
+			var msg = ns.autolinkUrls(this.model.get('text'));
+
 			var rendered = _.template(ns.templates.chatRowTemplate.html(), {
 				date : ns.formatDate(date),
 				username : this.model.get('handle'),
-				message : this.model.get('text')
+				message : msg
 			});
 			this.$el.html(rendered);
 			return this;
@@ -165,6 +167,11 @@ var GroupChat = {
 		row.hide();
 		ns.chatWindow.prepend(row);
 		row.show().css('display','table-row');
+	}
+
+	ns.autolinkUrls = function(text) {
+		var url_regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		return text.replace(url_regex, '<a href="$1">$1</a>');
 	}
 	
 	ns.sendHeartbeat = function() {

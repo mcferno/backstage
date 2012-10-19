@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('Sanitize', 'Utility');
 /**
  * Message Model
  *
@@ -23,6 +24,16 @@ class Message extends AppModel {
 			'order' => ''
 		)
 	);
+
+	public function beforeSave($options = array()) {
+
+		// sanitize for possible xss
+		if(empty($this->data[$this->alias]['id']) && !empty($this->data[$this->alias]['text'])) {
+			$this->data[$this->alias]['text'] = Sanitize::html($this->data[$this->alias]['text']);
+		}
+
+		return true;
+	}
 	
 	public function countNewMessages($user_id, $since = false) {
 		if($since === false) {
