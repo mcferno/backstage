@@ -25,7 +25,7 @@ var MemeGenerator = {
 	fontToHeightScaleiOS : (57 / 450), // to adjust for a different font on iOS
 	
 	// font stroke size coefficient to scale accordingly to width
-	fontStrokeWidthScale : (7 / 800),
+	fontStrokeWidthScale : 0.01,
 	
 	// series of coordinates within the canvas
 	coords : {},
