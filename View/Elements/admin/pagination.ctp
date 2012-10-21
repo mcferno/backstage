@@ -12,12 +12,12 @@ if(isset($show_summary) && $show_summary) :
 
 <div class="paging">
 	<ul class="pager">
-		<li class=""><?= $this->Paginator->prev('<i class="icon icon-chevron-left"></i> previous', array('escape'=>false), null, array('escape'=>false, 'class' => 'prev disabled')); ?></li>
+		<li class=""><?= $this->Paginator->prev('<i class="icon-white icon-chevron-left"></i> previous', array('escape'=>false), null, array('escape'=>false, 'class' => 'prev disabled')); ?></li>
 		<li class=""><?= $this->Paginator->numbers(array('separator' => '', 'modulus'=>4)); ?></li>
 		
 		<?php if($page_limits !== false) : ?>
 		
-		<li class="dropdown">
+		<li class="dropdown page-limit">
 			<a href="#"  role="button" data-target="#" class="dropdown-toggle"  data-toggle="dropdown"><?= $this->params['paging'][$this->Paginator->defaultModel()]['limit']; ?> per page</a>
 			<ul class="dropdown-menu">
 			<?php 
@@ -30,6 +30,6 @@ if(isset($show_summary) && $show_summary) :
 		
 		<?php endif; // show page limit links ?>
 		
-		<li class=""><?= $this->Paginator->next('next <i class="icon icon-chevron-right"></i>', array('escape'=>false,'class'=>''), null, array('escape'=>false,'class' => 'next disabled')); ?></li>
+		<li class=""><?= $this->Paginator->next('next <i class="icon-white icon-chevron-right"></i>', array('escape'=>false,'class'=>''), null, array('escape'=>false,'class' => 'next disabled')); ?></li>
 	</ul>
 </div>

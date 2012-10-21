@@ -109,7 +109,7 @@ hr {
 }
 
 .table tbody tr:hover td, .table tbody tr:hover th {
-	background-color: #888;
+	background-color: #666;
 	color: #DDD;
 }
 
@@ -155,6 +155,7 @@ input.copier {
 
 body {
 	padding-bottom: 4em;
+	font-size: 14px;
 }
 
 div.login {
@@ -347,9 +348,13 @@ li.comment .text {
 	border: 3px solid #666;
 }
 
+.pager .disabled {
+	color: #999;
+}
+
 .pager a:hover {
 	text-decoration:none;
-	background-color:#888;
+	background-color: #555;
 	color: #FC6626;
 }
 
@@ -361,6 +366,14 @@ li.comment .text {
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
+}
+
+.pager .current {
+	font-weight: bold;
+}
+
+.page-limit .dropdown-menu {
+	border-radius: 18px;
 }
 
 .posts .source {
