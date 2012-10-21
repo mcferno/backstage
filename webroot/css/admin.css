@@ -52,14 +52,6 @@ hr {
 	border-bottom: 1px solid #666;
 }
 
-.hero-unit {
-	color: #333;
-}
-
-.hero-unit {
-	background-color: #DDD;
-}
-
 .features .thumbnail {
 	background-color: #888;
 	color: #EEE;
@@ -170,7 +162,24 @@ img {
 	font-weight: bold;
 }
 
-.hero-unit .thumbnail {
+.dash {
+	padding: 3em 0;
+}
+
+.dash p {
+	font-size: 18px;
+	font-weight: 200;
+	line-height: 27px;
+}
+.dash h1 {
+	margin-bottom: 0;
+	font-size: 60px;
+	line-height: 1;
+	color: inherit;
+	letter-spacing: -1px;
+}
+
+.dash .thumbnail {
 	border: 5px solid #666;
 	border-radius: 7px;
 	padding: 0px;
@@ -185,11 +194,11 @@ img {
 	min-height: 240px;
 }
 
-.hero-unit .thumbnail h4, .hero-unit .thumbnail h5 {
+.dash .thumbnail h4, .dash .thumbnail h5 {
 	padding-right: 0.5em;
 }
 
-.hero-unit ul.thumbnails h3 {
+.dash ul.thumbnails h3 {
 	text-align: center;
 }
 
@@ -544,12 +553,16 @@ li.comment .text {
 
 @media (max-width:480px) {
 
-	.hero-unit h1 {
+	.dash {
+		padding: 0;
+	}
+
+	.dash h1 {
 		font-size: 40px;
 	}
-	
-	.hero-unit {
-		padding: 30px;
+
+	.features .span3 {
+		min-height: 0;
 	}
 	
 	.extra {

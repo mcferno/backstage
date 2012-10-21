@@ -1,10 +1,17 @@
-<?php $this->set('suppressSubnav', true); ?>
-<div class="hero-unit">
+<?php 
+	$this->set('suppressSubnav', true); 
+	$this->set('contentSpan', 11); 
+?>
+<div class="row-fluid">
+<div class="span1">&nbsp;</div>
+
+<div class="span11">
+<div class="dash">
 	<h1>dashboard</h1>
 	<p>Welcome <?= $this->Session->read('Auth.User.username'); ?>.</p>
 	<p>Get started on your choice of site features</p>
 	
-	<ul class="row thumbnails features">
+	<ul class="thumbnails features">
 		<li class="span3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
@@ -42,7 +49,7 @@
 				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
 					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
 				</a>
-				<h4 class="text-right">Images added by all users <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4>
+				<h4 class="text-right">Image Count <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4>
 			</div>
 		</li>
 		<li class="span3">
@@ -105,3 +112,6 @@
 </div>
 </div>
 <?php endif; ?>
+
+</div>
+</div>
