@@ -150,6 +150,7 @@ class ContestsController extends AppController {
 		);
 
 		$this->set('assets', $this->paginate('Asset'));
+		$this->set('page_limits', false);
 	}
 
 	/**

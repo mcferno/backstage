@@ -1,7 +1,7 @@
 <?php
 
 // accept page_limit options, or use default set
-$page_limits = (isset($page_limits) && $page_limits !== false) ? $page_limits : array(16, 48, 96);
+$page_limits = (isset($page_limits)) ? $page_limits : array(16, 48, 96);
 
 if(isset($show_summary) && $show_summary) :
 ?>
