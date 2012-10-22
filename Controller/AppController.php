@@ -155,11 +155,16 @@ class AppController extends Controller {
 		
 		if(isset($this->request->query['ack'])) {
 			$clientAck = (int)$this->request->query['ack'];
+
+			// set the last ack to no more than 24 hrs ago
+			$since = date(MYSQL_DATE_FORMAT, max($clientAck, $MessageModel->minimumSince));
+
+			// user's first request
 			if($clientAck === 0) {
-				$since = date(MYSQL_DATE_FORMAT,strtotime('now - 1 day'));
 				$data['messages'] = $MessageModel->getNewMessages($since);
+
+			// follow-up request (exclude one's own messages)
 			} else {
-				$since = date(MYSQL_DATE_FORMAT,$clientAck);
 				$this->User->setLastAck($currentUser, $clientAck);
 				$data['messages'] = $MessageModel->getNewMessages($since, $currentUser);
 			}

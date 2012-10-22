@@ -8,13 +8,12 @@ App::uses('Sanitize', 'Utility');
  */
 class Message extends AppModel {
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	// offset from "now" in seconds, to determine which messages are new
+	public $rolloverTime = DAY;
 
-/**
- * belongsTo associations
- *
- * @var array
- */
+	// rollover time, based on the current timestamp (computed at runtime)
+	public $minimumSince = -1;
+
 	public $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
@@ -24,6 +23,13 @@ class Message extends AppModel {
 			'order' => ''
 		)
 	);
+
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+
+		// compute the utility value timestamp
+		$this->minimumSince = time() - $this->rolloverTime;
+	}
 
 	public function beforeSave($options = array()) {
 
@@ -39,8 +45,9 @@ class Message extends AppModel {
 		if($since === false) {
 			$since = $this->User->field('last_ack',array('id'=>$user_id));
 			
-			if($since === false) {
-				$since = date(MYSQL_DATE_FORMAT,strtotime('now - 1 day'));
+			// since values was not found, or exceeds the max elapsed time.
+			if($since === false || strtotime($since) < $this->minimumSince) {
+				$since = date(MYSQL_DATE_FORMAT, $this->minimumSince);
 			}
 		}	
 		return $this->find('count',array(
