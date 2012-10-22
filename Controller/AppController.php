@@ -93,7 +93,9 @@ class AppController extends Controller {
 
 				// re-authentication succeeds
 				} else {
-					$this->User->setLastLogin($this->Auth->user('id'), time());
+					$this->User->setLastLogin($this->Auth->user('id'), Configure::read('App.start'));
+					$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
+					$this->User->resetUserCache();
 					$this->persistSession();
 				}
 			}
@@ -115,7 +117,7 @@ class AppController extends Controller {
 		if($this->Auth->loggedIn()) {
 			
 			// track the time of the last activity from a specific user
-			ClassRegistry::init('User')->setLastSeen($this->Auth->user('id'),Configure::read('App.start'));
+			$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
 		}
 	}
 

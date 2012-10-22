@@ -106,13 +106,22 @@ class User extends AppModel {
 			$users = $this->find('all',array(
 				'fields'=>array('username','last_seen'),
 				'conditions'=>array(
-					'last_seen >='=>date(MYSQL_DATE_FORMAT,strtotime('now - 5 minutes'))
+					'last_seen >='=>date(MYSQL_DATE_FORMAT, strtotime('now - 2 minutes'))
 				)
 			));
 			Cache::write('onlineUsers', $users, 'online_status');
 		}
 		
 		return $users;
+	}
+
+	/**
+	 * Clears cache related to active user state. Should be ran after new logins
+	 * logouts, etc so the user stats are as accurate as possible.
+	 */
+	public function resetUserCache() {
+		Cache::delete('onlineUsers', 'online_status');
+		Cache::gc('online_status');
 	}
 	
 	/**

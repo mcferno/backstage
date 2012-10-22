@@ -316,9 +316,9 @@
  *
  */
 $engine = 'File';
-if (extension_loaded('apc') && (php_sapi_name() !== 'cli' || ini_get('apc.enable_cli'))) {
-	$engine = 'Apc';
-}
+// if (extension_loaded('apc') && (php_sapi_name() !== 'cli' || ini_get('apc.enable_cli'))) {
+// 	$engine = 'Apc';
+// }
 
 // In development mode, caches should expire quickly.
 $duration = '+999 days';
@@ -364,7 +364,7 @@ Cache::config('online_status', array(
 	'prefix' => 'app_online_status_',
 	'path' => CACHE . 'persistent' . DS,
 	'serialize' => ($engine === 'File'),
-	'duration' => '10 seconds'
+	'duration' => '1 minute'
 ));
 
 if(isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {

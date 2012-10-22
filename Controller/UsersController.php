@@ -24,7 +24,9 @@ class UsersController extends AppController {
 		
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
-				$this->User->setLastLogin($this->Auth->user('id'),time());
+				$this->User->setLastLogin($this->Auth->user('id'), Configure::read('App.start'));
+				$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
+				$this->User->resetUserCache();
 				$this->persistSession();
 				$this->redirect($this->Auth->redirect());
 			} else {
@@ -82,7 +84,7 @@ class UsersController extends AppController {
 	}
 	
 	public function admin_group_chat() {
-		$this->User->setLastAck($this->Auth->user('id'),Configure::read('App.start'));
+		$this->User->setLastAck($this->Auth->user('id'), Configure::read('App.start'));
 	}
 	
 	/**
