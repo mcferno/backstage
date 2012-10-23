@@ -72,7 +72,7 @@
 		<p class="alert alert-warning">This image has been previously posted.</p>
 		<?php endif; ?>
 		<br>
-		<?= $this->Form->input('message',array('type'=>'text','label'=>'Message to post with image (optional)', 'class' => 'span5', 'placeholder' => 'Check this shit out')); ?>
+		<?= $this->Form->input('message',array('type'=>'text','label'=>'Message to post with image (optional)', 'class' => 'span5', 'placeholder' => 'Check this shit out', 'spellcheck' => 'true')); ?>
 	</div>
 	<div class="modal-footer">
 		<?= $this->Form->button('<i class="icon-white icon-upload"></i> Upload', array('class' => 'btn btn-primary')); ?>
