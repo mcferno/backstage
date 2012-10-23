@@ -25,16 +25,23 @@ Router::connect('/privacy-policy', array('controller' => 'pages', 'action'=>'dis
  * Backstage, the administrative panel
  */
 // Setting the admin urls manually, due to differing uri name
-Router::connect("/backstage", array('controller'=>'users', 'action' => 'login', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/dashboard", array('controller'=>'users', 'action' => 'dashboard', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/meme-generator/*", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/user/*", array('controller'=>'assets', 'action' => 'user', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/chat", array('controller'=>'users', 'action' => 'group_chat', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/setup", array('controller' => 'users', 'action' => 'setup', 'prefix', 'admin', 'admin' => true));
+$admin_url = 'backstage';
+Router::connect("/{$admin_url}", array('controller'=>'users', 'action' => 'login', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/dashboard", array('controller'=>'users', 'action' => 'dashboard', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/meme-generator/*", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/my-images/*", array('controller'=>'assets', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/all-images/*", array('controller'=>'assets', 'action' => 'users', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/caption-battles", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/caption-battles/:action/*", array('controller'=>'contests', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/caption-battles/*", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/user/*", array('controller'=>'assets', 'action' => 'user', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/chat", array('controller'=>'users', 'action' => 'group_chat', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/setup", array('controller' => 'users', 'action' => 'setup', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/quotes/*", array('controller' => 'posts', 'action'=> 'index', 'prefix' => 'admin', 'admin' => true));
 
-Router::connect("/backstage/:controller", array('action' => 'index', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/:controller/:action/", array('prefix' => 'admin', 'admin' => true));
-Router::connect("/backstage/:controller/:action/*", array('prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/:controller", array('action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/:controller/:action/", array('prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/:controller/:action/*", array('prefix' => 'admin', 'admin' => true));
 
 
 /**
