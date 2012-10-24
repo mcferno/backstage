@@ -93,6 +93,10 @@ class AssetsController extends AppController {
 						'asset_id' => $this->Asset->id,
 						'contest_id' => $this->request->data['contestId']
 					));
+
+					$response['view_url'] = Router::url(array('controller' => 'contests', 'action' => 'view', $this->request->data['contestId'], 'page' => 1), true);
+				} else {
+					$response['view_url'] = Router::url(array('controller' => 'assets', 'action' => 'view', $this->Asset->id), true);
 				}
 			}
 		}

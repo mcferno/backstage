@@ -413,11 +413,6 @@ li.comment .text {
 	text-align: center;
 }
 
-.meme-generator button, .meme-generator .btn {
-	padding: 1em 1em 1em;
-	margin-bottom: 0.5em;
-}
-
 .meme-generator .output {
 	margin-top: 0.5em;
 	margin-bottom: 1em;
@@ -428,7 +423,11 @@ li.comment .text {
 	padding: 0.5em;
 }
 .meme-generator select {
-	font-size: 1.2em;
+	font-size: 1.1em;
+}
+
+.btn-huge {
+	padding: 1em 1em 1em;
 }
 
 #workspace {
@@ -449,12 +448,21 @@ li.comment .text {
 	margin-bottom: 0.5em;
 }
 
-.meme-generator .save, .save-to-contest {
-	margin-right: 4em;
+.meme-generator .resize-reset {
+	margin-top: 2em;
 }
 
-.meme-generator .reset {
-	padding: 0.5em;
+.resize-reset .reset {
+	margin-left: 2em;
+}
+
+.meme-generator .btn-group {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.meme-generator .btn {
+	margin-bottom: 0.5em;
 }
 
 /* @end meme-generator ===================================================== */

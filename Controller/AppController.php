@@ -35,7 +35,7 @@ class AppController extends Controller {
 	public $uses = array('User');
 	
 	public $helpers = array(
-		'Site','Html','Js','Paginator','Session','Text','Cache',
+		'Site','Html','Paginator','Session','Text','Cache',
 		'Form' => array(
 			'className' => 'AppForm'
 		)

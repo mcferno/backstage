@@ -1,6 +1,7 @@
 /**
  * Site-wide tools
  */
+/*global _gaq */
 application = {};
 (function($) {
 	"use strict";
@@ -17,7 +18,7 @@ application = {};
 		}
 	});
 	
-	$(document).ready(function() {		
+	$(document).ready(function() {
 		// mouseover icon-color inversion
 		$('.dropdown-menu i.icon').each(function(){
 			$(this).closest('li')
@@ -26,7 +27,7 @@ application = {};
 				})
 				.mouseout(function() {
 					$(this).find('.icon-white').addClass('icon').removeClass('icon-white');
-				})
+				});
 		});
 		
 		// js detection for css tweaks

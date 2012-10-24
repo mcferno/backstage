@@ -2,7 +2,7 @@
 	$this->Html->script(array('meme-generator.js?t='.filemtime(JS.'meme-generator.js')),false);
 	
 	foreach ($base_images as &$image) {
-		$image = $this->Html->webroot('img/'.$image);
+		$image = $this->Html->webroot(IMAGES_URL . $image);
 	}
 
 	$title = 'Meme Generator';
@@ -13,7 +13,10 @@
 <script>
 MemeGenerator.config.baseImages = <?php echo json_encode($base_images); ?>;
 <?php if(!empty($contest['Contest']['id'])) : ?>
+MemeGenerator.config.type = 'Contest';
 MemeGenerator.config.contestEntryId = <?php echo json_encode($contest['Contest']['id']); ?>;
+<?php else: ?>
+MemeGenerator.config.type = 'Meme';
 <?php endif; ?>
 </script>
 <form class="meme-generator">
@@ -43,21 +46,25 @@ MemeGenerator.config.contestEntryId = <?php echo json_encode($contest['Contest']
 	
 	<div class="row-fluid">
 		<div class="span12">
-			<input type="text" name="first-line" id="first-line" class="span5" value="" placeholder="First line of text" spellcheck="true"></input>
+			<input type="text" name="first-line" id="first-line" class="span5" value="<?= $first_line; ?>" placeholder="First line of text" spellcheck="true"></input>
 		</div>
 	</div>
 	
 	<div class="row-fluid">
 		<div class="span12">
-			<input type="text" name="last-line" id="last-line" class="span5" value="" placeholder="Last line of text" spellcheck="true"></input>
+			<input type="text" name="last-line" id="last-line" class="span5" value="<?= $last_line; ?>" placeholder="Last line of text" spellcheck="true"></input>
 		</div>
 	</div>
 	
 	<div class="row-fluid actions">
 		<div class="span12">
-			<button class="btn btn-primary save-image"><i class="icon-white icon-refresh"></i> Refresh<span class="extra"> Image</span></button>
-			<button class="btn btn-inverse live-mode"><i class="icon-white icon-remove"></i> Auto<span class="extra"> Refresh</span></button>
-			<button class="btn choose-background" data-loading-text='<i class="icon icon-refresh"></i><span class="extra"> Change Image</span>'><i class="icon icon-picture"></i><span class="extra"> Change Image</span></button>
+			<div class="btn-group">
+				<button class="btn btn-huge btn-primary save-image"><i class="icon-white icon-refresh"></i> Refresh<span class="extra"> Image</span></button>
+				<button class="btn btn-huge btn-inverse live-mode"><i class="icon-white icon-remove"></i> Auto<span class="extra"> Refresh</span></button>
+			</div>
+
+			<button class="btn btn-huge choose-background" data-loading-text='<i class="icon icon-refresh"></i><span class="extra"> Change Image</span>'><i class="icon icon-picture"></i><span class="extra"> Change Image</span></button>
+			
 			<?php 
 				if(!empty($contest['Contest']['id'])) {
 					echo $this->Html->link('<i class="icon icon-search"></i> View Battle', array('controller' => 'contests', 'action' => 'view', $contest['Contest']['id']), array('class' => 'btn', 'escape' => false));
@@ -88,22 +95,26 @@ MemeGenerator.config.contestEntryId = <?php echo json_encode($contest['Contest']
 	*/ ?>
 	<div class="row-fluid">
 		<div class="span12">
-			<?php if(!empty($contest['Contest']['id'])) : ?>
-			<button class="btn-large btn-success save-to-contest" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save Entry</button>
-			<?php else : ?>
-			<button class="btn btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save on Server</button>
-			<?php endif; ?>
-			<button class="btn btn-danger reset"><i class="icon-white icon-ban-circle"></i> Start Over</button>
+			<div class="btn-group">
+				<?php if(!empty($contest['Contest']['id'])) : ?>
+				<button class="btn btn-huge btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save Entry<span class="extra"> &amp; Continue</span></button>
+				<?php else : ?>
+				<button class="btn btn-huge btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save<span class="extra"> &amp; Continue</span></button>
+				<?php endif; ?>
+				<button class="btn btn-huge btn save-jump" data-loading-text='<i class="icon icon-download-alt"></i> Saving ...' title="Save Image and Jump to View Page"><i class="icon icon-eye-open"></i> Save &amp; View</button>
+			</div>
+			<a href="#" style="display:none;" class="btn btn-huge btn-info view-last" title="View the last image you saved"><i class="icon-white icon-search"></i> View Last Saved</a>
 		</div>
 	</div>
-	<div class="row-fluid">
+	<div class="row-fluid resize-reset">
 		<div class="span12">
-			<h3>Image Size</h3>
 			<select name="canvasSize" class="canvasSize">
-				<option data-max="full">Full</option>
-				<option data-max="800">Large</option>
-				<option data-max="600" selected="selected">Regular</option>
+				<option data-max="full">Image Size: Full</option>
+				<option data-max="800">Image Size: Large</option>
+				<option data-max="600" selected="selected">Image Size: Regular</option>
 			</select>
+
+			<button class="btn btn-mini btn-danger reset" title="Abandon your work and restart"><i class="icon-white icon-ban-circle"></i> Start Over</button>
 		</div>
 	</div>
 	<div class="row-fluid">
@@ -112,7 +123,7 @@ MemeGenerator.config.contestEntryId = <?php echo json_encode($contest['Contest']
 			<ul class="unstyled tips">
 				<li>If you "<strong>Save on Server</strong>", it will automatically appear in "<strong>My Images</strong>" afterwards.</li>
 				<li><strong>iPhone users</strong> : To save a meme on your phone, press and hold on the image and you will be prompted to "<strong>Save Image</strong>".</li>
-				<li>Disable <strong>Live-Mode</strong> if your device is slower, and the interface is lagging.</li>
+				<li>Disable <strong>Auto-Refresh</strong> if your device is slower, and the interface is lagging.</li>
 			</ul>
 		</div>
 	</div>

@@ -149,6 +149,8 @@ class PagesController extends AppController {
 			}
 		}
 
+		$this->set('first_line', (!empty($this->request->query['first-line'])) ? $this->request->query['first-line'] : '' );
+		$this->set('last_line', (!empty($this->request->query['last-line'])) ? $this->request->query['last-line'] : '' );
 		$this->set('base_images',$images);
 	}
 	

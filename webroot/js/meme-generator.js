@@ -72,11 +72,11 @@ var MemeGenerator = {
 		})
 		.on('click','.meme-generator .save',function() {
 			$(this).button('loading');
-			ns.sendImageToServer();
+			ns.sendImageToServer(ns.config.type, false);
 		})
-		.on('click','.meme-generator .save-to-contest',function() {
+		.on('click','.meme-generator .save-jump',function() {
 			$(this).button('loading');
-			ns.sendImageToServer('contest');
+			ns.sendImageToServer(ns.config.type, true);
 		});
 		
 
@@ -159,14 +159,20 @@ var MemeGenerator = {
 		image.get(0).src = ns.canvas.toDataURL('image/jpeg');
 	};
 	
-	ns.sendImageToServer = function() {
+	/**
+	 * Saves a base64 encoded image on the server
+	 *
+	 * @param {String} Image type, determines inner behavior tweaks
+	 * @param {Boolean} Whether to jump to the image view page after save
+	 */
+	ns.sendImageToServer = function(type, jumpTo) {
 		if(ns.currentImage.height > 0 && ns.currentImage.width > 0) {
 
 			var payload = {
 				image : ns.canvas.toDataURL('image/jpeg')
 			};
 
-			var contest = (typeof arguments[0] == 'string' && arguments[0] == 'contest');
+			var contest = (type === 'Contest');
 
 			if(contest) {
 				payload.type = 'Contest';
@@ -178,10 +184,23 @@ var MemeGenerator = {
 				payload,
 				function(data) {
 					if(data.image_saved) {
-						if(contest) {
-							$('.meme-generator .save-to-contest').button('reset');
+
+						// jump to the view page
+						if(jumpTo && data.view_url) {
+							window.location = data.view_url;
+
+						// reset the button to allow more memes
 						} else {
-							$('.meme-generator .save').button('reset');
+							$('.meme-generator .save')
+								.button('reset')
+								.tooltip('show');
+
+							// hide notification after delay
+							setTimeout(function() {
+								$('.meme-generator .save').tooltip('hide');
+							}, 3500);
+
+							$('.meme-generator .view-last').show().attr('href', data.view_url);
 						}
 					}
 				}
@@ -355,6 +374,13 @@ var MemeGenerator = {
 		if(ns.images.length < 2) {
 			$('.choose-background').hide();
 		}
+
+		$('.meme-generator .save').tooltip({
+			animation : true,
+			placement : 'top',
+			trigger : 'manual',
+			title : 'Image saved successfully!'
+		});
 	};
 	
 	/**
