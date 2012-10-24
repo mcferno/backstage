@@ -263,23 +263,38 @@ var MemeGenerator = {
 		var lineWidth = parseInt(ns.canvas.width * 0.97, 10); // slight width padding
 		var textWidth = ns.context.measureText(text).width;
 
-		ns.context.font = parseInt(ns.fontSize, 10) + "pt " + ns.fontFamily;
+		var bestFit = parseInt(ns.fontSize, 10) + "pt " + ns.fontFamily;
+		ns.context.font = bestFit;
 		var lines = ns.breakTextIntoLines(text, lineWidth);
+		var originalLines = lines.length;
 		
+		// determine if a font size change yeilds less rows
 		if(lines.length > 1) {
-			var idealLines = (lines.length < 3) ? 1 : 2;
+			var idealLines = Math.ceil(lines.length / 2);
 			
 			// determine the optimal font-size
-			for(var i=1;i<5;i++) {
+			for(var i = 1; i < 5; i++) {
 				
 				ns.context.font = parseInt(ns.fontSize * (1 - 0.1 * i), 10) + "pt " + ns.fontFamily;
 				lines = ns.breakTextIntoLines(text, lineWidth);
 				
-				if(lines.length <= idealLines) {
-					break;
+				if(lines.length < originalLines) {
+					bestFit = ns.context.font;
+
+					// we've hit the ideal row count, stop here
+					if(lines.length === idealLines) {
+						break;
+
+					// try smaller font sizes until we hit less rows
+					} else {
+						originalLines -= 1;
+					}
 				}
 			}
 		}
+
+		ns.context.font = bestFit;
+		lines = ns.breakTextIntoLines(text, lineWidth);
 		
 		var emWidth = parseInt(ns.context.measureText('M').width * 1.4, 10);
 		var offsetY = (top) ? emWidth : parseInt(ns.canvas.height * 0.97 - ((lines.length - 1) * emWidth), 10);

@@ -71,6 +71,7 @@
 		<th>date</th>
 		<th>news</th>
 	</tr>
+	<tr><td>2012.10.24</td><td>Meme Generator's font-size adjustments are improved. Makes better use of image width.</td></tr>
 	<tr><td>2012.10.14</td><td>New Caption Battle section added. Battle on!</td></tr>
 	<tr><td>2012.10.11</td><td>Randomized set of Meme Generator images now includes uploads from all users.</td></tr>
 	<tr><td>2012.09.30</td><td>Image upload via URL now available. Supported types: PNG, JPG, GIF</td></tr>
