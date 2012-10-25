@@ -9,7 +9,8 @@ var GroupChat = {
 		chatRowTemplate : false
 	},
 	lastAck : 0,
-	windowFocus : false
+	windowFocus : false,
+	config : {}
 };
 
 (function($, ns) {
@@ -93,7 +94,7 @@ var GroupChat = {
 		
 		// reverse chronological sort for newest-on-top
 		comparator : function(chatMsgModel) {
-			return -1 * parseInt(chatMsgModel.get('timestamp'));
+			return ns.chatOrder * parseInt(chatMsgModel.get('timestamp'));
 		}
 	});
 	
@@ -265,7 +266,8 @@ var GroupChat = {
 		ns.loadingIndicator = $('#loaderAnim');
 		
 		ns.templates.chatRowTemplate = $('#chatRowTemplate');
-		
+
+		ns.chatOrder = (jQuery.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
 		ns.chatLogView = new ns.ChatLogView();
 		
 		$('.loading').hide();
@@ -275,10 +277,13 @@ var GroupChat = {
 		ns.originalTitle = document.title;
 		ns.init();
 		if($('body').hasClass('route-action-admin-group-chat')) {
-			ns.initChat();
 			ns.heartbeat = setInterval(ns.sendHeartbeat,3000);
 		} else {
 			ns.heartbeat = setInterval(ns.sendHeartbeat,45000);
+		}
+
+		if($('.chat-window').length) {
+			ns.initChat();
 		}
 		
 		ns.sendHeartbeat();

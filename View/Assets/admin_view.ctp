@@ -51,10 +51,13 @@
 			<?php endif; ?>
 		</ul>	
 	</div>
-	<div class="span10 text-center">
-		<p><?= $this->Html->image($user_dir.$asset['Asset']['filename']); ?></p>
+	<div class="span10">
+		<p class=" text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename']); ?></p>
 
-		<p>Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $user_dir . $asset['Asset']['filename']; ?>"></p>
+		<p class=" text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $user_dir . $asset['Asset']['filename']; ?>"></p>
+
+		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
+		<?= $this->element('common/chat-module', array('submitLabel' => 'Post', 'msgOrder' => 'asc', 'button' => 'info')); ?>
 	</div>
 </div>
 

@@ -107,5 +107,8 @@
 
 		<?php endif; ?>
 
+		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
+		<?= $this->element('common/chat-module', array('submitLabel' => 'Post', 'msgOrder' => 'asc', 'button' => 'info')); ?>
+
 	</div>
 </div>
