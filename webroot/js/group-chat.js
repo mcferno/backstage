@@ -136,10 +136,14 @@ var GroupChat = {
 		var date = ns.formatDate(now);
 		
 		var postData = {
-			'Message':{
-				'text':text
+			Message : {
+				text: text,
+				model: ns.config.scope
 			}
 		};
+		if($.type(ns.config.scopeId) === 'string') {
+			postData.Message.foreign_id = ns.config.scopeId;
+		}
 		if(ns.lastAck != 0) {
 			postData.ack = ns.lastAck;
 		}
@@ -176,10 +180,15 @@ var GroupChat = {
 	}
 	
 	ns.sendHeartbeat = function() {
-		var data = {};
+		var data = {
+			scope : ns.config.scope
+		};
 		
 		if(typeof ns.chatWindow != 'undefined') {
 			data.ack = ns.lastAck;
+		}
+		if($.type(ns.config.scopeId) === 'string') {
+			data.key = ns.config.scopeId;
 		}
 		$.ajax({
 			data : data,
@@ -267,7 +276,7 @@ var GroupChat = {
 		
 		ns.templates.chatRowTemplate = $('#chatRowTemplate');
 
-		ns.chatOrder = (jQuery.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
+		ns.chatOrder = ($.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
 		ns.chatLogView = new ns.ChatLogView();
 		
 		$('.loading').hide();

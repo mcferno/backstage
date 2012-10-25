@@ -41,7 +41,7 @@ class Message extends AppModel {
 		return true;
 	}
 	
-	public function countNewMessages($user_id, $since = false) {
+	public function countNewMessages($user_id, $since = false, $scope = 'Chat', $scopeId = false) {
 		if($since === false) {
 			$since = $this->User->field('last_ack',array('id'=>$user_id));
 			
@@ -53,22 +53,27 @@ class Message extends AppModel {
 		return $this->find('count',array(
 			'conditions'=>array(
 				'user_id <>' => $user_id,
-				'created >=' => $since
+				'created >=' => $since,
+				'model' => $scope
 			)
 		));
 	}
 	
-	public function getNewMessages($since, $exclude_from = false) {
+	public function getNewMessages($since, $exclude_from = false, $scope = 'Chat', $scopeId = false) {
 		$query = array(
 			'contain'=>'User',
 			'conditions'=>array(
-				'Message.created >='=>$since
+				'Message.created >='=>$since,
+				'Message.model' => $scope
 			),
 			'order'=>'Message.created DESC',
 			'limit'=>50
 		);
 		if($exclude_from !== false) {
 			$query['conditions']['NOT']['Message.user_id'] = $exclude_from;
+		}
+		if($scopeId !== false) {
+			$query['conditions']['Message.foreign_id'] = $scopeId;
 		}
 		$results = $this->find('all',$query);
 		

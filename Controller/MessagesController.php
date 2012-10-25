@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Messaging Module
+ */
 class MessagesController extends AppController {
 	public $uses = array('Message');
 	
@@ -13,6 +15,11 @@ class MessagesController extends AppController {
 		parent::adminBeforeFilter();	
 	}
 	
+	/**
+	 * Saves a new message.
+	 *
+	 * @return {JSON} Heartbeat payload
+	 */
 	public function admin_add() {
 		
 		$response = array();

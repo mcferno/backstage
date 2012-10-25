@@ -1,16 +1,25 @@
 <?php
 $this->Html->script(array('utilities'),false);
 
-$submit_label = isset($submitLabel) ? $submitLabel : 'Send';
-$reverseChat = true;
-
+// settings to pass to javascript module
 $chatSettings = array();
-if(isset($msgOrder) && in_array($msgOrder, array('asc', 'desc'))) {
-	$chatSettings['order'] = $msgOrder;
-	$reverseChat = ($msgOrder != 'asc');
+$chatSettings['scope'] = (!empty($model)) ? $model : 'Chat';
+$chatSettings['scopeId'] = (!empty($foreign_key)) ? $foreign_key : null;
+
+// chat settings
+if($chatSettings['scope'] === 'Chat') {
+	$reverseChat = true;
+	$submitLabel = 'Post';
+	$submitClass = 'primary';
+
+// non-chat integration
+} else {
+	$reverseChat = false;
+	$submitLabel = 'Send';
+	$submitClass = 'info';
+	$chatSettings['order'] = 'asc';
 }
 
-$submitClass = isset($button) ? $button : 'primary';
 ?>
 <a name="comments"></a>
 <?php $this->start('chat-bar'); ?>
@@ -23,7 +32,7 @@ $submitClass = isset($button) ? $button : 'primary';
 					<div class="text-input">
 						<input type="text" placeholder="Type something…">
 					</div>
-					<button type="submit" class="btn btn-<?= $submitClass; ?>"><strong><?= $submit_label; ?></strong></button>
+					<button type="submit" class="btn btn-<?= $submitClass; ?>"><strong><?= $submitLabel; ?></strong></button>
 				</form>
 			</div>
 		</div>

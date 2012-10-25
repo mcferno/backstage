@@ -86,7 +86,10 @@
 		<?php endforeach; ?>
 		</ul>
 
-		<?php endif; ?>
+		<?php endif; // contest index with entries ?>
+
+		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
+		<?= $this->element('common/chat-module', array('model' => 'Contest', 'foreign_key' => $contest['Contest']['id'])); ?>
 
 		<?php else : // single-entry viewing page ?>
 
@@ -105,10 +108,12 @@
 
 		<?= $this->element('admin/pagination'); ?>
 
+		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
+		<?= $this->element('common/chat-module', array('model' => 'Asset', 'foreign_key' => $assets[0]['Asset']['id'])); ?>
+
 		<?php endif; ?>
 
-		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
-		<?= $this->element('common/chat-module', array('submitLabel' => 'Post', 'msgOrder' => 'asc', 'button' => 'info')); ?>
+
 
 	</div>
 </div>
