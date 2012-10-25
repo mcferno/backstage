@@ -19,11 +19,11 @@
 		<div class="container">
 			<div class="msg">
 				<form class="navbar-form">
-					<input type="text" placeholder="Type something…">
+					<div class="text-input">
+						<input type="text" placeholder="Type something…">
+					</div>
 					<button type="submit" class="btn btn-primary"><strong>Send</strong></button>
 				</form>
-				
-				<?= $this->element('admin/loading-animation'); ?>		
 			</div>
 		</div>
 	</div>

@@ -470,11 +470,10 @@ li.comment .text {
 }
 
 .chat-bar .navbar-inner {
-	background: #F2F2F2; /* old browsers */
-	background: -moz-linear-gradient(top, #F2F2F2 0%, #C4C4C4 100%); /* firefox */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F2F2F2), color-stop(100%,#C4C4C4)); /* webkit */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F2F2F2', endColorstr='#C4C4C4',GradientType=0 ); /* ie */
-	border:1px solid #757575;
+	background: #EEEEEE; /* old browsers */
+	background: -moz-linear-gradient(top, #EEEEEE 0%, #C4C4C4 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#EEEEEE), color-stop(100%,#C4C4C4)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEEE', endColorstr='#C4C4C4',GradientType=0 ); /* ie */
 	padding: 0.5em;
 }
 
@@ -482,12 +481,16 @@ li.comment .text {
 	line-height: 30px;
 }
 
+.chat-bar .text-input {
+	padding-right: 86px;
+}
+
 .chat-bar .msg input {
 	border-radius: 6px;
 	margin-top: 0;
 	font-size: 1.2em;
 	padding: 0.5em;
-	width: 85%;
+	width: 100%;
 }
 
 .chat-bar .navbar-inner button {
@@ -495,6 +498,7 @@ li.comment .text {
 	padding: 0.6em 1em;
 	position: absolute;
 	right: 0;
+	top: 0;
 }
 
 .chat-bar form {
@@ -550,8 +554,12 @@ li.comment .text {
 		width: 5em;
 	}
 
+	.chat-bar .text-input {
+		padding-right: 72px;
+	}
+
 	.chat-bar .navbar-inner button {
-		right: 1em;
+		right: 0.1em;
 		padding: 0.6em 0.5em;
 	}
 	
