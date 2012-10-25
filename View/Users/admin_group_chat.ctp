@@ -2,25 +2,28 @@
 	$this->set('suppressSubnav', true);
 	$this->Html->script(array('utilities'),false);
 ?>
-<div class="row">
-	<div class="span8"><h1>Group Chat.</h1></div>
+<div class="row-fluid">
+	<div class="span12"><h1 class="pull-left">Group Chat.</h1></div>
 </div>
-<div class="row">
+<div class="row-fluid">
+	<div class="span12 ">
+		<div class="chat-stats">
+			<h3 class="handle"><?= $this->Session->read('Auth.User.username'); ?></h3>
+			<h4><i class="icon-user icon-white"></i> <span class="extra">Users online</span>: <span class="badge badge-info online-count" data-title="<?= $this->Session->read('Auth.User.username'); ?>" rel="tooltip"><?= count($onlineUsers); ?></span></h4>
+		</div>
+	</div>
+</div>
+<div class="row-fluid">
 <div class="navbar chat-bar">
 	<div class="navbar-inner">
 		<div class="container">
-			<div class="span8 msg">
-				<form class="navbar-form pull-left">
-					<input type="text" class="span7" placeholder="Type something…">
+			<div class="msg">
+				<form class="navbar-form">
+					<input type="text" placeholder="Type something…">
 					<button type="submit" class="btn btn-primary"><strong>Send</strong></button>
 				</form>
 				
 				<?= $this->element('admin/loading-animation'); ?>		
-			</div>
-			
-			<div class="span4">
-				<h3 class="handle"><?= $this->Session->read('Auth.User.username'); ?></h3>
-				<h4><i class="icon-user icon"></i> <span class="extra">Users online</span>: <span class="badge badge-info online-count" data-title="<?= $this->Session->read('Auth.User.username'); ?>" rel="tooltip"><?= count($onlineUsers); ?></span></h4>
 			</div>
 		</div>
 	</div>
@@ -28,13 +31,13 @@
 
 </div>
 
-<div class="row">
+<div class="row-fluid">
 	<div class="span12">
 		<div class="loading">Loading ...</div>
 	</div>
 </div>
-<div class="row chat-window">
-	<div class="span8">
+<div class="row-fluid chat-window">
+	<div class="span12">
 		<table class="table table-striped chat table-condensed"></table>
 	</div>
 </div>
