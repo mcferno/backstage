@@ -157,24 +157,34 @@ class AppController extends Controller {
 		
 		if(isset($this->request->query['ack'])) {
 			$clientAck = (int)$this->request->query['ack'];
+			$model = $this->request->query['scope'];
 
 			// set the last ack to no more than 24 hrs ago
 			$since = date(MYSQL_DATE_FORMAT, max($clientAck, $MessageModel->minimumSince));
-			$model = $this->request->query['scope'];
+			
 			$foreign_key = (!empty($this->request->query['key'])) ? $this->request->query['key'] : false;
 
 			// user's first request
 			if($clientAck === 0) {
-				$data['messages'] = $MessageModel->getNewMessages($since, false, $model, $foreign_key);
+
+				// eliminate message cap on non-chat interfaces
+				if($model != 'Chat') {
+					$since = false;
+				}
+				$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $since);
 
 			// follow-up request (exclude one's own messages)
 			} else {
-				$this->User->setLastAck($currentUser, $clientAck);
-				$data['messages'] = $MessageModel->getNewMessages($since, $currentUser, $model, $foreign_key);
+
+				// if on Chat, update the ack value for future revisits, and notification supression
+				if($model == 'Chat') {
+					$this->User->setLastAck($currentUser, $clientAck);
+				}
+				$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $since, $currentUser);
 			}
 		}
 		
-		$data['new_messages'] = $MessageModel->countNewMessages($currentUser);
+		$data['new_messages'] = $MessageModel->countNewMessages('Chat', $currentUser);
 		
 		return $data;
 	}

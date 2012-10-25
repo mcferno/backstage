@@ -9,7 +9,7 @@ var GroupChat = {
 		chatRowTemplate : false
 	},
 	lastAck : 0,
-	windowFocus : false,
+	windowFocus : true,
 	config : {}
 };
 
@@ -220,7 +220,7 @@ var GroupChat = {
 			ns.msgNotifier.removeClass('badge-off');
 			ns.msgNotifier.text(data.new_messages);
 			document.title = '(' + data.new_messages + ') ' + ns.originalTitle;
-		}	
+		}
 
 		// on chat, process new messages
 		if(typeof ns.chatWindow !== 'undefined') {

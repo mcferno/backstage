@@ -41,7 +41,7 @@ class Message extends AppModel {
 		return true;
 	}
 	
-	public function countNewMessages($user_id, $since = false, $scope = 'Chat', $scopeId = false) {
+	public function countNewMessages($scope, $user_id, $since = false) {
 		if($since === false) {
 			$since = $this->User->field('last_ack',array('id'=>$user_id));
 			
@@ -59,22 +59,33 @@ class Message extends AppModel {
 		));
 	}
 	
-	public function getNewMessages($since, $exclude_from = false, $scope = 'Chat', $scopeId = false) {
+	public function getNewMessages($scope, $scopeId = false, $since = false, $exclude_from = false) {
 		$query = array(
-			'contain'=>'User',
+			'contain'=> array(
+				'User' => array(
+					'fields' => array('username')
+				)
+			),
+			'fields' => array(
+				'id', 'created', 'text'
+			),
 			'conditions'=>array(
-				'Message.created >='=>$since,
 				'Message.model' => $scope
 			),
-			'order'=>'Message.created DESC',
-			'limit'=>50
+			'order'=>'Message.created DESC'
 		);
-		if($exclude_from !== false) {
-			$query['conditions']['NOT']['Message.user_id'] = $exclude_from;
-		}
+
 		if($scopeId !== false) {
 			$query['conditions']['Message.foreign_id'] = $scopeId;
 		}
+		if($since !== false) {
+			$query['conditions']['Message.created >='] = $since;
+			$query['limit'] = 50;
+		}
+		if($exclude_from !== false) {
+			$query['conditions']['NOT']['Message.user_id'] = $exclude_from;
+		}
+
 		$results = $this->find('all',$query);
 		
 		foreach ($results as &$result) {
