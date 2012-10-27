@@ -506,7 +506,7 @@ li.comment .text {
 	position: relative;
 }
 
-.chat-window .time {
+.chat-window .time, .activity .time {
 	color: #888;
 	width: 7em;
 }
@@ -526,6 +526,14 @@ li.comment .text {
 }
 
 /* @end chat-module ======================================================== */
+
+/* @start system updates =================================================== */
+
+.activity .type {
+	width: 1px;
+}
+
+/* @end system updates ===================================================== */
 
 /* @start responsive-adjustments =========================================== */
 

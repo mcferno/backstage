@@ -205,21 +205,35 @@ var GroupChat = {
 				allUsers += ', ';
 			}
 		}
-		$('.online-count')
+
+		var notificationCount = data.new_messages + data.new_updates;
+
+		ns.userCount
 			.data('title',allUsers)
 			.text(data.online.length);
 		$('.slideout .names').text(allUsers);
-		
-		if(data.new_messages == 0) {
-			if(ns.windowFocus) {
-				ns.msgNotifier.addClass('badge-off');
-				document.title = ns.originalTitle;
-				ns.msgNotifier.text(data.new_messages);
-			}
+
+		ns.updateNotifier.text(data.new_updates);
+		ns.msgNotifier.text(data.new_messages);
+
+		if(data.new_messages === 0) {
+			ns.msgNotifier.addClass('badge-off');
 		} else {
 			ns.msgNotifier.removeClass('badge-off');
-			ns.msgNotifier.text(data.new_messages);
-			document.title = '(' + data.new_messages + ') ' + ns.originalTitle;
+		}
+
+		if(data.new_updates === 0) {
+			ns.updateNotifier.addClass('badge-off');
+		} else {
+			ns.updateNotifier.removeClass('badge-off');
+		}
+
+		if(notificationCount !== 0) {
+			document.title = '(' + notificationCount + ') ' + ns.originalTitle;
+		} else {
+			if(ns.windowFocus) {
+				document.title = ns.originalTitle;
+			}
 		}
 
 		// on chat, process new messages
@@ -265,6 +279,7 @@ var GroupChat = {
 	
 	ns.init = function() {
 		ns.msgNotifier = $('.navbar .message-count');
+		ns.updateNotifier = $('.navbar .updates-count');
 		ns.userCount = $('.navbar .online-count');
 	}
 	

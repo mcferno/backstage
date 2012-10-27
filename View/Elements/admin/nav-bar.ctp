@@ -11,11 +11,11 @@
 			<div class="status">
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count">0</span></a>
 				<i class="icon-user icon-white"></i><span class="badge badge-info online-count"><?= count($onlineUsers); ?></span>
+				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>"><i class="icon-flag icon-white"></i><span class="badge badge-custom badge-off updates-count">0</span></a>
 			</div>
 			<?php endif; // authenticated ?>
 			<div class="nav-collapse">
 				<ul class="nav">
-					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-home icon-white"></i> Home',array('controller'=>'users','action'=>'dashboard'),array('escape'=>false)); ?></li>
 					
 					<?php if($this->Session->check('Auth.User')) : ?>
 					
@@ -34,7 +34,11 @@
 					<li <?php if($this->request->controller == 'posts') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-comment icon-white"></i> Quotes',array('controller'=>'posts','action'=>'index'),array('escape'=>false)); ?></li>
 					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-list icon-white"></i> Chat ',array('controller'=>'users','action'=>'group_chat'),array('escape'=>false,'class'=>'chat-link')); ?></li>
 				
-					<?php endif; // authenticated ?>
+					<?php else: // non-authenticated ?>
+
+					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-home icon-white"></i> Home',array('controller'=>'users','action'=>'dashboard'),array('escape'=>false)); ?></li>
+
+					<?php endif; ?>
 				</ul>
 				
 				<?php if($this->Session->check('Auth.User')) : ?>

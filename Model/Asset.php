@@ -10,6 +10,10 @@ class Asset extends AppModel {
 			'foreignKey' => 'winning_asset_id'
 	));
 	public $hasMany = array('Contest');
+
+	public $actsAs = array('Postable.Postable' => array(
+		'storageModel' => 'Activity'
+	));
 	
 	// recognized dataURL image types
 	public $headers = array(
@@ -272,5 +276,36 @@ class Asset extends AppModel {
 		));
 
 		return array_combine($types, $types);
+	}
+
+	/**
+	 * Converts the available Activity model and relationship data to reduce
+	 * it to a human-friendly sentence.
+	 * 
+	 * @param  {ActivityModel} $activity Activity to convert
+	 */
+	public function humanizeActivity(&$activity) {
+		switch($activity['Asset']['type']) {
+			case 'Contest':
+				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved a Caption Battle entry.";
+				$activity['Activity']['icon'] = 'picture';
+				break;
+			case 'Meme' :
+				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved a Meme.";
+				$activity['Activity']['icon'] = 'picture';
+				break;
+			case 'URLgrab':
+				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved an image from a URL.";
+				$activity['Activity']['icon'] = 'download';
+				break;
+			case 'Upload':
+				$activity['Activity']['phrase'] = "{$activity['User']['username']} uploaded an image.";
+				$activity['Activity']['icon'] = 'upload';
+				break;
+			default:
+				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved a new image.";
+				$activity['Activity']['icon'] = 'picture';
+		}
+		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Asset']['id']);
 	}
 }

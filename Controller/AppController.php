@@ -185,6 +185,7 @@ class AppController extends Controller {
 		}
 		
 		$data['new_messages'] = $MessageModel->countNewMessages('Chat', $currentUser);
+		$data['new_updates'] = ClassRegistry::init('Activity')->countNewActivity($currentUser);
 		
 		return $data;
 	}

@@ -91,6 +91,24 @@ class User extends AppModel {
 			)
 		);
 	}
+
+	/**
+	 * Tracks the last time the user viewed system notifications.
+	 *
+	 * @param {UUID} $user_id User to update
+	 * @param {Integer} $timestamp Unix timestamp of the visit
+	 * @return {Boolean} Update status
+	 */
+	public function setLastUpdate($user_id, $timestamp) {
+		$datetime = date(MYSQL_DATE_FORMAT,$timestamp);
+		return $this->updateAll(
+			array("{$this->alias}.last_update" => '\''.$datetime.'\''),
+			array(
+				"{$this->alias}.{$this->primaryKey}" => $user_id,
+				"{$this->alias}.last_update <" => $datetime
+			)
+		);
+	}
 	
 	/**
 	 * The users currently logged in (based on the last activity). Results are

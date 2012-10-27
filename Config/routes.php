@@ -28,6 +28,7 @@ Router::connect('/privacy-policy', array('controller' => 'pages', 'action'=>'dis
 $admin_url = 'backstage';
 Router::connect("/{$admin_url}", array('controller'=>'users', 'action' => 'login', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/dashboard", array('controller'=>'users', 'action' => 'dashboard', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/dashboard/updates/*", array('controller'=>'users', 'action' => 'updates', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/meme-generator/*", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/my-images/*", array('controller'=>'assets', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/all-images/*", array('controller'=>'assets', 'action' => 'users', 'prefix' => 'admin', 'admin' => true));

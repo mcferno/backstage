@@ -6,11 +6,16 @@ App::uses('AppController', 'Controller');
  * @property User $User
  */
 class UsersController extends AppController {
+
 	public $paginate = array(
-		'User'=>array()
+		'User',
+		'Activity' => array(
+			'contain' => array('User'),
+			'limit' => 20
+		)
 	);
 	
-	public $uses = array('User','Message');
+	public $uses = array('User', 'Message', 'Activity');
 	
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
@@ -52,6 +57,14 @@ class UsersController extends AppController {
 		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));
 		$this->set('asset_count', $asset_count);
 		$this->set('asset_count_all', $asset_count_all);
+	}
+
+	public function admin_updates() {
+		$this->User->setLastUpdate($this->Auth->user('id'), Configure::read('App.start'));
+		//ClassRegistry::init('Message')->refreshPostableIndex();
+		$this->paginate['Activity']['contain'] = array_keys($this->Activity->belongsTo);
+		//$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
+		$this->set('updates', $this->paginate('Activity'));
 	}
 	
 	public function admin_logout() {

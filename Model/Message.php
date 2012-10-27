@@ -24,6 +24,11 @@ class Message extends AppModel {
 		)
 	);
 
+	public $actsAs = array('Postable.Postable' => array(
+		'storageModel' => 'Activity',
+		'inclusionCallback' => 'activityFeedInclusion'
+	));
+
 	public function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
 
@@ -92,5 +97,31 @@ class Message extends AppModel {
 			$result['Message']['timestamp'] = strtotime($result['Message']['created']);
 		}
 		return $results;
+	}
+
+	public function activityFeedInclusion($data) {
+		return ($data['Message']['model'] !== 'Chat');
+	}
+
+	/**
+	 * Converts the available Activity model and relationship data to reduce
+	 * it to a human-friendly sentence.
+	 * 
+	 * @param {ActivityModel} $activity Activity to convert
+	 */
+	public function humanizeActivity(&$activity) {
+		$activity['Activity']['phrase'] = "{$activity['User']['username']} commented";
+		$activity['Activity']['icon'] = 'comment';
+
+		switch($activity['Message']['model']) {
+			case 'Contest':
+				$activity['Activity']['link'] = array('controller' => 'contests', 'action' => 'view', $activity['Message']['foreign_id']);
+				$activity['Activity']['phrase'] .= ' on a Caption Battle.';
+				break;
+			case 'Asset':
+				$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Message']['foreign_id']);
+				$activity['Activity']['phrase'] .= ' on an image.';
+				break;
+		}
 	}
 }

@@ -34,6 +34,10 @@ class Contest extends AppModel {
 		)
 	);
 
+	public $actsAs = array('Postable.Postable' => array(
+		'storageModel' => 'Activity'
+	));
+
 	// strings used in Facebook integration following specific actions
 	public $fbStrings = array(
 		'new_title' => 'New Caption Battle Started!',
@@ -131,5 +135,17 @@ class Contest extends AppModel {
 		$this->create();
 		$this->id = $contest_id;
 		return $this->saveField('winning_asset_id', $asset_id);
+	}
+
+	/**
+	 * Converts the available Activity model and relationship data to reduce
+	 * it to a human-friendly sentence.
+	 * 
+	 * @param {ActivityModel} $activity Activity to convert
+	 */
+	public function humanizeActivity(&$activity) {
+		$activity['Activity']['phrase'] = "{$activity['User']['username']} started a new Caption Battle.";
+		$activity['Activity']['icon'] = 'play-circle';
+		$activity['Activity']['link'] = array('controller' => 'contests', 'action' => 'view', $activity['Contest']['id']);
 	}
 }
