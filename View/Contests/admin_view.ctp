@@ -76,7 +76,7 @@
 				<div class="thumbnail">
 					<?= $this->Html->link($this->Html->image("user/{$asset['User']['id']}/200/{$asset['Asset']['filename']}"),array('action'=>'view',$contest['Contest']['id'], 'page'=> $page),array('escape'=>false)); ?>
 					<p>
-						<?php if($winner) { echo $this->Html->image('ui/trophy.png', array('title' => 'Winning Entry!')); } ?> 
+						<?php if($winner) { echo $this->Html->image('ui/icons/trophy.png', array('title' => 'Winning Entry!')); } ?> 
 						by <strong><?= $asset['User']['username']; ?></strong>
 					</p>
 					<p class="date"><?= date('Y.m.d H:m:s',strtotime($asset['Asset']['created'])); ?></p>
@@ -97,7 +97,7 @@
 
 		<p class="text-center">
 		<?php if($contest['Contest']['winning_asset_id'] === $assets[0]['Asset']['id']) {
-			echo $this->Html->image('ui/trophy.png') . " <strong>Winning</strong> ";
+			echo $this->Html->image('ui/icons/trophy.png') . " <strong>Winning</strong> ";
 		}
 		?>
 			Entry by <i class="icon-white icon-user"></i> <strong><?= $assets[0]['User']['username']; ?></strong> on <i class="icon-white icon-time"></i> <?= $assets[0]['Asset']['created']; ?>

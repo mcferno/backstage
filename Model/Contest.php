@@ -144,8 +144,8 @@ class Contest extends AppModel {
 	 * @param {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
-		$activity['Activity']['phrase'] = "{$activity['User']['username']} started a new Caption Battle.";
-		$activity['Activity']['icon'] = 'play-circle';
+		$activity['Activity']['phrase'] = ":user started a new Caption Battle.";
+		$activity['Activity']['icon'] = 'trophy';
 		$activity['Activity']['link'] = array('controller' => 'contests', 'action' => 'view', $activity['Contest']['id']);
 	}
 }

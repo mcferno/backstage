@@ -40,6 +40,9 @@ class UsersController extends AppController {
 		}
 	}
 	
+	/**
+	 * User landing page
+	 */
 	public function admin_dashboard() {
 		$users = $this->User->find('all',array(
 			'order'=>'last_seen DESC',
@@ -59,12 +62,26 @@ class UsersController extends AppController {
 		$this->set('asset_count_all', $asset_count_all);
 	}
 
+	/**
+	 * User system updates, the list of user actions across site features.
+	 */
 	public function admin_updates() {
 		$this->User->setLastUpdate($this->Auth->user('id'), Configure::read('App.start'));
-		//ClassRegistry::init('Message')->refreshPostableIndex();
 		$this->paginate['Activity']['contain'] = array_keys($this->Activity->belongsTo);
-		//$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
+		$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
 		$this->set('updates', $this->paginate('Activity'));
+	}
+
+	/**
+	 * Admin utility function to re-create the Activity data set.
+	 */
+	public function admin_refresh_updates() {
+		if($this->Auth->user('role') >= ROLES_ADMIN) {
+			ClassRegistry::init('Asset')->refreshPostableIndex();
+			ClassRegistry::init('Contest')->refreshPostableIndex();
+			ClassRegistry::init('Message')->refreshPostableIndex();
+		}
+		$this->redirect($this->referer(array('action' => 'admin_updates')));
 	}
 	
 	public function admin_logout() {
@@ -83,7 +100,7 @@ class UsersController extends AppController {
 	}
 	
 	/**
-	 * Tracks periodic "live" status of the user, returning useful data
+	 * Tracks periodic "live" status of the user, returning application 'state'
 	 */
 	public function admin_heartbeat() {
 		$this->cacheAction = false;
@@ -96,6 +113,9 @@ class UsersController extends AppController {
 		$this->set('_serialize', array_keys($data));
 	}
 	
+	/**
+	 * Group chat interface
+	 */
 	public function admin_group_chat() {
 		$this->User->setLastAck($this->Auth->user('id'), Configure::read('App.start'));
 	}

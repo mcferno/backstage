@@ -110,8 +110,8 @@ class Message extends AppModel {
 	 * @param {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
-		$activity['Activity']['phrase'] = "{$activity['User']['username']} commented";
-		$activity['Activity']['icon'] = 'comment';
+		$activity['Activity']['phrase'] = ":user commented";
+		$activity['Activity']['icon'] = 'balloon-ellipsis';
 
 		switch($activity['Message']['model']) {
 			case 'Contest':

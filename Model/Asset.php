@@ -287,24 +287,25 @@ class Asset extends AppModel {
 	public function humanizeActivity(&$activity) {
 		switch($activity['Asset']['type']) {
 			case 'Contest':
-				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved a Caption Battle entry.";
-				$activity['Activity']['icon'] = 'picture';
+				$activity['Activity']['phrase'] = ":user saved a Caption Battle entry.";
+				$activity['Activity']['icon'] = 'inbox-plus';
 				break;
 			case 'Meme' :
-				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved a Meme.";
-				$activity['Activity']['icon'] = 'picture';
+				$activity['Activity']['phrase'] = ":user saved a Meme.";
+				$activity['Activity']['icon'] = 'slide-pencil';
+				$activity['Activity']['icon'] = 'image-pencil';
 				break;
 			case 'URLgrab':
-				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved an image from a URL.";
-				$activity['Activity']['icon'] = 'download';
+				$activity['Activity']['phrase'] = ":user saved an image from a URL.";
+				$activity['Activity']['icon'] = 'network-cloud';
 				break;
 			case 'Upload':
-				$activity['Activity']['phrase'] = "{$activity['User']['username']} uploaded an image.";
-				$activity['Activity']['icon'] = 'upload';
+				$activity['Activity']['phrase'] = ":user uploaded an image.";
+				$activity['Activity']['icon'] = 'drive-upload';
 				break;
 			default:
-				$activity['Activity']['phrase'] = "{$activity['User']['username']} saved a new image.";
-				$activity['Activity']['icon'] = 'picture';
+				$activity['Activity']['phrase'] = ":user saved a new image.";
+				$activity['Activity']['icon'] = 'image-plus';
 		}
 		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Asset']['id']);
 	}

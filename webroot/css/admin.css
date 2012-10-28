@@ -506,7 +506,7 @@ li.comment .text {
 	position: relative;
 }
 
-.chat-window .time, .activity .time {
+.chat-window .time {
 	color: #888;
 	width: 7em;
 }
@@ -529,8 +529,25 @@ li.comment .text {
 
 /* @start system updates =================================================== */
 
+.activity .time {
+	color: #888;
+	width: 8em;
+}
+
 .activity .type {
-	width: 1px;
+	width: 16px;
+}
+
+.activity a {
+	color: inherit;
+}
+
+.activity tr {
+	border-radius: 5px;
+}
+
+.activity th, .activity td {
+	padding: 5px;
 }
 
 /* @end system updates ===================================================== */
