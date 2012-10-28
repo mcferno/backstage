@@ -30,7 +30,7 @@ a {
 	color: #FC6626;
 }
 
-.alert a, .alert a:hover {
+.alert a, .alert a:hover, h1 a, h2 a, h3 a {
 	color: inherit;
 }
 
@@ -340,6 +340,24 @@ li.comment .text {
 	padding-right: 1.5em;
 }
 
+.short-date {
+	color: #888;
+	width: 4.5em;
+}
+
+.route-action-admin-dashboard div.time {
+	display: inline-block;
+	float: right;
+}
+
+.route-action-admin-dashboard .table td {
+	padding: 9px;
+}
+
+.route-action-admin-dashboard h3 img {
+	padding: 4px;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
@@ -531,6 +549,9 @@ li.comment .text {
 
 .activity .time {
 	color: #888;
+}
+
+.activity td.time {
 	width: 8em;
 }
 
@@ -549,8 +570,6 @@ li.comment .text {
 .activity a {
 	color: inherit;
 }
-
-
 
 .activity th, .activity td {
 	padding: 5px;

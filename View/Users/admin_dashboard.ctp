@@ -65,21 +65,46 @@
 
 <div class="row-fluid">
 <div class="span12">
-	<h4 class="text-right">site updates</h4>
+
+	<?= $this->Html->link('<i class="icon-white icon-search"></i> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse pull-right', 'escape' => false)); ?>
+	<h3><a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>"><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</a></h3>
+	<?= $this->element('common/updates-list'); ?>
+
+</div>
+</div>
+
+<?php if($this->Session->read('Auth.User.role') >= 1): ?>
+<div class="row-fluid">
+<div class="span12">
+	<h3><?= $this->Html->image('ui/icons/clock.png'); ?> Recent Users</h3>
+	<table class="table table-striped activity">
+		<?php foreach($recent_users as $user) : ?>
+		<tr>
+			<td class="time extra"><?= date('M d h:i A', strtotime($user['User']['last_seen'])); ?></td>
+			<td>
+				<?= $user['User']['username']; ?> was last seen online.
+				<div class="time"><?= $this->Time->timeAgoInWords($user['User']['last_seen'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?></div>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
+</div>
+</div>
+<?php endif; ?>
+
+<div class="row-fluid">
+<div class="span12">
+	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
-	<tr>
-		<th>date</th>
-		<th>news</th>
-	</tr>
-	<tr><td>2012.10.24</td><td>Meme Generator's font-size adjustments are improved. Makes better use of image width.</td></tr>
-	<tr><td>2012.10.14</td><td>New Caption Battle section added. Battle on!</td></tr>
-	<tr><td>2012.10.11</td><td>Randomized set of Meme Generator images now includes uploads from all users.</td></tr>
-	<tr><td>2012.09.30</td><td>Image upload via URL now available. Supported types: PNG, JPG, GIF</td></tr>
-	<tr><td>2012.09.22</td><td>User sessions now persist up to a month. Login bugs fixed.</td></tr>
-	<tr><td>2012.05.11</td><td>Images can now be uploaded and used in the Meme Generator.</td></tr>
-	<tr><td>2012.05.11</td><td>Meme Generator images can now be saved on the server.</td></tr>
-	<tr><td>2012.05.11</td><td>You can view other user's images, and make memes with them.</td></tr>
-	<tr><td>2012.04.28</td><td>Chat is stable now, fixed a few bugs.</td></tr>
+		<tr><td class="short-date">Oct 25</td><td>Meme Generator's font-size adjustments are improved. Makes better use of image width.</td></tr>
+		<tr><td class="short-date">Oct 14</td><td>New Caption Battle section added. Battle on!</td></tr>
+		<tr><td class="short-date">Oct 11</td><td>Randomized set of Meme Generator images now includes uploads from all users.</td></tr>
+		<tr><td class="short-date">Sep 30</td><td>Image upload via URL now available. Supported types: PNG, JPG, GIF</td></tr>
+		<tr><td class="short-date">Sep 22</td><td>User sessions now persist up to a month. Login bugs fixed.</td></tr>
+		<tr><td class="short-date">May 11</td><td>Images can now be uploaded and used in the Meme Generator.</td></tr>
+		<tr><td class="short-date">May 11</td><td>Meme Generator images can now be saved on the server.</td></tr>
+		<tr><td class="short-date">May 11</td><td>You can view other user's images, and make memes with them.</td></tr>
+		<tr><td class="short-date">Apr 28</td><td>Chat is stable now, fixed a few bugs.</td></tr>
 <?php /*
 	<tr><td>2012.04.27</td><td>New dark theme, UI overhaul.</td></tr>
 	<tr><td>2012.04.26</td><td>Group chat is fairly functional now. Status bar added to nav.</td></tr>
@@ -93,26 +118,6 @@
 	</table>
 </div>
 </div>
-
-<?php if($this->Session->read('Auth.User.role') >= 1): ?>
-<div class="row-fluid">
-<div class="span12">
-	<h4 class="text-right">user activity</h4>
-	<table class="table table-striped">
-		<tr>
-			<th>time</th>
-			<th>status</th>
-		</tr>
-		<?php foreach($recent_users as $user) : ?>
-		<tr>
-			<td><?= date('Y.m.d H:i:s',strtotime($user['User']['last_seen'])); ?></td>
-			<td><?= $user['User']['username']; ?> was last seen online.</td>
-		</tr>
-		<?php endforeach; ?>
-	</table>
-</div>
-</div>
-<?php endif; ?>
 
 </div>
 </div>

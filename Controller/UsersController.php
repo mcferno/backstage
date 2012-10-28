@@ -60,6 +60,12 @@ class UsersController extends AppController {
 		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));
 		$this->set('asset_count', $asset_count);
 		$this->set('asset_count_all', $asset_count_all);
+
+		// obtain a subset of the latest updates
+		$this->paginate['Activity']['contain'] = array_keys($this->Activity->belongsTo);
+		$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
+		$this->paginate['Activity']['limit'] = 5;
+		$this->set('updates', $this->paginate('Activity'));
 	}
 
 	/**
