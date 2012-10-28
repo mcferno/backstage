@@ -15,13 +15,13 @@ class Message extends AppModel {
 	public $minimumSince = -1;
 
 	public $belongsTo = array(
-		'User' => array(
-			'className' => 'User',
-			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
+
+		// creator of the message
+		'User',
+
+		// object being written about (when applicable)
+		'Asset' => array('foreignKey' => 'foreign_id'),
+		'Contest' => array('foreignKey' => 'foreign_id')
 	);
 
 	public $actsAs = array('Postable.Postable' => array(
@@ -117,10 +117,20 @@ class Message extends AppModel {
 			case 'Contest':
 				$activity['Activity']['link'] = array('controller' => 'contests', 'action' => 'view', $activity['Message']['foreign_id']);
 				$activity['Activity']['phrase'] .= ' on a Caption Battle.';
+
+				if(!empty($activity['Message']['Contest']['Asset']['id'])) {
+					$activity['Activity']['preview'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Contest']['Asset']['user_id']}/200/{$activity['Message']['Contest']['Asset']['filename']}";
+					$activity['Activity']['preview-small'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Contest']['Asset']['user_id']}/75/{$activity['Message']['Contest']['Asset']['filename']}";
+				}
 				break;
 			case 'Asset':
 				$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Message']['foreign_id']);
 				$activity['Activity']['phrase'] .= ' on an image.';
+
+				if(!empty($activity['Message']['Asset']['id'])) {
+					$activity['Activity']['preview'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Asset']['user_id']}/200/{$activity['Message']['Asset']['filename']}";
+					$activity['Activity']['preview-small'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Asset']['user_id']}/75/{$activity['Message']['Asset']['filename']}";
+				}
 				break;
 		}
 	}

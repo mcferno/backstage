@@ -147,5 +147,10 @@ class Contest extends AppModel {
 		$activity['Activity']['phrase'] = ":user started a new Caption Battle.";
 		$activity['Activity']['icon'] = 'trophy';
 		$activity['Activity']['link'] = array('controller' => 'contests', 'action' => 'view', $activity['Contest']['id']);
+
+		if(!empty($activity['Contest']['Asset']['id'])) {
+			$activity['Activity']['preview'] = "{$this->Asset->folderPathRelative}{$activity['Contest']['Asset']['user_id']}/200/{$activity['Contest']['Asset']['filename']}";
+			$activity['Activity']['preview-small'] = "{$this->Asset->folderPathRelative}{$activity['Contest']['Asset']['user_id']}/75/{$activity['Contest']['Asset']['filename']}";
+		}
 	}
 }

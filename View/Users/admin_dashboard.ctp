@@ -68,7 +68,7 @@
 
 	<?= $this->Html->link('<i class="icon-white icon-search"></i> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse pull-right', 'escape' => false)); ?>
 	<h3><a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>"><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</a></h3>
-	<?= $this->element('common/updates-list'); ?>
+	<?= $this->element('common/updates-list', array('hideSmallPreview' => true)); ?>
 
 </div>
 </div>
@@ -96,6 +96,8 @@
 <div class="span12">
 	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
+		<tr><td class="short-date">Oct 28</td><td>Network Update notifications alert you of all user actions.</td></tr>
+		<tr><td class="short-date">Oct 28</td><td>You can comment on all saved Images and Caption Battles.</td></tr>
 		<tr><td class="short-date">Oct 25</td><td>Meme Generator's font-size adjustments are improved. Makes better use of image width.</td></tr>
 		<tr><td class="short-date">Oct 14</td><td>New Caption Battle section added. Battle on!</td></tr>
 		<tr><td class="short-date">Oct 11</td><td>Randomized set of Meme Generator images now includes uploads from all users.</td></tr>

@@ -9,9 +9,9 @@
 			<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'brand')); ?>
 			<?php if($this->Session->check('Auth.User')) : ?>
 			<div class="status">
-				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>" title="Unread Chat Messages"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count">0</span></a>
-				<i class="icon-user icon-white"></i><span class="badge badge-info online-count"><?= count($onlineUsers); ?></span>
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>" title="Unread Network Updates"><i class="icon-flag icon-white"></i><span class="badge badge-custom badge-off updates-count">0</span></a>
+				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>" title="Unread Chat Messages"><i class="icon-envelope icon-white"></i><span class="badge badge-custom badge-off message-count">0</span></a>
+				<i class="icon-user icon-white" title="Online Users"></i><span class="badge badge-info online-count" title="Online Users"><?= count($onlineUsers); ?></span>
 			</div>
 			<?php endif; // authenticated ?>
 			<div class="nav-collapse">

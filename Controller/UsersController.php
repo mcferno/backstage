@@ -10,8 +10,12 @@ class UsersController extends AppController {
 	public $paginate = array(
 		'User',
 		'Activity' => array(
-			'contain' => array('User'),
-			'limit' => 20
+			'contain' => array(
+				'User', 'Asset',
+				'Contest' => 'Asset', 
+				'Message' => array('Asset', 'Contest' => 'Asset')
+			),
+			'limit' => 15
 		)
 	);
 	
@@ -62,7 +66,6 @@ class UsersController extends AppController {
 		$this->set('asset_count_all', $asset_count_all);
 
 		// obtain a subset of the latest updates
-		$this->paginate['Activity']['contain'] = array_keys($this->Activity->belongsTo);
 		$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
 		$this->paginate['Activity']['limit'] = 5;
 		$this->set('updates', $this->paginate('Activity'));
@@ -73,9 +76,9 @@ class UsersController extends AppController {
 	 */
 	public function admin_updates() {
 		$this->User->setLastUpdate($this->Auth->user('id'), Configure::read('App.start'));
-		$this->paginate['Activity']['contain'] = array_keys($this->Activity->belongsTo);
 		$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
 		$this->set('updates', $this->paginate('Activity'));
+		$this->set('page_limits', array(15, 30, 60));
 	}
 
 	/**

@@ -358,6 +358,19 @@ li.comment .text {
 	padding: 4px;
 }
 
+.popover-title {
+	display: none;
+}
+
+.popover-content {
+	padding: 0;
+	text-align: center;
+}
+
+.popover-inner {
+	width: auto;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
@@ -575,6 +588,18 @@ li.comment .text {
 	padding: 5px;
 }
 
+.activity .preview-small {
+	float: right;
+}
+
+.activity .preview-small img {
+	max-height: 36px;
+}
+
+.activity .linked {
+	cursor: pointer;
+}
+
 /* @end system updates ===================================================== */
 
 /* @start responsive-adjustments =========================================== */
@@ -641,10 +666,16 @@ li.comment .text {
 	
 	.navbar .brand {
 		margin-left: -18px;
+		font-size: 1.1em;
 	}
 	
 	.navbar .btn-navbar {
 		margin-right: -10px;
+	}
+
+	.navbar .badge {
+		padding: 1px 7px 2px;
+		margin-left: 0;
 	}
 	
 	.chat-window .time, .posts .time {
