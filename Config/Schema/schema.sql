@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 03, 2012 at 11:54 PM
+-- Generation Time: Oct 28, 2012 at 01:17 AM
 -- Server version: 5.1.61
 -- PHP Version: 5.3.3
 
@@ -35,6 +35,22 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `profile_image` varchar(255) DEFAULT NULL,
   `data` text NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `activities`
+--
+
+CREATE TABLE IF NOT EXISTS `activities` (
+  `id` char(36) NOT NULL,
+  `model` varchar(25) NOT NULL,
+  `foreign_key` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `model` (`model`,`foreign_key`,`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -100,12 +116,16 @@ CREATE TABLE IF NOT EXISTS `contests` (
 
 CREATE TABLE IF NOT EXISTS `messages` (
   `id` char(36) NOT NULL,
+  `model` varchar(25) DEFAULT NULL,
+  `foreign_id` char(36) DEFAULT NULL,
   `user_id` char(36) NOT NULL,
   `created` datetime NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
-  KEY `id` (`id`,`user_id`)
+  KEY `id` (`id`,`user_id`),
+  KEY `foreign_id` (`foreign_id`),
+  KEY `model` (`model`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -181,7 +201,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `fb_target` varchar(64) DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
   `last_seen` datetime DEFAULT NULL,
-  `last_ack` datetime NOT NULL,
+  `last_ack` datetime DEFAULT NULL,
+  `last_update` datetime DEFAULT NULL,
   `session_key` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

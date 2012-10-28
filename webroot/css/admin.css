@@ -534,17 +534,23 @@ li.comment .text {
 	width: 8em;
 }
 
+.activity tr:hover .time {
+	color: #AAA;
+}
+
 .activity .type {
 	width: 16px;
+}
+
+.activity .time, .activity .type {
+	vertical-align: middle;
 }
 
 .activity a {
 	color: inherit;
 }
 
-.activity tr {
-	border-radius: 5px;
-}
+
 
 .activity th, .activity td {
 	padding: 5px;
