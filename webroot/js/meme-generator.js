@@ -327,12 +327,25 @@ var MemeGenerator = {
 		var row = -1;
 		var rowSum = 0;
 		var gapWidth = ns.context.measureText(' ').width;
-		var idealWidth = lineWidth / 4;
 
 		// iterate through the words, collecting length and the greedy-wrap max line count.
 		for(var iter = 0; iter < words.length ; iter++) {
 			
 			var cost = ns.context.measureText(words[iter]).width;
+
+			// single word exceeds line-width, split word onto new line
+			if(cost > lineWidth) {
+				var mid = Math.floor(words[iter].length / 2);
+				var halfWord = words[iter].substr(0, mid);
+				var remainingWord = words[iter].substr(mid);
+				var previousWords = words.splice(0, iter);
+				words[0] = remainingWord;
+				words.unshift(halfWord + '-');
+				words = previousWords.concat(words);
+
+				// recompute costs of this newly split line
+				cost = ns.context.measureText(words[iter]).width;
+			}
 			
 			// word falls on a new line
 			if(typeof lines[row] == 'undefined' || rowSum + gapWidth + cost > lineWidth) {
