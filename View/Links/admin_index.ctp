@@ -43,6 +43,11 @@
 			<div class="stats muted">
 				&mdash; posted <?= date('M j', strtotime($link['Link']['created'])); ?> by <strong><?= $link['User']['username']; ?></strong> <small>(<?= $this->Time->timeAgoInWords($link['Link']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
 			</div>
+			<div class="interact">
+				<span class="badge badge-info">3 comments</span>
+				<span class="badge badge-inverse">Game</span>
+				<span class="badge badge-inverse">HTML5</span>
+			</div>
 		</li>
 		<?php endforeach; ?>
 		</ul>

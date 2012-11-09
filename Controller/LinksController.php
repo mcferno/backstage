@@ -20,7 +20,7 @@ class LinksController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Link->create();
 			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash(__('The link has been saved'));
+				$this->Session->setFlash('Your new linked has been added!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The link could not be saved. Please, try again.'));

@@ -677,10 +677,6 @@ li.comment .text {
 	font-size: 0.9em;
 }
 
-.link-exchange .main {
-	font-weight: bold;
-}
-
 .link-exchange li {
 	border-bottom: 1px solid #666;
 	padding: 1.2em;
@@ -692,6 +688,16 @@ li.comment .text {
 
 .link-exchange small {
 	font-size: 0.8em;
+}
+
+.link-exchange .interact {
+	margin: 0.5em;
+}
+
+.link-exchange .badge {
+	font-size: 0.9em;
+	font-weight: normal;
+	padding: 2px 12px 3px;
 }
 
 /* @end link exchange ====================================================== */
