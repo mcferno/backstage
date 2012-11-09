@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 28, 2012 at 01:17 AM
+-- Generation Time: Nov 09, 2012 at 12:04 AM
 -- Server version: 5.1.61
 -- PHP Version: 5.3.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `kennyquotemachine`
@@ -111,6 +105,24 @@ CREATE TABLE IF NOT EXISTS `contests` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `links`
+--
+
+CREATE TABLE IF NOT EXISTS `links` (
+  `id` char(36) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `url` varchar(512) NOT NULL,
+  `title` varchar(300) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `messages`
 --
 
@@ -124,8 +136,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `id` (`id`,`user_id`),
-  KEY `foreign_id` (`foreign_id`),
-  KEY `model` (`model`)
+  KEY `model` (`model`,`foreign_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -206,7 +217,3 @@ CREATE TABLE IF NOT EXISTS `users` (
   `session_key` char(36) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
