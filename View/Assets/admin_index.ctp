@@ -2,7 +2,7 @@
 	$this->set('contentSpan',10);
 ?>	
 <div class="row-fluid">
-	<div class="span2 text-right">
+	<div class="span2 text-right action-bar">
 		<h3>Specs</h3>
 		<ul class="unstyled">
 			<li><strong><?= $this->Session->read('Auth.User.username'); ?></strong> <i class="icon-white icon-user"></i></li>

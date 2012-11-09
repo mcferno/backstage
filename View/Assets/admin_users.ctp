@@ -2,7 +2,7 @@
 	$this->set('contentSpan',10);
 ?>	
 <div class="row-fluid">
-	<div class="span2 text-right">
+	<div class="span2 text-right action-bar">
 		<h3>Contributing Users</h3>
 		<ul class="unstyled">
 			<?php foreach($contributingUsers as $user) : ?>

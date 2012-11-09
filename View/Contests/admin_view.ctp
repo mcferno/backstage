@@ -8,7 +8,7 @@
 	</div>
 </div>
 <div class="row-fluid">
-	<div class="span2 text-right">
+	<div class="span2 text-right action-bar">
 		<ul class="unstyled">
 			<li><strong><?= $contest['User']['username']; ?></strong> <i class="icon-white icon-user"></i></li>
 			<li><?= $contest['Contest']['created']; ?> <i class="icon-white icon-time"></i></li>

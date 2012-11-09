@@ -12,6 +12,9 @@
 				?>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
 				<?	break;
+				case ($this->request->controller == 'links'):
+
+					break; 
 				default:
 				?>
 					<li class="nav-header">Images</li>

@@ -2,7 +2,7 @@
 	$this->set('contentSpan',10);
 ?>	
 <div class="row-fluid">
-	<div class="span2">
+	<div class="span2 action-bar">
 		&nbsp;
 		<?php if(!empty($activeContests)) : ?>
 		<p><i class="icon-white icon-info-sign"></i> To start a caption battle of your own, pick an image from <?= $this->Html->link('Your Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?>.</p>

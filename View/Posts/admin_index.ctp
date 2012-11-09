@@ -3,7 +3,7 @@
 	<h2>Quotes</h2>
 	<p>Aggregated posts from <?= implode(', ',$types); ?></p>
 	<?= $this->element('admin/pagination'); ?>
-	<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped">
+	<table cellpadding="0" cellspacing="0" class="table table-striped">
 	<tr>
 		<th><?php echo $this->Paginator->sort('date');?></th>
 		<th><?php echo $this->Paginator->sort('model','Source');?></th>

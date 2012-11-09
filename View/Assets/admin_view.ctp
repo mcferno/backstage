@@ -11,7 +11,7 @@
 </div>
 	
 <div class="row-fluid">
-	<div class="span2 asset-view text-right">
+	<div class="span2 asset-view text-right action-bar">
 		<ul class="unstyled">
 			<li><strong><?= $asset['User']['username']; ?></strong> <i class="icon-white icon-user"></i></li>
 			<li><?= $asset['Asset']['created']; ?> <i class="icon-white icon-time"></i></li>
