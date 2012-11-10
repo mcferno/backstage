@@ -13,7 +13,13 @@ class LinksController extends AppController {
 		if (!$this->Link->exists()) {
 			throw new NotFoundException(__('Invalid link'));
 		}
-		$this->set('link', $this->Link->read(null, $id));
+		$link = $this->Link->find('first', array(
+			'contain' => 'User',
+			'conditions' => array(
+				'Link.id' => $id
+			)
+		));
+		$this->set('link', $link);
 	}
 
 	public function admin_add() {

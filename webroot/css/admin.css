@@ -688,9 +688,8 @@ li.comment .text {
 .link-exchange .main {
 	font-size: 14pt;
 	margin-right: 0.5em;
-	padding: 5px;
 	padding-bottom: 2px;
-	border-bottom: 2px dotted #FC6626;
+	border-bottom: 1px solid #FC6626;
 }
 
 .link-exchange .description {
