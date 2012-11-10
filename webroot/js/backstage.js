@@ -21,6 +21,13 @@ Backstage = {};
 		})
 		.on('mouseup', '.copier', function(e) {
 			e.preventDefault();
+		})
+		.on('mouseover', '.link-exchange li', function() {
+
+			$(this).find('.controls').show();
+		})
+		.on('mouseout', '.link-exchange li', function() {
+			$(this).find('.controls').hide();
 		});
 	
 	$(document).ready(function() {		

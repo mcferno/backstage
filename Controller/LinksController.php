@@ -19,15 +19,14 @@ class LinksController extends AppController {
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->Link->create();
+			$this->Link->set('user_id', $this->Auth->user('id'));
 			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash('Your new linked has been added!', 'messaging/alert-success');
+				$this->Session->setFlash('Your new link has been added!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The link could not be saved. Please, try again.'));
+				$this->Session->setFlash('Your new link could not be saved. Please, try again.', 'messaging/alert-error');
 			}
 		}
-		$users = $this->Link->User->find('list');
-		$this->set(compact('users'));
 	}
 
 	public function admin_edit($id = null) {
@@ -37,16 +36,14 @@ class LinksController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash(__('The link has been saved'));
+				$this->Session->setFlash('Your link has been updated!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The link could not be saved. Please, try again.'));
+				$this->Session->setFlash('Your link could not be updated. Please, try again.', 'messaging/alert-error');
 			}
 		} else {
 			$this->request->data = $this->Link->read(null, $id);
 		}
-		$users = $this->Link->User->find('list');
-		$this->set(compact('users'));
 	}
 
 	public function admin_delete($id = null) {
@@ -58,10 +55,10 @@ class LinksController extends AppController {
 			throw new NotFoundException(__('Invalid link'));
 		}
 		if ($this->Link->delete()) {
-			$this->Session->setFlash(__('Link deleted'));
+			$this->Session->setFlash('Your link has been removed!', 'messaging/alert-success');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Link was not deleted'));
+		$this->Session->setFlash('Your link could not be deleted. Please, try again.', 'messaging/alert-error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

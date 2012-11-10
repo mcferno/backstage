@@ -125,6 +125,24 @@ hr {
 	background-color: #d95821;
 }
 
+.badge-muted {
+	background-color: #999;
+}
+
+.badge-muted:hover {
+	background-color: #BBB;
+}
+
+.badge-pale {
+	background-color: #DD7500;
+	background-color: #6996AD;
+}
+
+.badge-pale:hover {
+	background-color: #E38217;
+	background-color: #42647F;
+}
+
 span.badge-off {
 	background-color: #666;
 }
@@ -158,7 +176,7 @@ body {
 	font-size: 12pt;
 }
 
-p {
+p, label {
 	font-size: 12pt;
 }
 
@@ -419,6 +437,12 @@ li.comment .text {
 	width: auto;
 }
 
+.btn-radio {
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
@@ -662,14 +686,16 @@ li.comment .text {
 /* @start link exchange ==================================================== */
 
 .link-exchange .main {
-	font-size: 1.1em;
-	padding-right: 0.5em;
+	font-size: 14pt;
+	margin-right: 0.5em;
+	padding: 5px;
+	padding-bottom: 2px;
+	border-bottom: 2px dotted #FC6626;
 }
 
 .link-exchange .description {
-	margin-left: 0.75em;
-	margin-top: 0.4em;
-	margin-bottom: 0.2em;
+	margin: 0.75em;
+	margin-bottom: 4px;
 }
 
 .link-exchange .stats {
@@ -679,7 +705,7 @@ li.comment .text {
 
 .link-exchange li {
 	border-bottom: 1px solid #666;
-	padding: 1.2em;
+	padding: 1.5em;
 }
 
 .link-exchange li:last-child {
@@ -692,6 +718,14 @@ li.comment .text {
 
 .link-exchange .interact {
 	margin: 0.5em;
+}
+
+.link-exchange .comments {
+	margin-right: 1.5em;
+}
+
+.link-exchange .controls {
+	float: right;
 }
 
 .link-exchange .badge {

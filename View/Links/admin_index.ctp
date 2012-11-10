@@ -44,9 +44,18 @@
 				&mdash; posted <?= date('M j', strtotime($link['Link']['created'])); ?> by <strong><?= $link['User']['username']; ?></strong> <small>(<?= $this->Time->timeAgoInWords($link['Link']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
 			</div>
 			<div class="interact">
-				<span class="badge badge-info">3 comments</span>
-				<span class="badge badge-inverse">Game</span>
-				<span class="badge badge-inverse">HTML5</span>
+				<?= $this->Html->link('<span class="badge badge-success comments">3 comments</span>', array('action' => 'view', $link['Link']['id']), array('escape' => false)); ?>
+				<span class="badge badge-info">Game</span>
+				<span class="badge badge-pale">HTML5</span>
+				<span class="badge badge-info">Chrome</span>
+				<span class="badge badge-pale">Audio</span>
+
+				<?php if($this->Session->read('Auth.User.id') == $link['Link']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLE_ADMIN) : ?>
+				<div class="controls" style="display:none;">
+					<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-inverse edit-btn', 'title' => 'Edit this link', 'escape' => false)); ?>
+					<?= $this->Form->postLink($this->Html->image('ui/icons/prohibition.png') . ' Delete', array('action' => 'delete', $link['Link']['id']), array('class' => 'btn btn-inverse', 'title' => 'Delete this link', 'escape' => false), "Are you sure you want to delete the {$link['Link']['title']} link?"); ?>
+				</div>
+				<?php endif; ?>
 			</div>
 		</li>
 		<?php endforeach; ?>
