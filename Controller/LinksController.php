@@ -4,7 +4,9 @@ App::uses('AppController', 'Controller');
 class LinksController extends AppController {
 
 	public function admin_index() {
-		$this->Link->recursive = 0;
+		$this->paginate = array(
+			'contain' => array('User', 'Tag')
+		);
 		$this->set('links', $this->paginate());
 	}
 
@@ -14,7 +16,7 @@ class LinksController extends AppController {
 			throw new NotFoundException(__('Invalid link'));
 		}
 		$link = $this->Link->find('first', array(
-			'contain' => 'User',
+			'contain' => array('User', 'Tag'),
 			'conditions' => array(
 				'Link.id' => $id
 			)
@@ -26,6 +28,7 @@ class LinksController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Link->create();
 			$this->Link->set('user_id', $this->Auth->user('id'));
+
 			if ($this->Link->save($this->request->data)) {
 				$this->Session->setFlash('Your new link has been added!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
@@ -33,6 +36,8 @@ class LinksController extends AppController {
 				$this->Session->setFlash('Your new link could not be saved. Please, try again.', 'messaging/alert-error');
 			}
 		}
+		
+		$this->set('tags', array_values($this->Link->Tag->find('list')));
 	}
 
 	public function admin_edit($id = null) {
@@ -48,8 +53,21 @@ class LinksController extends AppController {
 				$this->Session->setFlash('Your link could not be updated. Please, try again.', 'messaging/alert-error');
 			}
 		} else {
-			$this->request->data = $this->Link->read(null, $id);
+			
+			$this->request->data = $this->Link->find('first', array(
+				'contain' => 'Tag',
+				'conditions' => array(
+					'Link.id' => $id
+				)
+			));
+			
+			// compile existing tags
+			if(!empty($this->request->data['Tag'])) {
+				$this->request->data['Tagging']['tags'] = implode(Hash::extract($this->request->data['Tag'], '{n}.name'), ',');
+			}
 		}
+
+		$this->set('tags', array_values($this->Link->Tag->find('list')));
 	}
 
 	public function admin_delete($id = null) {

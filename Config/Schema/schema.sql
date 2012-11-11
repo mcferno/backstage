@@ -160,6 +160,38 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `taggings`
+--
+
+CREATE TABLE IF NOT EXISTS `taggings` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `created` datetime DEFAULT NULL,
+  `user_id` char(36) DEFAULT NULL,
+  `tag_id` char(36) DEFAULT NULL,
+  `model` varchar(25) DEFAULT NULL,
+  `foreign_id` char(36) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tumblr`
+--
+
+CREATE TABLE IF NOT EXISTS `tags` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `user_id` char(36) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tumblr`
 --
 

@@ -15,10 +15,9 @@
 </div>
 <div class="interact">
 	<?= $this->Html->link('<span class="badge badge-success comments">3 comments</span>', array('action' => 'view', $link['Link']['id']), array('escape' => false)); ?>
-	<span class="badge badge-info">Game</span>
-	<span class="badge badge-pale">HTML5</span>
-	<span class="badge badge-info">Chrome</span>
-	<span class="badge badge-pale">Audio</span>
+	<?php foreach($link['Tag'] as $idx => $tag) : ?>
+	<span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span>
+	<?php endforeach; ?>
 
 	<?php if($this->Session->read('Auth.User.id') == $link['Link']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLE_ADMIN) : ?>
 	<div class="controls" style="display:none;">

@@ -733,6 +733,11 @@ li.comment .text {
 	padding: 2px 12px 3px;
 }
 
+.links .content-tags {
+	margin-left: 0;
+	display: block;
+}
+
 /* @end link exchange ====================================================== */
 
 /* @start responsive-adjustments =========================================== */

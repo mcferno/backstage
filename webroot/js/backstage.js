@@ -30,7 +30,7 @@ Backstage = {};
 			$(this).find('.controls').hide();
 		});
 	
-	$(document).ready(function() {		
+	$(document).ready(function() {
 		// mouseover icon-color inversion
 		$('.dropdown-menu i.icon').each(function(){
 			$(this).closest('li')
@@ -39,11 +39,18 @@ Backstage = {};
 				})
 				.mouseout(function() {
 					$(this).find('.icon-white').addClass('icon').removeClass('icon-white');
-				})
+				});
 		});
 		
 		// js detection for css tweaks
 		$('body').removeClass('no-js').addClass('js');
+
+		if($('.content-tags').length){
+			$('.content-tags').select2({
+				tags : ns.selectTags,
+				tokenSeparators : [",", " "]
+			});
+		}
 	});
 
 })(jQuery, Backstage);
