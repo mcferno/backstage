@@ -21,9 +21,19 @@
 
 	<div class="span10">
 		<h1>Link Exchange</h1>
+	<?php if(!empty($tag['Tag'])) : ?>
+		<h3>
+			Viewing Links in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+			<?= $this->Html->link('Clear &times;', array('action' => 'index'), array('class' => 'badge badge-muted', 'escape' => false)); ?>
+		</h3>
+	<?php else: ?>
 		<p>Got some links others need to know about? Just want to browse a collection of the best content? This is the place.</p>
+	<?php endif; ?>
+		<br>
 
 		<?= $this->element('admin/pagination'); ?>
+
+
 
 		<ul class="link-exchange unstyled striped">
 		<?php foreach ($links as $link): ?>

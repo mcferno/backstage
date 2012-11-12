@@ -131,6 +131,7 @@ hr {
 
 .badge-muted:hover {
 	background-color: #BBB;
+	color: #666;
 }
 
 .badge-pale {
@@ -729,6 +730,12 @@ li.comment .text {
 
 .link-exchange .badge {
 	font-size: 0.9em;
+	font-weight: normal;
+	padding: 2px 12px 3px;
+}
+
+.active-tag {
+	font-size: 1em;
 	font-weight: normal;
 	padding: 2px 12px 3px;
 }

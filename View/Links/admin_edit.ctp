@@ -12,7 +12,7 @@
 	?>
 	<label>Tags</label>
 	<?php
-		echo $this->element('common/tagging', array('model' => 'Link'));
+		echo $this->element('common/tagging', array('model' => 'Link', 'foreign_key' => $this->request->data['Link']['id']));
 		echo $this->Form->button('<i class="icon-white icon-plus-sign"></i> Submit',array('class'=>'btn btn-large btn-primary')); 
 	?>
 	</fieldset>

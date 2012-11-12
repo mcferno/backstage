@@ -134,4 +134,21 @@ class Message extends AppModel {
 				break;
 		}
 	}
+
+	/**
+	 * Obtains a message count for all types of content in a lookup array, similar
+	 * to the output of ->find('list')
+	 *
+	 * @return  {Array} Array indexed by the foreign_id, with its message count as the value
+	 */
+	public function getTally($conditions = array()) {
+
+		$tally = $this->find('all', array(
+			'fields' => array('COUNT(*) as count', 'foreign_id'),
+			'group' => 'foreign_id',
+			'conditions' => $conditions
+		));
+
+		return Hash::combine($tally, '{n}.Message.foreign_id', '{n}.0.count');
+	}
 }

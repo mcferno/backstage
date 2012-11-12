@@ -3,11 +3,44 @@ App::uses('AppController', 'Controller');
 
 class LinksController extends AppController {
 
+	public $uses = array('Link', 'Message');
+
+	public $paginate = array();
+
 	public function admin_index() {
 		$this->paginate = array(
-			'contain' => array('User', 'Tag')
+			'Link' => array(
+				'contain' => array('User', 'Tag')
+			)
 		);
-		$this->set('links', $this->paginate());
+
+		// restrict links to those by a specific tag
+		if(isset($this->request->params['named']['tag'])) {
+			$tag = $this->Link->Tag->findById($this->request->params['named']['tag']);
+			$this->set('tag', $tag);
+
+			$this->paginate['Link']['joins'][] = array(
+				'alias' => 'Tagging',
+				'type' => 'INNER',
+				'table' => 'taggings',
+				'conditions'=> array(
+					'Link.id = Tagging.foreign_id',
+					'Tagging.model' => 'Link'
+				)
+			);
+			$this->paginate['Link']['group'] = 'Link.id';
+			$this->paginate['Link']['conditions']['Tagging.tag_id'] = $tag['Tag']['id'];
+		}
+		$links = $this->paginate();
+
+		// get message counts
+		$tally = $this->Message->getTally(array(
+			'foreign_id' => Hash::extract($links, '{n}.Link.id'),
+			'model' => 'Link'
+		));
+
+		$this->set('links', $links);
+		$this->set('message_tally', $tally);
 	}
 
 	public function admin_view($id = null) {
