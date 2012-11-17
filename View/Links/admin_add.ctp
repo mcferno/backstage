@@ -2,6 +2,7 @@
 <?php echo $this->Form->create('Link'); ?>
 	<fieldset>
 		<h1>Add a New Link</h1>
+		<p>Please be sure that the links you submit have long-running relevance for other users, and remember that quality trumps quantity. Avoid links which can very easily be found by other means.</p>
 	<?php
 		echo $this->Form->input('url', array('label' => 'URL', 'class' => 'span8', 'placeholder' => 'http://example.com'));
 		echo $this->Form->input('title', array('label' => 'Link Title', 'class' => 'span8', 'placeholder' => 'Website name, content title, or short descriptive name'));

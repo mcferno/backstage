@@ -13,8 +13,12 @@
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
 				<?	break;
 				case ($this->request->controller == 'links'):
+				?>
+					<li class="nav-header">Link Exchange</li>
+					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('View All Links',array('action'=>'index')); ?></li>
+					<li <?php if($this->request->action == 'admin_my_links') { echo 'class="active"'; } ?>><?= $this->Html->link('My Links',array('action'=>'my_links')); ?></li>
 
-					break; 
+				<?	break; 
 				default:
 				?>
 					<li class="nav-header">Images</li>

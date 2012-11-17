@@ -85,7 +85,7 @@ class UsersController extends AppController {
 	 * Admin utility function to re-create the Activity data set.
 	 */
 	public function admin_refresh_updates() {
-		if($this->Auth->user('role') >= ROLES_ADMIN) {
+		if($this->isAdminUser()) {
 			ClassRegistry::init('Asset')->refreshPostableIndex();
 			ClassRegistry::init('Contest')->refreshPostableIndex();
 			ClassRegistry::init('Message')->refreshPostableIndex();

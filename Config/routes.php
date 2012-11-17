@@ -32,13 +32,19 @@ Router::connect("/{$admin_url}/dashboard/updates/*", array('controller'=>'users'
 Router::connect("/{$admin_url}/meme-generator/*", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/my-images/*", array('controller'=>'assets', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/all-images/*", array('controller'=>'assets', 'action' => 'users', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/{$admin_url}/caption-battles", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/{$admin_url}/caption-battles/:action/*", array('controller'=>'contests', 'prefix' => 'admin', 'admin' => true));
-Router::connect("/{$admin_url}/caption-battles/*", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/user/*", array('controller'=>'assets', 'action' => 'user', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/chat", array('controller'=>'users', 'action' => 'group_chat', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/setup", array('controller' => 'users', 'action' => 'setup', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/quotes/*", array('controller' => 'posts', 'action'=> 'index', 'prefix' => 'admin', 'admin' => true));
+
+Router::connect("/{$admin_url}/caption-battles", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/caption-battles/:action/*", array('controller'=>'contests', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/caption-battles/*", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
+
+Router::connect("/{$admin_url}/link-exchange", array('controller'=>'links', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/link-exchange/my-links/*", array('controller'=>'links', 'action' => 'my_links', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/link-exchange/:action/*", array('controller'=>'links', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/link-exchange/*", array('controller'=>'links', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 
 Router::connect("/{$admin_url}/:controller", array('action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/:controller/:action/", array('prefix' => 'admin', 'admin' => true));

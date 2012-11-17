@@ -5,16 +5,28 @@ class LinksController extends AppController {
 
 	public $uses = array('Link', 'Message');
 
-	public $paginate = array();
+	public $paginate = array(
+		'Link' => array(
+			'contain' => array('User', 'Tag'),
+			'limit' => 10
+		)
+	);
 
 	public function admin_index() {
-		$this->paginate = array(
-			'Link' => array(
-				'contain' => array('User', 'Tag'),
-				'limit' => 10
-			)
-		);
+		$this->defaultPagination();
+	}
 
+	public function admin_my_links() {
+		$this->paginate['Link']['conditions']['Link.user_id'] = $this->Auth->user('id');
+		$this->set('sectionTitle', 'My Links');
+		$this->defaultPagination();
+		$this->render('admin_index');
+	}
+
+	/**
+	 * Prepares the necessary data for a paginated index of links
+	 */
+	protected function defaultPagination() {
 		// restrict links to those by a specific tag
 		if(isset($this->request->params['named']['tag'])) {
 			$tag = $this->Link->Tag->findById($this->request->params['named']['tag']);
@@ -32,6 +44,16 @@ class LinksController extends AppController {
 			$this->paginate['Link']['group'] = 'Link.id';
 			$this->paginate['Link']['conditions']['Tagging.tag_id'] = $tag['Tag']['id'];
 		}
+
+		// restrict links to those by a specific user
+		if(isset($this->request->params['named']['user'])) {
+			$this->Message->User->id = $this->request->params['named']['user'];
+			if($this->Message->User->exists()) {
+				$this->paginate['Link']['conditions']['Link.user_id'] = $this->request->params['named']['user'];
+				$this->set('user', $this->Message->User->findById($this->request->params['named']['user']));
+			}
+		}
+
 		$links = $this->paginate();
 
 		// get message counts
@@ -82,10 +104,10 @@ class LinksController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Link->save($this->request->data)) {
-				$this->Session->setFlash('Your link has been updated!', 'messaging/alert-success');
+				$this->Session->setFlash('The link has been updated!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('Your link could not be updated. Please, try again.', 'messaging/alert-error');
+				$this->Session->setFlash('The link could not be updated. Please, try again.', 'messaging/alert-error');
 			}
 		} else {
 			
@@ -113,6 +135,12 @@ class LinksController extends AppController {
 		if (!$this->Link->exists()) {
 			throw new NotFoundException(__('Invalid link'));
 		}
+
+		if(!$this->isAdminUser() && !$this->Link->isOwner($this->Auth->user('id'))) {
+			$this->Session->setFlash('Sorry, only the owner of this link can delete it!', 'messaging/alert-error');
+			$this->redirect(array('action' => 'index'));
+		}
+
 		if ($this->Link->delete()) {
 			$this->Session->setFlash('Your link has been removed!', 'messaging/alert-success');
 			$this->redirect(array('action' => 'index'));

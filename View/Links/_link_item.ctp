@@ -11,7 +11,7 @@
 ?>
 </div>
 <div class="stats muted">
-	&mdash; posted <?= date('M j', strtotime($link['Link']['created'])); ?> by <strong><?= $link['User']['username']; ?></strong> <small>(<?= $this->Time->timeAgoInWords($link['Link']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
+	&mdash; posted <?= date('M j', strtotime($link['Link']['created'])); ?> by <strong><?= $this->Html->link($link['User']['username'], ($this->Session->read('Auth.User.id') == $link['Link']['user_id']) ? array('action' => 'my_links') : array('action' => 'index', 'user' => $link['Link']['user_id'])); ?></strong> <small>(<?= $this->Time->timeAgoInWords($link['Link']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
 </div>
 <div class="interact">
 	<?php
@@ -22,7 +22,7 @@
 	<a href="<?= $this->Html->url(array('controller' => 'links', 'action' => 'index', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
 	<?php endforeach; ?>
 
-	<?php if($this->Session->read('Auth.User.id') == $link['Link']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLE_ADMIN) : ?>
+	<?php if($this->Session->read('Auth.User.id') == $link['Link']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
 	<div class="controls" style="display:none;">
 		<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-inverse edit-btn', 'title' => 'Edit this link', 'escape' => false)); ?>
 		<?= $this->Form->postLink($this->Html->image('ui/icons/prohibition.png') . ' Delete', array('action' => 'delete', $link['Link']['id']), array('class' => 'btn btn-inverse', 'title' => 'Delete this link', 'escape' => false), "Are you sure you want to delete the {$link['Link']['title']} link?"); ?>

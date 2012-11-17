@@ -247,4 +247,13 @@ class AppController extends Controller {
 		}
 	}
 
+	/**
+	 * Determines if the current User is classified as a site administrator
+	 *
+	 * @return {Boolean}
+	 */
+	protected function isAdminUser($min_role = ROLES_ADMIN) {
+		return $this->Session->check('Auth.User.role') && (int)$this->Auth->user('role') >= $min_role;
+	}
+
 }
