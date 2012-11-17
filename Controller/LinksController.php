@@ -10,7 +10,8 @@ class LinksController extends AppController {
 	public function admin_index() {
 		$this->paginate = array(
 			'Link' => array(
-				'contain' => array('User', 'Tag')
+				'contain' => array('User', 'Tag'),
+				'limit' => 10
 			)
 		);
 
@@ -41,6 +42,7 @@ class LinksController extends AppController {
 
 		$this->set('links', $links);
 		$this->set('message_tally', $tally);
+		$this->set('page_limits', array(20, 40, 80));
 	}
 
 	public function admin_view($id = null) {

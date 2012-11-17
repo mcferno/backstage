@@ -576,10 +576,6 @@ li.comment .text {
 
 /* @start chat-module ====================================================== */
 
-.chat-link .icon-white {
-	margin-left: 0.5em;
-}
-
 .chat-bar .navbar-inner {
 	background: #EEEEEE; /* old browsers */
 	background: -moz-linear-gradient(top, #EEEEEE 0%, #C4C4C4 100%); /* firefox */
@@ -688,6 +684,7 @@ li.comment .text {
 
 .link-exchange .main {
 	font-size: 14pt;
+	line-height: 2em;
 	margin-right: 0.5em;
 	padding-bottom: 2px;
 	border-bottom: 1px solid #FC6626;
@@ -731,6 +728,7 @@ li.comment .text {
 .link-exchange .badge {
 	font-size: 0.9em;
 	font-weight: normal;
+	line-height: 2em;
 	padding: 2px 12px 3px;
 }
 
@@ -743,6 +741,7 @@ li.comment .text {
 .links .content-tags {
 	margin-left: 0;
 	display: block;
+	padding-bottom: 1em;
 }
 
 /* @end link exchange ====================================================== */
@@ -825,6 +824,27 @@ li.comment .text {
 	
 	.chat-window .time, .posts .time {
 		font-size: 0.8em;
+		width: 1em;
+	}
+
+	.link-exchange li {
+		padding: 0.5em;
+	}
+
+	.link-exchange .long-link, .link-exchange .view-link {
+		display: block;
+		word-break: break-all;
+	}
+
+	.link-exchange .main {
+		line-height: 1.5em;
+	}
+
+	.link-exchange .description {
+		margin: 0.5em;
+	}
+
+	.table .short-date {
 		width: 1em;
 	}
 }

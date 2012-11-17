@@ -1,5 +1,5 @@
 <div class="title">
-	<a href="<?= $link['Link']['url']; ?>" target="_blank" class="main"><?= $link['Link']['title']; ?></a> <span class="muted">« <a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $link['Link']['url']; ?></a> »</span>
+	<a href="<?= $link['Link']['url']; ?>" target="_blank" class="main"><?= $link['Link']['title']; ?></a> <span class="muted long-link"><span class="extra">« </span><a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $link['Link']['url']; ?></a><span class="extra"> »</span></span>
 </div>
 <div class="description">
 <?php
@@ -17,7 +17,7 @@
 	<?php
 		$count = isset($message_tally[$link['Link']['id']]) ? $message_tally[$link['Link']['id']] : 0;
 		$badge = ($count === 0) ? 'custom badge-off' : 'success';
-		echo $this->Html->link('<span class="badge badge-' . $badge . ' comments">'. $count .' comments</span>', array('action' => 'view', $link['Link']['id']), array('escape' => false)); ?>
+		echo $this->Html->link('<span class="badge badge-' . $badge . ' comments">'. $count .' comments</span>', array('action' => 'view', $link['Link']['id']), array('escape' => false, 'class' => 'view-link')); ?>
 	<?php foreach($link['Tag'] as $idx => $tag) : ?>
 	<a href="<?= $this->Html->url(array('controller' => 'links', 'action' => 'index', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
 	<?php endforeach; ?>
