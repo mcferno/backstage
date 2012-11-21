@@ -26,7 +26,7 @@ class Link extends AppModel {
 		if(!empty($link['Link']['title'])) {
 			$link['Activity']['phrase'] .= " called \"{$link['Link']['title']}\".";
 		}
-		$link['Activity']['icon'] = 'image-plus';
+		$link['Activity']['icon'] = 'application-browser';
 		$link['Activity']['link'] = array('controller' => 'links', 'action' => 'view', $link['Link']['id']);
 	}
 }

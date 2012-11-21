@@ -96,6 +96,7 @@
 <div class="span12">
 	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
+		<tr><td class="short-date">Nov 20</td><td>New Link Exchange section allows you to save links and tag them.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>Network Update notifications alert you of all user actions.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>You can comment on all saved Images and Caption Battles.</td></tr>
 		<tr><td class="short-date">Oct 25</td><td>Meme Generator's font-size adjustments are improved. Makes better use of image width.</td></tr>
