@@ -15,7 +15,8 @@ class Activity extends AppModel {
 		// the data the 'activity' corresponds to
 		'Asset' => array('foreignKey' => 'foreign_key'),
 		'Contest' => array('foreignKey' => 'foreign_key'),
-		'Message' => array('foreignKey' => 'foreign_key')
+		'Message' => array('foreignKey' => 'foreign_key'),
+		'Link' => array('foreignKey' => 'foreign_key')
 	);
 
 	public function afterFind($results, $primary = false) {

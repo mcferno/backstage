@@ -21,7 +21,8 @@ class Message extends AppModel {
 
 		// object being written about (when applicable)
 		'Asset' => array('foreignKey' => 'foreign_id'),
-		'Contest' => array('foreignKey' => 'foreign_id')
+		'Contest' => array('foreignKey' => 'foreign_id'),
+		'Link' => array('foreignKey' => 'foreign_id')
 	);
 
 	public $actsAs = array('Postable.Postable' => array(
@@ -130,6 +131,15 @@ class Message extends AppModel {
 				if(!empty($activity['Message']['Asset']['id'])) {
 					$activity['Activity']['preview'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Asset']['user_id']}/200/{$activity['Message']['Asset']['filename']}";
 					$activity['Activity']['preview-small'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Asset']['user_id']}/75/{$activity['Message']['Asset']['filename']}";
+				}
+				break;
+			case 'Link':
+				$activity['Activity']['link'] = array('controller' => 'links', 'action' => 'view', $activity['Message']['foreign_id']);
+				
+				if(!empty($activity['Message']['Link']['title'])) {
+					$activity['Activity']['phrase'] .= " on the {$activity['Message']['Link']['title']} link.";
+				} else {
+					$activity['Activity']['phrase'] .= ' on a link.';
 				}
 				break;
 		}
