@@ -27,6 +27,12 @@ define('ROLES_ADMIN',1);
 
 define('MYSQL_DATE_FORMAT','Y-m-d H:i:s');
 
+// time in seconds after which chat messages are no longer retrievable
+define('MESSAGES_DEFAULT_ROLLOVER', 21600); // 6 hrs
+
+// number of chat messages to retrieve
+define('MESSAGES_DEFAULT_BUFFER', 40);
+
 /**
  * Load any environment-specific configurations
  */

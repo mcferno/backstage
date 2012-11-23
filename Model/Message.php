@@ -9,7 +9,7 @@ App::uses('Sanitize', 'Utility');
 class Message extends AppModel {
 
 	// offset from "now" in seconds, to determine which messages are new
-	public $rolloverTime = DAY;
+	public $rolloverTime = MESSAGES_DEFAULT_ROLLOVER;
 
 	// rollover time, based on the current timestamp (computed at runtime)
 	public $minimumSince = -1;
@@ -86,7 +86,7 @@ class Message extends AppModel {
 		}
 		if($since !== false) {
 			$query['conditions']['Message.created >='] = $since;
-			$query['limit'] = 50;
+			$query['limit'] = MESSAGES_DEFAULT_BUFFER;
 		}
 		if($exclude_from !== false) {
 			$query['conditions']['NOT']['Message.user_id'] = $exclude_from;
