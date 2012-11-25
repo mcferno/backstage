@@ -12,6 +12,7 @@
 	<?php
 	foreach ($posts as $post):
 		$matches = array();
+		$handle = false;
 		if(preg_match("/https:\/\/twitter.com\/#!\/([^\/]+?)\//", $post['Post']['permalink'], $matches) > 0) {
 			$handle = $matches[1];
 		}
