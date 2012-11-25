@@ -10,12 +10,20 @@
 		<th><?php echo $this->Paginator->sort('body','Text');?></th>
 	</tr>
 	<?php
-	foreach ($posts as $post): ?>
+	foreach ($posts as $post):
+		$matches = array();
+		if(preg_match("/https:\/\/twitter.com\/#!\/([^\/]+?)\//", $post['Post']['permalink'], $matches) > 0) {
+			$handle = $matches[1];
+		}
+	?>
 	<tr>
 		<td class="time"><?php echo h(date('Y.m.d H:i:s',$post['Post']['date'])); ?>&nbsp;</td>
 		<td><?php echo h($post['Post']['model']); ?>&nbsp;</td>
 		<td>
 			<?php echo $post['Post']['body']; ?>&nbsp;
+			<?php if(!empty($handle)) : ?>
+			<div class="source">&mdash; @<?php echo $handle; ?></div>
+			<?php endif; ?>
 			<?php if(!empty($post['Post']['source'])) : ?>
 			<div class="source">&mdash; <?php echo $post['Post']['source']; ?></div>
 			<?php endif; ?>
