@@ -634,6 +634,26 @@ li.comment .text {
 	display: inline-block;
 }
 
+/* user currently logged in */
+.active-user {
+	font-weight: 800;
+	color: #FC6626;
+}
+
+.chat-window tbody tr.highlight {
+	border: 2px solid #222;
+}
+
+.chat-window tbody tr.highlight td {
+	padding-top: 0.75em;
+	padding-bottom: 0.75em;
+}
+
+.highlight .time {
+	color: #AAA;
+}
+
+
 /* @end chat-module ======================================================== */
 
 /* @start system updates =================================================== */

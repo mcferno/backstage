@@ -67,12 +67,16 @@ var GroupChat = {
 		className : 'chat-row',
 		initialize : function() {
 			this.render();
+			if(this.$el.find('.active-user').length) {
+				this.el.className = this.el.className + ' highlight';
+			}
 		},
 		render : function() {
 			var timestamp = this.model.get('timestamp');
 			var date = new Date(timestamp * 1000);
 			
 			var msg = ns.autolinkUrls(this.model.get('text'));
+			msg = ns.highlightCallouts(msg);
 
 			var rendered = _.template(ns.templates.chatRowTemplate.html(), {
 				date : ns.formatDate(date),
@@ -176,7 +180,15 @@ var GroupChat = {
 
 	ns.autolinkUrls = function(text) {
 		var url_regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-		return text.replace(url_regex, '<a href="$1">$1</a>');
+		return text.replace(url_regex, '<a href="$1" target="_blank">$1</a>');
+	}
+
+	ns.highlightCallouts = function(text) {
+		if(ns.config.self) {
+			var username_regex = new RegExp("@(" + ns.config.self + ")", 'g');
+			return text.replace(username_regex, '<span class="active-user">@$1</span>');
+		}
+		return text;
 	}
 	
 	ns.sendHeartbeat = function() {

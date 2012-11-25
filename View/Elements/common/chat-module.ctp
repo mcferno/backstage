@@ -2,7 +2,10 @@
 $this->Html->script(array('utilities'),false);
 
 // settings to pass to javascript module
-$chatSettings = array();
+$chatSettings = array(
+	// username reference to highlight mentions
+	'self' => $this->Session->read('Auth.User.username')
+);
 $chatSettings['scope'] = (!empty($model)) ? $model : 'Chat';
 $chatSettings['scopeId'] = (!empty($foreign_key)) ? $foreign_key : null;
 
