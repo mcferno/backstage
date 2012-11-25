@@ -22,7 +22,12 @@ class SiteHelper extends AppHelper {
 					return $this->Html->image('profile/kqm-profile96.jpg',array('alt'=>'The Man Himself','title'=>'The Man Himself'));
 				}
 			} elseif($data['Post']['model'] == 'Twitter') {
-				$image = $this->Html->image($this->_View->viewVars['accounts']['fakeclouds'],array('width'=>96,'height'=>96,'alt'=>'@fakeclouds','title'=>'@fakeclouds'));
+				if(stripos($data['Post']['permalink'], 'fakeclouds')) {
+					$image = $this->Html->image($this->_View->viewVars['accounts']['fakeclouds'],array('width'=>96,'height'=>96,'alt'=>'@fakeclouds','title'=>'@fakeclouds'));
+				} else {
+					$image = $this->Html->image($this->_View->viewVars['accounts']['SexistSquash'],array('width'=>96,'height'=>96,'alt'=>'@SexistSquash','title'=>'@SexistSquash'));
+				}
+
 				if(!empty($data['Post']['permalink'])) {
 					return $this->Html->link($image,$data['Post']['permalink'],array('escape'=>false));
 				} else {
