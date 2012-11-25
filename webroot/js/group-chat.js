@@ -185,8 +185,8 @@ var GroupChat = {
 
 	ns.highlightCallouts = function(text) {
 		if(ns.config.self) {
-			var username_regex = new RegExp("@(" + ns.config.self.toLowerCase() + ")", 'g');
-			return text.toLowerCase().replace(username_regex, '<span class="active-user">@' + ns.config.self + '</span>');
+			var username_regex = new RegExp("@(" + ns.config.self + ")", 'gi');
+			return text.replace(username_regex, '<span class="active-user">@' + ns.config.self + '</span>');
 		}
 		return text;
 	}
