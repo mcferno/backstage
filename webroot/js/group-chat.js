@@ -241,7 +241,15 @@ var GroupChat = {
 		}
 
 		if(notificationCount !== 0) {
-			document.title = '(' + notificationCount + ') ' + ns.originalTitle;
+			var title = '';
+			console.log(data);
+			if(data.new_messages > 0) {
+				title += '(' + data.new_messages + ') ';
+			}
+			if(data.new_updates > 0) {
+				title += '[' + data.new_updates + '] ';
+			}
+			document.title = title + ns.originalTitle;
 		} else {
 			if(ns.windowFocus) {
 				document.title = ns.originalTitle;
