@@ -6,6 +6,7 @@ class User extends AppModel {
 
 	public $displayField = 'username';
 	public $hasMany = array('Asset', 'Contest');
+	public $attachTimeDeltas = false;
 	
 	protected $facebookObj = false;
 
@@ -44,6 +45,19 @@ class User extends AppModel {
 	        $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
 	    }
 	    return true;
+	}
+
+	public function afterFind($results, $primary = false) {
+		if($this->attachTimeDeltas) {
+			$now = Configure::read('App.start');
+			foreach($results as &$result) {
+				if(isset($result['User']['last_ack'])) {
+					$result['User']['last_ack_delta'] = $now - strtotime($result['User']['last_ack']);
+				}
+			}
+		}
+
+		return $results;
 	}
 	
 	/**
@@ -121,8 +135,9 @@ class User extends AppModel {
 		
 		// cache-miss
 		if($users === false) {
+			$this->attachTimeDeltas = true;
 			$users = $this->find('all',array(
-				'fields'=>array('username','last_seen'),
+				'fields'=>array('username','last_ack'),
 				'conditions'=>array(
 					'last_seen >='=>date(MYSQL_DATE_FORMAT, strtotime('now - 2 minutes'))
 				)

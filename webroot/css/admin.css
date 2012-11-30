@@ -10,6 +10,8 @@
  *   #666666 > border-color
  *   #444444 > dark alternate background-color
  *
+ *   #AAAAAA > subdued text against dark
+ *
  * bootstrap-responsive.css tweaks (nav bar @ 768px +)
  * - Switched compact nav jump point from 979px -> 767px
  * - Switched the nav adjustment jump point from 980px -> 786px
@@ -187,6 +189,10 @@ p, label {
 
 .subnav a {
 	font-size: 11pt;
+}
+
+.subnav h3 .badge {
+	vertical-align: top;
 }
 
 .action-bar, .action-bar p, .image-list p, .page-limit .dropdown-menu, .slideout {
@@ -651,6 +657,34 @@ li.comment .text {
 
 .highlight .time {
 	color: #AAA;
+}
+
+.online-users {
+	margin-bottom: 2em;
+}
+
+.idle-users {
+	color: #888;
+	padding-left: 2em;
+}
+
+.online-users li {
+	font-weight: bold;
+	padding-left: 1em;
+}
+
+.online-users li i {
+	vertical-align: middle;
+}
+
+.tips {
+	margin-top: 2em;
+}
+
+.tips p {
+	font-size: 0.8em;
+	color: #AAA;
+	margin-bottom: 1em;
 }
 
 

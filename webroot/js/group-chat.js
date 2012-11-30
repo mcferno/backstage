@@ -10,7 +10,9 @@ var GroupChat = {
 	},
 	lastAck : 0,
 	windowFocus : true,
-	config : {}
+	config : {},
+	idleTimeMax : 300,
+	userIcon : '<i class="icon-white icon-user"></i>'
 };
 
 (function($, ns) {
@@ -211,10 +213,18 @@ var GroupChat = {
 	
 	ns.processHeartbeat = function(data) {
 		var allUsers = '';
+		var idleUsers = [];
+		var activeUsers = [];
 		for(var i=0;i<data.online.length;i++) {
 			allUsers += data.online[i].User.username;
 			if(i != data.online.length - 1) {
 				allUsers += ', ';
+			}
+
+			if(data.online[i].User.last_ack_delta < ns.idleTimeMax) {
+				activeUsers.push(data.online[i].User.username);
+			} else {
+				idleUsers.push(data.online[i].User.username);
 			}
 		}
 
@@ -224,6 +234,22 @@ var GroupChat = {
 			.data('title',allUsers)
 			.text(data.online.length);
 		$('.slideout .names').text(allUsers);
+
+		if(activeUsers.length) {
+			ns.activeList.empty().show().html(
+				'<li>' + ns.userIcon + ' ' + activeUsers.join('</li><li>' + ns.userIcon + ' ') + '</li>'
+			);
+		} else {
+			ns.activeList.hide();
+		}
+		ns.activeCount.text(activeUsers.length);
+		
+		if(idleUsers.length) {
+			ns.idleList.empty().show().html('<li>' + idleUsers.join('</li><li>') + '</li>');
+		} else {
+			ns.idleList.hide();
+		}
+		ns.idleCount.text(idleUsers.length);
 
 		ns.updateNotifier.text(data.new_updates);
 		ns.msgNotifier.text(data.new_messages);
@@ -300,7 +326,11 @@ var GroupChat = {
 	ns.init = function() {
 		ns.msgNotifier = $('.navbar .message-count');
 		ns.updateNotifier = $('.navbar .updates-count');
-		ns.userCount = $('.navbar .online-count');
+		ns.userCount = $('.online-count');
+		ns.activeList = $('.online-users');
+		ns.activeCount = $('.active-count');
+		ns.idleList = $('.idle-users');
+		ns.idleCount = $('.idle-count');
 	}
 	
 	ns.initChat = function() {

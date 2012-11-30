@@ -57,13 +57,10 @@
 						<?php echo $this->fetch('content'); ?>
 					</div>
 					
-					<?php if (!isset($suppressSubnav) || $suppressSubnav !== true): ?>
 					<div class="span2 subnav">
 						<?= $this->element('admin/subnav'); ?>
+						&nbsp;
 					</div>
-					<?php else: ?>
-					<div class="span2">&nbsp;</div>
-					<?php endif; ?>
 				</div>
 			</div>
 		</div> <!-- /container -->

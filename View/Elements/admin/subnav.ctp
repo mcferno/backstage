@@ -1,3 +1,6 @@
+<?= $this->fetch('sidebar-top'); ?>
+
+<?php if(!isset($suppressSubnav) || $suppressSubnav !== true) : ?>
 <ul class="nav nav-list">
 	<?php 
 		if($this->Session->check('Auth.User')) {
@@ -33,3 +36,6 @@
 		}
 	?>
 </ul>
+<?php endif; // end of optional sidebar supression ?>
+
+<?= $this->fetch('sidebar-bottom'); ?>
