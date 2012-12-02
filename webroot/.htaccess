@@ -6,6 +6,8 @@
     RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
 
+Options -Indexes
+
 # Standardize mime-types
 AddType	application/javascript	js
 AddType	image/x-icon			ico
