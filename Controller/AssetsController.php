@@ -20,20 +20,32 @@ class AssetsController extends AppController {
 		'jpeg' => 'image/jpeg'
 	);
 	
-	public function adminBeforeFilter() {		
+	public function adminBeforeFilter() {
+
 		if($this->request->is('ajax')) {
 			$this->disableCache(); // expire cache immediately
 			$this->RequestHandler->renderAs($this, 'json');
 			$this->Security->validatePost = false;
 			$this->Security->csrfCheck = false;
 		}
-		parent::adminBeforeFilter();	
+
+		if($this->RequestHandler->isMobile()) {
+			$this->paginate['limit'] = 15;
+		}
+
+		parent::adminBeforeFilter();
 	}
 
 	public function beforeRender() {
 		parent::beforeRender();
 
-		$this->set('page_limits', array($this->paginate['limit'], 80, 150));
+		$page_limits = array($this->paginate['limit'], 80, 150);
+
+		if($this->RequestHandler->isMobile()) {
+			$page_limits = array($this->paginate['limit'], 30, 60);
+		}
+
+		$this->set('page_limits', $page_limits);
 	}
 	
 	/**
