@@ -8,7 +8,8 @@ class AssetsController extends AppController {
 
 	public $paginate = array(
 		'order' => 'Asset.created DESC',
-		'limit' => 12
+		'limit' => 40,
+		'maxLimit' => 150
 	);
 
 	// image formats permitted by image manipulation functions
@@ -27,6 +28,12 @@ class AssetsController extends AppController {
 			$this->Security->csrfCheck = false;
 		}
 		parent::adminBeforeFilter();	
+	}
+
+	public function beforeRender() {
+		parent::beforeRender();
+
+		$this->set('page_limits', array($this->paginate['limit'], 80, 150));
 	}
 	
 	/**

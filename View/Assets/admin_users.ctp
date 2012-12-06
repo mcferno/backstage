@@ -16,22 +16,13 @@
 		<p>We have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count((int)$this->Paginator->counter('{:count}')))?'badge-custom':''; ?>"><?= $this->Paginator->counter('{:count}'); ?></span> images.</p>
 		
 		<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
-		
-		<div class="image-list">
-			<?php if(empty($images)) : ?>
-			<div class="alert alert-info"><a class="close" data-dismiss="alert" href="#">&times;</a> No images saved.</div>
-			<?php endif; ?>
-			<ul class="row thumbnails">
-			<?php foreach ($images as $image) : ?>
-				<li class="span2 text-center">
-					<h4><i class="icon-white icon-user"></i> <?= $this->Html->link($image['User']['username'],array('action'=>'user',$image['Asset']['user_id'])); ?></h4>
-					<div class="thumbnail">
-						<?= $this->Html->link($this->Html->image($user_dir . $image['Asset']['user_id'] . '/200/' . $image['Asset']['filename']),array('action'=>'view',$image['Asset']['id']),array('escape'=>false)); ?>
-						<p class="date"><?= date('Y.m.d H:m:s',strtotime($image['Asset']['created'])); ?></p>
-					</div>
-				</li>
-			<?php endforeach; ?>
-			</ul>
+
+		<div class="image-wall">
+		<?php 
+			foreach ($images as $image) {
+				echo $this->Html->link($this->Html->image($user_dir . $image['Asset']['user_id'] . '/200/' . $image['Asset']['filename']),array('action'=>'view',$image['Asset']['id']),array('escape'=>false));
+			} 
+		?>
 		</div>
 		
 		<?= $this->element('admin/pagination'); ?>

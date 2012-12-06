@@ -29,7 +29,7 @@ class Asset extends AppModel {
 	public $imageThumbs = array(75, 200);
 	
 	// default quality (out of 100) for image transformations
-	public $jpegQuality = 85;
+	public $jpegQuality = 90;
 	
 	public function __construct() {
 		parent::__construct();
