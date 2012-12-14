@@ -224,6 +224,35 @@ class AssetsController extends AppController {
 		$this->set('types', $this->Asset->getTypes());
 		$this->set('user_dir', $this->Asset->folderPathRelative . $asset['Asset']['user_id'].'/');
 	}
+
+	/**
+	 * Crops an existing image, saving it as a new image by the user who initiated
+	 * the crop.
+	 */
+	public function admin_crop() {
+		$response = array(
+			'status' => 'failed'
+		);
+
+		if(!empty($this->data['asset_id'])) {
+
+			$this->Asset->id = $this->data['asset_id'];
+			if($this->Asset->exists()) {
+				$asset = $this->Asset->read();
+				$image_path = IMAGES . $this->Asset->getPath($this->Asset->id);
+
+				$status = $this->Asset->saveImage($image_path, $this->Auth->user('id'), 'Crop', array('crop' => $this->data['coords']));
+				if($status) {
+					$this->Session->setFlash('The image has been cropped and saved.','messaging/alert-success');
+					$response['status'] = 'success';
+					$response['redirect'] = Router::url(array('controller' => 'assets', 'action' => 'view', $this->Asset->id));
+				}
+			}
+		}
+
+		$this->set($response);
+		$this->set('_serialize', array_keys($response));
+	}
 	
 	/**
 	 * Posts a single image to a specific Facebook group

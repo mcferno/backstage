@@ -3,7 +3,13 @@
 	$specs = getimagesize($rel_path);
 	$filesize = filesize($rel_path);
 	$this->set('contentSpan',10);
+
+	$this->Html->script('//cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.10/jquery.Jcrop.js', array('inline' => false));
+	$this->Html->css('/lib/jcrop/jquery.Jcrop.min.css', null, array('inline' => false));
 ?>
+<script>
+Backstage.cropUrl = <?= json_encode($this->Html->url(array('controller' => 'assets', 'action' => 'crop'))); ?>;
+</script>
 <div class="row-fluid">
 	<div class="span12">
 		<h1>Saved Image</h1>
@@ -21,7 +27,7 @@
 		</ul>
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
-			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab'))) : ?>
+			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> Meme This Image',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
 			<li><?= $this->Html->link('<i class="icon-white icon-play-circle"></i> Start Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false)); ?></li>
 			<?php endif; // upload or url download ?>
@@ -49,10 +55,17 @@
 			</li>
 
 			<?php endif; ?>
-		</ul>	
+		</ul>
 	</div>
 	<div class="span10">
-		<p class=" text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename']); ?></p>
+		<div class="crop-actions" style="display: none;">
+			<h3>Crop this image</h3>
+			<h3 class="pull-right">New Size &nbsp;<span class="badge badge-info crop-width">432</span> x <span class="badge badge-info crop-height">234</span> px</h3>
+			<button class="btn btn-large btn-primary crop-save"><i class="icon-white icon-download"></i> Save Cropped Image</button>
+			<button class="btn btn-large btn crop-cancel"><i class="icon icon-remove"></i> Cancel</button>
+		</div>
+
+		<p class=" text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename'], array('class' => 'cropable', 'data-asset-id' => $asset['Asset']['id'])); ?></p>
 
 		<p class=" text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $user_dir . $asset['Asset']['filename']; ?>"></p>
 

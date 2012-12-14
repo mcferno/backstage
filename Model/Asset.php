@@ -144,7 +144,7 @@ class Asset extends AppModel {
 	 * @param {String} $type String classification
 	 * @return {Boolean}
 	 */
-	public function saveImage($file_path, $user_id, $type = 'Image') {
+	public function saveImage($file_path, $user_id, $type = 'Image', $options = array()) {
 		App::import('Vendor', 'WideImage/WideImage');
 		
 		$image = WideImage::load($file_path);
@@ -161,7 +161,12 @@ class Asset extends AppModel {
 		}
 		$new_path =  $folder . $image_name;
 		
-		$cropped = $image->resize($this->maxDimensions['w'],$this->maxDimensions['h']);
+		if(!empty($options['crop'])) {
+			$cropped = $image->crop($options['crop']['x1'], $options['crop']['y1'], $options['crop']['w'], $options['crop']['h']);
+		} else {
+			$cropped = $image->resize($this->maxDimensions['w'],$this->maxDimensions['h']);
+		}
+
 		$cropped->saveToFile($new_path, $this->jpegQuality);
 		
 		$data = array(
@@ -172,6 +177,7 @@ class Asset extends AppModel {
 			'user_id' => $user_id
 		);
 		
+		$this->create();
 		$save_status = $this->save($data);
 		if($save_status === false) {
 			$this->log("Can't record image {$new_path} meta to db.");

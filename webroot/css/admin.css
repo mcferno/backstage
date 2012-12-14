@@ -446,6 +446,10 @@ li.comment .text {
 	max-height: 120px;
 }
 
+.crop-actions {
+	margin-bottom: 1em;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
