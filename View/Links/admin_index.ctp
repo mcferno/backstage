@@ -48,3 +48,4 @@
 		<?= $this->element('admin/pagination'); ?>
 	</div>
 </div>
+<?php $this->element('common/tag-tally'); ?>

@@ -857,6 +857,10 @@ li.comment .text {
 	padding: 2px 12px 3px;
 }
 
+.nav-list.tags-tally {
+	margin-top: 1em;
+}
+
 /* @end link exchange ====================================================== */
 
 /* @start responsive-adjustments =========================================== */

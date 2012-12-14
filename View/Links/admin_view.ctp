@@ -17,3 +17,5 @@
 		<?= $this->element('common/chat-module', array('model' => 'Link', 'foreign_key' => $link['Link']['id'])); ?>
 	</div>
 </div>
+
+<?php $this->element('common/tag-tally'); ?>

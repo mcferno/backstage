@@ -54,6 +54,14 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
+				<a href="<?= $this->Html->url(array('controller'=>'links','action'=>'index')); ?>">
+					<?= $this->Html->image('ui/link-exchange-callout.jpg',array('alt'=>'All Images')); ?>
+				</a>
+				<h4 class="text-right">Links Tracked <span class="badge badge-custom"><?= $links_count; ?></span></h4>
+			</div>
+		</li>
+		<li class="span3">
+			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'Quotes')); ?>
 				</a>

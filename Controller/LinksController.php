@@ -14,12 +14,14 @@ class LinksController extends AppController {
 
 	public function admin_index() {
 		$this->defaultPagination();
+		$this->set('tag_tally', $this->Link->getTagTally());
 	}
 
 	public function admin_my_links() {
 		$this->paginate['Link']['conditions']['Link.user_id'] = $this->Auth->user('id');
 		$this->set('sectionTitle', 'My Links');
 		$this->defaultPagination();
+		$this->set('tag_tally', $this->Link->getTagTally($this->Auth->user('id')));
 		$this->render('admin_index');
 	}
 
@@ -79,6 +81,19 @@ class LinksController extends AppController {
 			)
 		));
 		$this->set('link', $link);
+
+		$tally = $this->Message->getTally(array(
+			'foreign_id' => $link['Link']['id'],
+			'model' => 'Link'
+		));
+		$this->set('message_tally', $tally);
+
+		// owner
+		if($this->Auth->user('id') == $link['Link']['user_id']) {
+			$this->set('tag_tally', $this->Link->getTagTally($this->Auth->user('id')));
+		} else {
+			$this->set('tag_tally', $this->Link->getTagTally());
+		}
 	}
 
 	public function admin_add() {

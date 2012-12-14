@@ -19,7 +19,7 @@ class UsersController extends AppController {
 		)
 	);
 	
-	public $uses = array('User', 'Message', 'Activity');
+	public $uses = array('User', 'Message', 'Activity', 'Link');
 	
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
@@ -62,6 +62,7 @@ class UsersController extends AppController {
 		$this->set('meme_count', count(glob(IMAGES.'base-meme'.DS.'*.*')));
 		$this->set('contest_count', ClassRegistry::init('Contest')->find('count'));
 		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));
+		$this->set('links_count', ClassRegistry::init('Link')->find('count'));
 		$this->set('asset_count', $asset_count);
 		$this->set('asset_count_all', $asset_count_all);
 
