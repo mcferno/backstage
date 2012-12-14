@@ -309,6 +309,10 @@ class Asset extends AppModel {
 				$activity['Activity']['phrase'] = ":user uploaded an image.";
 				$activity['Activity']['icon'] = 'drive-upload';
 				break;
+			case 'Crop':
+				$activity['Activity']['phrase'] = ":user cropped an image.";
+				$activity['Activity']['icon'] = 'ruler-crop';
+				break;
 			default:
 				$activity['Activity']['phrase'] = ":user saved a new image.";
 				$activity['Activity']['icon'] = 'image-plus';
