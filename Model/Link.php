@@ -21,6 +21,9 @@ class Link extends AppModel {
 		)
 	);
 
+	public $thumbnailSize = 150;
+	public $thumbnailPath = 'user/links';
+
 	public function humanizeActivity(&$link) {
 		$link['Activity']['phrase'] = ":user added a new link";
 		if(!empty($link['Link']['title'])) {
@@ -28,5 +31,23 @@ class Link extends AppModel {
 		}
 		$link['Activity']['icon'] = 'application-browser';
 		$link['Activity']['link'] = array('controller' => 'links', 'action' => 'view', $link['Link']['id']);
+	}
+
+	/**
+	 * Sets an image association with a specific link. Processes uploaded images
+	 * to match the proper sizing.
+	 */
+	public function attachImage($link_id, $file_path) {
+		App::import('Vendor', 'WideImage/WideImage');
+		
+		$image = WideImage::load($file_path);
+		
+		if($image === false) {
+			$this->log('Could not open file upload.');
+			return false;
+		}
+
+		$cropped = $image->resize($this->thumbnailSize, $this->thumbnailSize);
+		$cropped->saveToFile($new_path, $this->jpegQuality);
 	}
 }

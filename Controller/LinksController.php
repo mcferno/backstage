@@ -142,6 +142,25 @@ class LinksController extends AppController {
 		$this->set('tags', array_values($this->Link->Tag->find('list')));
 	}
 
+	public function admin_image($id = null) {
+		$this->Link->id = $id;
+		if (!$this->Link->exists()) {
+			throw new NotFoundException(__('Invalid link'));
+		}
+
+		if ($this->request->is('post') || $this->request->is('put')) {
+			
+		} else {
+			$link = $this->Link->find('first', array(
+				'contain' => array('User', 'Tag'),
+				'conditions' => array(
+					'Link.id' => $id
+				)
+			));
+			$this->set('link', $link);
+		}
+	}
+
 	public function admin_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();

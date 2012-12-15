@@ -450,6 +450,10 @@ li.comment .text {
 	margin-bottom: 1em;
 }
 
+.inset {
+	padding: 1.5em;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
@@ -825,7 +829,6 @@ li.comment .text {
 
 .link-exchange li {
 	border-bottom: 1px solid #666;
-	padding: 1.5em;
 }
 
 .link-exchange li:last-child {
@@ -863,6 +866,22 @@ li.comment .text {
 
 .nav-list.tags-tally {
 	margin-top: 1em;
+}
+
+.link-item {
+	padding: 1.5em;
+	padding-left: 0;
+}
+
+.screenshot {
+	float: left;
+	width: 120px;
+	margin-right: 1em;
+	border: 5px solid #444;
+}
+
+.link-item.no-screenshot {
+	padding-left: 1.5em;
 }
 
 /* @end link exchange ====================================================== */

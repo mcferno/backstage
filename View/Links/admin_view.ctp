@@ -6,6 +6,7 @@
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
 			<li><?= $this->Html->link('<i class="icon icon-pencil"></i> Edit this Link', array('controller' => 'links', 'action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon icon-picture"></i> Screenshot', array('controller' => 'links', 'action' => 'image', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 		</ul>
 	</div>
 	<div class="span10">

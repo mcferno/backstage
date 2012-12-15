@@ -1,6 +1,25 @@
+<?php
+	$screenshot = "user/links/{$link['Link']['id']}";
+	if(file_exists(IMAGES_URL . "{$screenshot}.jpg")) {
+		$screenshot .= '.jpg';
+	} elseif (file_exists(IMAGES_URL . "{$screenshot}.png")) {
+		$screenshot .= '.png';
+	} else {
+		$screenshot = false;
+	}
+?>
+<div class="link-item <?php if(!$screenshot) { echo 'no-screenshot'; } ?> clearfix">
+
+<?php if($screenshot) : ?>
+<div class="screenshot">
+	<a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $this->Html->image($screenshot); ?></a>
+</div>
+<?php endif; // has screenshot ?>
+
 <div class="title">
 	<a href="<?= $link['Link']['url']; ?>" target="_blank" class="main"><?= $link['Link']['title']; ?></a> <span class="muted long-link"><span class="extra">« </span><a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $link['Link']['url']; ?></a><span class="extra"> »</span></span>
 </div>
+
 <div class="description">
 <?php
 	if(empty($link['Link']['description'])) {
@@ -10,14 +29,19 @@
 	}
 ?>
 </div>
+
 <div class="stats muted">
 	&mdash; posted <?= date('M j', strtotime($link['Link']['created'])); ?> by <strong><?= $this->Html->link($link['User']['username'], ($this->Session->read('Auth.User.id') == $link['Link']['user_id']) ? array('action' => 'my_links') : array('action' => 'index', 'user' => $link['Link']['user_id'])); ?></strong> <small>(<?= $this->Time->timeAgoInWords($link['Link']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
 </div>
+
 <div class="interact">
 	<?php
-		$count = isset($message_tally[$link['Link']['id']]) ? $message_tally[$link['Link']['id']] : 0;
-		$badge = ($count === 0) ? 'custom badge-off' : 'success';
-		echo $this->Html->link('<span class="badge badge-' . $badge . ' comments">'. $count .' comments</span>', array('action' => 'view', $link['Link']['id']), array('escape' => false, 'class' => 'view-link')); ?>
+		if(!isset($hideComments)) {
+			$count = isset($message_tally[$link['Link']['id']]) ? $message_tally[$link['Link']['id']] : 0;
+			$badge = ($count === 0) ? 'custom badge-off' : 'success';
+			echo $this->Html->link('<span class="badge badge-' . $badge . ' comments">'. $count .' comments</span>', array('action' => 'view', $link['Link']['id']), array('escape' => false, 'class' => 'view-link'));
+		}
+	?>
 	<?php foreach($link['Tag'] as $idx => $tag) : ?>
 	<a href="<?= $this->Html->url(array('controller' => 'links', 'action' => 'index', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
 	<?php endforeach; ?>
@@ -29,3 +53,5 @@
 	</div>
 	<?php endif; ?>
 </div>
+
+</div><!-- closing link item -->
