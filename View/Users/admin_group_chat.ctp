@@ -1,15 +1,5 @@
 <?php $this->set('suppressSubnav', true); ?>
-<div class="row-fluid">
-	<div class="span12"><h1 class="pull-left">Group Chat.</h1></div>
-</div>
-<div class="row-fluid">
-	<div class="span12">
-		<div class="chat-stats">
-			<h3 class="handle"><?= $this->Session->read('Auth.User.username'); ?></h3>
-			<h4><i class="icon-user icon-white"></i> <span class="extra">Users online</span></h4>
-		</div>
-	</div>
-</div>
+<h2>Group Chat.</h2>
 <?= $this->element('common/chat-module'); ?>
 
 <?php $this->start('sidebar-top'); ?>
