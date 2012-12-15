@@ -1,6 +1,7 @@
 <?php 
 if(!empty($tag_tally)) :
-	$this->start('sidebar-bottom'); 
+	$this->start('sidebar-bottom');
+	$action = (isset($action) ? $action : $this->request->params['action']);
 ?>
 <ul class="nav nav-list tags-tally">
 	<li class="nav-header">Tags</li>
@@ -14,7 +15,7 @@ if(!empty($tag_tally)) :
 			if($tag['Tag']['id'] == $tag_id) {
 				$options['class'] = 'active';
 			}
-			echo $this->Html->tag('li', $this->Html->link("{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>", array('tag' => $tag['Tag']['id']), array('escape' => false)), $options);
+			echo $this->Html->tag('li', $this->Html->link("{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>", array('action' => $action, 'tag' => $tag['Tag']['id']), array('escape' => false)), $options);
 		}
 	?>
 </ul>

@@ -18,4 +18,4 @@
 	</div>
 </div>
 
-<?php $this->element('common/tag-tally'); ?>
+<?php $this->element('common/tag-tally', array('action' => ($link['Link']['user_id'] == $this->Session->read('Auth.User.id') ? 'my_links' : 'index'))); ?>
