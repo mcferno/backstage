@@ -54,12 +54,12 @@ Backstage = {};
 			});
 		}
 
-		var cropable = $('.cropable');
-		var crop_image = new Image();
-		crop_image.src = cropable.attr("src");
-
 		// configure image cropper
+		var cropable = $('.cropable');
 		if(cropable.length) {
+			var crop_image = new Image();
+			crop_image.src = cropable.attr("src");
+
 			cropable.Jcrop({
 				onSelect : function() {
 					ns.cropTool.tools.slideDown();
@@ -71,8 +71,8 @@ Backstage = {};
 						scale = crop_image.width / cropable.width();
 					}
 
-					ns.cropTool.widthLabel.html(parseInt(sizing.w * scale));
-					ns.cropTool.heightLabel.html(parseInt(sizing.h * scale));
+					ns.cropTool.widthLabel.html(parseInt(sizing.w * scale, 10));
+					ns.cropTool.heightLabel.html(parseInt(sizing.h * scale, 10));
 				}
 			}, function() {
 				if(!ns.cropTool) {
@@ -98,16 +98,16 @@ Backstage = {};
 				// submit image to be cropped and saved as a new image
 				if(sizing.w > 1 && sizing.h > 1) {
 					$.ajax({
-						'url' : Backstage.cropUrl,
+						'url' : ns.cropUrl,
 						'type' : 'POST',
 						'data' : {
 							coords : {
-								w : parseInt(sizing.w * scale),
-								h : parseInt(sizing.h * scale),
-								x1 : parseInt(sizing.x * scale),
-								x2 : parseInt(sizing.x2 * scale),
-								y1 : parseInt(sizing.y * scale),
-								y2 : parseInt(sizing.y2 * scale)
+								w : parseInt(sizing.w * scale, 10),
+								h : parseInt(sizing.h * scale, 10),
+								x1 : parseInt(sizing.x * scale, 10),
+								x2 : parseInt(sizing.x2 * scale, 10),
+								y1 : parseInt(sizing.y * scale, 10),
+								y2 : parseInt(sizing.y2 * scale, 10)
 							},
 							asset_id : ns.cropTool.assetId
 						},
