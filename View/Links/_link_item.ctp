@@ -1,5 +1,5 @@
 <?php
-	$screenshot = "user/links/{$link['Link']['id']}";
+	$screenshot = "{$thumbnail_path}/{$link['Link']['id']}";
 	if(file_exists(IMAGES_URL . "{$screenshot}.jpg")) {
 		$screenshot .= '.jpg';
 	} elseif (file_exists(IMAGES_URL . "{$screenshot}.png")) {

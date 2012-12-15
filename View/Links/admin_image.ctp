@@ -7,6 +7,19 @@
 	</div>
 </div>
 
+<?php if(!empty($this->request->params['named']['mode']) && $this->request->params['named']['mode'] == 'crop') : ?>
+<div class="row-fluid">
+	<div class="span12">
+		<h3>Crop this image</h3>
+		<p>Please select a segment of this image to generate a thumbnail.</p>
+
+		<?= $this->element('common/image-cropper'); ?>
+		<?= $this->Html->image("{$thumbnail_path}/full/{$link['Link']['id']}.png", array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id'])); ?>
+	</div>
+</div>
+
+<?php else: ?>
+
 <div class="row-fluid">
 	<div class="span12">
 		<h3>Choose an image to represent this link</h3>
@@ -29,9 +42,4 @@
 	</div>
 </div>
 
-<div class="row-fluid">
-	<div class="span12">
-		<h3>Crop this image</h3>
-		<p>Please select a segment of this image to generate a thumbnail.</p>
-	</div>
-</div>
+<?php endif; ?>

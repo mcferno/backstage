@@ -67,6 +67,7 @@ class LinksController extends AppController {
 		$this->set('links', $links);
 		$this->set('message_tally', $tally);
 		$this->set('page_limits', array(20, 40, 80));
+		$this->set('thumbnail_path', $this->Link->thumbnailPath);
 	}
 
 	public function admin_view($id = null) {
@@ -94,6 +95,7 @@ class LinksController extends AppController {
 		} else {
 			$this->set('tag_tally', $this->Link->getTagTally());
 		}
+		$this->set('thumbnail_path', $this->Link->thumbnailPath);
 	}
 
 	public function admin_add() {
@@ -158,6 +160,7 @@ class LinksController extends AppController {
 				)
 			));
 			$this->set('link', $link);
+			$this->set('thumbnail_path', $this->Link->thumbnailPath);
 		}
 	}
 

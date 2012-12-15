@@ -234,9 +234,9 @@ class AssetsController extends AppController {
 			'status' => 'failed'
 		);
 
-		if(!empty($this->data['asset_id'])) {
+		if(!empty($this->data['image_id'])) {
 
-			$this->Asset->id = $this->data['asset_id'];
+			$this->Asset->id = $this->data['image_id'];
 			if($this->Asset->exists()) {
 				$asset = $this->Asset->read();
 				$image_path = IMAGES . $this->Asset->getPath($this->Asset->id);
