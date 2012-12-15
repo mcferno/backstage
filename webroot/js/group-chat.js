@@ -14,7 +14,7 @@ var GroupChat = {
 	idleTimeMax : 300,
 	userIcon : '<i class="icon-white icon-user"></i>'
 };
-
+/*global Backbone _ AppBaseURL */
 (function($, ns) {
 	"use strict";
 	
@@ -100,7 +100,7 @@ var GroupChat = {
 		
 		// reverse chronological sort for newest-on-top
 		comparator : function(chatMsgModel) {
-			return ns.chatOrder * parseInt(chatMsgModel.get('timestamp'));
+			return ns.chatOrder * parseInt(chatMsgModel.get('timestamp'), 10);
 		}
 	});
 	
@@ -118,7 +118,7 @@ var GroupChat = {
 			if(ns.chatLog.length > 1) {
 				var idx = ns.chatLog.sortedIndex(chatMsgModel, ns.chatLog.comparator);
 				// new view belongs at the front
-				if(idx == 0) {
+				if(idx === 0) {
 					this.$el.prepend(chatMsgModel.view.el);
 					
 				// new view belongs at the end
@@ -150,22 +150,22 @@ var GroupChat = {
 		if($.type(ns.config.scopeId) === 'string') {
 			postData.Message.foreign_id = ns.config.scopeId;
 		}
-		if(ns.lastAck != 0) {
+		if(ns.lastAck !== 0) {
 			postData.ack = ns.lastAck;
 		}
 		
 		$.ajax({
 			type: 'POST',
-  			url: AppBaseURL+'backstage/messages/add',
-  			data: postData,
-  			dataType: 'json',
-  			success : function(data) {
-  				ns.processHeartbeat(data);
-  			}
+			url: AppBaseURL + 'backstage/messages/add',
+			data: postData,
+			dataType: 'json',
+			success : function(data) {
+				ns.processHeartbeat(data);
+			}
 		});
 		
 		ns.msgBar.attr('value','');
-	}
+	};
 	
 	ns.addMessage = function(date,timestamp,text,handle) {
 		var rowData = _.template(ns.templates.chatRowTemplate.html(), {
@@ -178,12 +178,12 @@ var GroupChat = {
 		row.hide();
 		ns.chatWindow.prepend(row);
 		row.show().css('display','table-row');
-	}
+	};
 
 	ns.autolinkUrls = function(text) {
 		var url_regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 		return text.replace(url_regex, '<a href="$1" target="_blank">$1</a>');
-	}
+	};
 
 	ns.highlightCallouts = function(text) {
 		if(ns.config.self) {
@@ -191,7 +191,7 @@ var GroupChat = {
 			return text.replace(username_regex, '<span class="active-user">@' + ns.config.self + '</span>');
 		}
 		return text;
-	}
+	};
 	
 	ns.sendHeartbeat = function() {
 		var data = {
@@ -209,7 +209,7 @@ var GroupChat = {
 			url : AppBaseURL+'backstage/users/heartbeat',
 			success : ns.processHeartbeat
 		});
-	}
+	};
 	
 	ns.processHeartbeat = function(data) {
 		var allUsers = '';
@@ -268,7 +268,6 @@ var GroupChat = {
 
 		if(notificationCount !== 0) {
 			var title = '';
-			console.log(data);
 			if(data.new_messages > 0) {
 				title += '(' + data.new_messages + ') ';
 			}
@@ -292,7 +291,7 @@ var GroupChat = {
 				ns.processMessages(data.messages);
 			}
 		}
-	}
+	};
 	
 	ns.processMessages = function(data) {
 		
@@ -308,7 +307,7 @@ var GroupChat = {
 				handle : message.User.username
 			}));
 		});
-	}
+	};
 	
 	ns.formatDate = function(dateObj) {
 		var date = ns.padNumber((dateObj.getMonth() + 1))
@@ -317,11 +316,11 @@ var GroupChat = {
 			+ ':' + ns.padNumber(dateObj.getMinutes())
 			+ ':' + ns.padNumber(dateObj.getSeconds());
 		return date;
-	}
+	};
 	
 	ns.padNumber = function(str) {
 		return String('00'+str).match(/[0-9]{2}$/);
-	}
+	};
 	
 	ns.init = function() {
 		ns.msgNotifier = $('.navbar .message-count');
@@ -331,7 +330,7 @@ var GroupChat = {
 		ns.activeCount = $('.active-count');
 		ns.idleList = $('.idle-users');
 		ns.idleCount = $('.idle-count');
-	}
+	};
 	
 	ns.initChat = function() {
 		ns.msgBar = $('.chat-bar .msg input');
@@ -345,7 +344,7 @@ var GroupChat = {
 		ns.chatLogView = new ns.ChatLogView();
 		
 		$('.loading').hide();
-	}
+	};
 		
 	$(document).ready(function() {
 		ns.originalTitle = document.title;
