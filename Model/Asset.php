@@ -145,7 +145,9 @@ class Asset extends AppModel {
 	 * @return {Boolean}
 	 */
 	public function saveImage($file_path, $user_id, $type = 'Image', $options = array()) {
-		App::import('Vendor', 'WideImage/WideImage');
+		if(!class_exists('WideImage')) {
+			App::import('Vendor', 'WideImage/WideImage');
+		}
 		
 		$image = WideImage::load($file_path);
 		
@@ -168,6 +170,8 @@ class Asset extends AppModel {
 		}
 
 		$cropped->saveToFile($new_path, $this->jpegQuality);
+		$cropped->releaseHandle();
+		$image->releaseHandle();
 		
 		$data = array(
 			'type' => $type,
@@ -195,8 +199,10 @@ class Asset extends AppModel {
 	 * @param {String} $imagePath Path to image to process
 	 */
 	public function saveThumbs($imagePath) {
-		App::import('Vendor', 'WideImage/WideImage');
-				
+		if(!class_exists('WideImage')) {
+			App::import('Vendor', 'WideImage/WideImage');
+		}
+
 		$image = WideImage::load($imagePath);
 		
 		if($image === false) {
@@ -217,9 +223,11 @@ class Asset extends AppModel {
 			}
 			
 			$cropped->saveToFile($folder . $filename, $this->jpegQuality);
-			
+			$cropped->releaseHandle();
 			unset($cropped);
 		}
+
+		$image->releaseHandle();
 		return true;
 	}
 	

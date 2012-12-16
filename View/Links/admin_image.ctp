@@ -10,11 +10,27 @@
 <?php if(!empty($this->request->params['named']['mode']) && $this->request->params['named']['mode'] == 'crop') : ?>
 <div class="row-fluid">
 	<div class="span12">
+		<?php
+			$image = "{$thumbnail_path}/full/{$link['Link']['id']}";
+			if(file_exists(IMAGES_URL . "{$image}.jpg")) {
+				$image .= '.jpg';
+			} elseif (file_exists(IMAGES_URL . "{$image}.png")) {
+				$image .= '.png';
+			} else {
+				$image = false;
+			}
+		?>
 		<h3>Crop this image</h3>
 		<p>Please select a segment of this image to generate a thumbnail.</p>
-
-		<?= $this->element('common/image-cropper'); ?>
-		<?= $this->Html->image("{$thumbnail_path}/full/{$link['Link']['id']}.png", array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id'])); ?>
+		<?php
+			// display the image if we found one, otherwise invite the user to provide one
+			if($image) {
+				echo $this->element('common/image-cropper');
+				echo $this->Html->image($image, array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id']));
+			} else {
+				echo $this->Html->link('No Image Found! Please upload an image to continue', array('action' => 'image', $link['Link']['id']));
+			}
+		?>
 	</div>
 </div>
 

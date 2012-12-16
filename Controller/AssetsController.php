@@ -1,23 +1,21 @@
 <?php
+App::uses('Folder', 'Utility');
 /**
  * Handles all tasks related to manipulation and management a user's site assets
  */
-App::uses('Validation', 'Utility');
-
 class AssetsController extends AppController {
+
+	public $components = array(
+		'Upload' => array(
+			'mimeTypes' => array('image/png', 'image/jpeg', 'image/gif'),
+			'fileExtensions' => array('png', 'jpg', 'jpeg', 'gif')
+		)
+	);
 
 	public $paginate = array(
 		'order' => 'Asset.created DESC',
 		'limit' => 40,
 		'maxLimit' => 150
-	);
-
-	// image formats permitted by image manipulation functions
-	public $permittedImageTypes = array(
-		'png' => 'image/png',
-		'gif' => 'image/gif',
-		'jpg' => 'image/jpeg',
-		'jpeg' => 'image/jpeg'
 	);
 	
 	public function adminBeforeFilter() {
@@ -129,52 +127,53 @@ class AssetsController extends AppController {
 	 */
 	public function admin_upload() {
 
-		// file has been posted
-		if(!empty($this->request->data['Asset']['image']['name'])) {
-			
-			// upload error
-			if($this->request->data['Asset']['image']['error'] !== 0 || !file_exists($this->request->data['Asset']['image']['tmp_name'])) {
-				$this->Session->setFlash('Image upload has failed, please try again.','messaging/alert-error');
-				
-			// mine-type error
-			} elseif(!in_array($this->request->data['Asset']['image']['type'],array('image/jpeg','image/png'))){
-				$this->Session->setFlash('Sorry, JPEG and PNG uploads only.','messaging/alert-error');
-				
-			// no errors found, process image
-			} else {
-				$save = $this->Asset->saveImage($this->request->data['Asset']['image']['tmp_name'], $this->Auth->user('id'), 'Upload');
-				
-				if($save === false) {
-					$this->Session->setFlash('Image processing has failed, please try again.','messaging/alert-error');
-					
-				// save is the new model ID
-				} else {
-					$this->Session->setFlash('The image has been uploaded successfully!','messaging/alert-success');
-					$this->redirect(array('action'=>'view', $save));
-				}
+		if ($this->request->is('post') || $this->request->is('put')) {
+
+			// base file path of the eventual new image original
+			$new_file = $this->Asset->getFolderPath($this->Auth->user('id')) . 'full' . DS;
+			if(!file_exists($new_file)) {
+				$dir = new Folder($new_file, true, 0755);
 			}
 
-		// url to scrape
-		} elseif (!empty($this->request->data['Asset']['url'])) {
-			
-			$target_url = $this->request->data['Asset']['url'];
+			// file upload
+			if(!empty($this->request->data['Asset']['image']['name'])) {
 
-			if(Validation::url($target_url)) {
+				$valid = $this->Upload->isValidUpload($this->request->data['Asset']['image']);
 
-				$url_parts = parse_url($target_url);
-				$extension_regex = implode('|', array_keys($this->permittedImageTypes));
+				if($valid === true) {
+					$save = $this->Asset->saveImage($this->request->data['Asset']['image']['tmp_name'], $this->Auth->user('id'), 'Upload');
 
-				// restrict url capture to image formats
-				if(preg_match('/\.(' . $extension_regex . ')$/i', $url_parts['path'])) {
+					// save is the new model ID
+					if($save !== false) {
 
-					// attempt download
-					$file = $this->saveURLtoTemp($target_url, array_values($this->permittedImageTypes));
+						$new_file .= $save . '.' . $this->Upload->getExtension($this->request->data['Asset']['image']['name']);
+						move_uploaded_file($this->request->data['Asset']['image']['tmp_name'], $new_file);
 
+						$this->Session->setFlash('The image has been uploaded successfully!','messaging/alert-success');
+						$this->redirect(array('action'=>'view', $save));
+					
+					} else {
+						$this->Session->setFlash('Image processing has failed, please try again.','messaging/alert-error');
+					}
+
+				} else {
+					$this->Session->setFlash($valid, 'messaging/alert-error');
+				}
+
+			// URL grab
+			} else {
+				$valid = $this->Upload->isValidURL($this->request->data['Asset']['url']);
+				
+				if($valid === true) {
+					$file = $this->Upload->saveURLtoFile($this->request->data['Asset']['url']);
+					
 					if($file !== false) {
 						$asset_id = $this->Asset->saveImage($file, $this->Auth->user('id'), 'URLgrab');
-						unlink($file);
 
 						if($asset_id !== false) {
+							$new_file .= $asset_id . '.' . $this->Upload->getExtension($this->request->data['Asset']['url']);
+							rename($file, $new_file);
+
 							$this->Session->setFlash('The image has been downloaded successfully!','messaging/alert-success');
 							$this->redirect(array('action'=>'view', $asset_id));
 						} else {
@@ -182,17 +181,12 @@ class AssetsController extends AppController {
 						}
 
 					} else {
-						unlink($file);
 						$this->Session->setFlash('The URL could not be downloaded, please try again.','messaging/alert-error');
 					}
 
-				// non-image url provided
 				} else {
-					$this->Session->setFlash('Only png, gif, and jpg/jpeg are accepted via URL, please try a different URL.','messaging/alert-error');
+					$this->Session->setFlash($valid, 'messaging/alert-error');
 				}
-
-			} else {
-				$this->Session->setFlash('Invalid image URL, please try again.','messaging/alert-error');
 			}
 		}
 		

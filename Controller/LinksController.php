@@ -5,6 +5,13 @@ class LinksController extends AppController {
 
 	public $uses = array('Link', 'Message');
 
+	public $components = array(
+		'Upload' => array(
+			'mimeTypes' => array('image/png', 'image/jpeg'),
+			'fileExtensions' => array('png', 'jpg')
+		)
+	);
+
 	public $paginate = array(
 		'Link' => array(
 			'contain' => array('User', 'Tag'),
@@ -144,6 +151,13 @@ class LinksController extends AppController {
 		$this->set('tags', array_values($this->Link->Tag->find('list')));
 	}
 
+	/**
+	 * Manages the creation of a thumbnail image. Allows the user to upload an
+	 * image, or download one from a URL. Once an image is set, the user may
+	 * choose the proper thumbnail crop from it.
+	 * 
+	 * @param {UUID} $id Link to set an image
+	 */
 	public function admin_image($id = null) {
 		$this->Link->id = $id;
 		if (!$this->Link->exists()) {
@@ -151,17 +165,54 @@ class LinksController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			
-		} else {
-			$link = $this->Link->find('first', array(
-				'contain' => array('User', 'Tag'),
-				'conditions' => array(
-					'Link.id' => $id
-				)
-			));
-			$this->set('link', $link);
-			$this->set('thumbnail_path', $this->Link->thumbnailPath);
+
+			// base file path of the eventual new image (missing extension)
+			$new_file = "{$this->Link->thumbnailPath}/full/{$id}.";
+
+			// file upload
+			if(!empty($this->request->data['Link']['image']['name'])) {
+
+				$valid = $this->Upload->isValidUpload($this->request->data['Link']['image']);
+
+				if($valid === true) {
+					$new_file .= $this->Upload->getExtension($this->request->data['Link']['image']['name']);
+					move_uploaded_file($this->request->data['Link']['image']['tmp_name'], IMAGES . $new_file);
+					
+					$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
+					$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
+				} else {
+					$this->Session->setFlash($valid, 'messaging/alert-error');
+				}
+
+			// URL grab
+			} else {
+				$valid = $this->Upload->isValidURL($this->request->data['Link']['url']);
+				
+				if($valid === true) {
+					$new_file .= $this->Upload->getExtension($this->request->data['Link']['url']);
+					$file = $this->Upload->saveURLtoFile($this->request->data['Link']['url'], IMAGES . $new_file);
+					
+					if($file !== false) {
+						$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
+						$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
+					} else {
+						$this->Session->setFlash('The URL could not be downloaded, please try again.','messaging/alert-error');
+					}
+
+				} else {
+					$this->Session->setFlash($valid, 'messaging/alert-error');
+				}
+			}
 		}
+
+		$link = $this->Link->find('first', array(
+			'contain' => array('User', 'Tag'),
+			'conditions' => array(
+				'Link.id' => $id
+			)
+		));
+		$this->set('link', $link);
+		$this->set('thumbnail_path', $this->Link->thumbnailPath);
 	}
 
 	public function admin_delete($id = null) {
