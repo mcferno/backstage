@@ -104,11 +104,13 @@
 <div class="span12">
 	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
+		<tr><td class="short-date">Dec 16</td><td>Link Exchange has easier to navigate tag lists, and allows thumbnail images for each link.</td></tr>
 		<tr><td class="short-date">Nov 20</td><td>New Link Exchange section allows you to save links and tag them.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>Network Update notifications alert you of all user actions.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>You can comment on all saved Images and Caption Battles.</td></tr>
 		<tr><td class="short-date">Oct 25</td><td>Meme Generator's font-size adjustments are improved. Makes better use of image width.</td></tr>
 		<tr><td class="short-date">Oct 14</td><td>New Caption Battle section added. Battle on!</td></tr>
+<?php /*
 		<tr><td class="short-date">Oct 11</td><td>Randomized set of Meme Generator images now includes uploads from all users.</td></tr>
 		<tr><td class="short-date">Sep 30</td><td>Image upload via URL now available. Supported types: PNG, JPG, GIF</td></tr>
 		<tr><td class="short-date">Sep 22</td><td>User sessions now persist up to a month. Login bugs fixed.</td></tr>
@@ -116,15 +118,14 @@
 		<tr><td class="short-date">May 11</td><td>Meme Generator images can now be saved on the server.</td></tr>
 		<tr><td class="short-date">May 11</td><td>You can view other user's images, and make memes with them.</td></tr>
 		<tr><td class="short-date">Apr 28</td><td>Chat is stable now, fixed a few bugs.</td></tr>
-<?php /*
-	<tr><td>2012.04.27</td><td>New dark theme, UI overhaul.</td></tr>
-	<tr><td>2012.04.26</td><td>Group chat is fairly functional now. Status bar added to nav.</td></tr>
-	<tr><td>2012.04.11</td><td>Memes now have text wordwrap. Bunch more images added.</td></tr>
-	<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
-	<tr><td>2012.04.05</td><td>Custom backgrounds added, more coming soon.</td></tr>
-	<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>
-	<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
-	<tr><td>2012.03.31</td><td>Admin panel launched. Meme generator being worked on.</td></tr>
+		<tr><td>2012.04.27</td><td>New dark theme, UI overhaul.</td></tr>
+		<tr><td>2012.04.26</td><td>Group chat is fairly functional now. Status bar added to nav.</td></tr>
+		<tr><td>2012.04.11</td><td>Memes now have text wordwrap. Bunch more images added.</td></tr>
+		<tr><td>2012.04.06</td><td>Meme generator now outputs JPEG when possible (much faster).</td></tr>
+		<tr><td>2012.04.05</td><td>Custom backgrounds added, more coming soon.</td></tr>
+		<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>
+		<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
+		<tr><td>2012.03.31</td><td>Admin panel launched. Meme generator being worked on.</td></tr>
 */ ?>
 	</table>
 </div>
