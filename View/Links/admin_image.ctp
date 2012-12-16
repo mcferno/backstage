@@ -10,9 +10,9 @@
 <?php
 	$image = "{$thumbnail_path}/full/{$link['Link']['id']}";
 	if(file_exists(IMAGES_URL . "{$image}.jpg")) {
-		$image .= '.jpg';
+		$image .= '.jpg?' . filemtime(IMAGES_URL . "{$image}.jpg");
 	} elseif (file_exists(IMAGES_URL . "{$image}.png")) {
-		$image .= '.png';
+		$image .= '.png?' . filemtime(IMAGES_URL . "{$image}.png");
 	} else {
 		$image = false;
 	}
@@ -28,6 +28,7 @@
 			if($image) {
 				echo $this->element('common/image-cropper');
 				echo $this->Html->image($image, array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id']));
+				echo $this->Html->link('<i class="icon icon-chevron-left"></i> Return to Link', array('action' => 'view', $link['Link']['id']), array('class' => 'btn', 'escape' => false));
 			} else {
 				echo $this->Html->link('No Image Found! Please upload an image to continue', array('action' => 'image', $link['Link']['id']));
 			}

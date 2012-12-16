@@ -175,6 +175,7 @@ class LinksController extends AppController {
 				$valid = $this->Upload->isValidUpload($this->request->data['Link']['image']);
 
 				if($valid === true) {
+					$this->Upload->cleanPath(IMAGES . $new_file . '*'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Link']['image']['name']);
 					move_uploaded_file($this->request->data['Link']['image']['tmp_name'], IMAGES . $new_file);
 					
@@ -189,6 +190,7 @@ class LinksController extends AppController {
 				$valid = $this->Upload->isValidURL($this->request->data['Link']['url']);
 				
 				if($valid === true) {
+					$this->Upload->cleanPath(IMAGES . $new_file . '*'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Link']['url']);
 					$file = $this->Upload->saveURLtoFile($this->request->data['Link']['url'], IMAGES . $new_file);
 					
@@ -225,6 +227,9 @@ class LinksController extends AppController {
 			$this->Link->id = $this->data['image_id'];
 			if($this->Link->exists()) {
 				
+				// remove existing thumbs before proceeding
+				$this->Upload->cleanPath(IMAGES . "{$this->Link->thumbnailPath}/{$this->data['image_id']}.*");
+
 				$status = $this->Link->saveThumbnail($this->data['image_id'], $this->data['coords']);
 				if($status) {
 					$this->Session->setFlash('The image has been cropped and saved.','messaging/alert-success');

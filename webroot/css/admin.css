@@ -849,6 +849,7 @@ li.comment .text {
 
 .link-exchange .controls {
 	float: right;
+	padding-top: 5px;
 }
 
 .link-exchange .badge {

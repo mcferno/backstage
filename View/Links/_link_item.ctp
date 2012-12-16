@@ -1,9 +1,9 @@
 <?php
 	$screenshot = "{$thumbnail_path}/{$link['Link']['id']}";
 	if(file_exists(IMAGES_URL . "{$screenshot}.jpg")) {
-		$screenshot .= '.jpg';
+		$screenshot .= '.jpg?' . filemtime(IMAGES_URL . "{$screenshot}.jpg");
 	} elseif (file_exists(IMAGES_URL . "{$screenshot}.png")) {
-		$screenshot .= '.png';
+		$screenshot .= '.png?' . filemtime(IMAGES_URL . "{$screenshot}.png");
 	} else {
 		$screenshot = false;
 	}
@@ -48,8 +48,9 @@
 
 	<?php if($this->Session->read('Auth.User.id') == $link['Link']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
 	<div class="controls" style="display:none;">
-		<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-inverse edit-btn', 'title' => 'Edit this link', 'escape' => false)); ?>
-		<?= $this->Form->postLink($this->Html->image('ui/icons/prohibition.png') . ' Delete', array('action' => 'delete', $link['Link']['id']), array('class' => 'btn btn-inverse', 'title' => 'Delete this link', 'escape' => false), "Are you sure you want to delete the {$link['Link']['title']} link?"); ?>
+		<?= $this->Html->link($this->Html->image('ui/icons/image-pencil.png') . ' Thumbnail', array('action' => 'image', $link['Link']['id']), array('class' => 'btn btn-mini btn-inverse', 'title' => 'Change this link\'s thumnail', 'escape' => false)); ?>
+		<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-mini btn-inverse edit-btn', 'title' => 'Edit this link', 'escape' => false)); ?>
+		<?= $this->Form->postLink($this->Html->image('ui/icons/prohibition.png') . ' Delete', array('action' => 'delete', $link['Link']['id']), array('class' => 'btn btn-mini btn-inverse', 'title' => 'Delete this link', 'escape' => false), "Are you sure you want to delete the {$link['Link']['title']} link?"); ?>
 	</div>
 	<?php endif; ?>
 </div>

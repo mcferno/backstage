@@ -138,4 +138,15 @@ class UploadComponent extends Component {
 
 		return false;
 	}
+
+	/**
+	 * Helper function to remove files matching a directory or wildcard path
+	 */
+	public function cleanPath($path) {
+		$files = glob($path);
+
+		foreach ($files as $file) {
+			@unlink($file);
+		}
+	}
 }
