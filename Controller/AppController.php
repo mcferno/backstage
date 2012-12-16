@@ -100,6 +100,8 @@ class AppController extends Controller {
 				}
 			}
 		}
+
+		$this->detectAjax();
 	}
 	
 	public function beforeRender() {
@@ -212,4 +214,15 @@ class AppController extends Controller {
 		return $this->Session->check('Auth.User.role') && (int)$this->Auth->user('role') >= $min_role;
 	}
 
+	/**
+	 * Detects if an AJAX request is in progress, allowing it to pass
+	 */
+	protected function detectAjax() {
+		if($this->Auth->loggedIn() && $this->request->is('ajax')) {
+			$this->disableCache(); // expire cache immediately
+			$this->RequestHandler->renderAs($this, 'json');
+			$this->Security->validatePost = false;
+			$this->Security->csrfCheck = false;
+		}
+	}
 }

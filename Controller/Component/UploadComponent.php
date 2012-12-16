@@ -133,7 +133,7 @@ class UploadComponent extends Component {
 		$matches = array();
 
 		if(preg_match('/\.([a-z0-9]{2,4})$/i', $path, $matches)) {
-			return $matches[1];
+			return strtolower($matches[1]);
 		}
 
 		return false;

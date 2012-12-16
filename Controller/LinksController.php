@@ -215,6 +215,29 @@ class LinksController extends AppController {
 		$this->set('thumbnail_path', $this->Link->thumbnailPath);
 	}
 
+	public function admin_crop() {
+		$response = array(
+			'status' => 'failed'
+		);
+
+		if(!empty($this->data['image_id'])) {
+
+			$this->Link->id = $this->data['image_id'];
+			if($this->Link->exists()) {
+				
+				$status = $this->Link->saveThumbnail($this->data['image_id'], $this->data['coords']);
+				if($status) {
+					$this->Session->setFlash('The image has been cropped and saved.','messaging/alert-success');
+					$response['status'] = 'success';
+					$response['redirect'] = Router::url(array('controller' => 'links', 'action' => 'view', $this->data['image_id']));
+				}
+			}
+		}
+
+		$this->set($response);
+		$this->set('_serialize', array_keys($response));
+	}
+
 	public function admin_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();

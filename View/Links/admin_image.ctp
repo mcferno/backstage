@@ -7,19 +7,20 @@
 	</div>
 </div>
 
+<?php
+	$image = "{$thumbnail_path}/full/{$link['Link']['id']}";
+	if(file_exists(IMAGES_URL . "{$image}.jpg")) {
+		$image .= '.jpg';
+	} elseif (file_exists(IMAGES_URL . "{$image}.png")) {
+		$image .= '.png';
+	} else {
+		$image = false;
+	}
+?>
+
 <?php if(!empty($this->request->params['named']['mode']) && $this->request->params['named']['mode'] == 'crop') : ?>
 <div class="row-fluid">
 	<div class="span12">
-		<?php
-			$image = "{$thumbnail_path}/full/{$link['Link']['id']}";
-			if(file_exists(IMAGES_URL . "{$image}.jpg")) {
-				$image .= '.jpg';
-			} elseif (file_exists(IMAGES_URL . "{$image}.png")) {
-				$image .= '.png';
-			} else {
-				$image = false;
-			}
-		?>
 		<h3>Crop this image</h3>
 		<p>Please select a segment of this image to generate a thumbnail.</p>
 		<?php
@@ -50,8 +51,15 @@
 				<?= $this->Form->input('url',array('type' => 'text', 'label' =>'', 'class' => 'asset-url', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
 			
 
-			<?= $this->Form->button('<i class="icon-white icon-upload"></i> Upload',array('class'=>'btn btn-large btn-success')); ?>
-			<?= $this->Html->link('<i class="icon icon-ban-circle"></i> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-large', 'escape' => false)); ?>
+			<?php
+				echo $this->Form->button('<i class="icon-white icon-upload"></i> Upload',array('class'=>'btn btn-large btn-success'));
+				echo '&nbsp;';
+				echo $this->Html->link('<i class="icon icon-ban-circle"></i> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-large', 'escape' => false));
+				if($image) {
+					echo '&nbsp;';
+					echo $this->Html->link('<i class="icon-white icon-pencil"></i> Re-Crop Existing', array('action' => 'image', $link['Link']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info btn-large', 'escape' => false));
+				} 
+			?>
 			</div>
 		</fieldset>
 		<?php echo $this->Form->end(); ?>

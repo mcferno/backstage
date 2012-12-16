@@ -4,17 +4,7 @@
  */
 class MessagesController extends AppController {
 	public $uses = array('Message');
-	
-	public function adminBeforeFilter() {		
-		if($this->request->is('ajax')) {
-			$this->disableCache(); // expire cache immediately
-			$this->RequestHandler->renderAs($this, 'json');
-			$this->Security->validatePost = false;
-			$this->Security->csrfCheck = false;
-		}
-		parent::adminBeforeFilter();	
-	}
-	
+		
 	/**
 	 * Saves a new message.
 	 *

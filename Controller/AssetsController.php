@@ -20,13 +20,6 @@ class AssetsController extends AppController {
 	
 	public function adminBeforeFilter() {
 
-		if($this->request->is('ajax')) {
-			$this->disableCache(); // expire cache immediately
-			$this->RequestHandler->renderAs($this, 'json');
-			$this->Security->validatePost = false;
-			$this->Security->csrfCheck = false;
-		}
-
 		if($this->RequestHandler->isMobile()) {
 			$this->paginate['limit'] = 15;
 		}

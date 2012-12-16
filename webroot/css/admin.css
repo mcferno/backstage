@@ -971,6 +971,10 @@ li.comment .text {
 		padding: 0.5em;
 	}
 
+	.link-exchange .screenshot {
+		float: none;
+	}
+
 	.link-exchange .long-link, .link-exchange .view-link {
 		display: block;
 		word-break: break-all;
