@@ -60,7 +60,7 @@ Backstage = {};
 			var crop_image = new Image();
 			crop_image.src = cropable.attr("src");
 
-			cropable.Jcrop({
+			var options = {
 				onSelect : function() {
 					ns.cropTool.tools.slideDown();
 				},
@@ -74,10 +74,16 @@ Backstage = {};
 					ns.cropTool.widthLabel.html(parseInt(sizing.w * scale, 10));
 					ns.cropTool.heightLabel.html(parseInt(sizing.h * scale, 10));
 				}
-			}, function() {
+			};
+
+			if(cropable.data('crop-aspect')) {
+				options.aspectRatio = cropable.data('crop-aspect');
+			}
+
+			cropable.Jcrop(options, function() {
 				if(!ns.cropTool) {
 					ns.cropTool = this;
-					ns.cropTool.assetId = cropable.data('asset-id');
+					ns.cropTool.imageId = cropable.data('image-id');
 					ns.cropTool.widthLabel = $('.crop-width');
 					ns.cropTool.heightLabel = $('.crop-height');
 					ns.cropTool.tools = $('.crop-actions');
@@ -91,6 +97,8 @@ Backstage = {};
 			$('.crop-save').on('click', function() {
 				var sizing = ns.cropTool.tellSelect();
 				var scale = 1;
+
+				// determine image metric scale (when the image is not displayed as it's actual dimensions)
 				if(cropable.width() != crop_image.width) {
 					scale = crop_image.width / cropable.width();
 				}
@@ -101,6 +109,7 @@ Backstage = {};
 						'url' : ns.cropUrl,
 						'type' : 'POST',
 						'data' : {
+							// scale out coordinates to match actual image size
 							coords : {
 								w : parseInt(sizing.w * scale, 10),
 								h : parseInt(sizing.h * scale, 10),
@@ -109,7 +118,7 @@ Backstage = {};
 								y1 : parseInt(sizing.y * scale, 10),
 								y2 : parseInt(sizing.y2 * scale, 10)
 							},
-							asset_id : ns.cropTool.assetId
+							image_id : ns.cropTool.imageId
 						},
 						'success' : function(response) {
 							if(response.status == 'success') {

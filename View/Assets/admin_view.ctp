@@ -6,15 +6,7 @@
 
 	// load cropping library if the image is not too small (crop-worthy)
 	$load_cropper = ($specs[0] >= 400 || $specs[1] >= 400 || isset($this->request->params['named']['cropper']));
-
-	if($load_cropper) {
-		$this->Html->script('//cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.10/jquery.Jcrop.js', array('inline' => false));
-		$this->Html->css('/lib/jcrop/jquery.Jcrop.min.css', null, array('inline' => false));
-	}
 ?>
-<script>
-Backstage.cropUrl = <?= json_encode($this->Html->url(array('controller' => 'assets', 'action' => 'crop'))); ?>;
-</script>
 <div class="row-fluid">
 	<div class="span12">
 		<h1>Saved Image</h1>
@@ -63,16 +55,9 @@ Backstage.cropUrl = <?= json_encode($this->Html->url(array('controller' => 'asse
 		</ul>
 	</div>
 	<div class="span10">
-		<?php if($load_cropper) : ?>
-		<div class="crop-actions" style="display: none;">
-			<h3>Crop this image</h3>
-			<h3 class="pull-right">New Size &nbsp;<span class="badge badge-info crop-width">432</span> x <span class="badge badge-info crop-height">234</span> px</h3>
-			<button class="btn btn-large btn-primary crop-save"><i class="icon-white icon-download"></i> Save Cropped Image</button>
-			<button class="btn btn-large btn crop-cancel"><i class="icon icon-remove"></i> Cancel</button>
-		</div>
-		<?php endif; // load cropping tools ?>
+		<?php if($load_cropper) { echo $this->element('common/image-cropper'); } ?>
 
-		<p class=" text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename'], array('class' => 'cropable', 'data-asset-id' => $asset['Asset']['id'])); ?></p>
+		<p class=" text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename'], array('class' => ($load_cropper) ? 'cropable' : '', 'data-image-id' => $asset['Asset']['id'])); ?></p>
 
 		<p class=" text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $user_dir . $asset['Asset']['filename']; ?>"></p>
 
