@@ -454,6 +454,18 @@ li.comment .text {
 	padding: 1.5em;
 }
 
+/* break long text/links */
+.chat-row .message {
+	word-break: break-word;
+}
+.chat-row a, .link-exchange .long-link a, .link-exchange .view-link a {
+	-ms-word-break: break-all;
+	word-break: break-all;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
@@ -962,8 +974,25 @@ li.comment .text {
 		padding: 1px 7px 2px;
 		margin-left: 0;
 	}
+
+	.chat-row .time, .chat-row .handle {
+		display: inline-block;
+	}
+
+	.chat-row .handle {
+		float: left;
+		padding-left: 1em;
+	}
+
+	.chat-row:nth-child(odd) {
+		background-color: #444;
+	}
+
+	.chat-row .message {
+		display: block;
+	}
 	
-	.chat-window .time, .posts .time {
+	.posts .time {
 		font-size: 0.8em;
 		width: 1em;
 	}
@@ -978,7 +1007,6 @@ li.comment .text {
 
 	.link-exchange .long-link, .link-exchange .view-link {
 		display: block;
-		word-break: break-all;
 	}
 
 	.link-exchange .main {
