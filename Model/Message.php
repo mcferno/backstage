@@ -107,35 +107,35 @@ class Message extends AppModel {
 	/**
 	 * Converts the available Activity model and relationship data to reduce
 	 * it to a human-friendly sentence.
+	 *
+	 * Messages are attached to existing content (Model), so we leverage that 
+	 * Model's humanization first.
 	 * 
 	 * @param {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
+
+		// remap the inner-model to leverage its humanization
+		if(!empty($activity['Message'][$activity['Message']['model']]['id'])) {
+			$activity[$activity['Message']['model']] = $activity['Message'][$activity['Message']['model']];
+
+			if(isset($this->{$activity['Message']['model']})) {
+				$this->{$activity['Message']['model']}->humanizeActivity($activity);
+			}
+		}
+
 		$activity['Activity']['phrase'] = ":user commented";
 		$activity['Activity']['icon'] = 'balloon-ellipsis';
 
+		// specialize the information message based on the Model it applied to
 		switch($activity['Message']['model']) {
 			case 'Contest':
-				$activity['Activity']['link'] = array('controller' => 'contests', 'action' => 'view', $activity['Message']['foreign_id']);
 				$activity['Activity']['phrase'] .= ' on a Caption Battle.';
-
-				if(!empty($activity['Message']['Contest']['Asset']['id'])) {
-					$activity['Activity']['preview'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Contest']['Asset']['user_id']}/200/{$activity['Message']['Contest']['Asset']['filename']}";
-					$activity['Activity']['preview-small'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Contest']['Asset']['user_id']}/75/{$activity['Message']['Contest']['Asset']['filename']}";
-				}
 				break;
 			case 'Asset':
-				$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Message']['foreign_id']);
 				$activity['Activity']['phrase'] .= ' on an image.';
-
-				if(!empty($activity['Message']['Asset']['id'])) {
-					$activity['Activity']['preview'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Asset']['user_id']}/200/{$activity['Message']['Asset']['filename']}";
-					$activity['Activity']['preview-small'] = "{$this->Asset->folderPathRelative}{$activity['Message']['Asset']['user_id']}/75/{$activity['Message']['Asset']['filename']}";
-				}
 				break;
 			case 'Link':
-				$activity['Activity']['link'] = array('controller' => 'links', 'action' => 'view', $activity['Message']['foreign_id']);
-				
 				if(!empty($activity['Message']['Link']['title'])) {
 					$activity['Activity']['phrase'] .= " on the {$activity['Message']['Link']['title']} link.";
 				} else {

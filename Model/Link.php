@@ -24,6 +24,38 @@ class Link extends AppModel {
 	public $thumbnailSize = 150;
 	public $thumbnailPath = 'user/links';
 
+	public function afterFind($results, $primary = false) {
+
+		// singular set
+		if(!empty($results['id'])) {
+			$this->attachImages($results);
+
+		// multiple set
+		} elseif(!empty($results[0]['Link'])) {
+			foreach($results as &$result) {
+				$this->attachImages($result['Link']);
+			}
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Inspects the webroot for a possible preview image to attach to a Link instance
+	 *
+	 * @param {Link} $link Link object to inspect and attach to
+	 */
+	public function attachImages(&$link) {
+		if(!empty($link['id'])) {
+			$image_path = "{$this->thumbnailPath}/{$link['id']}";
+			if(file_exists(IMAGES_URL . "{$image_path}.jpg")) {
+				$link['thumbnail'] = "{$image_path}.jpg";
+			} elseif(file_exists(IMAGES_URL . "{$image_path}.png")) {
+				$link['thumbnail'] = "{$image_path}.png";
+			}
+		}
+	}
+
 	public function humanizeActivity(&$link) {
 		$link['Activity']['phrase'] = ":user added a new link";
 		if(!empty($link['Link']['title'])) {
@@ -31,6 +63,10 @@ class Link extends AppModel {
 		}
 		$link['Activity']['icon'] = 'application-browser';
 		$link['Activity']['link'] = array('controller' => 'links', 'action' => 'view', $link['Link']['id']);
+
+		if(isset($link['Link']['thumbnail'])) {
+			$link['Activity']['preview'] = $link['Activity']['preview-small'] = $link['Link']['thumbnail'];
+		}
 	}
 
 	/**

@@ -1,12 +1,5 @@
 <?php
-	$screenshot = "{$thumbnail_path}/{$link['Link']['id']}";
-	if(file_exists(IMAGES_URL . "{$screenshot}.jpg")) {
-		$screenshot .= '.jpg?' . filemtime(IMAGES_URL . "{$screenshot}.jpg");
-	} elseif (file_exists(IMAGES_URL . "{$screenshot}.png")) {
-		$screenshot .= '.png?' . filemtime(IMAGES_URL . "{$screenshot}.png");
-	} else {
-		$screenshot = false;
-	}
+	$screenshot = (isset($link['Link']['thumbnail'])) ? $link['Link']['thumbnail'] : false;
 ?>
 <div class="link-item <?php if(!$screenshot) { echo 'no-screenshot'; } ?> clearfix">
 
