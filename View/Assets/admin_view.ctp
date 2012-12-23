@@ -5,7 +5,17 @@
 	$this->set('contentSpan',10);
 
 	// load cropping library if the image is not too small (crop-worthy)
-	$load_cropper = ($specs[0] >= 400 || $specs[1] >= 400 || isset($this->request->params['named']['cropper']));
+	$load_cropper = (
+		!$this->request->is('mobile') 
+		&& ($specs[0] >= 600 || $specs[1] >= 600)
+		&& ($this->Session->read('Auth.User.id') == $asset['Asset']['user_id'])
+		&& $asset['Asset']['type'] != 'Crop'
+	);
+
+	// force cropper if in the URL request
+	if(isset($this->request->params['named']['crop'])) {
+		$load_cropper = true;
+	}
 ?>
 <div class="row-fluid">
 	<div class="span12">
@@ -25,17 +35,28 @@
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
 			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
+
 			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> Meme This Image',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
 			<li><?= $this->Html->link('<i class="icon-white icon-play-circle"></i> Start Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false)); ?></li>
+
 			<?php endif; // upload or url download ?>
+
+			<?php if(!$load_cropper) : ?>
+			<li><?= $this->Html->link('<i class="icon icon-fullscreen"></i> Crop this Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false)); ?></li>
+			<?php endif; // cropper option ?>
+
 			<?php if($this->Session->read('Auth.User.id') == $asset['Asset']['user_id']) : ?>
-			<li><?= $this->Html->link('<i class="icon icon-chevron-left"></i> Return to My Images',array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
+
 			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal')); ?></li>
-			<?php endif; // user's own image ?>
+			<?php endif; // image is Facebook shareable ?>
+
 			<li><?= $this->Html->link('<i class="icon-white icon-remove"></i> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false),'Are you sure you wish to permanently delete this image?'); ?></li>
+
 			<?php else : // someone else's image ?>
+
 			<li><?= $this->Html->link('<i class="icon-white icon-user"></i> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false)); ?></li>
+			
 			<?php endif; ?>
 
 			<?php if((int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
@@ -55,6 +76,10 @@
 		</ul>
 	</div>
 	<div class="span10">
+		<?php if($load_cropper && isset($this->request->params['named']['crop'])) : ?>
+		<p><i class="icon-white icon-info-sign"></i> Click and drag a region on this image to begin a crop.</p>
+		<?php endif; // cropper tooltip ?>
+
 		<?php if($load_cropper) { echo $this->element('common/image-cropper'); } ?>
 
 		<p class=" text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename'], array('class' => ($load_cropper) ? 'cropable' : '', 'data-image-id' => $asset['Asset']['id'])); ?></p>

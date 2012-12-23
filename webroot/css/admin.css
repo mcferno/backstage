@@ -997,12 +997,9 @@ li.comment .text {
 		width: 1em;
 	}
 
-	.link-exchange li {
-		padding: 0.5em;
-	}
-
 	.link-exchange .screenshot {
 		float: none;
+		width: 150px;
 	}
 
 	.link-exchange .long-link, .link-exchange .view-link {
@@ -1013,12 +1010,24 @@ li.comment .text {
 		line-height: 1.5em;
 	}
 
+	.link-exchange li {
+		padding: 0em;
+	}
+
+	.link-item, .link-item.no-screenshot {
+		padding: 1em 0;
+	}
+
 	.link-exchange .description {
-		margin: 0.5em;
+		margin-left: 0.5em;
 	}
 
 	.table .short-date {
 		width: 1em;
+	}
+
+	.image-wall img {
+		margin-bottom: 1em;
 	}
 }
 
