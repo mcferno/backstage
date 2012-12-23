@@ -80,6 +80,10 @@ var GroupChat = {
 			var msg = ns.autolinkUrls(this.model.get('text'));
 			msg = ns.highlightCallouts(msg);
 
+			if(!ns.config.mobile) {
+				msg = ns.autoViewImages(msg, this.model.get('handle'));
+			}
+
 			var rendered = _.template(ns.templates.chatRowTemplate.html(), {
 				date : ns.formatDate(date),
 				username : this.model.get('handle'),
@@ -192,6 +196,16 @@ var GroupChat = {
 		}
 		return text;
 	};
+
+	ns.autoViewImages = function(text, handle) {
+		// depends on being previously hyperlinked
+		var linkToImageURL = text.match('(<a.*>)(.+\.(jpeg|jpg|png|gif))</a>');
+		if(linkToImageURL) {
+			var imageTag = linkToImageURL[1] + _.template(ns.templates.embeddedImage.html(), { username : handle, url : linkToImageURL[2] }) + '</a>';
+			text = text.replace(linkToImageURL[0], imageTag);
+		}
+		return text;
+	}
 	
 	ns.sendHeartbeat = function() {
 		var data = {
@@ -339,6 +353,7 @@ var GroupChat = {
 		ns.loadingIndicator = $('#loaderAnim');
 		
 		ns.templates.chatRowTemplate = $('#chatRowTemplate');
+		ns.templates.embeddedImage = $('#embeddedImageTemplate');
 
 		ns.chatOrder = ($.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
 		ns.chatLogView = new ns.ChatLogView();

@@ -8,6 +8,7 @@ $chatSettings = array(
 );
 $chatSettings['scope'] = (!empty($model)) ? $model : 'Chat';
 $chatSettings['scopeId'] = (!empty($foreign_key)) ? $foreign_key : null;
+$chatSettings['mobile'] = $this->request->is('mobile');
 
 // chat settings
 if($chatSettings['scope'] === 'Chat') {
@@ -63,6 +64,9 @@ if($chatSettings['scope'] === 'Chat') {
 <td class="time"><%= date %></td>
 <td class="handle"><%= username %></td>
 <td class="message"><%= message %></td>
+</script>
+<script type="text/template" id="embeddedImageTemplate">
+<img src="<%= url %>" title="Image link posted by @<%= username %>" class="posted-image">
 </script>
 <script type="text/javascript">
 GroupChat.config = <?= json_encode($chatSettings); ?>;
