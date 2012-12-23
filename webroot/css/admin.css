@@ -203,7 +203,7 @@ div.login {
 	margin-left: 0;
 }
 
-img {
+img, iframe, embed, object {
 	max-width: 100%;
 }
 
@@ -738,6 +738,14 @@ li.comment .text {
 .chat-window tbody tr.highlight td {
 	padding-top: 0.75em;
 	padding-bottom: 0.75em;
+}
+
+.chat .message {
+	max-width: 300px;
+}
+
+.chat .message iframe {
+	display: block;
 }
 
 .highlight .time {

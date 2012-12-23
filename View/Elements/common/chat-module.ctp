@@ -68,6 +68,9 @@ if($chatSettings['scope'] === 'Chat') {
 <script type="text/template" id="embeddedImageTemplate">
 <img src="<%= url %>" title="Image link posted by @<%= username %>" class="posted-image">
 </script>
+<script type="text/template" id="embeddedYouTubeTemplate">
+<iframe width="640" height="360" src="http://www.youtube.com/embed/<%= video_id %>?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+</script>
 <script type="text/javascript">
 GroupChat.config = <?= json_encode($chatSettings); ?>;
 </script>

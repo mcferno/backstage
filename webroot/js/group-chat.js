@@ -82,6 +82,7 @@ var GroupChat = {
 
 			if(!ns.config.mobile) {
 				msg = ns.autoViewImages(msg, this.model.get('handle'));
+				msg = ns.autoEmbedVideos(msg);
 			}
 
 			var rendered = _.template(ns.templates.chatRowTemplate.html(), {
@@ -205,7 +206,16 @@ var GroupChat = {
 			text = text.replace(linkToImageURL[0], imageTag);
 		}
 		return text;
-	}
+	};
+
+	ns.autoEmbedVideos = function(text) {
+		var youtubeLink = text.match(/<a.*>.*youtube\.com\/watch.*v=([\-\_a-zA-Z0-9]*).*<\/a>/);
+		if(youtubeLink) {
+			var embedTag = _.template(ns.templates.embeddedYoutube.html(), { video_id : youtubeLink[1] }) + youtubeLink[0] + '<br>';
+			text = text.replace(youtubeLink[0], embedTag);
+		}
+		return text;
+	};
 	
 	ns.sendHeartbeat = function() {
 		var data = {
@@ -354,6 +364,7 @@ var GroupChat = {
 		
 		ns.templates.chatRowTemplate = $('#chatRowTemplate');
 		ns.templates.embeddedImage = $('#embeddedImageTemplate');
+		ns.templates.embeddedYoutube = $('#embeddedYouTubeTemplate');
 
 		ns.chatOrder = ($.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
 		ns.chatLogView = new ns.ChatLogView();
