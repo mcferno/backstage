@@ -35,10 +35,9 @@ class AppController extends Controller {
 	public $uses = array('User');
 	
 	public $helpers = array(
-		'Site','Html','Paginator','Session','Text','Cache',
-		'Form' => array(
-			'className' => 'AppForm'
-		)
+		'Site', 'Cache',
+		'Form' => array('className' => 'AppForm'),
+		'Html' => array('className' => 'AppHtml')
 	);
 	
 	public $components = array(
@@ -110,6 +109,15 @@ class AppController extends Controller {
 			$this->set('contentSpan',8);
 			$this->set('onlineUsers',$this->User->getOnlineUsers());
 		}
+
+		if(isset($this->request->params['prefix']) 
+		&& $this->request->params['prefix'] == 'admin'
+		&& $this->request->params['admin'] == '1') {
+			$this->adminBeforeRender();
+		}
+	}
+
+	public function adminBeforeRender() {
 	}
 	
 	/**

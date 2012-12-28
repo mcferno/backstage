@@ -10,9 +10,9 @@
 <?php
 	$image = "{$thumbnail_path}/full/{$link['Link']['id']}";
 	if(file_exists(IMAGES_URL . "{$image}.jpg")) {
-		$image .= '.jpg?' . filemtime(IMAGES_URL . "{$image}.jpg");
+		$image .= '.jpg';
 	} elseif (file_exists(IMAGES_URL . "{$image}.png")) {
-		$image .= '.png?' . filemtime(IMAGES_URL . "{$image}.png");
+		$image .= '.png';
 	} else {
 		$image = false;
 	}
@@ -27,7 +27,7 @@
 			// display the image if we found one, otherwise invite the user to provide one
 			if($image) {
 				echo $this->element('common/image-cropper');
-				echo $this->Html->image($image, array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id']));
+				echo $this->Html->image($image, array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id'], 'cachebust' => true));
 				echo $this->Html->link('<i class="icon icon-chevron-left"></i> Return to Link', array('action' => 'view', $link['Link']['id']), array('class' => 'btn', 'escape' => false));
 			} else {
 				echo $this->Html->link('No Image Found! Please upload an image to continue', array('action' => 'image', $link['Link']['id']));
@@ -47,13 +47,13 @@
 		<fieldset>
 			<div class="inset">
 				<h4><?= $this->Html->image('ui/icons/computer.png'); ?> Upload an image from your device or computer</h4>
-				<?= $this->Form->input('image',array('type'=>'file','label'=>'')); ?>
+				<?= $this->Form->input('image', array('type'=>'file','label'=>'')); ?>
 				<h4><?= $this->Html->image('ui/icons/network-cloud.png'); ?> Upload an image from a URL</h4>
-				<?= $this->Form->input('url',array('type' => 'text', 'label' =>'', 'class' => 'asset-url', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
+				<?= $this->Form->input('url', array('type' => 'text', 'label' =>'', 'class' => 'asset-url', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
 			
 
 			<?php
-				echo $this->Form->button('<i class="icon-white icon-upload"></i> Upload',array('class'=>'btn btn-large btn-success'));
+				echo $this->Form->button('<i class="icon-white icon-upload"></i> Upload', array('class'=>'btn btn-large btn-success'));
 				echo '&nbsp;';
 				echo $this->Html->link('<i class="icon icon-ban-circle"></i> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-large', 'escape' => false));
 				if($image) {

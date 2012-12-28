@@ -5,7 +5,7 @@
 
 <?php if($screenshot) : ?>
 <div class="screenshot">
-	<a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $this->Html->image($screenshot); ?></a>
+	<a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $this->Html->image($screenshot, array('cachebust' => true)); ?></a>
 </div>
 <?php endif; // has screenshot ?>
 
