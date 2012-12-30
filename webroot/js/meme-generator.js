@@ -302,7 +302,7 @@ var MemeGenerator = {
 		// write out each line, respecting inner spacing
 		for(var iter = 0; iter < lines.length; iter++) {
 			var line = lines[iter].join(' ');
-			ns.context.strokeText(line, ns.coords.center.x,offsetY + iter * emWidth);
+			ns.context.strokeText(line, ns.coords.center.x, offsetY + iter * emWidth);
 			ns.context.fillText(line, ns.coords.center.x, offsetY + iter * emWidth);
 		}
 		
@@ -409,6 +409,9 @@ var MemeGenerator = {
 			trigger : 'manual',
 			title : 'Image saved successfully!'
 		});
+
+		// ensure the scale adapting is done at least once
+		ns.adaptToScale();
 	};
 	
 	/**

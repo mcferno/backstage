@@ -66,7 +66,6 @@
 		</div> <!-- /container -->
 		
 		<?= $this->element('common/asset-upload'); ?>
-</div>
-	<?= $this->element('sql_dump'); ?>
+		<?= $this->element('sql_dump'); ?>
 </body>
 </html>
