@@ -169,6 +169,24 @@ class Asset extends AppModel {
 			$cropped = $image->resize($this->maxDimensions['w'],$this->maxDimensions['h']);
 		}
 
+		// detect if the image needs rotation based on available EXIF data
+		$exif = exif_read_data($file_path);
+		if(isset($exif['Orientation']) && is_numeric($exif['Orientation'])) {
+
+			// 180 deg flip (upside-down)
+			if($exif['Orientation'] === 3) {
+				$cropped = $cropped->rotate(180);
+
+			// counter 90 deg
+			} elseif($exif['Orientation'] === 6) {
+				$cropped = $cropped->rotate(90);
+
+			// 90 deg
+			} elseif ($exif['Orientation'] === 8) {
+				$cropped = $cropped->rotate(-90);
+			}
+		}
+
 		$cropped->saveToFile($new_path, $this->jpegQuality);
 		$cropped->releaseHandle();
 		$image->releaseHandle();
