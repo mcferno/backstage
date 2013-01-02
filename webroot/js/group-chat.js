@@ -200,7 +200,7 @@ var GroupChat = {
 
 	ns.autoViewImages = function(text, handle) {
 		// depends on being previously hyperlinked
-		var linkToImageURL = text.match('(<a.*>)(.+\.(jpeg|jpg|png|gif))</a>');
+		var linkToImageURL = text.match(/(<a.*>)(.+\.(jpeg|jpg|png|gif))<\/a>/);
 		if(linkToImageURL) {
 			var imageTag = linkToImageURL[1] + _.template(ns.templates.embeddedImage.html(), { username : handle, url : linkToImageURL[2] }) + '</a>';
 			text = text.replace(linkToImageURL[0], imageTag);
