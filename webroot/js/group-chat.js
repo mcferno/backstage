@@ -214,6 +214,13 @@ var GroupChat = {
 			var embedTag = _.template(ns.templates.embeddedYoutube.html(), { video_id : youtubeLink[1] }) + youtubeLink[0] + '<br>';
 			text = text.replace(youtubeLink[0], embedTag);
 		}
+
+		var vimeoLink = text.match(/<a.*>.*vimeo\.com\/([\-\_a-zA-Z0-9]*).*<\/a>/);
+		if(vimeoLink) {
+			var embedTag = _.template(ns.templates.embeddedVimeo.html(), { video_id : vimeoLink[1] }) + vimeoLink[0] + '<br>';
+			text = text.replace(vimeoLink[0], embedTag);
+		}
+
 		return text;
 	};
 	
@@ -365,6 +372,7 @@ var GroupChat = {
 		ns.templates.chatRowTemplate = $('#chatRowTemplate');
 		ns.templates.embeddedImage = $('#embeddedImageTemplate');
 		ns.templates.embeddedYoutube = $('#embeddedYouTubeTemplate');
+		ns.templates.embeddedVimeo = $('#embeddedVimeoTemplate');
 
 		ns.chatOrder = ($.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
 		ns.chatLogView = new ns.ChatLogView();

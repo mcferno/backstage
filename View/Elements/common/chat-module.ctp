@@ -71,6 +71,9 @@ if($chatSettings['scope'] === 'Chat') {
 <script type="text/template" id="embeddedYouTubeTemplate">
 <iframe width="640" height="360" src="http://www.youtube.com/embed/<%= video_id %>?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
 </script>
+<script type="text/template" id="embeddedVimeoTemplate">
+<iframe src="http://player.vimeo.com/video/<%= video_id %>" width="640" height="360" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+</script>
 <script type="text/javascript">
 GroupChat.config = <?= json_encode($chatSettings); ?>;
 </script>
