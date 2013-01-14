@@ -1,5 +1,7 @@
 <?php
 	$this->set('contentSpan', 10);
+
+	$video_path = IMAGES_URL . "user/videos/{$video['Video']['id']}";
 ?>
 <div class="row-fluid">
 	<div class="span2 text-right action-bar">
@@ -14,11 +16,11 @@
 			<h2><?= $video['Video']['title']; ?></h2>
 			<p><?= $video['Video']['description']; ?></p>
 			<video width="640" height="360" controls>
-				<?php if($video['Video']['mp4']) : ?>
-				<source type="video/mp4" src="<?= $this->Html->webroot(IMAGES_URL . "user/videos/{$video['Video']['id']}.mp4"); ?>" />
+				<?php if($video['Video']['mp4'] && file_exists("{$video_path}.mp4")) : ?>
+				<source type="video/mp4" src="<?= $this->Html->webroot("{$video_path}.mp4?t=" . filemtime("{$video_path}.mp4")); ?>" />
 				<?php endif; ?>
-				<?php if($video['Video']['webm']) : ?>
-				<source type="video/webm" src="<?= $this->Html->webroot(IMAGES_URL . "user/videos/{$video['Video']['id']}.webm"); ?>" />
+				<?php if($video['Video']['webm'] && file_exists("{$video_path}.webm")) : ?>
+				<source type="video/webm" src="<?= $this->Html->webroot("{$video_path}.webm?t=" . filemtime("{$video_path}.webm")); ?>" />
 				<?php endif; ?>
 				<?php /*
 				<object width="640" height="360" type="application/x-shockwave-flash" data="__FLASH__.SWF">
