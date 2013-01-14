@@ -1,7 +1,11 @@
 <?php
 	$screenshot = (isset($video['Video']['thumbnail'])) ? $video['Video']['thumbnail'] : false;
+	if(!class_exists('CakeNumber')) {
+		App::uses('CakeNumber', 'Utility');
+	}
+	$video_path = IMAGES_URL . "user/videos/{$video['Video']['id']}";
 ?>
-<div class="video-item <?php if(!$screenshot) { echo 'no-screenshot'; } ?> clearfix">
+<div class="link-item <?php if(!$screenshot) { echo 'no-screenshot'; } ?> clearfix">
 
 <?php if($screenshot) : ?>
 <div class="screenshot">
@@ -21,6 +25,16 @@
 		echo $video['Video']['description'];
 	}
 ?>
+</div>
+
+<div class="stats">
+	&mdash; <i class="icon-white icon-time"></i> <?php printf('%d:%02d', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?> min
+	<?php if($video['Video']['mp4'] && file_exists("${video_path}.mp4")) : ?>
+	&middot; <i class="icon-white icon-facetime-video"></i> <?= CakeNumber::toReadableSize(filesize("${video_path}.mp4")); ?>
+	<?php endif; ?>
+	<?php if(!empty($video['Video']['url'])) : $video_url = parse_url($video['Video']['url']); ?>
+	&middot; <i class="icon-white icon-globe"></i> <?= str_replace('www.', '', $video_url['host']); ?>
+	<?php endif; ?>
 </div>
 
 <div class="stats muted">
