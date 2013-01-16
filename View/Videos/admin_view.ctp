@@ -15,7 +15,7 @@
 		<div class="link-exchange link-view text-center">
 			<h2><?= $video['Video']['title']; ?></h2>
 			<p><?= $video['Video']['description']; ?></p>
-			<video width="640" height="360" controls>
+			<video controls>
 				<?php if($video['Video']['mp4'] && file_exists("{$video_path}.mp4")) : ?>
 				<source type="video/mp4" src="<?= $this->Html->webroot("{$video_path}.mp4?t=" . filemtime("{$video_path}.mp4")); ?>" />
 				<?php endif; ?>

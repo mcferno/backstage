@@ -907,6 +907,14 @@ li.comment .text {
 
 /* @end link exchange ====================================================== */
 
+/* @start videos =========================================================== */
+
+.video-item .screenshot {
+	width: 300px;
+}
+
+/* @end videos ============================================================= */
+
 /* @start responsive-adjustments =========================================== */
 
 @media (min-width:768px) and (max-width:979px) {

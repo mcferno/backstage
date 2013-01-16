@@ -49,3 +49,7 @@
 	</div>
 </div>
 <?php $this->element('common/tag-tally'); ?>
+
+<?php if($this->request->is('mobile')) : $this->start('sidebar-bottom'); ?>
+<p><i class="icon-white icon-info-sign"></i> Mobile users: keep an eye on the video sizes when you're not on WiFi</p>
+<?php $this->end(); endif; // mobile only ?>

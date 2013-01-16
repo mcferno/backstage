@@ -1,15 +1,23 @@
 <?php
-	$screenshot = (isset($video['Video']['thumbnail'])) ? $video['Video']['thumbnail'] : false;
+	$video_path = "user/videos/{$video['Video']['id']}";
+	$screenshot = (file_exists(IMAGES_URL . "{$video_path}.png")) ? "{$video_path}.png" : false;
 	if(!class_exists('CakeNumber')) {
 		App::uses('CakeNumber', 'Utility');
 	}
-	$video_path = IMAGES_URL . "user/videos/{$video['Video']['id']}";
+
+	$video_sizes = array();
+	if($video['Video']['mp4'] && file_exists(IMAGES_URL . "${video_path}.mp4")) {
+		$video_sizes['mp4'] = filesize(IMAGES_URL . "${video_path}.mp4");
+	}
+	if($video['Video']['webm'] && file_exists(IMAGES_URL . "${video_path}.webm")) {
+		$video_sizes['webm'] = filesize(IMAGES_URL . "${video_path}.webm");
+	}
 ?>
-<div class="link-item <?php if(!$screenshot) { echo 'no-screenshot'; } ?> clearfix">
+<div class="link-item video-item <?php if(!$screenshot) { echo 'no-screenshot'; } ?> clearfix">
 
 <?php if($screenshot) : ?>
 <div class="screenshot">
-	<a href="<?= $video['Video']['url']; ?>" target="_blank"><?= $this->Html->image($screenshot, array('cachebust' => true)); ?></a>
+	<?= $this->Html->image($screenshot, array('cachebust' => true, 'url' => array('controller' => 'videos', 'action' => 'view', $video['Video']['id']))); ?>
 </div>
 <?php endif; // has screenshot ?>
 
@@ -28,9 +36,10 @@
 </div>
 
 <div class="stats">
-	&mdash; <i class="icon-white icon-time"></i> <?php printf('%d:%02d', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?> min
-	<?php if($video['Video']['mp4'] && file_exists("${video_path}.mp4")) : ?>
-	&middot; <i class="icon-white icon-facetime-video"></i> <?= CakeNumber::toReadableSize(filesize("${video_path}.mp4")); ?>
+	&mdash; <i class="icon-white icon-time"></i> <?php printf('%d min %02d sec', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?>
+	<?php if($video_sizes) : ?>
+	&middot; <i class="icon-white icon-facetime-video"></i> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
+	<!-- <?= json_encode($video_sizes); ?> -->
 	<?php endif; ?>
 	<?php if(!empty($video['Video']['url'])) : $video_url = parse_url($video['Video']['url']); ?>
 	&middot; <i class="icon-white icon-globe"></i> <?= str_replace('www.', '', $video_url['host']); ?>
