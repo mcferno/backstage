@@ -4,6 +4,8 @@ App::uses('CakeLog', 'Log');
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
+$engine = 'File';
+
 // short cache
 Cache::config('short', array(
 	'engine' => $engine,
