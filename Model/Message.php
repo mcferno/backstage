@@ -97,7 +97,7 @@ class Message extends AppModel {
 		foreach ($results as &$result) {
 			$result['Message']['timestamp'] = strtotime($result['Message']['created']);
 		}
-		return $results;
+		return array_reverse($results);
 	}
 
 	public function activityFeedInclusion($data) {

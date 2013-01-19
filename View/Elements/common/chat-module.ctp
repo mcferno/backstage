@@ -54,7 +54,7 @@ if($chatSettings['scope'] === 'Chat') {
 </div>
 <div class="row-fluid chat-window">
 	<div class="span12">
-		<table class="table table-striped chat table-condensed"></table>
+		<table class="table chat table-condensed"></table>
 	</div>
 </div>
 

@@ -72,6 +72,9 @@ var GroupChat = {
 			if(this.$el.find('.active-user').length) {
 				this.el.className = this.el.className + ' highlight';
 			}
+			if(ns.messageCount() %2 === ns.chatRowStripe) {
+				this.el.className = this.el.className + ' alt-row';
+			}
 		},
 		render : function() {
 			var timestamp = this.model.get('timestamp');
@@ -180,6 +183,9 @@ var GroupChat = {
 			message : text
 		});
 		var row = $('<tr>').addClass('chat-row').html(rowData);
+		if(ns.messageCount() % 2 === ns.chatRowStripe) {
+			row.addClass('alt-row');
+		}
 		row.hide();
 		ns.chatWindow.prepend(row);
 		row.show().css('display','table-row');
@@ -222,6 +228,13 @@ var GroupChat = {
 		}
 
 		return text;
+	};
+
+	ns.messageCount = function() {
+		if(!ns.chatWindow) {
+			return 0;
+		}
+		return ns.chatWindow.find('.chat-row').length;
 	};
 	
 	ns.sendHeartbeat = function() {
@@ -375,6 +388,7 @@ var GroupChat = {
 		ns.templates.embeddedVimeo = $('#embeddedVimeoTemplate');
 
 		ns.chatOrder = ($.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
+		ns.chatRowStripe = (ns.chatOrder === 1) ? 1 : 0;
 		ns.chatLogView = new ns.ChatLogView();
 		
 		$('.loading').hide();

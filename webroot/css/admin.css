@@ -89,7 +89,9 @@ hr {
 	border-bottom: 1px solid #888;
 }
 
-.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+.table .alt-row td, .table .alt-row th,
+.table-striped tbody tr:nth-child(odd) td, 
+.table-striped tbody tr:nth-child(odd) th {
 	background-color: #444;
 }
 
