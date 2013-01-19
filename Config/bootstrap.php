@@ -4,6 +4,23 @@ App::uses('CakeLog', 'Log');
 // Setup a 'default' cache configuration for use in the application.
 Cache::config('default', array('engine' => 'File'));
 
+// short cache
+Cache::config('short', array(
+	'engine' => $engine,
+	'prefix' => 'app_short_',
+	'path' => CACHE . 'persistent' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => '5 minutes'
+));
+
+Cache::config('online_status', array(
+	'engine' => $engine,
+	'prefix' => 'app_online_status_',
+	'path' => CACHE . 'persistent' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => '20 seconds'
+));
+
 Configure::write('Dispatcher.filters', array(
 	//'AssetDispatcher',
 	'CacheDispatcher'

@@ -349,26 +349,3 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
-
-// short cache
-Cache::config('short', array(
-	'engine' => $engine,
-	'prefix' => 'app_short_',
-	'path' => CACHE . 'persistent' . DS,
-	'serialize' => ($engine === 'File'),
-	'duration' => '5 minutes'
-));
-
-Cache::config('online_status', array(
-	'engine' => $engine,
-	'prefix' => 'app_online_status_',
-	'path' => CACHE . 'persistent' . DS,
-	'serialize' => ($engine === 'File'),
-	'duration' => '20 seconds'
-));
-
-if(isset($_SERVER['HTTP_HOST']) && stripos($_SERVER['HTTP_HOST'],'kennyquotemachine.com') !== false) {
-	Configure::write('debug', 0);
-	Configure::write('Cache.disable', false);
-	Configure::write('Cache.check', true);
-}
