@@ -142,6 +142,24 @@ CREATE TABLE IF NOT EXISTS `messages` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pages`
+--
+
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` char(36) NOT NULL DEFAULT '',
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  `title` varchar(50) DEFAULT NULL,
+  `content` longtext,
+  `content_width` int(11) DEFAULT NULL,
+  `uri` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uri` (`uri`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `posts`
 --
 

@@ -263,15 +263,15 @@ img, iframe, embed, object {
 	font-weight: bold;
 }
 
-.text-left {
+.text-left, .text-left td, .text-left th {
 	text-align: left;
 }
 
-.text-center {
+.text-center, .text-center td, .text-center th {
 	text-align: center;
 }
 
-.text-right {
+.text-right, .text-right td, .text-right th {
 	text-align: right;
 }
 

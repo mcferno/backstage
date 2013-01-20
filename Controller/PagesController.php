@@ -1,59 +1,28 @@
 <?php
 /**
- * Static content controller.
- *
- * This file will render views from views/pages/
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
-/**
  * Static content controller
- *
- * Override this controller by placing a copy in controllers directory of an application
- *
- * @package       app.Controller
  */
 class PagesController extends AppController {
 
-/**
- * Controller name
- *
- * @var string
- */
 	public $name = 'Pages';
-
-/**
- * Default helper
- *
- * @var array
- */
 	public $helpers = array('Html');
+	public $uses = array('Page', 'Tumblr', 'Contest', 'Asset');
+	public $scaffold = 'admin';
 
-/**
- * This controller does not use a model
- *
- * @var array
- */
-	public $uses = array('Tumblr', 'Contest', 'Asset');
+	// admin-only scaffolding
+	public function beforeScaffold($method) {
+		if($this->Auth->user('role') < ROLES_ADMIN) {
+			$this->redirect(array('controller'=>'users', 'action' => 'dashboard'));
+		}
+		$this->set('schema', $this->Page->schema());
+		return parent::beforeScaffold($method);
+	}
 
-/**
- * Displays a view
- *
- * @param mixed What page to display
- */
+	/**
+	 * Displays a view
+	 *
+	 * @param mixed What page to display
+	 */
 	public function display() {				
 		$path = func_get_args();
 
@@ -169,5 +138,21 @@ class PagesController extends AppController {
 			$this->Session->setFlash($msg,$type);
 		}
 		$this->redirect($this->referer(array('controller'=>'users','action'=>'dashboard')));
+	}
+
+	/**
+	 * Displays database driven pages
+	 */
+	public function admin_content() {
+		$page = false;
+		if(!empty($this->request->params['uri'])) { 
+			$page = $this->Page->findByUri($this->request->params['uri']);
+		}
+
+		if(!$page) {
+			$this->Session->setFlash('Sorry, the requested page could not be located.', 'messaging/alert-error');
+			$this->redirect(array('controller'=>'users', 'action' => 'dashboard'));
+		}
+		$this->set('page', $page);
 	}
 }

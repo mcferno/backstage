@@ -37,6 +37,9 @@ Router::connect("/{$admin_url}/chat", array('controller'=>'users', 'action' => '
 Router::connect("/{$admin_url}/setup", array('controller' => 'users', 'action' => 'setup', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/quotes/*", array('controller' => 'posts', 'action'=> 'index', 'prefix' => 'admin', 'admin' => true));
 
+Router::redirect("/{$admin_url}/page", "/{$admin_url}/dashboard");
+Router::connect("/{$admin_url}/page/:uri", array('controller' => 'pages', 'action'=> 'content', 'prefix' => 'admin', 'admin' => true), array('uri' => '.+'));
+
 Router::connect("/{$admin_url}/caption-battles", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/caption-battles/:action/*", array('controller'=>'contests', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/caption-battles/*", array('controller'=>'contests', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
