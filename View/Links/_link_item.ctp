@@ -1,16 +1,18 @@
 <?php
 	$screenshot = (isset($link['Link']['thumbnail'])) ? $link['Link']['thumbnail'] : false;
+	$url_parts = parse_url($link['Link']['url']);
+	$target = (stripos($url_parts['host'], $_SERVER['HTTP_HOST']) === false) ? '_blank' : '_top';
 ?>
 <div class="link-item <?php if(!$screenshot) { echo 'no-screenshot'; } ?> clearfix">
 
 <?php if($screenshot) : ?>
 <div class="screenshot">
-	<a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $this->Html->image($screenshot, array('cachebust' => true)); ?></a>
+	<a href="<?= $link['Link']['url']; ?>" target="<?= $target; ?>"><?= $this->Html->image($screenshot, array('cachebust' => true)); ?></a>
 </div>
 <?php endif; // has screenshot ?>
 
 <div class="title">
-	<a href="<?= $link['Link']['url']; ?>" target="_blank" class="main"><?= $link['Link']['title']; ?></a> <span class="muted long-link"><span class="extra">« </span><a href="<?= $link['Link']['url']; ?>" target="_blank"><?= $link['Link']['url']; ?></a><span class="extra"> »</span></span>
+	<a href="<?= $link['Link']['url']; ?>" target="<?= $target; ?>" class="main"><?= $link['Link']['title']; ?></a> <span class="muted long-link"><span class="extra">« </span><a href="<?= $link['Link']['url']; ?>" target="<?= $target; ?>"><?= $link['Link']['url']; ?></a><span class="extra"> »</span></span>
 </div>
 
 <div class="description">
