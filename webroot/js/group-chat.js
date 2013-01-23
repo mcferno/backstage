@@ -144,6 +144,7 @@ var GroupChat = {
 		}
 	});
 	
+	// submits a message to the server
 	ns.submitMessage = function() {
 		var text = ns.msgBar.attr('value');
 		var now = new Date();
@@ -175,6 +176,7 @@ var GroupChat = {
 		ns.msgBar.attr('value','');
 	};
 	
+	// testing function which injects messages directly into the chat, bypassing the server
 	ns.addMessage = function(date,timestamp,text,handle) {
 		var rowData = _.template(ns.templates.chatRowTemplate.html(), {
 			date : date,
@@ -191,11 +193,13 @@ var GroupChat = {
 		row.show().css('display','table-row');
 	};
 
+	// convert URLs to active hyperlinks
 	ns.autolinkUrls = function(text) {
 		var url_regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 		return text.replace(url_regex, '<a href="$1" target="_blank">$1</a>');
 	};
 
+	// highlight @mentions within a given text
 	ns.highlightCallouts = function(text) {
 		if(ns.config.self) {
 			var username_regex = new RegExp("@(" + ns.config.self + "|all)", 'gi');
@@ -204,6 +208,7 @@ var GroupChat = {
 		return text;
 	};
 
+	// parses text for image links and converts them to embedded images
 	ns.autoViewImages = function(text, handle) {
 		// depends on being previously hyperlinked
 		var linkToImageURL = text.match(/(<a.*>)(.+\.(jpeg|jpg|png|gif))<\/a>/);
@@ -214,29 +219,33 @@ var GroupChat = {
 		return text;
 	};
 
+	// parses text for video site links, converting them to embed codes
 	ns.autoEmbedVideos = function(text) {
 		var youtubeLink = text.match(/<a.*>.*youtube\.com\/watch.*v=([\-\_a-zA-Z0-9]*).*<\/a>/);
+		var embedTag = false;
 		if(youtubeLink) {
-			var embedTag = _.template(ns.templates.embeddedYoutube.html(), { video_id : youtubeLink[1] }) + youtubeLink[0] + '<br>';
+			embedTag = _.template(ns.templates.embeddedYoutube.html(), { video_id : youtubeLink[1] }) + youtubeLink[0] + '<br>';
 			text = text.replace(youtubeLink[0], embedTag);
 		}
 
 		var vimeoLink = text.match(/<a.*>.*vimeo\.com\/([\-\_a-zA-Z0-9]*).*<\/a>/);
 		if(vimeoLink) {
-			var embedTag = _.template(ns.templates.embeddedVimeo.html(), { video_id : vimeoLink[1] }) + vimeoLink[0] + '<br>';
+			embedTag = _.template(ns.templates.embeddedVimeo.html(), { video_id : vimeoLink[1] }) + vimeoLink[0] + '<br>';
 			text = text.replace(vimeoLink[0], embedTag);
 		}
 
 		return text;
 	};
 
+	// returns the number of messages currently in the chat window
 	ns.messageCount = function() {
 		if(!ns.chatWindow) {
 			return 0;
 		}
-		return ns.chatWindow.find('.chat-row').length;
+		return ns.chatLog.length;
 	};
 	
+	// polls the server for new status
 	ns.sendHeartbeat = function() {
 		var data = {
 			scope : ns.config.scope
@@ -255,6 +264,7 @@ var GroupChat = {
 		});
 	};
 	
+	// processes the results from a server status update
 	ns.processHeartbeat = function(data) {
 		var allUsers = '';
 		var idleUsers = [];
@@ -337,6 +347,7 @@ var GroupChat = {
 		}
 	};
 	
+	// parses a series of new messages
 	ns.processMessages = function(data) {
 		
 		$(data).each(function(){
@@ -353,6 +364,7 @@ var GroupChat = {
 		});
 	};
 	
+	// converts a message date to a human-friendly format
 	ns.formatDate = function(dateObj) {
 		var date = ns.padNumber((dateObj.getMonth() + 1))
 			+ '/' + ns.padNumber(dateObj.getDate())
@@ -366,6 +378,8 @@ var GroupChat = {
 		return String('00'+str).match(/[0-9]{2}$/);
 	};
 	
+
+	// initializes the bare-bones chat status functionality
 	ns.init = function() {
 		ns.msgNotifier = $('.navbar .message-count');
 		ns.updateNotifier = $('.navbar .updates-count');
@@ -376,6 +390,8 @@ var GroupChat = {
 		ns.idleCount = $('.idle-count');
 	};
 	
+
+	// initializes the full chat messaging interface
 	ns.initChat = function() {
 		ns.msgBar = $('.chat-bar .msg input');
 		ns.chatWindow = $('.chat-window table.chat');
@@ -393,7 +409,7 @@ var GroupChat = {
 		
 		$('.loading').hide();
 	};
-		
+	
 	$(document).ready(function() {
 		ns.originalTitle = document.title;
 		ns.init();
