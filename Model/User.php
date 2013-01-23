@@ -142,6 +142,7 @@ class User extends AppModel {
 					'last_seen >='=>date(MYSQL_DATE_FORMAT, strtotime('now - 2 minutes'))
 				)
 			));
+			$users = Hash::remove($users, '{n}.User.last_ack');
 			Cache::write('onlineUsers', $users, 'online_status');
 		}
 		
