@@ -14,10 +14,10 @@
 
 		// base js libraries
 		$scripts = array(
-			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js',
-			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js',
-			'bootstrap.min',
+			'https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js ',
+			'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js',
 			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
 			'backstage.js?t='.filemtime(JS.'backstage.js')
 		);

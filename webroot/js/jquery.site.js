@@ -7,7 +7,7 @@ application = {};
 	"use strict";
 	
 	// ajax quote generator refresh
-	$('article.generator').live('click',function() {
+	$(document).on('click', '.generator', function() {
 		var quote = $(this).find('.quote');
 		
 		if(quote) {

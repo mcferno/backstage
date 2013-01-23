@@ -5,13 +5,13 @@ Backstage = {};
 
 	ns.cropTool = false;
 	
-	$('.image-upload-btn').live('click',function(e) {
+	$(document).on('click', '.image-upload-btn', function(e) {
 		e.preventDefault();
 		
 		$('.asset-upload-popin').modal();
 	});
 
-	$('.contest-start').live('click',function(e) {
+	$(document).on('click', '.contest-start', function(e) {
 		e.preventDefault();
 		
 		$('.contest-start-popin').modal();

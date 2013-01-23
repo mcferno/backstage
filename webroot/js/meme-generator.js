@@ -241,8 +241,8 @@ var MemeGenerator = {
 			context.drawImage(ns.currentImage, 0, 0, canvas.width, canvas.height);
 		}
 		
-		var firstLineText = ns.firstLineText.attr('value').toUpperCase();
-		var lastLineText = ns.lastLineText.attr('value').toUpperCase();
+		var firstLineText = ns.firstLineText.val().toUpperCase();
+		var lastLineText = ns.lastLineText.val().toUpperCase();
 		
 		ns.writeText(firstLineText, true);
 		ns.writeText(lastLineText);

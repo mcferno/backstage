@@ -3,7 +3,7 @@
  * Image cropping tools and library (single use only)
  * Pull in immediately above the image which is to be cropped.
  */
-$this->Html->script('//cdnjs.cloudflare.com/ajax/libs/jquery-jcrop/0.9.10/jquery.Jcrop.js', array('inline' => false));
+$this->Html->script('https://raw.github.com/tapmodo/Jcrop/1a4ecdb8f18a1a74caae15e4950503fc7ee888d6/js/jquery.Jcrop.min.js', array('inline' => false));
 $this->Html->css('/lib/jcrop/jquery.Jcrop.min.css', null, array('inline' => false));
 ?>
 <script>Backstage.cropUrl = <?= json_encode($this->Html->url(array('action' => 'crop'))); ?>;</script>

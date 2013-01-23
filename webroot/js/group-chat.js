@@ -146,7 +146,12 @@ var GroupChat = {
 	
 	// submits a message to the server
 	ns.submitMessage = function() {
-		var text = ns.msgBar.attr('value');
+		var text = ns.msgBar.val();
+		if(text.length === 0 || $.trim(text).length === 0) {
+			ns.msgBar.val('');
+			return;
+		}
+
 		var now = new Date();
 		var date = ns.formatDate(now);
 		
@@ -169,11 +174,12 @@ var GroupChat = {
 			data: postData,
 			dataType: 'json',
 			success : function(data) {
+				if(text === ns.msgBar.val()) {
+					ns.msgBar.val('');
+				}
 				ns.processHeartbeat(data);
 			}
 		});
-		
-		ns.msgBar.attr('value','');
 	};
 	
 	// testing function which injects messages directly into the chat, bypassing the server
