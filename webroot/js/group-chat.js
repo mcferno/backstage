@@ -173,13 +173,10 @@ var GroupChat = {
 			url: AppBaseURL + 'backstage/messages/add',
 			data: postData,
 			dataType: 'json',
-			success : function(data) {
-				if(text === ns.msgBar.val()) {
-					ns.msgBar.val('');
-				}
-				ns.processHeartbeat(data);
-			}
+			success : ns.processHeartbeat
 		});
+
+		ns.msgBar.val('');
 	};
 	
 	// testing function which injects messages directly into the chat, bypassing the server
