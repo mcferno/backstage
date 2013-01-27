@@ -29,14 +29,20 @@ class Video extends AppModel {
 	public $thumbnailPath = 'user/videos';
 
 	public function beforeSave($options = array()) {
-		parent::beforeSave($options);
-
 		// convert HH:MM:SS duration format to seconds integer
 		if(!empty($this->data['Video']['duration']) && strpos($this->data['Video']['duration'], ':') !== false) {
 			$this->data['Video']['duration'] = $this->durationToSeconds($this->data['Video']['duration']);
 		}
 
-		return true;
+		return parent::beforeSave($options);
+	}
+
+	public function convertDate($result) {
+		if(!empty($result['Video']['filmed']['month']) && !empty($result['Video']['filmed']['year'])) {
+			$date_timestamp = mktime(0, 0, 0, $result['Video']['filmed']['month'], 1, $result['Video']['filmed']['year']);
+			$result['Video']['filmed'] = date('Y-m-d', $date_timestamp);
+		}
+		return $result;
 	}
 
 	public function afterFind($results, $primary = false) {

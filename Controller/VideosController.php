@@ -84,8 +84,8 @@ class VideosController extends AppController {
 			$this->Video->create();
 			$this->Video->set('user_id', $this->Auth->user('id'));
 
-			if ($this->Video->save($this->request->data)) {
-
+			$data = $this->Video->convertDate($this->request->data);
+			if ($this->Video->save($data)) {
 				if(empty($this->request->data['Video']['url'])) {
 					$this->Session->setFlash('Your video has been added! Please provide a screencap.', 'messaging/alert-success');
 					$this->redirect(array('action' => 'image', $this->Video->id));
@@ -209,7 +209,8 @@ class VideosController extends AppController {
 			throw new NotFoundException(__('Invalid video'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Video->save($this->request->data)) {
+			$data = $this->Video->convertDate($this->request->data);
+			if ($this->Video->save($data)) {
 				$this->Session->setFlash('The video has been updated!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {

@@ -37,8 +37,11 @@
 
 <div class="stats">
 	&mdash; <i class="icon-white icon-time"></i> <?php printf('%d min %02d sec', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?>
+	<?php if($video['Video']['filmed'] != '0000-00-00') : ?>
+	&middot; <i class="icon-white icon-facetime-video"></i> <?= date('M Y', strtotime($video['Video']['filmed'])); ?>
+	<?php endif; ?>
 	<?php if($video_sizes) : ?>
-	&middot; <i class="icon-white icon-facetime-video"></i> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
+	&middot; <i class="icon-white icon-file"></i> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
 	<!-- <?= json_encode($video_sizes); ?> -->
 	<?php endif; ?>
 	<?php if(!empty($video['Video']['url'])) : $video_url = parse_url($video['Video']['url']); ?>

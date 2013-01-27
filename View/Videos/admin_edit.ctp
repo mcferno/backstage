@@ -16,7 +16,8 @@
 			<div class="span4"><?= $this->Form->input('duration', array('label' => 'Duration (MM:SS)', 'type' => 'text', 'placeholder' => '05:14')); ?></div>
 			<div class="span8"><?= $this->Form->input('filmed', array('label' => 'Date Filmed (approximate when unknown)', 'type' => 'date', 'dateFormat' => 'MY', 'maxYear' => date('Y') + 1,  'minYear' => date('Y') - 20)); ?></div>
 		</div>
-	<?= $this->Form->input('description', array('class' => 'full', 'rows' => 4, 'placeholder' => 'Describe the video content and why someone should be compelled to watch it.')); ?>
+		<?= $this->Form->input('description', array('class' => 'full', 'rows' => 4, 'placeholder' => 'Describe the video content and why someone should be compelled to watch it.')); ?>
+		<?= $this->Form->input('mp4'); ?><?= $this->Form->input('webm'); ?>
 		<label>Tags (to group similar type links together)</label>
 		<div class="clearfix">
 			<?= $this->element('common/tagging', array('model' => 'Video', 'foreign_key' => $this->request->data['Video']['id'])); ?>
