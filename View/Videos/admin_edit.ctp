@@ -1,10 +1,15 @@
 <div class="row-fluid">
 	<div class="links form span12">
 	<?php echo $this->Form->create('Video'); ?>
-		<h1>Add a New Video</h1>
-		<p>Upload a new video, or link to an external video (Youtube &amp; Vimeo) to add it to the video collection.</p>
-		<p class="alert">At the moment, uploaded videos must be encoded correctly (MP4 and WebM format) or they will not play. We hope to add a way to convert videos automatically in the future.</p>
+		<h1>Edit Video</h1>
+		<?php if($this->Session->read('Auth.User.id') !== $this->request->data['Video']['user_id']) : ?>
+		<div class="alert alert-warning">
+			<strong>Warning</strong> You are not the owner of this link. You are permitted to edit it, but focus on improving the quality of the information on the owner's behalf.
+		</div>
+		<?php endif; ?>
 	<?php
+		echo $this->Form->input('id');
+		echo $this->Form->input('user_id', array('type' => 'hidden'));
 		echo $this->Form->input('title', array('label' => 'Video Title', 'class' => 'full', 'placeholder' => 'Video name, or short descriptive title'));
 	?>
 		<div class="row-fluid">
@@ -12,14 +17,14 @@
 			<div class="span8"><?= $this->Form->input('filmed', array('label' => 'Date Filmed (approximate when unknown)', 'type' => 'date', 'dateFormat' => 'MY', 'maxYear' => date('Y') + 1,  'minYear' => date('Y') - 20)); ?></div>
 		</div>
 	<?= $this->Form->input('description', array('class' => 'full', 'rows' => 4, 'placeholder' => 'Describe the video content and why someone should be compelled to watch it.')); ?>
-		<label>Tags (to group similar type videos together)</label>
+		<label>Tags (to group similar type links together)</label>
 		<div class="clearfix">
-			<?= $this->element('common/tagging', array('model' => 'Video')); ?>
+			<?= $this->element('common/tagging', array('model' => 'Video', 'foreign_key' => $this->request->data['Video']['id'])); ?>
 		</div>
-		<p class="muted"><br><i class="icon-white icon-info-sign"></i> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many videos per tag.</p>
+		<p class="muted"><br><i class="icon-white icon-info-sign"></i> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many links per tag.</p>
 
 		<?= $this->Form->button('<i class="icon-white icon-plus-sign"></i> Submit',array('class'=>'btn btn-large btn-primary')); ?>
-
+		<?= $this->Html->link('<i class="icon icon-ban-circle"></i> Cancel Edit', array('action' => 'view', $this->request->data['Video']['id']), array('class' => 'btn btn-large', 'escape' => false)); ?>
 	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

@@ -5,7 +5,9 @@
 	<div class="span2 text-right action-bar">
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
+			<?php if($this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-pencil"></i> Add a Video', array('controller' => 'videos', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false)); ?></li>
+			<?php endif; // admin-only ?>
 			<li>
 				<div class="dropdown">
 					<a class="dropdown-toggle btn btn" data-toggle="dropdown" href="#"><i class="icon icon-random"></i> Sort Videos by</a>

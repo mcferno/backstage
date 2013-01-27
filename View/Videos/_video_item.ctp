@@ -58,9 +58,9 @@
 			echo $this->Html->link('<span class="badge badge-' . $badge . ' comments">'. $count .' comments</span>', array('action' => 'view', $video['Video']['id']), array('escape' => false, 'class' => 'view-video'));
 		}
 	?>
-	<?php /* foreach($video['Tag'] as $idx => $tag) : ?>
+	<?php foreach($video['Tag'] as $idx => $tag) : ?>
 	<a href="<?= $this->Html->url(array('controller' => 'videos', 'action' => 'index', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
-	<?php endforeach; */ ?>
+	<?php endforeach; ?>
 
 	<?php if(!$this->request->is('mobile') && ($this->Session->read('Auth.User.id') == $video['Video']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN)) : ?>
 	<div class="controls" style="display:none;">
