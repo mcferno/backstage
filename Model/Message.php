@@ -22,7 +22,8 @@ class Message extends AppModel {
 		// object being written about (when applicable)
 		'Asset' => array('foreignKey' => 'foreign_id'),
 		'Contest' => array('foreignKey' => 'foreign_id'),
-		'Link' => array('foreignKey' => 'foreign_id')
+		'Link' => array('foreignKey' => 'foreign_id'),
+		'Video' => array('foreignKey' => 'foreign_id')
 	);
 
 	public $actsAs = array('Postable.Postable' => array(

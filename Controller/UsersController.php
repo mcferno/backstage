@@ -11,9 +11,9 @@ class UsersController extends AppController {
 		'User',
 		'Activity' => array(
 			'contain' => array(
-				'User', 'Asset', 'Link',
+				'User', 'Asset', 'Link','Video',
 				'Contest' => 'Asset', 
-				'Message' => array('Asset', 'Contest' => 'Asset', 'Link')
+				'Message' => array('Asset', 'Contest' => 'Asset', 'Link', 'Video')
 			),
 			'limit' => 15
 		)

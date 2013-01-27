@@ -26,6 +26,14 @@ class VideosController extends AppController {
 		$this->set('tag_tally', $this->Video->getTagTally());
 	}
 
+	public function admin_my_links() {
+		$this->paginate['Video']['conditions']['Video.user_id'] = $this->Auth->user('id');
+		$this->set('sectionTitle', 'My Video');
+		$this->defaultPagination();
+		$this->set('tag_tally', $this->Video->getTagTally($this->Auth->user('id')));
+		$this->render('admin_index');
+	}
+
 	/**
 	 * Prepares the necessary data for a paginated index of videos
 	 */
@@ -124,7 +132,8 @@ class VideosController extends AppController {
 				$valid = $this->Upload->isValidUpload($this->request->data['Video']['image']);
 
 				if($valid === true) {
-					$this->Upload->cleanPath(IMAGES . $new_file . '*'); // remove existing images
+					$this->Upload->cleanPath(IMAGES . $new_file . '.png'); // remove existing images
+					$this->Upload->cleanPath(IMAGES . $new_file . '.jpg'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Video']['image']['name']);
 					move_uploaded_file($this->request->data['Video']['image']['tmp_name'], IMAGES . $new_file);
 					
@@ -139,7 +148,8 @@ class VideosController extends AppController {
 				$valid = $this->Upload->isValidURL($this->request->data['Video']['url']);
 				
 				if($valid === true) {
-					$this->Upload->cleanPath(IMAGES . $new_file . '*'); // remove existing images
+					$this->Upload->cleanPath(IMAGES . $new_file . '.png'); // remove existing images
+					$this->Upload->cleanPath(IMAGES . $new_file . '.jpg'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Video']['url']);
 					$file = $this->Upload->saveURLtoFile($this->request->data['Video']['url'], IMAGES . $new_file);
 					
@@ -177,7 +187,8 @@ class VideosController extends AppController {
 			if($this->Video->exists()) {
 				
 				// remove existing thumbs before proceeding
-				$this->Upload->cleanPath(IMAGES . "{$this->Video->thumbnailPath}/{$this->data['image_id']}.*");
+				$this->Upload->cleanPath(IMAGES .  "{$this->Video->thumbnailPath}/{$this->data['image_id']}.png"); // remove existing images
+				$this->Upload->cleanPath(IMAGES .  "{$this->Video->thumbnailPath}/{$this->data['image_id']}.jpg"); // remove existing images
 
 				$status = $this->Video->saveThumbnail($this->data['image_id'], $this->data['coords']);
 				if($status) {

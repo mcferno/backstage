@@ -233,4 +233,11 @@ class AppController extends Controller {
 			$this->Security->csrfCheck = false;
 		}
 	}
+
+	public function admin_refresh_model() {
+		if($this->isAdminUser() && $this->{$this->modelClass}->Behaviors->attached('Postable')) {
+			$this->{$this->modelClass}->refreshPostableIndex();
+		}
+		$this->redirect($this->referer());
+	}
 }

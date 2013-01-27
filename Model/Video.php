@@ -84,17 +84,17 @@ class Video extends AppModel {
 	}
 
 	/**
-	 * Inspects the webroot for a possible preview image to attach to a Link instance
+	 * Inspects the webroot for a possible preview image to attach to a Video instance
 	 *
-	 * @param {Link} $link Link object to inspect and attach to
+	 * @param {Video} $video Video object to inspect and attach to
 	 */
-	public function attachImages(&$link) {
-		if(!empty($link['id'])) {
-			$image_path = "{$this->thumbnailPath}/{$link['id']}";
+	public function attachImages(&$video) {
+		if(!empty($video['id'])) {
+			$image_path = "{$this->thumbnailPath}/{$video['id']}";
 			if(file_exists(IMAGES_URL . "{$image_path}.jpg")) {
-				$link['thumbnail'] = "{$image_path}.jpg";
+				$video['thumbnail'] = "{$image_path}.jpg";
 			} elseif(file_exists(IMAGES_URL . "{$image_path}.png")) {
-				$link['thumbnail'] = "{$image_path}.png";
+				$video['thumbnail'] = "{$image_path}.png";
 			}
 		}
 	}
@@ -103,13 +103,13 @@ class Video extends AppModel {
 	 * Sets an image association with a specific link. Processes uploaded images
 	 * to match the proper sizing.
 	 */
-	public function saveThumbnail($link_id, $crop) {
+	public function saveThumbnail($video_id, $crop) {
 		if(!class_exists('WideImage')) {
 			App::import('Vendor', 'WideImage/WideImage');
 		}
 		
-		$screenshot = $this->thumbnailPath . DS . 'full' . DS . $link_id;
-		$thumbnail = $this->thumbnailPath . DS . $link_id;
+		$screenshot = $this->thumbnailPath . DS . 'full' . DS . $video_id;
+		$thumbnail = $this->thumbnailPath . DS . $video_id;
 
 		if(file_exists(IMAGES_URL . "{$screenshot}.jpg")) {
 			$screenshot .= '.jpg';
@@ -137,5 +137,17 @@ class Video extends AppModel {
 			$cropped->saveToFile(IMAGES_URL . $thumbnail);
 		}
 		return true;
+	}
+
+	public function humanizeActivity(&$video) {
+		$video['Activity']['phrase'] = ":user added a new video";
+		if(!empty($video['Link']['title'])) {
+			$video['Activity']['phrase'] .= " called \"{$video['Video']['title']}\".";
+		}
+		$video['Activity']['icon'] = 'film';
+		$video['Activity']['link'] = array('controller' => 'videos', 'action' => 'view', $video['Video']['id']);
+		if(isset($video['Video']['thumbnail'])) {
+			$video['Activity']['preview'] = $video['Activity']['preview-small'] = $video['Video']['thumbnail'];
+		}
 	}
 }
