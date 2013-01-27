@@ -203,7 +203,7 @@ div.login {
 	margin-left: 0;
 }
 
-img, iframe, embed, object {
+img, iframe, embed, object, .video-embed video {
 	max-width: 100%;
 }
 
@@ -920,6 +920,19 @@ li.comment .text {
 @media (min-width:768px) and (max-width:979px) {
 	.features .span3 {
 		min-height: 180px;
+	}
+
+}
+
+@media (min-width:600px) {
+	.video-embed video {
+		min-width: 400px;
+	}
+}
+
+@media (min-width:900px) {
+	.video-embed video {
+		min-width: 600px;
 	}
 }
 

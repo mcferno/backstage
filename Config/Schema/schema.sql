@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 13, 2013 at 11:07 PM
+-- Generation Time: Jan 27, 2013 at 04:45 PM
 -- Server version: 5.1.61
 -- PHP Version: 5.3.3
 
@@ -263,9 +263,11 @@ CREATE TABLE IF NOT EXISTS `videos` (
   `user_id` char(36) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL,
+  `filmed` date NOT NULL,
   `url` varchar(100) NOT NULL,
   `mp4` tinyint(1) NOT NULL,
   `webm` tinyint(1) NOT NULL,
+  `hd` tinyint(1) NOT NULL,
   `duration` smallint(6) NOT NULL,
   `state` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`)

@@ -12,7 +12,7 @@
 		</ul>
 	</div>
 	<div class="span10">
-		<div class="link-exchange link-view text-center">
+		<div class="link-exchange link-view video-embed text-center">
 			<h2><?= $video['Video']['title']; ?></h2>
 			<p><?= $video['Video']['description']; ?></p>
 			<video controls>

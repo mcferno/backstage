@@ -44,6 +44,7 @@
 	&middot; <i class="icon-white icon-file"></i> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
 	<!-- <?= json_encode($video_sizes); ?> -->
 	<?php endif; ?>
+	&middot; <i class="icon-white icon-film"></i> <?= ($video['Video']['hd'])? 'HD' : 'SD'; ?>
 	<?php if(!empty($video['Video']['url'])) : $video_url = parse_url($video['Video']['url']); ?>
 	&middot; <i class="icon-white icon-globe"></i> <?= str_replace('www.', '', $video_url['host']); ?>
 	<?php endif; ?>
