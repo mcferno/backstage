@@ -129,6 +129,72 @@ Backstage = {};
 				}
 			});
 		}
+
+		if(ns.supportsFileApi()) {
+			$('.asset-upload-popin form').submit(ns.ajaxFileUpload);
+		}
 	});
+
+	ns.supportsFileApi = function() {
+		return $("<input type='file'/>").get(0).files !== undefined && window.FormData !== undefined;
+	};
+
+	ns.ajaxFileUpload = function(e) {
+		var obj = $(this);
+		var fileInput = obj.find('input[type=file]');
+		if(fileInput.get(0).files.length < 1) {
+			return true;
+		}
+		e.preventDefault();
+
+		var data = new FormData();
+		var formData = obj.serializeArray();
+		$.each(formData, function() {
+			data.append(this.name, this.value);
+		});
+		data.append(fileInput.attr('name'), fileInput.get(0).files[0]);
+
+		var progressBar = obj.find('.bar');
+		progressBar.css('width', '0');
+
+		obj.find('.progress').show();
+
+		$.ajax({
+			url : obj.attr('action'),
+			data: data,
+			cache: false,
+			contentType: false,
+			processData: false,
+			type: 'POST',
+			error: function(request, status, error) {
+				alert('Error during upload! Please try again');
+			},
+			xhr: function(){
+				var xhr = new window.XMLHttpRequest();
+				xhr.upload.addEventListener("progress", function(e) {
+					if (e.lengthComputable) {
+						var percent = Math.round(e.loaded / e.total * 100);
+						progressBar.css('width', percent + '%');
+					}
+					
+				}, false);
+				return xhr;
+			},
+			success: function(response) {
+				if(response.error === false && response.redirect) {
+					window.location = response.redirect;
+				} else {
+					if(response.message) {
+						alert(response.message);
+					} else {
+						alert('Error during upload! Please try again');
+					}
+				}
+			},
+			complete: function() {
+				obj.find('.progress').hide();
+			}
+		});
+	};
 
 })(jQuery, Backstage);

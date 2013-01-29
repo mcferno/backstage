@@ -14,6 +14,9 @@
 				<?= $this->Form->input('url',array('type' => 'text', 'label' =>'', 'class' => 'asset-url', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
 			</fieldset>
 		</div>
+		<div class="progress progress-striped active" style="display:none;">
+			<div class="bar" style="width: 0%;"></div>
+		</div>
 	</div>
 	<div class="modal-footer">
 		<?= $this->Form->button('<i class="icon-white icon-upload"></i> Upload',array('class'=>'btn btn-large btn-success')); ?>
