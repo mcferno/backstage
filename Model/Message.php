@@ -143,6 +143,13 @@ class Message extends AppModel {
 					$activity['Activity']['phrase'] .= ' on a link.';
 				}
 				break;
+			case 'Video':
+				if(!empty($activity['Message']['Video']['title'])) {
+					$activity['Activity']['phrase'] .= " on the \"{$activity['Message']['Video']['title']}\" video.";
+				} else {
+					$activity['Activity']['phrase'] .= ' on a video.';
+				}
+				break;
 		}
 	}
 

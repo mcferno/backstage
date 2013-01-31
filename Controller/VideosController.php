@@ -8,8 +8,8 @@ class VideosController extends AppController {
 
 	public $components = array(
 		'Upload' => array(
-			'mimeTypes' => array('image/png', 'image/jpeg'),
-			'fileExtensions' => array('png', 'jpg', 'jpeg')
+			'mimeTypes' => array('image/png', 'image/jpeg', 'video/mp4', 'video/webm'),
+			'fileExtensions' => array('png', 'jpg', 'jpeg', 'mp4', 'webm')
 		)
 	);
 
@@ -26,7 +26,7 @@ class VideosController extends AppController {
 		$this->set('tag_tally', $this->Video->getTagTally());
 	}
 
-	public function admin_my_links() {
+	public function admin_my_videos() {
 		$this->paginate['Video']['conditions']['Video.user_id'] = $this->Auth->user('id');
 		$this->set('sectionTitle', 'My Video');
 		$this->defaultPagination();
@@ -104,8 +104,47 @@ class VideosController extends AppController {
 	/**
 	 * Handles the lengthy video upload process
 	 */
-	public function admin_upload() {
+	public function admin_upload($id = null) {
+		if($this->request->is('post') || $this->request->is('put')) {
 
+			// base file path of the eventual new image (missing extension)
+			$new_file = "{$this->Video->thumbnailPath}/{$id}.";
+
+			// file upload
+			if(!empty($this->request->data['Video']['mp4_file']['name']) || !empty($this->request->data['Video']['webm_file']['name'])) {
+
+				// mp4 upload
+				$valid_mp4 = $this->Upload->isValidUpload($this->request->data['Video']['mp4_file']);
+				if($valid_mp4 === true) {
+					$mp4_file = $new_file . 'mp4';
+					$this->Upload->cleanPath(IMAGES . $mp4_file);
+					move_uploaded_file($this->request->data['Video']['mp4_file']['tmp_name'], IMAGES . $mp4_file);
+
+					$this->Video->id = $id;
+					$this->Video->saveField('mp4', true);
+				}
+
+				// webm upload
+				$valid_webm = $this->Upload->isValidUpload($this->request->data['Video']['webm_file']);
+				if($valid === true) {
+					$webm_file = $new_file . 'webm';
+					$this->Upload->cleanPath(IMAGES . $webm_file);
+					move_uploaded_file($this->request->data['Video']['webm_file']['tmp_name'], IMAGES . $webm_file);
+
+					$this->Video->id = $id;
+					$this->Video->saveField('webm', true);
+				}
+
+				if($valid_mp4 === true || $valid_webm === true) {
+					$this->Session->setFlash('Video(s) saved!', 'messaging/alert-success');
+					$this->redirect(array('action' => 'view', $id));
+				} else {
+					$this->Session->setFlash($valid_mp4, 'messaging/alert-error');
+				}
+			}
+		}
+		$this->paginate['Video']['conditions']['Video.id'] = $id;
+		$this->defaultPagination();
 	}
 
 	/**

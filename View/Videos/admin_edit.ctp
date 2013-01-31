@@ -24,8 +24,9 @@
 		</div>
 		<p class="muted"><br><i class="icon-white icon-info-sign"></i> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many links per tag.</p>
 
-		<?= $this->Form->button('<i class="icon-white icon-plus-sign"></i> Submit',array('class'=>'btn btn-large btn-primary')); ?>
-		<?= $this->Html->link('<i class="icon icon-ban-circle"></i> Cancel Edit', array('action' => 'view', $this->request->data['Video']['id']), array('class' => 'btn btn-large', 'escape' => false)); ?>
+		<?= $this->Form->button('<i class="icon-white icon-plus-sign"></i> Submit',array('class'=>'btn btn-large btn-primary')); ?><br><br>
+		<?= $this->Html->link('<i class="icon icon-facetime-video"></i> Upload Video Files', array('action' => 'upload', $this->request->data['Video']['id']), array('class' => 'btn', 'escape' => false)); ?>
+		<?= $this->Html->link('<i class="icon icon-search"></i> View Video', array('action' => 'view', $this->request->data['Video']['id']), array('class' => 'btn', 'escape' => false)); ?>
 	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

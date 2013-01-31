@@ -39,6 +39,7 @@
 
 		<?= $this->element('admin/pagination'); ?>
 
+		<?php if(!empty($videos)) : ?>
 		<ul class="link-exchange unstyled striped">
 		<?php foreach ($videos as $video): ?>
 		<li>
@@ -46,6 +47,10 @@
 		</li>
 		<?php endforeach; ?>
 		</ul>
+
+		<?php else : // no videos ?>
+		<p class="alert alert-info">No videos to display.</p>
+		<?php endif; // videos ?>
 
 		<?= $this->element('admin/pagination'); ?>
 	</div>

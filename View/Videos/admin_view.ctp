@@ -15,6 +15,7 @@
 		<?php if($video['Video']['user_id'] == $this->Session->read('Auth.User.id') || $this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
+			<li><?= $this->Html->link('<i class="icon icon-facetime-video"></i> Upload video files', array('controller' => 'videos', 'action' => 'upload', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 			<li><?= $this->Html->link('<i class="icon icon-pencil"></i> Change video text', array('controller' => 'videos', 'action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 			<li><?= $this->Html->link('<i class="icon icon-picture"></i> Screenshot', array('controller' => 'videos', 'action' => 'image', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 		</ul>
@@ -23,7 +24,7 @@
 	<div class="span10">
 		<div class="link-exchange link-view video-embed text-center">
 			<h2><?= $video['Video']['title']; ?></h2>
-			<p><?= $video['Video']['description']; ?></p>
+			<p><?= $video['Video']['description']; ?><br><br></p>
 			<video controls>
 				<?php if($video['Video']['mp4'] && file_exists(IMAGES . "{$video_path}.mp4")) : ?>
 				<source type="video/mp4" src="<?= $this->Html->webroot(IMAGES_URL . "{$video_path}.mp4?t=" . filemtime(IMAGES . "{$video_path}.mp4")); ?>" />

@@ -25,7 +25,7 @@
 				?>
 					<li class="nav-header">Videos</li>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('All Videos',array('action'=>'index')); ?></li>
-					<li <?php if($this->request->action == 'admin_my_links') { echo 'class="active"'; } ?>><?= $this->Html->link('My Videos',array('action'=>'my_links')); ?></li>
+					<li <?php if($this->request->action == 'admin_my_videos') { echo 'class="active"'; } ?>><?= $this->Html->link('My Videos',array('action'=>'my_videos')); ?></li>
 				<?	break; 
 				default:
 				?>

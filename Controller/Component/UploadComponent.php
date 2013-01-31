@@ -73,7 +73,7 @@ class UploadComponent extends Component {
 
 		// file upload error
 		if($payload['error'] !== 0 || !file_exists($payload['tmp_name'])) {
-			return 'Image upload has failed, please try again.';
+			return 'Upload has failed, please try again.';
 		}
 
 		// mime-type error
