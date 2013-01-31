@@ -1,9 +1,6 @@
 <?php
 	$video_path = "user/videos/{$video['Video']['id']}";
 	$screenshot = (file_exists(IMAGES_URL . "{$video_path}.png")) ? "{$video_path}.png" : false;
-	if(!class_exists('CakeNumber')) {
-		App::uses('CakeNumber', 'Utility');
-	}
 
 	$video_sizes = array();
 	if($video['Video']['mp4'] && file_exists(IMAGES_URL . "${video_path}.mp4")) {

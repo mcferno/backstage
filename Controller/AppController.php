@@ -21,6 +21,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('CakeNumber', 'Utility');
 
 /**
  * Application Controller

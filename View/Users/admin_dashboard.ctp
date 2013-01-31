@@ -46,6 +46,14 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
+				<a href="<?= $this->Html->url(array('controller'=>'videos','action'=>'index')); ?>">
+					<?= $this->Html->image('ui/videos-callout.jpg',array('alt'=>'Videos')); ?>
+				</a>
+				<h4 class="text-right">Total Videos <span class="badge badge-custom"><?= $videos_count; ?></span></h4>
+			</div>
+		</li>
+		<li class="span3">
+			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
 					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
 				</a>
