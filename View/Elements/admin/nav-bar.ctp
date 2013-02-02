@@ -31,6 +31,7 @@
 						</ul>
 					</li>
 					
+					<li <?php if($this->request->controller == 'videos') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-facetime-video icon-white"></i> Videos',array('controller'=>'videos','action'=>'index'),array('escape'=>false)); ?></li>
 					<li <?php if($this->request->controller == 'posts') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-comment icon-white"></i> Quotes',array('controller'=>'posts','action'=>'index'),array('escape'=>false)); ?></li>
 					<li <?php if($this->request->controller == 'links') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-star icon-white"></i> Links',array('controller'=>'links','action'=>'index'),array('escape'=>false)); ?></li>
 					<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-list icon-white"></i> Chat ',array('controller'=>'users','action'=>'group_chat'),array('escape'=>false,'class'=>'chat-link')); ?></li>

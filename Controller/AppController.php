@@ -21,6 +21,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('CakeNumber', 'Utility');
 
 /**
  * Application Controller
@@ -232,5 +233,12 @@ class AppController extends Controller {
 			$this->Security->validatePost = false;
 			$this->Security->csrfCheck = false;
 		}
+	}
+
+	public function admin_refresh_model() {
+		if($this->isAdminUser() && $this->{$this->modelClass}->Behaviors->attached('Postable')) {
+			$this->{$this->modelClass}->refreshPostableIndex();
+		}
+		$this->redirect($this->referer());
 	}
 }

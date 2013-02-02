@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 09, 2012 at 12:04 AM
+-- Generation Time: Jan 27, 2013 at 04:45 PM
 -- Server version: 5.1.61
 -- PHP Version: 5.3.3
 
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `taggings` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tumblr`
+-- Table structure for table `tags`
 --
 
 CREATE TABLE IF NOT EXISTS `tags` (
@@ -265,5 +265,28 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_ack` datetime DEFAULT NULL,
   `last_update` datetime DEFAULT NULL,
   `session_key` char(36) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `videos`
+--
+
+CREATE TABLE IF NOT EXISTS `videos` (
+  `id` char(36) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `filmed` date NOT NULL,
+  `url` varchar(100) NOT NULL,
+  `mp4` tinyint(1) NOT NULL,
+  `webm` tinyint(1) NOT NULL,
+  `hd` tinyint(1) NOT NULL,
+  `duration` smallint(6) NOT NULL,
+  `state` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

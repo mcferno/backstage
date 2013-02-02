@@ -20,9 +20,18 @@
 Options -Indexes
 
 # Standardize mime-types
-AddType	application/javascript	js
-AddType	image/x-icon			ico
- 
+AddType	application/javascript js
+AddType	image/x-icon ico
+AddType video/mp4 mp4 m4v f4v f4p
+AddType video/ogg .ogv
+AddType video/webm .webm
+AddType video/x-flv .flv
+
+SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
+
+php_value upload_max_filesize 512M
+php_value post_max_size 512M
+
 # Gzip compression
 <IfModule mod_deflate.c>
 
@@ -91,10 +100,10 @@ AddType	image/x-icon			ico
   ExpiresByType image/png                 "access plus 1 week"
   ExpiresByType image/jpg                 "access plus 1 week"
   ExpiresByType image/jpeg                "access plus 1 week"
-  ExpiresByType video/ogg                 "access plus 1 month"
-  ExpiresByType audio/ogg                 "access plus 1 month"
-  ExpiresByType video/mp4                 "access plus 1 month"
-  ExpiresByType video/webm                "access plus 1 month"
+  ExpiresByType video/ogg                 "access plus 1 year"
+  ExpiresByType audio/ogv                 "access plus 1 year"
+  ExpiresByType video/mp4                 "access plus 1 year"
+  ExpiresByType video/webm                "access plus 1 year"
 
   # CSS and JavaScript (cache-busted)
   ExpiresByType text/css                  "access plus 1 year"

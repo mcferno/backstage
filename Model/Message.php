@@ -22,7 +22,8 @@ class Message extends AppModel {
 		// object being written about (when applicable)
 		'Asset' => array('foreignKey' => 'foreign_id'),
 		'Contest' => array('foreignKey' => 'foreign_id'),
-		'Link' => array('foreignKey' => 'foreign_id')
+		'Link' => array('foreignKey' => 'foreign_id'),
+		'Video' => array('foreignKey' => 'foreign_id')
 	);
 
 	public $actsAs = array('Postable.Postable' => array(
@@ -140,6 +141,13 @@ class Message extends AppModel {
 					$activity['Activity']['phrase'] .= " on the {$activity['Message']['Link']['title']} link.";
 				} else {
 					$activity['Activity']['phrase'] .= ' on a link.';
+				}
+				break;
+			case 'Video':
+				if(!empty($activity['Message']['Video']['title'])) {
+					$activity['Activity']['phrase'] .= " on the \"{$activity['Message']['Video']['title']}\" video.";
+				} else {
+					$activity['Activity']['phrase'] .= ' on a video.';
 				}
 				break;
 		}

@@ -118,7 +118,7 @@ class LinksController extends AppController {
 			}
 		}
 		
-		$this->set('tags', array_values($this->Link->Tag->find('list')));
+		$this->set('tags', array_values($this->Link->Tag->getListForModel('Link')));
 	}
 
 	public function admin_edit($id = null) {
@@ -148,7 +148,7 @@ class LinksController extends AppController {
 			}
 		}
 
-		$this->set('tags', array_values($this->Link->Tag->find('list')));
+		$this->set('tags', array_values($this->Link->Tag->getListForModel('Link')));
 	}
 
 	/**
