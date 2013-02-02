@@ -112,6 +112,7 @@
 <div class="span12">
 	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
+		<tr><td class="short-date">Feb 02</td><td>Video section launched!</td></tr>
 		<tr><td class="short-date">Dec 16</td><td>Link Exchange has easier to navigate tag lists, and allows thumbnail images for each link.</td></tr>
 		<tr><td class="short-date">Nov 20</td><td>New Link Exchange section allows you to save links and tag them.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>Network Update notifications alert you of all user actions.</td></tr>
