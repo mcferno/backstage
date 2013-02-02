@@ -63,7 +63,7 @@ class UsersController extends AppController {
 		$this->set('contest_count', ClassRegistry::init('Contest')->find('count'));
 		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));
 		$this->set('links_count', ClassRegistry::init('Link')->find('count'));
-		$this->set('videos_count', ClassRegistry::init('Video')->find('count', array('conditions' => array('webm' => 1, 'mp4' => 1))));
+		$this->set('videos_count', ClassRegistry::init('Video')->find('count', array('conditions' => array('mp4' => 1))));
 		$this->set('asset_count', $asset_count);
 		$this->set('asset_count_all', $asset_count_all);
 
