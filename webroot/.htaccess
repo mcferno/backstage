@@ -29,9 +29,6 @@ AddType video/x-flv .flv
 
 SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
 
-php_value upload_max_filesize 512M
-php_value post_max_size 512M
-
 # Gzip compression
 <IfModule mod_deflate.c>
 
