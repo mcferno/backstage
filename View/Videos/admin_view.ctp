@@ -25,22 +25,14 @@
 		<div class="link-exchange link-view video-embed text-center">
 			<h2><?= $video['Video']['title']; ?></h2>
 			<p><?= $video['Video']['description']; ?><br><br></p>
-			<video controls>
-				<?php if($video['Video']['mp4'] && file_exists(IMAGES . "{$video_path}.mp4")) : ?>
-				<source type="video/mp4" src="<?= $this->Html->webroot(IMAGES_URL . "{$video_path}.mp4?t=" . filemtime(IMAGES . "{$video_path}.mp4")); ?>" />
-				<?php endif; ?>
-				<?php if($video['Video']['webm'] && file_exists(IMAGES . "{$video_path}.webm")) : ?>
-				<source type="video/webm" src="<?= $this->Html->webroot(IMAGES_URL . "{$video_path}.webm?t=" . filemtime(IMAGES . "{$video_path}.webm")); ?>" />
-				<?php endif; ?>
-				<?php /*
-				<object width="640" height="360" type="application/x-shockwave-flash" data="__FLASH__.SWF">
-					<param name="movie" value="__FLASH__.SWF" />
-					<param name="flashvars" value="autostart=true&amp;controlbar=over&amp;image=__POSTER__.JPG&amp;file=__VIDEO__.MP4" />
-					<img src="__VIDEO__.JPG" width="640" height="360" alt="__TITLE__"
-						title="No video playback capabilities, please download the video below" />
-				</object>
-				*/ ?>
-			</video>
+			<?php if($video['Video']['mp4'] && file_exists(IMAGES . "{$video_path}.mp4")) : 
+				$this->Html->script('/lib/mediaelement-2.10.3/mediaelement-and-player.min.js', array('inline' => false));
+				$this->Html->css('/lib/mediaelement-2.10.3/mediaelementplayer.min.css', null, array('inline' => false));
+			?>
+			<video src="<?= $this->Html->webroot(IMAGES_URL . "{$video_path}.mp4?t=" . filemtime(IMAGES . "{$video_path}.mp4")); ?>" type="video/mp4" id="video-player" controls="controls" preload="none"></video>
+			<script>$('video').mediaelementplayer();</script>
+			<?php endif; // mp4 video player ?>
+
 		</div>
 
 		<p class="stats text-center"><br>

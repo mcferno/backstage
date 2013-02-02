@@ -12,9 +12,11 @@ Options -Indexes
 AddType	application/javascript js
 AddType	image/x-icon ico
 AddType video/mp4 mp4 m4v f4v f4p
-AddType video/ogg ogv
-AddType video/webm webm
-AddType video/x-flv flv
+AddType video/ogg .ogv
+AddType video/webm .webm
+AddType video/x-flv .flv
+
+SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
 
 php_value upload_max_filesize 512M
 php_value post_max_size 512M
