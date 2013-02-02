@@ -119,12 +119,8 @@ class Video extends AppModel {
 
 		if(file_exists(IMAGES_URL . "{$screenshot}.jpg")) {
 			$screenshot .= '.jpg';
-			$thumbnail .= '.jpg';
-			$is_jpeg = true;
 		} elseif (file_exists(IMAGES_URL . "{$screenshot}.png")) {
 			$screenshot .= '.png';
-			$thumbnail .= '.png';
-			$is_jpeg = false;
 		} else {
 			$this->log('File not found for cropping, base: ' . $screenshot);
 			return false;
@@ -136,12 +132,10 @@ class Video extends AppModel {
 			return false;
 		}
 
+		$thumbnail .= '.jpg';
+
 		$cropped = $image->crop($crop['x1'], $crop['y1'], $crop['w'], $crop['h'])->resize($this->thumbnailSize, $this->thumbnailSize);
-		if($is_jpeg) {
-			$cropped->saveToFile(IMAGES_URL . $thumbnail, 90);
-		} else {
-			$cropped->saveToFile(IMAGES_URL . $thumbnail);
-		}
+		$cropped->saveToFile(IMAGES_URL . $thumbnail, 90);
 		return true;
 	}
 
