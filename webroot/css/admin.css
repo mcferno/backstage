@@ -205,7 +205,7 @@ div.login {
 	margin-left: 0;
 }
 
-img, iframe, embed, object, .video-embed video {
+img, iframe, embed, object {
 	max-width: 100%;
 }
 
@@ -916,6 +916,14 @@ li.comment .text {
 	width: 300px;
 }
 
+.video-embed .horizontal video {
+	max-width: 100%;
+}
+
+.video-embed .mejs-container.vertical {
+	margin: 0 auto;
+}
+
 /* @end videos ============================================================= */
 
 /* @start responsive-adjustments =========================================== */
@@ -925,18 +933,6 @@ li.comment .text {
 		min-height: 180px;
 	}
 
-}
-
-@media (min-width:600px) {
-	.video-embed video {
-		min-width: 400px;
-	}
-}
-
-@media (min-width:900px) {
-	.video-embed video {
-		min-width: 600px;
-	}
 }
 
 @media (max-width:767px) {

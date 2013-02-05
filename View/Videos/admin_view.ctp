@@ -25,12 +25,41 @@
 		<div class="link-exchange link-view video-embed text-center">
 			<h2><?= $video['Video']['title']; ?></h2>
 			<p><?= $video['Video']['description']; ?><br><br></p>
-			<?php if($video['Video']['mp4'] && file_exists(IMAGES . "{$video_path}.mp4")) : 
+			<?php if($video['Video']['mp4'] && file_exists(IMAGES . "{$video_path}.mp4")) :
+
+				$video_tag = array(
+					'src' => $this->Html->webroot(IMAGES_URL . "{$video_path}.mp4?t=" . filemtime(IMAGES . "{$video_path}.mp4")),
+					'controls' => 'controls',
+					'preload' => 'none',
+					'type' => 'video/mp4',
+					'id' => 'video-player'
+				);
+
+				App::import('Vendor', 'GetID3/getid3');
+				$getID3 = new getID3;
+				$videoInfo = $getID3->analyze(IMAGES . "{$video_path}.mp4");
+
+				$video_tag['width'] = $videoInfo['video']['resolution_x'];
+				$video_tag['height'] = $videoInfo['video']['resolution_y'];
+
+				// vertical video
+				if($video_tag['height'] > $video_tag['width']) {
+					if($video_tag['height'] > 700) {
+						$video_tag['height'] = 700;
+						$video_tag['width'] = ceil($video_tag['height'] * ($videoInfo['video']['resolution_x'] / $videoInfo['video']['resolution_y']));
+					}
+					$video_tag['class'] = 'vertical';
+				// horizontal video
+				} else {
+					$video_tag['class'] = 'horizontal';
+				}
+
 				$this->Html->script('/lib/mediaelement-2.10.3/mediaelement-and-player.min.js', array('inline' => false));
 				$this->Html->css('/lib/mediaelement-2.10.3/mediaelementplayer.min.css', null, array('inline' => false));
+
+				echo $this->Html->tag('video', null, $video_tag);
 			?>
-			<video src="<?= $this->Html->webroot(IMAGES_URL . "{$video_path}.mp4?t=" . filemtime(IMAGES . "{$video_path}.mp4")); ?>" type="video/mp4" id="video-player" controls="controls" preload="none"></video>
-			<script>$('video').mediaelementplayer();</script>
+			<script>$('video').mediaelementplayer({videoWidth: <?= $video_tag['width']; ?>, videoHeight: <?= $video_tag['height']; ?>});</script>
 			<?php endif; // mp4 video player ?>
 
 		</div>
