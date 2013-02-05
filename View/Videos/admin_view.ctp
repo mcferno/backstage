@@ -60,7 +60,9 @@
 				echo $this->Html->tag('video', null, $video_tag);
 			?>
 			<script>$('video').mediaelementplayer({videoWidth: <?= $video_tag['width']; ?>, videoHeight: <?= $video_tag['height']; ?>});</script>
-			<?php endif; // mp4 video player ?>
+			<?php else : ?>
+			<p class="alert alert-info">No video attached at the moment, check back soon.</p>
+			<?php endif; ?>
 
 		</div>
 
