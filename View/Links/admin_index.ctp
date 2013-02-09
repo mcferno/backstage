@@ -31,9 +31,8 @@
 			Viewing Links submitted by: <?= $user['User']['username']; ?> 
 		</h3>
 	<?php else: ?>
-		<p>Got some links others need to know about? Just want to browse a collection of the best content? This is the place.</p>
+		<p class="tall">Got some links others need to know about? Just want to browse a collection of the best content? This is the place.</p>
 	<?php endif; ?>
-		<br>
 
 		<?= $this->element('admin/pagination'); ?>
 
@@ -45,7 +44,7 @@
 		<?php endforeach; ?>
 		</ul>
 
-		<?= $this->element('admin/pagination'); ?>
+		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>
 <?php $this->element('common/tag-tally'); ?>

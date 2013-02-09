@@ -10,7 +10,7 @@
 	</div>
 	<div class="span10">
 		<h1>Caption Battles</h1>
-		<p>There have been <span class="badge <?= (count($contests))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> battles.<p>
+		<p class="tall">There have been <span class="badge <?= (count($contests))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> battles.</p>
 
 		<?php if(!empty($activeContests)) : ?>
 		<div class="active-contests">
@@ -53,7 +53,7 @@
 		
 		<h2>All Battles</h2>
 
-		<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
+		<?= $this->element('admin/pagination'); ?>
 		
 		<div class="image-list">
 			<?php if(empty($contests)) : ?>
@@ -72,6 +72,6 @@
 			</ul>
 		</div>
 		
-		<?= $this->element('admin/pagination'); ?>
+		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>

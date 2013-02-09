@@ -13,9 +13,9 @@
 	<div class="span10">
 
 		<h1>Images From All Users</h1>
-		<p>We have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count((int)$this->Paginator->counter('{:count}')))?'badge-custom':''; ?>"><?= $this->Paginator->counter('{:count}'); ?></span> images.</p>
+		<p class="tall">We have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count((int)$this->Paginator->counter('{:count}')))?'badge-custom':''; ?>"><?= $this->Paginator->counter('{:count}'); ?></span> images.</p>
 		
-		<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
+		<?= $this->element('admin/pagination'); ?>
 
 		<div class="image-wall">
 		<?php 
@@ -25,6 +25,6 @@
 		?>
 		</div>
 		
-		<?= $this->element('admin/pagination'); ?>
+		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>

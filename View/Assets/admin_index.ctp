@@ -16,10 +16,10 @@
 	<div class="span10">
 		<h1>Your Images</h1>
 		<?php if(!empty($images)) : ?>
-		<p>You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> images</p>
+		<p class="tall">You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> images</p>
 		<?php endif; ?>
 		
-		<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
+		<?= $this->element('admin/pagination'); ?>
 		
 		<div class="image-wall">
 		<?php 
@@ -29,6 +29,6 @@
 		?>
 		</div>
 		
-		<?= $this->element('admin/pagination'); ?>
+		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>

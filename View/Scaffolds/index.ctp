@@ -14,7 +14,7 @@ $scaffoldFields = array_diff($scaffoldFields, $removeFields);
 <div class="<?php echo $pluralVar; ?> index">
 <h2><?php echo $pluralHumanName; ?></h2>
 
-<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
+<?= $this->element('admin/pagination'); ?>
 
 <table class="table table-condensed table-striped">
 <tr>
@@ -60,7 +60,7 @@ endforeach;
 ?>
 </table>
 
-<?= $this->element('admin/pagination'); ?>
+<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 
 </div>
 <div class="actions">

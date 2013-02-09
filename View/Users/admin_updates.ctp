@@ -12,6 +12,6 @@
 
 <?= $this->element('common/updates-list'); ?>
 
-<?= $this->element('admin/pagination'); ?>
+<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 
 <?php endif; ?>

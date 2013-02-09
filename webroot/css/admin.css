@@ -177,12 +177,25 @@ input.copier {
 /* @start misc-ui-elements ================================================= */
 
 body {
-	padding-bottom: 4em;
+	margin-bottom: 4em;
 	font-size: 12pt;
+}
+@media (min-width:768px) {
+	body {
+		margin-top: 4em;
+	}
+	.navbar-fixed-top .container, .navbar-fixed-bottom .container {
+		width: 98%;
+		margin-left: 1em;
+	}
 }
 
 p, label {
 	font-size: 12pt;
+}
+
+p.tall {
+	margin-bottom: 1em;
 }
 
 .navbar {
@@ -987,20 +1000,6 @@ li.comment .text {
 	
 	.extra {
 		display: none;
-	}
-	
-	.navbar .brand {
-		margin-left: -18px;
-		font-size: 1.1em;
-	}
-	
-	.navbar .btn-navbar {
-		margin-right: -10px;
-	}
-
-	.navbar .badge {
-		padding: 1px 7px 2px;
-		margin-left: 0;
 	}
 
 	.chat-row .time, .chat-row .handle {

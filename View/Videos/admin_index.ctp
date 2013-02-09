@@ -33,9 +33,8 @@
 			Viewing Videos submitted by: <?= $user['User']['username']; ?> 
 		</h3>
 	<?php else: ?>
-		<p>A private collection of member videos for your viewing pleasure.</p>
+		<p class="tall">A private collection of member videos for your viewing pleasure.</p>
 	<?php endif; ?>
-		<br>
 
 		<?= $this->element('admin/pagination'); ?>
 
@@ -52,7 +51,7 @@
 		<p class="alert alert-info">No videos to display.</p>
 		<?php endif; // videos ?>
 
-		<?= $this->element('admin/pagination'); ?>
+		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>
 <?php $this->element('common/tag-tally'); ?>

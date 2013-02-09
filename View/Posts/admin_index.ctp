@@ -1,7 +1,7 @@
 <?php $this->set('suppressSubnav', true); ?>
 <div class="posts index">
 	<h2>Quotes</h2>
-	<p>Aggregated posts from <?= implode(', ',$types); ?></p>
+	<p class="tall">Aggregated posts from <?= implode(', ',$types); ?></p>
 	<?= $this->element('admin/pagination'); ?>
 	<table cellpadding="0" cellspacing="0" class="table table-striped">
 	<tr>

@@ -106,7 +106,7 @@
 
 		<p class="text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . "user/{$assets[0]['Asset']['user_id']}/{$assets[0]['Asset']['filename']}"); ?>"></p>
 
-		<?= $this->element('admin/pagination'); ?>
+		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 
 		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
 		<?= $this->element('common/chat-module', array('model' => 'Asset', 'foreign_key' => $assets[0]['Asset']['id'])); ?>
