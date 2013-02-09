@@ -986,6 +986,12 @@ li.comment .text {
 
 @media (max-width:480px) {
 
+	.navbar .status {
+		padding-left: 0px;
+		padding-right: 0px;
+		float: none;
+	}
+
 	.dash {
 		padding: 0;
 	}
