@@ -8,7 +8,6 @@ App::uses('AppController', 'Controller');
 class UsersController extends AppController {
 
 	public $paginate = array(
-		'User',
 		'Activity' => array(
 			'contain' => array(
 				'User', 'Asset', 'Link','Video',
@@ -137,8 +136,7 @@ class UsersController extends AppController {
 	 * @return void
 	 */
 	public function admin_index() {
-		$this->User->recursive = 0;
-		$this->set('users', $this->paginate());
+		$this->set('users', $this->paginate('User'));
 	}
 
 	/**
@@ -191,11 +189,11 @@ class UsersController extends AppController {
 				unset($this->User->validate['password']);
 			}
 			if ($this->User->save($this->request->data)) {
-				$msg = $this->_isUser($id)?'Your account has been updated.':'The user has been updated.';
+				$msg = Access::isOwner($id) ? 'Your account has been updated.' : 'The user has been updated.';
 				$this->Session->setFlash($msg,'messaging/alert-success');
 				$this->redirect($this->referer(array('action' => 'index')));
 			} else {
-				$msg = $this->_isUser($id)?'Your account could not be saved. Please, try again.':'The user could not be saved. Please, try again.';
+				$msg = Access::isOwner($id) ? 'Your account could not be saved. Please, try again.' : 'The user could not be saved. Please, try again.';
 				$this->Session->setFlash($msg,'messaging/alert-error');
 			}
 		} else {

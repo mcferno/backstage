@@ -7,7 +7,7 @@ $this->set(array(
 
 echo $page['Page']['content'];
 
-if($this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
+if(Access::hasRole('Admin')) : ?>
 
 <hr>
 <?= $this->Html->link('Edit this page', array('action' => 'edit', $page['Page']['id']), array('class' => 'btn')); ?>

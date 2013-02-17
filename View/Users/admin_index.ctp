@@ -1,7 +1,7 @@
 <div class="users index">
 	<h2><?php echo __('Users');?></h2>
 	<?= $this->element('admin/pagination'); ?>
-	<table cellpadding="0" cellspacing="0" class="table table-striped table-condensed">
+	<table class="table table-striped table-condensed">
 	<tr>
 		<th><?php echo $this->Paginator->sort('created');?></th>
 			<th><?php echo $this->Paginator->sort('username');?></th>
@@ -18,7 +18,7 @@
 		
 		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['modified']); ?>&nbsp;</td>
-		<td><?php echo h(($user['User']['role'] == ROLES_GENERAL)?'General':'Admin'); ?>&nbsp;</td>
+		<td><?php echo Access::$assignableRoles[$user['User']['role']]; ?>&nbsp;</td>
 		<td><?php echo h($user['User']['last_login']); ?>&nbsp;</td>
 		<td><?php echo h($user['User']['last_seen']); ?>&nbsp;</td>
 		<td class="actions">

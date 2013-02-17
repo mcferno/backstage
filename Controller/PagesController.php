@@ -11,7 +11,7 @@ class PagesController extends AppController {
 
 	// admin-only scaffolding
 	public function beforeScaffold($method) {
-		if($this->Auth->user('role') < ROLES_ADMIN) {
+		if(!Access::hasRole('Admin')) {
 			$this->redirect(array('controller'=>'users', 'action' => 'dashboard'));
 		}
 		$this->set('schema', $this->Page->schema());

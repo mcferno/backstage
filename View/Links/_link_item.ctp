@@ -41,7 +41,7 @@
 	<a href="<?= $this->Html->url(array('controller' => 'links', 'action' => 'index', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
 	<?php endforeach; ?>
 
-	<?php if(!$this->request->is('mobile') && ($this->Session->read('Auth.User.id') == $link['Link']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN)) : ?>
+	<?php if(!$this->request->is('mobile') && (Access::isOwner($link['Link']['user_id']) || Access::hasRole('Admin'))) : ?>
 	<div class="controls" style="display:none;">
 		<?= $this->Html->link($this->Html->image('ui/icons/image-pencil.png') . ' Thumbnail', array('action' => 'image', $link['Link']['id']), array('class' => 'btn btn-mini btn-inverse', 'title' => 'Change this link\'s thumnail', 'escape' => false)); ?>
 		<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-mini btn-inverse edit-btn', 'title' => 'Edit this link', 'escape' => false)); ?>

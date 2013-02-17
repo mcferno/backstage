@@ -1,36 +1,8 @@
 <?php
-/**
- * Application level Controller
- *
- * This file is application-wide controller file. You can put all
- * application-wide controller-related methods here.
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Controller
- * @since         CakePHP(tm) v 0.2.9
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
 App::uses('Controller', 'Controller');
 App::uses('CakeNumber', 'Utility');
+App::uses('Access', 'Model');
 
-/**
- * Application Controller
- *
- * Add your application-wide methods in the class below, your controllers
- * will inherit them.
- *
- * @package       app.Controller
- */
 class AppController extends Controller {
 	
 	public $uses = array('User');
@@ -144,17 +116,6 @@ class AppController extends Controller {
 	}
 	
 	/**
-	 * Determines if the passed key matches that of the currently authenticated
-	 * user.
-	 *
-	 * @param {String} $id
-	 * @return {Boolean} Whether the id matches the current auth user
-	 */
-	protected function _isUser($id) {
-		return $this->Auth->user('id') === $id;
-	}
-	
-	/**
 	 * Set of data needed by the front-end application to maintain state and 
 	 * user interactivity.
 	 */
@@ -212,15 +173,6 @@ class AppController extends Controller {
 			// store user information in an encrypted cookie
 			$this->Cookie->write('persist', $identifier, true, '+1 month');
 		}
-	}
-
-	/**
-	 * Determines if the current User is classified as a site administrator
-	 *
-	 * @return {Boolean}
-	 */
-	protected function isAdminUser($min_role = ROLES_ADMIN) {
-		return $this->Session->check('Auth.User.role') && (int)$this->Auth->user('role') >= $min_role;
 	}
 
 	/**

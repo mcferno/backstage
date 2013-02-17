@@ -11,12 +11,13 @@
 ?>
 <!--nocache-->
 <?php
+App::uses('Access', 'Model');
 
 // determine if we are on the live domain
 $isLiveDomain = (stripos(env('HTTP_HOST'),'kennyquotemachine.com') !== false);
 
 // determine if a admin-user session is active
-$isAdminUser = ($this->Session->check('Auth.User.role') && $this->Session->read('Auth.User.role') >= ROLES_ADMIN);
+$isAdminUser = Access::hasRole('Admin');
 
 // determine which tracker to use.
 $isBackend = (isset($this->request->params['prefix']) && ($this->request->params['prefix'] == 'admin'));

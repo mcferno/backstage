@@ -12,7 +12,7 @@
 ?>
 <div class="row-fluid">
 	<div class="span2 text-right action-bar">&nbsp;
-		<?php if($video['Video']['user_id'] == $this->Session->read('Auth.User.id') || $this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
+		<?php if(Access::isOwner($video['Video']['user_id']) || Access::hasRole('Admin')) : ?>
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
 			<li><?= $this->Html->link('<i class="icon icon-facetime-video"></i> Upload video files', array('controller' => 'videos', 'action' => 'upload', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>

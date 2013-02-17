@@ -59,7 +59,7 @@
 			
 			<?php endif; ?>
 
-			<?php if((int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN) : ?>
+			<?php if(Access::hasRole('Admin')) : ?>
 
 			<li>
 			<p>Change Type <i class="icon-white icon-question-sign"></i></p>

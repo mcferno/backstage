@@ -63,7 +63,7 @@
 	<a href="<?= $this->Html->url(array('controller' => 'videos', 'action' => 'index', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
 	<?php endforeach; ?>
 
-	<?php if(!$this->request->is('mobile') && ($this->Session->read('Auth.User.id') == $video['Video']['user_id'] || (int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN)) : ?>
+	<?php if(!$this->request->is('mobile') && (Access::isOwner($video['Video']['user_id']) || Access::hasRole('Admin'))) : ?>
 	<div class="controls" style="display:none;">
 		<?= $this->Html->link($this->Html->image('ui/icons/image-pencil.png') . ' Thumbnail', array('action' => 'image', $video['Video']['id']), array('class' => 'btn btn-mini btn-inverse', 'title' => 'Change this video\'s thumnail', 'escape' => false)); ?>
 		<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-mini btn-inverse edit-btn', 'title' => 'Edit this video', 'escape' => false)); ?>

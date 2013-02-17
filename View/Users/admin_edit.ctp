@@ -1,4 +1,8 @@
-<?php if((int)$this->Session->read('Auth.User.role') < ROLES_ADMIN) { $this->set('suppressSubnav',true); } ?>
+<?php 
+	if(!Access::hasRole('Admin')) { 
+		$this->set('suppressSubnav',true); 
+	}
+?>
 <div class="users form">
 <?php echo $this->Form->create('User');?>
 	<fieldset>
@@ -12,8 +16,8 @@
 	?>	
 		<div class="alert alert-info">Leave blank to keep current password.</div>
 	<?php
-		if((int)$this->Session->read('Auth.User.role') >= ROLES_ADMIN) {
-			echo $this->Form->input('role');
+		if(Access::hasRole('Admin')) {
+			echo $this->Form->input('role', array('options' => Access::$assignableRoles));
 		}
 		echo $this->Form->button('Submit',array('class'=>'btn btn-primary'));
 	?>
