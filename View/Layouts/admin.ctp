@@ -15,8 +15,8 @@
 
 		// base js libraries
 		$scripts = array(
-			'https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js',
-			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js',
+			'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js',
 			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js ',
 			'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js',
 			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
@@ -58,10 +58,12 @@
 						<?php echo $this->fetch('content'); ?>
 					</div>
 					
+					<?php if($contentSpan <= 10) : ?>
 					<div class="span2 subnav">
 						<?= $this->element('admin/subnav'); ?>
 						&nbsp;
 					</div>
+					<?php endif ; // show sidebar ?>
 				</div>
 			</div>
 		</div> <!-- /container -->

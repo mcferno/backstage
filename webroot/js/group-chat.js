@@ -333,9 +333,7 @@ var GroupChat = {
 			}
 			document.title = title + ns.originalTitle;
 		} else {
-			if(ns.windowFocus) {
-				document.title = ns.originalTitle;
-			}
+			document.title = ns.originalTitle;
 		}
 
 		// on chat, process new messages

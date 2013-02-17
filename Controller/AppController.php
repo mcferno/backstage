@@ -168,6 +168,11 @@ class AppController extends Controller {
 		}
 		
 		$data['new_messages'] = $MessageModel->countNewMessages('Chat', $currentUser);
+
+		// cap the message count if it goes beyond the max buffer size
+		if($data['new_messages'] > MESSAGES_DEFAULT_BUFFER) {
+			$data['new_messages'] = MESSAGES_DEFAULT_BUFFER;
+		}
 		$data['new_updates'] = ClassRegistry::init('Activity')->countNewActivity($currentUser);
 		
 		return $data;
