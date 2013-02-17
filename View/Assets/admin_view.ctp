@@ -41,6 +41,8 @@
 
 			<?php endif; // upload or url download ?>
 
+			<li><?= $this->Html->link('<i class="icon icon-comment"></i> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn','escape'=>false)); ?></li>
+
 			<?php if(!$load_cropper) : ?>
 			<li><?= $this->Html->link('<i class="icon icon-fullscreen"></i> Crop this Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false)); ?></li>
 			<?php endif; // cropper option ?>

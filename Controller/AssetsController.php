@@ -240,6 +240,25 @@ class AssetsController extends AppController {
 		$this->set($response);
 		$this->set('_serialize', array_keys($response));
 	}
+
+	/**
+	 * Posts an image as a comment to the Group Chat, and visit the Chat.
+	 * Utility shortcut.
+	 */
+	public function admin_chat_post($id = null) {
+		$this->Asset->id = $id;
+
+		if(!empty($id) && $this->Asset->exists()) {
+			$url = Router::url('/'.IMAGES_URL . $this->Asset->getPath($id), true);
+			ClassRegistry::init('Message')->save(array(
+				'model' => 'Chat',
+				'user_id' => $this->Auth->user('id'),
+				'text' => $url
+			));
+			$this->redirect(array('controller' => 'users', 'action' => 'group_chat'));
+		}
+		$this->redirect($this->referer(array('controller' => 'users', 'action' => 'group_chat')));
+	}
 	
 	/**
 	 * Posts a single image to a specific Facebook group
