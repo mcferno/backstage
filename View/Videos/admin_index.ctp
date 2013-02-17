@@ -6,15 +6,15 @@
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
 			<?php if(Access::hasRole('Admin')) : ?>
-			<li><?= $this->Html->link('<i class="icon-white icon-pencil"></i> Add a Video', array('controller' => 'videos', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-pencil"></i> Add a Video', array('controller' => 'videos', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false, 'title' => 'Upload a Video of your own')); ?></li>
 			<?php endif; // admin-only ?>
 			<li>
 				<div class="dropdown">
-					<a class="dropdown-toggle btn btn" data-toggle="dropdown" href="#"><i class="icon icon-random"></i> Sort Videos by</a>
+					<a class="dropdown-toggle btn btn" data-toggle="dropdown" href="#" title="Change the order of the Videos list"><i class="icon icon-random"></i> Sort Videos</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-							<li><?php echo $this->Paginator->sort('created', 'Date Submitted <i class="icon-white icon-time"></i>', array('direction' => 'desc', 'escape'=>false)); ?></li>
-							<li><?php echo $this->Paginator->sort('title', 'Video Name <i class="icon-white icon-comment"></i>', array('escape'=>false)); ?></li>
-							<li><?php echo $this->Paginator->sort('url', 'URL <i class="icon-white icon-share-alt"></i>', array('escape'=>false)); ?></li>
+							<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <i class="icon-white icon-time"></i>', array('direction' => 'desc', 'escape'=>false)); ?></li>
+							<li><?php echo $this->Paginator->sort('title', 'by Video Name <i class="icon-white icon-comment"></i>', array('escape'=>false)); ?></li>
+							<li><?php echo $this->Paginator->sort('url', 'by URL <i class="icon-white icon-share-alt"></i>', array('escape'=>false)); ?></li>
 					</ul>
 				</div>
 			</li>

@@ -36,28 +36,28 @@
 		<ul class="unstyled actions">
 			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
-			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> Meme This Image',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false)); ?></li>
-			<li><?= $this->Html->link('<i class="icon-white icon-play-circle"></i> Start Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-large btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-play-circle"></i> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
 
 			<?php endif; // upload or url download ?>
 
-			<li><?= $this->Html->link('<i class="icon icon-comment"></i> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon icon-comment"></i> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn','escape'=>false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
 
 			<?php if(!$load_cropper) : ?>
-			<li><?= $this->Html->link('<i class="icon icon-fullscreen"></i> Crop this Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon icon-fullscreen"></i> Crop Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false, 'title' => 'Save a slice of this image')); ?></li>
 			<?php endif; // cropper option ?>
 
 			<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
 
 			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
-			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal')); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
 			<?php endif; // image is Facebook shareable ?>
 
-			<li><?= $this->Html->link('<i class="icon-white icon-remove"></i> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false),'Are you sure you wish to permanently delete this image?'); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-remove"></i> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
 
 			<?php else : // someone else's image ?>
 
-			<li><?= $this->Html->link('<i class="icon-white icon-user"></i> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<i class="icon-white icon-user"></i> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
 			
 			<?php endif; ?>
 

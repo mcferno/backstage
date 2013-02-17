@@ -59,8 +59,8 @@ MemeGenerator.config.type = 'Meme';
 	<div class="row-fluid actions">
 		<div class="span12">
 			<div class="btn-group">
-				<button class="btn btn-huge btn-primary save-image"><i class="icon-white icon-refresh"></i> Refresh<span class="extra"> Image</span></button>
-				<button class="btn btn-huge btn-inverse live-mode"><i class="icon-white icon-remove"></i> Auto<span class="extra"> Refresh</span></button>
+				<button class="btn btn-huge btn-primary save-image" title="Refreshes the text on top of the image below"><i class="icon-white icon-refresh"></i> Refresh<span class="extra"> Image</span></button>
+				<button class="btn btn-huge btn-inverse live-mode" title="Toggles the automatic text refreshing mode"><i class="icon-white icon-remove"></i> Auto<span class="extra"> Refresh</span></button>
 			</div>
 
 			<button class="btn btn-huge choose-background" data-loading-text='<i class="icon icon-refresh"></i><span class="extra"> Change Image</span>'><i class="icon icon-picture"></i><span class="extra"> Change Image</span></button>
@@ -97,9 +97,9 @@ MemeGenerator.config.type = 'Meme';
 		<div class="span12">
 			<div class="btn-group">
 				<?php if(!empty($contest['Contest']['id'])) : ?>
-				<button class="btn btn-huge btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save Entry<span class="extra"> &amp; Continue</span></button>
+				<button class="btn btn-huge btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...' title="Save this entry, and stay in the Meme Generator"><i class="icon-white icon-download"></i> Save Entry<span class="extra"> &amp; Continue</span></button>
 				<?php else : ?>
-				<button class="btn btn-huge btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...'><i class="icon-white icon-download"></i> Save<span class="extra"> &amp; Continue</span></button>
+				<button class="btn btn-huge btn-success save" data-loading-text='<i class="icon-white icon-download-alt"></i> Saving ...' title="Save this image, and stay in the Meme Generator"><i class="icon-white icon-download"></i> Save<span class="extra"> &amp; Continue</span></button>
 				<?php endif; ?>
 				<button class="btn btn-huge btn save-jump" data-loading-text='<i class="icon icon-download-alt"></i> Saving ...' title="Save Image and Jump to View Page"><i class="icon icon-eye-open"></i> Save &amp; View</button>
 			</div>
@@ -108,7 +108,7 @@ MemeGenerator.config.type = 'Meme';
 	</div>
 	<div class="row-fluid resize-reset">
 		<div class="span12">
-			<select name="canvasSize" class="canvasSize">
+			<select name="canvasSize" class="canvasSize" title="Change the size of this meme when saved">
 				<option data-max="full">Image Size: Full</option>
 				<option data-max="800">Image Size: Large</option>
 				<option data-max="600" selected="selected">Image Size: Regular</option>
@@ -119,7 +119,6 @@ MemeGenerator.config.type = 'Meme';
 	</div>
 	<div class="row-fluid">
 		<div class="span12">
-			<h3>Tips</h3>
 			<ul class="unstyled tips">
 				<li>If you "<strong>Save on Server</strong>", it will automatically appear in "<strong>My Images</strong>" afterwards.</li>
 				<li><strong>iPhone users</strong> : To save a meme on your phone, press and hold on the image and you will be prompted to "<strong>Save Image</strong>".</li>
