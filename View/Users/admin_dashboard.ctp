@@ -89,7 +89,7 @@
 </div>
 </div>
 
-<?php if($this->Session->read('Auth.User.role') >= 1): ?>
+<?php if(Access::hasRole('Admin')): ?>
 <div class="row-fluid">
 <div class="span12">
 	<h3><?= $this->Html->image('ui/icons/clock.png'); ?> Recent Users</h3>

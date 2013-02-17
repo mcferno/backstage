@@ -55,7 +55,7 @@ class AssetsController extends AppController {
 		if(empty($user_id)) {
 			$this->redirect('admin_users');
 		}
-		if($user_id == $this->Auth->user('id')) {
+		if(Access::isOwner($user_id)) {
 			$this->redirect(array('action'=>'admin_index'));
 		}
 		$this->paginate['conditions']['Asset.user_id'] = $user_id;
@@ -322,7 +322,7 @@ class AssetsController extends AppController {
 	 * @param {UUID} $id Primary key of the desired asset
 	 */
 	public function admin_delete($id = null) {
-		if(empty($id) || !$this->Asset->hasAny(array('id'=>$id,'user_id'=>$this->Auth->user('id')))) {
+		if(empty($id) || !$this->Asset->isOwner($this->Auth->user('id'), $id)) {
 			$this->Session->setFlash('Image could not be found.','messaging/alert-error');
 			$this->redirect($this->referer('index'));
 		}

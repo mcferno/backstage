@@ -48,7 +48,7 @@
 </div>
 
 <div class="stats muted">
-	&mdash; posted <?= date('M j', strtotime($video['Video']['created'])); ?> by <strong><?= $this->Html->link($video['User']['username'], ($this->Session->read('Auth.User.id') == $video['Video']['user_id']) ? array('action' => 'my_videos') : array('action' => 'index', 'user' => $video['Video']['user_id'])); ?></strong> <small>(<?= $this->Time->timeAgoInWords($video['Video']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
+	&mdash; posted <?= date('M j', strtotime($video['Video']['created'])); ?> by <strong><?= $this->Html->link($video['User']['username'], (Access::isOwner($video['Video']['user_id'])) ? array('action' => 'my_videos') : array('action' => 'index', 'user' => $video['Video']['user_id'])); ?></strong> <small>(<?= $this->Time->timeAgoInWords($video['Video']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
 </div>
 
 <div class="interact">

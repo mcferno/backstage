@@ -294,7 +294,7 @@ class VideosController extends AppController {
 		$this->set('message_tally', $tally);
 
 		// owner
-		if($this->Auth->user('id') == $video['Video']['user_id']) {
+		if(Access::isOwner($video['Video']['user_id'])) {
 			$this->set('tag_tally', $this->Video->getTagTally($this->Auth->user('id')));
 		} else {
 			$this->set('tag_tally', $this->Video->getTagTally());
@@ -311,7 +311,7 @@ class VideosController extends AppController {
 			throw new NotFoundException(__('Invalid video'));
 		}
 
-		if(!$this->isAdminUser() && !$this->Video->isOwner($this->Auth->user('id'))) {
+		if(!Access::hasRole('Admin') && !$this->Video->isOwner($this->Auth->user('id'))) {
 			$this->Session->setFlash('Sorry, only the owner of this video can delete it!', 'messaging/alert-error');
 			$this->redirect(array('action' => 'index'));
 		}

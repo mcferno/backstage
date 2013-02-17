@@ -87,4 +87,4 @@
 	</div>
 </div>
 
-<?php $this->element('common/tag-tally', array('action' => ($video['Video']['user_id'] == $this->Session->read('Auth.User.id') ? 'my_videos' : 'index'))); ?>
+<?php $this->element('common/tag-tally', array('action' => (Access::isOwner($video['Video']['user_id'])) ? 'my_videos' : 'index'))); ?>

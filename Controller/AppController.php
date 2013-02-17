@@ -28,6 +28,11 @@ class AppController extends Controller {
 			'csrfCheck' => false
 		)
 	);
+
+	public $userHome = '/';
+
+	// routes reserved for high-level roles only
+	public $restrictedRoutes = array();
 	
 	public function beforeFilter() {
 		$this->setSecurity();
@@ -51,6 +56,12 @@ class AppController extends Controller {
 	
 	public function adminBeforeFilter() {
 		$this->layout = 'admin';
+		$this->userHome = array('controller'=>'users', 'action' => 'dashboard');
+
+		// restrict certain actions to higher-level roles
+		if(!empty($this->restrictedRoutes) && !Access::hasRole('Admin') && in_array($this->request->params['action'], $this->restrictedRoutes)) {
+			$this->redirect($this->userHome);
+		}
 
 		// attempt a "remember me"
 		if(!$this->request->isPost() && !$this->Auth->loggedIn() && $this->Cookie->read('persist')) {
@@ -188,7 +199,7 @@ class AppController extends Controller {
 	}
 
 	public function admin_refresh_model() {
-		if($this->isAdminUser() && $this->{$this->modelClass}->Behaviors->attached('Postable')) {
+		if(Access::hasRole('Admin') && $this->{$this->modelClass}->Behaviors->attached('Postable')) {
 			$this->{$this->modelClass}->refreshPostableIndex();
 		}
 		$this->redirect($this->referer());

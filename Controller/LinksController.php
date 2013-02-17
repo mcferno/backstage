@@ -97,7 +97,7 @@ class LinksController extends AppController {
 		$this->set('message_tally', $tally);
 
 		// owner
-		if($this->Auth->user('id') == $link['Link']['user_id']) {
+		if(Access::isOwner($link['Link']['user_id'])) {
 			$this->set('tag_tally', $this->Link->getTagTally($this->Auth->user('id')));
 		} else {
 			$this->set('tag_tally', $this->Link->getTagTally());
@@ -252,7 +252,7 @@ class LinksController extends AppController {
 			throw new NotFoundException(__('Invalid link'));
 		}
 
-		if(!$this->isAdminUser() && !$this->Link->isOwner($this->Auth->user('id'))) {
+		if(!Access::hasRole('Admin') && !$this->Link->isOwner($this->Auth->user('id'))) {
 			$this->Session->setFlash('Sorry, only the owner of this link can delete it!', 'messaging/alert-error');
 			$this->redirect(array('action' => 'index'));
 		}

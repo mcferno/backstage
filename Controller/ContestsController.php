@@ -58,7 +58,7 @@ class ContestsController extends AppController {
 		$contest_route = array('action' => 'view', $id);
 
 		// contest not found, or user is not the contest owner
-		if(!$contest || $contest['Contest']['user_id'] !== $this->Auth->user('id')) {
+		if(!$contest || !Access::isOwner($contest['Contest']['user_id'])) {
 			$this->Session->setFlash('Caption battle could not be found. Please try again.', 'messaging/alert-error');
 			$this->redirect($contest_route);
 		}
@@ -220,7 +220,7 @@ class ContestsController extends AppController {
 		$winner_route = array('action' => 'view', $id, 'page' => 1);
 
 		// contest not found, or user is not the contest owner
-		if(!$contest || $contest['Contest']['user_id'] !== $this->Auth->user('id')) {
+		if(!$contest || !Access::isOwner($contest['Contest']['user_id'])) {
 			$this->Session->setFlash('Caption battle could not be found. Please try again.', 'messaging/alert-error');
 			$this->redirect($contest_route);
 		}
@@ -233,7 +233,7 @@ class ContestsController extends AppController {
 			$asset_path = $this->Asset->getPath($contest['Contest']['winning_asset_id'], 200);
 
 			// creator chose himself as winner
-			if($this->Auth->user('id') == $contest['Winner']['User']['id']) {
+			if(Access::isOwner($contest['Winner']['User']['id'])) {
 				$winner = $this->Auth->user('username') . ' has chosen himself as the winner.';
 			} else {
 				$winner = $this->Auth->user('username') . " has chosen {$contest['Winner']['User']['username']} as the winner.";

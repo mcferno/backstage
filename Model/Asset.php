@@ -11,9 +11,12 @@ class Asset extends AppModel {
 	));
 	public $hasMany = array('Contest');
 
-	public $actsAs = array('Postable.Postable' => array(
-		'storageModel' => 'Activity'
-	));
+	public $actsAs = array(
+		'Postable.Postable' => array(
+			'storageModel' => 'Activity'
+		),
+		'Ownable'
+	);
 	
 	// recognized dataURL image types
 	public $headers = array(

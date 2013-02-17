@@ -2,7 +2,7 @@
 	<div class="links form span12">
 	<?php echo $this->Form->create('Video'); ?>
 		<h1>Edit Video</h1>
-		<?php if($this->Session->read('Auth.User.id') !== $this->request->data['Video']['user_id']) : ?>
+		<?php if(!Access::isOwner($this->request->data['Video']['user_id'])) : ?>
 		<div class="alert alert-warning">
 			<strong>Warning</strong> You are not the owner of this link. You are permitted to edit it, but focus on improving the quality of the information on the owner's behalf.
 		</div>

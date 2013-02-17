@@ -127,7 +127,7 @@ class PagesController extends AppController {
 	 * Clears the view cache.
 	 */
 	public function admin_clear_cache() {
-		if($this->isAdminUser()) {
+		if(Access::hasRole('Admin')) {
 			if(clearCache() === true) {
 				$msg = 'View cache has been cleared successfully!';
 				$type = 'messaging/alert-success';

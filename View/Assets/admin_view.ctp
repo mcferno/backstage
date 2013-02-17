@@ -8,7 +8,7 @@
 	$load_cropper = (
 		!$this->request->is('mobile') 
 		&& ($specs[0] >= 600 || $specs[1] >= 600)
-		&& ($this->Session->read('Auth.User.id') == $asset['Asset']['user_id'])
+		&& Access::isOwner($asset['Asset']['user_id'])
 		&& $asset['Asset']['type'] != 'Crop'
 	);
 
@@ -45,7 +45,7 @@
 			<li><?= $this->Html->link('<i class="icon icon-fullscreen"></i> Crop this Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false)); ?></li>
 			<?php endif; // cropper option ?>
 
-			<?php if($this->Session->read('Auth.User.id') == $asset['Asset']['user_id']) : ?>
+			<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
 
 			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
 			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal')); ?></li>

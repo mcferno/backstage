@@ -19,6 +19,8 @@ class UsersController extends AppController {
 	);
 	
 	public $uses = array('User', 'Message', 'Activity', 'Link');
+
+	public $restrictedRoutes = array('admin_index', 'admin_add', 'admin_view', 'admin_delete', 'admin_refresh_updates');
 	
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
@@ -86,7 +88,7 @@ class UsersController extends AppController {
 	 * Admin utility function to re-create the Activity data set.
 	 */
 	public function admin_refresh_updates() {
-		if($this->isAdminUser()) {
+		if(Access::hasRole('Admin')) {
 			ClassRegistry::init('Asset')->refreshPostableIndex();
 			ClassRegistry::init('Contest')->refreshPostableIndex();
 			ClassRegistry::init('Message')->refreshPostableIndex();
@@ -178,9 +180,16 @@ class UsersController extends AppController {
 	 */
 	public function admin_edit($id = null) {
 		$this->User->id = $id;
+
+		// non admins can't edit other Users
+		if(!Access::hasRole('Admin') && !Access::isOwner($id)) {
+			$this->redirect($this->userHome);
+		}
+
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
+
 		if ($this->request->is('post') || $this->request->is('put')) {
 			
 			// skip password manipulation if left blank
@@ -191,7 +200,7 @@ class UsersController extends AppController {
 			if ($this->User->save($this->request->data)) {
 				$msg = Access::isOwner($id) ? 'Your account has been updated.' : 'The user has been updated.';
 				$this->Session->setFlash($msg,'messaging/alert-success');
-				$this->redirect($this->referer(array('action' => 'index')));
+				$this->redirect($this->referer($this->userHome));
 			} else {
 				$msg = Access::isOwner($id) ? 'Your account could not be saved. Please, try again.' : 'The user could not be saved. Please, try again.';
 				$this->Session->setFlash($msg,'messaging/alert-error');

@@ -7,7 +7,7 @@
 <?php echo $this->Form->create('User');?>
 	<fieldset>
 		<legend>
-			<?= ($this->Form->value('id') == $this->Session->read('Auth.User.id'))?'Modify your account':'Modify user account'; ?>
+			<?= (Access::isOwner($this->Form->value('id'))) ? 'Modify your account' : 'Modify user account'; ?>
 		</legend>
 	<?php
 		echo $this->Form->input('id');
