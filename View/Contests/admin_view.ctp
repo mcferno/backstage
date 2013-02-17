@@ -26,7 +26,7 @@
 
 		<p><strong>Original</strong><br><?= $this->Html->image('user/' . $contest['Asset']['user_id'] . "/200/" .$contest['Asset']['filename'], array('url' => array('action' => 'view', $contest['Contest']['id']), 'title' => 'Caption Battle overview')); ?></p>
 
-		<?php if(empty($contest['Contest']['winning_asset_id']) && !empty($assets) && Access::isOwner($contest['Contest']['user_id']) : ?>
+		<?php if(empty($contest['Contest']['winning_asset_id']) && !empty($assets) && Access::isOwner($contest['Contest']['user_id'])) : ?>
 
 		<h3>Contest Admin</h3>
 		<?php

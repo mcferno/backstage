@@ -19,4 +19,4 @@
 	</div>
 </div>
 
-<?php $this->element('common/tag-tally', array('action' => (Access::isOwner($link['Link']['user_id'])) ? 'my_links' : 'index'))); ?>
+<?php $this->element('common/tag-tally', array('action' => (Access::isOwner($link['Link']['user_id'])) ? 'my_links' : 'index')); ?>

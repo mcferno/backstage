@@ -66,13 +66,13 @@ if($chatSettings['scope'] === 'Chat') {
 <td class="message"><%= message %></td>
 </script>
 <script type="text/template" id="embeddedImageTemplate">
-<img src="<%= url %>" title="Image link posted by @<%= username %>" class="posted-image">
+<a href="<%= url %>" target="_blank" class="posted-content"><img src="<%= url %>" title="Image link posted by @<%= username %>"></a><a href="<%= url %>" class="original-link" target="_blank" style="display:none;"><%= url %></a><a class="close" href="#" title="Hide this image">×</a>
 </script>
 <script type="text/template" id="embeddedYouTubeTemplate">
-<iframe width="640" height="360" src="http://www.youtube.com/embed/<%= video_id %>?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" src="http://www.youtube.com/embed/<%= video_id %>" frameborder="0" allowfullscreen class="posted-content"></iframe><a href="<%= url %>" target="_blank" class="original-link"><%= url %></a><a class="close" href="#" title="Hide this video">×</a><br>
 </script>
 <script type="text/template" id="embeddedVimeoTemplate">
-<iframe src="http://player.vimeo.com/video/<%= video_id %>" width="640" height="360" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+<iframe src="http://player.vimeo.com/video/<%= video_id %>" width="640" height="360" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen class="posted-content"></iframe><a href="<%= url %>" target="_blank" class="original-link"><%= url %></a><a class="close" href="#" title="Hide this video">×</a><br>
 </script>
 <script type="text/javascript">
 GroupChat.config = <?= json_encode($chatSettings); ?>;

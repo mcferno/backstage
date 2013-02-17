@@ -759,7 +759,7 @@ li.comment .text {
 	max-width: 300px;
 }
 
-.chat .message iframe {
+.chat .message .posted-content {
 	display: block;
 }
 

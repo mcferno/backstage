@@ -88,7 +88,7 @@ var GroupChat = {
 				msg = ns.autoEmbedVideos(msg);
 			}
 
-			var rendered = _.template(ns.templates.chatRowTemplate.html(), {
+			var rendered = _.template(ns.templates.chatRowTemplate, {
 				date : ns.formatDate(date),
 				username : this.model.get('handle'),
 				message : msg
@@ -181,7 +181,7 @@ var GroupChat = {
 	
 	// testing function which injects messages directly into the chat, bypassing the server
 	ns.addMessage = function(date,timestamp,text,handle) {
-		var rowData = _.template(ns.templates.chatRowTemplate.html(), {
+		var rowData = _.template(ns.templates.chatRowTemplate, {
 			date : date,
 			timestamp : timestamp,
 			username : handle,
@@ -214,30 +214,45 @@ var GroupChat = {
 	// parses text for image links and converts them to embedded images
 	ns.autoViewImages = function(text, handle) {
 		// depends on being previously hyperlinked
-		var linkToImageURL = text.match(/(<a.*>)(.+\.(jpeg|jpg|png|gif))<\/a>/);
+		var imgRegex = "<a[^>]*>([^<]+\.(jpeg|jpg|png|gif))<\/a>";
+		var linkToImageURL = text.match(new RegExp(imgRegex, 'g'));
+
 		if(linkToImageURL) {
-			var imageTag = linkToImageURL[1] + _.template(ns.templates.embeddedImage.html(), { username : handle, url : linkToImageURL[2] }) + '</a>';
-			text = text.replace(linkToImageURL[0], imageTag);
+			// process each image url found
+			$.each(linkToImageURL, function(idx, anchor) {
+				var parts = anchor.match(new RegExp(imgRegex));
+				var imageTag = _.template(ns.templates.embeddedImage, { username : handle, url : parts[1] });
+				text = text.replace(parts[0], imageTag);
+			});
 		}
 		return text;
 	};
 
 	// parses text for video site links, converting them to embed codes
 	ns.autoEmbedVideos = function(text) {
-		var youtubeLink = text.match(/<a.*>.*youtube\.com\/watch.*v=([\-\_a-zA-Z0-9]*).*<\/a>/);
+		var youtubeLink = text.match(/<a.*>(.*youtube\.com\/watch.*v=([\-\_a-zA-Z0-9]*).*)<\/a>/);
 		var embedTag = false;
 		if(youtubeLink) {
-			embedTag = _.template(ns.templates.embeddedYoutube.html(), { video_id : youtubeLink[1] }) + youtubeLink[0] + '<br>';
+			embedTag = _.template(ns.templates.embeddedYoutube, { video_id : youtubeLink[2], url : youtubeLink[1] });
 			text = text.replace(youtubeLink[0], embedTag);
 		}
 
-		var vimeoLink = text.match(/<a.*>.*vimeo\.com\/([\-\_a-zA-Z0-9]*).*<\/a>/);
+		var vimeoLink = text.match(/<a.*>(.*vimeo\.com\/([\-\_a-zA-Z0-9]*).*)<\/a>/);
 		if(vimeoLink) {
-			embedTag = _.template(ns.templates.embeddedVimeo.html(), { video_id : vimeoLink[1] }) + vimeoLink[0] + '<br>';
+			embedTag = _.template(ns.templates.embeddedVimeo, { video_id : vimeoLink[2], url : vimeoLink[1] });
 			text = text.replace(vimeoLink[0], embedTag);
 		}
 
 		return text;
+	};
+
+	// removes an enriched message content, reverting it back to a simple hyperlink
+	ns.collapseMessage = function(event) {
+		event.preventDefault();
+		var link = $(this);
+		link.prevUntil('.close','.posted-content').remove();
+		link.prevUntil('.close','.original-link').show();
+		link.remove();
 	};
 
 	// returns the number of messages currently in the chat window
@@ -399,10 +414,12 @@ var GroupChat = {
 		ns.handle = $('.chat-bar .handle').text();
 		ns.loadingIndicator = $('#loaderAnim');
 		
-		ns.templates.chatRowTemplate = $('#chatRowTemplate');
-		ns.templates.embeddedImage = $('#embeddedImageTemplate');
-		ns.templates.embeddedYoutube = $('#embeddedYouTubeTemplate');
-		ns.templates.embeddedVimeo = $('#embeddedVimeoTemplate');
+		ns.templates.chatRowTemplate = $('#chatRowTemplate').html();
+		ns.templates.embeddedImage = $('#embeddedImageTemplate').html();
+		ns.templates.embeddedYoutube = $('#embeddedYouTubeTemplate').html();
+		ns.templates.embeddedVimeo = $('#embeddedVimeoTemplate').html();
+
+		ns.chatWindow.on('click', '.chat-row .close', ns.collapseMessage);
 
 		ns.chatOrder = ($.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
 		ns.chatRowStripe = (ns.chatOrder === 1) ? 1 : 0;
