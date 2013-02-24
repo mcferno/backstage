@@ -48,6 +48,9 @@ class Message extends AppModel {
 		return true;
 	}
 	
+	/**
+	 * Obtains the number of new messages not seen by the User
+	 */
 	public function countNewMessages($scope, $user_id, $since = false) {
 		if($since === false) {
 			$since = $this->User->field('last_ack',array('id' => $user_id));

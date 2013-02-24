@@ -26,6 +26,7 @@ AddType video/mp4 mp4 m4v f4v f4p
 AddType video/ogg .ogv
 AddType video/webm .webm
 AddType video/x-flv .flv
+AddType audio/ogg .oga .ogg
 
 SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
 
@@ -101,6 +102,7 @@ SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
   ExpiresByType audio/ogv                 "access plus 1 year"
   ExpiresByType video/mp4                 "access plus 1 year"
   ExpiresByType video/webm                "access plus 1 year"
+  ExpiresByType audio/mpeg                "access plus 1 year"
 
   # CSS and JavaScript (cache-busted)
   ExpiresByType text/css                  "access plus 1 year"

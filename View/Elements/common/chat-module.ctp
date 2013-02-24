@@ -24,8 +24,31 @@ if($chatSettings['scope'] === 'Chat') {
 	$chatSettings['order'] = 'asc';
 }
 
+$chatSettings['tones'] = array(
+	'notify' => array(
+		'mp3' => array(
+			'format' => 'audio/mpeg',
+			'file' => $this->Html->webroot('/audio/standard.mp3')
+		),
+		'ogg' => array(
+			'format' => 'audio/ogg',
+			'file' => $this->Html->webroot('/audio/standard.ogg')
+		)
+	),
+	'alert' => array(
+		'mp3' => array(
+			'format' => 'audio/mpeg',
+			'file' => $this->Html->webroot('/audio/attention.mp3')
+		),
+		'ogg' => array(
+			'format' => 'audio/ogg',
+			'file' => $this->Html->webroot('/audio/attention.ogg')
+		)
+	)
+);
+
 ?>
-<a name="comments"></a>
+<a name="comments"></a><a name="chat"></a>
 <?php $this->start('chat-bar'); ?>
 <div class="row-fluid">
 <div class="navbar chat-bar">

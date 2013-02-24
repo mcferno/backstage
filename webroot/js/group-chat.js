@@ -12,7 +12,8 @@ var GroupChat = {
 	windowFocus : true,
 	config : {},
 	idleTimeMax : 300,
-	userIcon : '<i class="icon-white icon-user"></i>'
+	userIcon : '<i class="icon-white icon-user"></i>',
+	playSounds : null
 };
 /*global Backbone _ AppBaseURL */
 (function($, ns) {
@@ -140,6 +141,14 @@ var GroupChat = {
 				}
 			} else {
 				this.$el.append(chatMsgModel.view.el);
+			}
+
+			if(ns.playSounds === true) {
+				if($(chatMsgModel.view.el).hasClass('highlight') && chatMsgModel.get('handle') != ns.config.self) {
+					ns.sounds.attention.play();
+				} else if(chatMsgModel.get('handle') != ns.config.self) {
+					ns.sounds.notify.play();
+				}
 			}
 		}
 	});
@@ -353,6 +362,11 @@ var GroupChat = {
 
 		// on chat, process new messages
 		if(typeof ns.chatWindow !== 'undefined') {
+
+			if(ns.lastAck > 0 && ns.playSounds !== false) {
+				ns.playSounds = true;
+			}
+
 			if(data.ack > ns.lastAck && ns.windowFocus) {
 				ns.lastAck = data.ack;
 			}
@@ -394,6 +408,41 @@ var GroupChat = {
 		return String('00'+str).match(/[0-9]{2}$/);
 	};
 	
+	// wrapper for a multi-format audio element, with browser support detection
+	ns.sound = function(config, volumeLevel) {
+		var obj = this;
+		var audio = false;
+
+		var supportsFormat = function(mimetype) {
+			var elem = document.createElement('audio');
+			if(typeof elem.canPlayType == 'function'){
+				var playable = elem.canPlayType(mimetype);
+				if((playable.toLowerCase() == 'maybe')||(playable.toLowerCase() == 'probably')){
+					return true;
+				}
+			}
+			return false;
+		};
+
+		// find and load a supported audio file
+		for(var type in config) {
+			if(supportsFormat(config[type]['format'])) {
+				var audio = document.createElement('audio');
+				audio.src = config[type]['file'];
+				audio.load();
+				audio.volume = (typeof volumeLevel !== "undefined") ? volumeLevel : 1.0;
+				break;
+			}
+		}
+
+		obj.play = function() {
+			if(audio) {
+				audio.play();
+				return true;
+			}
+			return false;
+		}
+	};
 
 	// initializes the bare-bones chat status functionality
 	ns.init = function() {
@@ -424,7 +473,12 @@ var GroupChat = {
 		ns.chatOrder = ($.type(ns.config.order) === "string" && ns.config.order === 'asc') ? 1 : -1;
 		ns.chatRowStripe = (ns.chatOrder === 1) ? 1 : 0;
 		ns.chatLogView = new ns.ChatLogView();
-		
+
+		ns.sounds = {
+			attention : new ns.sound(ns.config.tones['alert']),
+			notify : new ns.sound(ns.config.tones['notify'])
+		};
+
 		$('.loading').hide();
 	};
 	
