@@ -20,10 +20,10 @@
 <h4>Sound Settings</h4>
 <ul class="unstyled">
 <li class="mention-setting">
-	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF &#64;mention sound"><i class="icon-white icon-volume-down"></i></button><button class="btn btn-danger btn-mini state-off" title="Turn ON &#64;mention sound" style="display: none;"><i class="icon icon-volume-off"></i></button> mentions
+	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF &#64;mention notification"><i class="icon-white icon-volume-up"></i></button><button class="btn btn-danger btn-mini state-off" title="Turn ON &#64;mention notification" style="display: none;"><i class="icon-white icon-volume-off"></i></button> direct messages
 </li>
 <li class="notification-setting">
-	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF new message sound"><i class="icon-white icon-volume-down"></i></button><button class="btn btn-danger btn-mini state-off" title="Turn ON new message sound" style="display: none;"><i class="icon icon-volume-off"></i></button> new message
+	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF new message notification"><i class="icon-white icon-volume-up"></i></button><button class="btn btn-danger btn-mini state-off" title="Turn ON new message notification" style="display: none;"><i class="icon-white icon-volume-off"></i></button> new messages
 </li>
 </ul>
 

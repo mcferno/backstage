@@ -566,6 +566,7 @@ li.comment .text {
 .image-wall img {
 	width: 100% !important;
 	height: auto !important;
+	max-width: 250px;
 }
 
 @media (max-width: 2600px) {
