@@ -22,10 +22,10 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'contests','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/contest-callout.jpg',array('alt'=>'Caption Battles')); ?>
+				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
+					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'Group Chat')); ?>
 				</a>
-				<h4 class="text-right">Battles Fought <span class="badge badge-custom"><?= $contest_count; ?></span></h4>
+				<h4 class="text-right">Chat with other online users</h4>
 			</div>
 		</li>
 		<li class="span3">
@@ -38,10 +38,10 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
-					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'Group Chat')); ?>
+				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
+					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
 				</a>
-				<h4 class="text-right">Chat with other online users</h4>
+				<h4 class="text-right">Image Count <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4>
 			</div>
 		</li>
 		<li class="span3">
@@ -54,10 +54,10 @@
 		</li>
 		<li class="span3">
 			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
-					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
+				<a href="<?= $this->Html->url(array('controller'=>'contests','action'=>'index')); ?>">
+					<?= $this->Html->image('ui/contest-callout.jpg',array('alt'=>'Caption Battles')); ?>
 				</a>
-				<h4 class="text-right">Image Count <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4>
+				<h4 class="text-right">Battles Fought <span class="badge badge-custom"><?= $contest_count; ?></span></h4>
 			</div>
 		</li>
 		<li class="span3">

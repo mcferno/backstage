@@ -163,7 +163,7 @@ class AppController extends Controller {
 				if($model == 'Chat') {
 					$this->User->setLastAck($currentUser, $clientAck);
 				}
-				$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $since, $currentUser);
+				$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $since);
 			}
 		}
 		

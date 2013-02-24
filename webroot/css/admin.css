@@ -89,7 +89,7 @@ hr {
 	border-bottom: 1px solid #888;
 }
 
-.table .alt-row td, .table .alt-row th,
+.table .alt-row, .table .alt-row td, .table .alt-row th,
 .table-striped tbody > tr:nth-child(odd) > td,
 .table-striped tbody > tr:nth-child(odd) > th {
 	background-color: #444;
@@ -112,7 +112,7 @@ hr {
 	color: #EEE;
 }
 
-.table tbody tr:hover td, .table tbody tr:hover th {
+.table tbody tr:hover, .table tbody tr:hover td, .table tbody tr:hover th {
 	background-color: #666;
 	color: #DDD;
 }
@@ -993,6 +993,10 @@ li.comment .text {
 		float: none;
 	}
 
+	.pager a {
+		margin-bottom: 0.5em;
+	}
+
 	.dash {
 		padding: 0;
 	}
@@ -1003,10 +1007,21 @@ li.comment .text {
 
 	.features .span3 {
 		min-height: 0;
+		width: 95%;
+	}
+
+	.features img {
+		width: 100%;
+		height: auto;
 	}
 	
 	.extra {
 		display: none;
+	}
+
+	.chat-row {
+		display:block;
+		width: 100%;
 	}
 
 	.chat-row .time, .chat-row .handle {
@@ -1016,10 +1031,6 @@ li.comment .text {
 	.chat-row .handle {
 		float: left;
 		padding-left: 1em;
-	}
-
-	.chat-row:nth-child(odd) {
-		background-color: #444;
 	}
 
 	.chat-row .message {
@@ -1061,6 +1072,7 @@ li.comment .text {
 
 	.image-wall img {
 		margin-bottom: 1em;
+		max-width: 100%;
 	}
 }
 

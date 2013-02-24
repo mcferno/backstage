@@ -11,7 +11,7 @@
 		<fieldset>
 			<legend></legend>
 		<?php
-			echo $this->Form->input('username');
+			echo $this->Form->input('username', array('autofocus' => 'autofocus'));
 			echo $this->Form->input('password');
 		?>
 		</fieldset>
