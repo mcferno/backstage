@@ -489,71 +489,79 @@ var GroupChat = {
 		ns.chatRowStripe = (ns.chatOrder === 1) ? 1 : 0;
 		ns.chatLogView = new ns.ChatLogView();
 
+		// initialize chat sounds for non-mobile users
 		if(ns.config.scope == 'Chat' && ns.config.mobile === false) {
-
-			ns.soundConfig = {
-				notifications : $('.notification-setting'),
-				mentions : $('.mention-setting')
-			};
-
-			ns.sounds = {
-				attention : new ns.sound(ns.config.tones['alert'], 0.5),
-				notify : new ns.sound(ns.config.tones['notify'], 0.25)
-			};
-
-			var cookieConfig = {
-				expires: 30, path: ns.config.url
-			};
-
-			if($.cookie('play_notifications') == 'no') {
-				ns.playNotifications = false;
-			}
-			$.cookie('play_notifications', (ns.playNotifications === false) ? 'no' : 'yes', cookieConfig);
-
-			if($.cookie('play_mentions') == 'no') {
-				ns.playMentions = false;
-			}
-			$.cookie('play_mentions', (ns.playMentions === false) ? 'no' : 'yes', cookieConfig);
-
-			if(ns.playNotifications === false) {
-				ns.soundConfig.notifications.find('.btn').toggle();
-			}
-			if(ns.playMentions === false) {
-				ns.soundConfig.mentions.find('.btn').toggle();
-			}
-
-			ns.soundConfig.notifications.on('click', '.state-off', function() {
-				ns.soundConfig.notifications.find('.btn').toggle();
-				ns.playNotifications = true;
-				$.cookie('play_notifications', 'yes', cookieConfig);
-			});
-			ns.soundConfig.notifications.on('click', '.state-on', function() {
-				ns.soundConfig.notifications.find('.btn').toggle();
-				ns.playNotifications = false;
-				$.cookie('play_notifications', 'no', cookieConfig);
-			});
-
-			ns.soundConfig.mentions.on('click', '.state-off', function() {
-				ns.soundConfig.mentions.find('.btn').toggle();
-				ns.playMentions = true;
-				$.cookie('play_mentions', 'yes', cookieConfig);
-			});
-			ns.soundConfig.mentions.on('click', '.state-on', function() {
-				ns.soundConfig.mentions.find('.btn').toggle();
-				ns.playMentions = false;
-				$.cookie('play_mentions', 'no', cookieConfig);
-			});
-
+			ns.initChatSounds();
 		}
 
 		$('.loading').hide();
+	};
+
+	// configures Chat notification sounds
+	ns.initChatSounds = function() {
+		ns.soundConfig = {
+			notifications : $('.notification-setting'),
+			mentions : $('.mention-setting')
+		};
+
+		ns.sounds = {
+			attention : new ns.sound(ns.config.tones['alert'], 0.5),
+			notify : new ns.sound(ns.config.tones['notify'], 0.3)
+		};
+
+		var cookieConfig = {
+			expires: 30, path: ns.config.url
+		};
+
+		// read audio configuration from cookie
+		if($.cookie('play_notifications') == 'no') {
+			ns.playNotifications = false;
+		}
+		$.cookie('play_notifications', (ns.playNotifications === false) ? 'no' : 'yes', cookieConfig);
+
+		if($.cookie('play_mentions') == 'no') {
+			ns.playMentions = false;
+		}
+		$.cookie('play_mentions', (ns.playMentions === false) ? 'no' : 'yes', cookieConfig);
+
+		// update interface to match preference
+		if(ns.playNotifications === false) {
+			ns.soundConfig.notifications.find('.btn').toggle();
+		}
+		if(ns.playMentions === false) {
+			ns.soundConfig.mentions.find('.btn').toggle();
+		}
+
+		// notification tone settings
+		ns.soundConfig.notifications.on('click', '.state-off', function() {
+			ns.soundConfig.notifications.find('.btn').toggle();
+			ns.playNotifications = true;
+			$.cookie('play_notifications', 'yes', cookieConfig);
+		});
+		ns.soundConfig.notifications.on('click', '.state-on', function() {
+			ns.soundConfig.notifications.find('.btn').toggle();
+			ns.playNotifications = false;
+			$.cookie('play_notifications', 'no', cookieConfig);
+		});
+
+		// alert tone settings
+		ns.soundConfig.mentions.on('click', '.state-off', function() {
+			ns.soundConfig.mentions.find('.btn').toggle();
+			ns.playMentions = true;
+			$.cookie('play_mentions', 'yes', cookieConfig);
+		});
+		ns.soundConfig.mentions.on('click', '.state-on', function() {
+			ns.soundConfig.mentions.find('.btn').toggle();
+			ns.playMentions = false;
+			$.cookie('play_mentions', 'no', cookieConfig);
+		});
 	};
 	
 	$(document).ready(function() {
 		ns.originalTitle = document.title;
 		ns.init();
 
-		if(ns.config.scope == 'Chat') {
+		if(typeof ns.config.scope != 'undefined' && ns.config.scope == 'Chat') {
 			ns.heartbeat = setInterval(ns.sendHeartbeat,3000);
 		} else {
 			ns.heartbeat = setInterval(ns.sendHeartbeat,45000);
