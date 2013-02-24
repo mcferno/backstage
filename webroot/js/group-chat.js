@@ -489,7 +489,7 @@ var GroupChat = {
 		ns.chatRowStripe = (ns.chatOrder === 1) ? 1 : 0;
 		ns.chatLogView = new ns.ChatLogView();
 
-		if(ns.config.scope == 'Chat') {
+		if(ns.config.scope == 'Chat' && ns.config.mobile === false) {
 
 			ns.soundConfig = {
 				notifications : $('.notification-setting'),
@@ -497,8 +497,8 @@ var GroupChat = {
 			};
 
 			ns.sounds = {
-				attention : new ns.sound(ns.config.tones['alert']),
-				notify : new ns.sound(ns.config.tones['notify'])
+				attention : new ns.sound(ns.config.tones['alert'], 0.5),
+				notify : new ns.sound(ns.config.tones['notify'], 0.25)
 			};
 
 			var cookieConfig = {

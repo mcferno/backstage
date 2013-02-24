@@ -15,6 +15,8 @@
 	<p><i class="icon-white icon-info-sign"></i> Use <strong>@all</strong> to highlight a message to all users.</p>
 </div>
 
+<?php if(!$this->request->is('mobile')) : ?>
+
 <h4>Sound Settings</h4>
 <ul class="unstyled">
 <li class="mention-setting">
@@ -25,5 +27,6 @@
 </li>
 </ul>
 
+<?php endif; // desktop ?>
 
 <?php $this->end(); ?>
