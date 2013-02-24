@@ -1,5 +1,5 @@
 <?php
-$this->Html->script(array('utilities'),false);
+$this->Html->script(array('https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.3.1/jquery.cookie.min.js'),false);
 
 // settings to pass to javascript module
 $chatSettings = array(
@@ -16,6 +16,31 @@ if($chatSettings['scope'] === 'Chat') {
 	$submitLabel = 'Post';
 	$submitClass = 'primary';
 
+	$chatSettings['tones'] = array(
+		'notify' => array(
+			'mp3' => array(
+				'format' => 'audio/mpeg',
+				'file' => $this->Html->webroot('/audio/standard.mp3')
+			),
+			'ogg' => array(
+				'format' => 'audio/ogg',
+				'file' => $this->Html->webroot('/audio/standard.ogg')
+			)
+		),
+		'alert' => array(
+			'mp3' => array(
+				'format' => 'audio/mpeg',
+				'file' => $this->Html->webroot('/audio/attention.mp3')
+			),
+			'ogg' => array(
+				'format' => 'audio/ogg',
+				'file' => $this->Html->webroot('/audio/attention.ogg')
+			)
+		)
+	);
+
+	$chatSettings['url'] = $this->Html->url(array('controller' => 'users', 'action' => 'group_chat'));
+
 // non-chat integration
 } else {
 	$reverseChat = false;
@@ -23,29 +48,6 @@ if($chatSettings['scope'] === 'Chat') {
 	$submitClass = 'info';
 	$chatSettings['order'] = 'asc';
 }
-
-$chatSettings['tones'] = array(
-	'notify' => array(
-		'mp3' => array(
-			'format' => 'audio/mpeg',
-			'file' => $this->Html->webroot('/audio/standard.mp3')
-		),
-		'ogg' => array(
-			'format' => 'audio/ogg',
-			'file' => $this->Html->webroot('/audio/standard.ogg')
-		)
-	),
-	'alert' => array(
-		'mp3' => array(
-			'format' => 'audio/mpeg',
-			'file' => $this->Html->webroot('/audio/attention.mp3')
-		),
-		'ogg' => array(
-			'format' => 'audio/ogg',
-			'file' => $this->Html->webroot('/audio/attention.ogg')
-		)
-	)
-);
 
 ?>
 <a name="comments"></a><a name="chat"></a>

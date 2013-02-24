@@ -13,7 +13,8 @@ var GroupChat = {
 	config : {},
 	idleTimeMax : 300,
 	userIcon : '<i class="icon-white icon-user"></i>',
-	playSounds : null
+	playNotifications : null,
+	playMentions : null
 };
 /*global Backbone _ AppBaseURL */
 (function($, ns) {
@@ -143,12 +144,21 @@ var GroupChat = {
 				this.$el.append(chatMsgModel.view.el);
 			}
 
-			if(ns.playSounds === true) {
-				if($(chatMsgModel.view.el).hasClass('highlight') && chatMsgModel.get('handle') != ns.config.self) {
-					ns.sounds.attention.play();
-				} else if(chatMsgModel.get('handle') != ns.config.self) {
-					ns.sounds.notify.play();
-				}
+			if(
+				ns.playMentions === true
+				&& $(chatMsgModel.view.el).hasClass('highlight') 
+				&& chatMsgModel.get('handle') != ns.config.self
+			) {
+
+				ns.sounds.attention.play();
+
+			} else if(
+				ns.playNotifications === true
+				&& chatMsgModel.get('handle') != ns.config.self
+			) {
+
+				ns.sounds.notify.play();
+
 			}
 		}
 	});
@@ -363,8 +373,13 @@ var GroupChat = {
 		// on chat, process new messages
 		if(typeof ns.chatWindow !== 'undefined') {
 
-			if(ns.lastAck > 0 && ns.playSounds !== false) {
-				ns.playSounds = true;
+			if(ns.lastAck > 0) {
+				if(ns.playMentions !== false) {
+					ns.playMentions = true;
+				}
+				if(ns.playNotifications !== false) {
+					ns.playNotifications = true;
+				}
 			}
 
 			if(data.ack > ns.lastAck && ns.windowFocus) {
@@ -474,10 +489,62 @@ var GroupChat = {
 		ns.chatRowStripe = (ns.chatOrder === 1) ? 1 : 0;
 		ns.chatLogView = new ns.ChatLogView();
 
-		ns.sounds = {
-			attention : new ns.sound(ns.config.tones['alert']),
-			notify : new ns.sound(ns.config.tones['notify'])
-		};
+		if(ns.config.scope == 'Chat') {
+
+			ns.soundConfig = {
+				notifications : $('.notification-setting'),
+				mentions : $('.mention-setting')
+			};
+
+			ns.sounds = {
+				attention : new ns.sound(ns.config.tones['alert']),
+				notify : new ns.sound(ns.config.tones['notify'])
+			};
+
+			var cookieConfig = {
+				expires: 30, path: ns.config.url
+			};
+
+			if($.cookie('play_notifications') == 'no') {
+				ns.playNotifications = false;
+			}
+			$.cookie('play_notifications', (ns.playNotifications === false) ? 'no' : 'yes', cookieConfig);
+
+			if($.cookie('play_mentions') == 'no') {
+				ns.playMentions = false;
+			}
+			$.cookie('play_mentions', (ns.playMentions === false) ? 'no' : 'yes', cookieConfig);
+
+			if(ns.playNotifications === false) {
+				ns.soundConfig.notifications.find('.btn').toggle();
+			}
+			if(ns.playMentions === false) {
+				ns.soundConfig.mentions.find('.btn').toggle();
+			}
+
+			ns.soundConfig.notifications.on('click', '.state-off', function() {
+				ns.soundConfig.notifications.find('.btn').toggle();
+				ns.playNotifications = true;
+				$.cookie('play_notifications', 'yes', cookieConfig);
+			});
+			ns.soundConfig.notifications.on('click', '.state-on', function() {
+				ns.soundConfig.notifications.find('.btn').toggle();
+				ns.playNotifications = false;
+				$.cookie('play_notifications', 'no', cookieConfig);
+			});
+
+			ns.soundConfig.mentions.on('click', '.state-off', function() {
+				ns.soundConfig.mentions.find('.btn').toggle();
+				ns.playMentions = true;
+				$.cookie('play_mentions', 'yes', cookieConfig);
+			});
+			ns.soundConfig.mentions.on('click', '.state-on', function() {
+				ns.soundConfig.mentions.find('.btn').toggle();
+				ns.playMentions = false;
+				$.cookie('play_mentions', 'no', cookieConfig);
+			});
+
+		}
 
 		$('.loading').hide();
 	};
@@ -485,7 +552,8 @@ var GroupChat = {
 	$(document).ready(function() {
 		ns.originalTitle = document.title;
 		ns.init();
-		if($('body').hasClass('route-action-admin-group-chat')) {
+
+		if(ns.config.scope == 'Chat') {
 			ns.heartbeat = setInterval(ns.sendHeartbeat,3000);
 		} else {
 			ns.heartbeat = setInterval(ns.sendHeartbeat,45000);
