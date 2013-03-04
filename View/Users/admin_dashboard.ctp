@@ -112,15 +112,16 @@
 <div class="span12">
 	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
+		<tr><td class="short-date">Mar 03</td><td>Meme Generator font has been improved for Android and iOS users</td></tr>
 		<tr><td class="short-date">Feb 24</td><td>Group Chat has optional notification sounds for new messages and @mentions.</td></tr>
 		<tr><td class="short-date">Feb 02</td><td>Video section launched!</td></tr>
 		<tr><td class="short-date">Dec 16</td><td>Link Exchange has easier to navigate tag lists, and allows thumbnail images for each link.</td></tr>
 		<tr><td class="short-date">Nov 20</td><td>New Link Exchange section allows you to save links and tag them.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>Network Update notifications alert you of all user actions.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>You can comment on all saved Images and Caption Battles.</td></tr>
+<?php /*
 		<tr><td class="short-date">Oct 25</td><td>Meme Generator's font-size adjustments are improved. Makes better use of image width.</td></tr>
 		<tr><td class="short-date">Oct 14</td><td>New Caption Battle section added. Battle on!</td></tr>
-<?php /*
 		<tr><td class="short-date">Oct 11</td><td>Randomized set of Meme Generator images now includes uploads from all users.</td></tr>
 		<tr><td class="short-date">Sep 30</td><td>Image upload via URL now available. Supported types: PNG, JPG, GIF</td></tr>
 		<tr><td class="short-date">Sep 22</td><td>User sessions now persist up to a month. Login bugs fixed.</td></tr>

@@ -49,7 +49,7 @@ MemeGenerator.config.type = 'Meme';
 	
 	<div class="row-fluid">
 		<div class="span12">
-			<input type="text" name="first-line" id="first-line" class="span5" value="<?= $first_line; ?>" placeholder="First line of text" spellcheck="true">
+			<input type="text" name="first-line" id="first-line" class="span5" value="<?= $first_line; ?>" placeholder="First line of text" spellcheck="true" autofocus="true">
 		</div>
 	</div>
 	
