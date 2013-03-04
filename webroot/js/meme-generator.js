@@ -18,11 +18,20 @@ var MemeGenerator = {
 	imageOffset : -1,
 	
 	// main font + fallbacks for various devices
-	fontFamily : 'Impact, Futura-CondensedExtraBold, sans-serif',
+	fontFamily : 'Impact, Passion One, sans-serif',
 	
 	// font size coefficient to scale accordingly to height
-	fontToHeightScale    : (60 / 450), // 0.0711+, from 32pt @ 450px
-	fontToHeightScaleiOS : (57 / 450), // to adjust for a different font on iOS
+	fontToHeightScale : {
+		base : (60 / 450), // 0.0711+, from 32pt @ 450px
+		ios: (57 / 450), // to adjust for a different font on iOS
+		android : (60 / 450)
+	},
+
+	fontLineHeight : {
+		base : 1.4,
+		ios : 1.1,
+		android : 1.1
+	},
 	
 	// font stroke size coefficient to scale accordingly to width
 	fontStrokeWidthScale : 0.01,
@@ -296,7 +305,7 @@ var MemeGenerator = {
 		ns.context.font = bestFit;
 		lines = ns.breakTextIntoLines(text, lineWidth);
 		
-		var emWidth = parseInt(ns.context.measureText('M').width * 1.4, 10);
+		var emWidth = parseInt(ns.context.measureText('M').width * ns.fontHeightPadding, 10);
 		var offsetY = (top) ? emWidth : parseInt(ns.canvas.height * 0.97 - ((lines.length - 1) * emWidth), 10);
 		
 		// write out each line, respecting inner spacing
@@ -410,6 +419,17 @@ var MemeGenerator = {
 			title : 'Image saved successfully!'
 		});
 
+		// scale font relative to canvas, avoiding sub-pixel
+		ns.fontScale = ns.fontToHeightScale['base'];
+		ns.fontHeightPadding = ns.fontLineHeight['base'];
+		if(navigator.userAgent.match(/(iPhone|iPod)/i)) {
+			ns.fontScale = ns.fontToHeightScale['ios'];
+			ns.fontHeightPadding = ns.fontLineHeight['ios'];
+		} else if(navigator.userAgent.match(/(Android)/i)) {
+			ns.fontScale = ns.fontToHeightScale['android'];
+			ns.fontHeightPadding = ns.fontLineHeight['android'];
+		}
+
 		// ensure the scale adapting is done at least once
 		ns.adaptToScale();
 	};
@@ -422,12 +442,10 @@ var MemeGenerator = {
 		ns.context.textAlign = "center";
 		ns.context.fillStyle = "#FFF";
 		ns.context.lineStyle = "#000";
-		
-		// scale font relative to canvas, avoiding sub-pixel
-		var fontScale = navigator.userAgent.match(/(iPhone|iPod)/i)?ns.fontToHeightScaleiOS:ns.fontToHeightScale;
+
 		var canvasHeight = (ns.canvas.width > ns.canvas.height)?ns.canvas.height:ns.canvas.width;
 		var canvasWidth = (ns.canvas.width > ns.canvas.height)?ns.canvas.width:ns.canvas.height;
-		ns.fontSize = parseInt(fontScale * canvasHeight, 10);
+		ns.fontSize = parseInt(ns.fontScale * canvasHeight, 10);
 		ns.context.font = ns.fontSize + "pt " + ns.fontFamily;
 		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * canvasWidth, 10);
 		

@@ -1,5 +1,5 @@
 <?php
-	$this->Html->script(array('meme-generator.js?t='.filemtime(JS.'meme-generator.js')),false);
+	$this->Html->script(array('meme-generator.js?t='.filemtime(JS.'meme-generator.js')), array('inline' => false));
 	
 	foreach ($base_images as &$image) {
 		$image = $this->Html->webroot(IMAGES_URL . $image);
@@ -9,6 +9,9 @@
 	if(!empty($contest)) {
 		$title = 'Caption Battle';
 	}
+
+	// substitute font for browsers missing Impact
+	$this->Html->css('http://fonts.googleapis.com/css?family=Passion+One:900,700', null, array('inline' => false));
 ?>
 <script>
 MemeGenerator.config.baseImages = <?php echo json_encode($base_images); ?>;
