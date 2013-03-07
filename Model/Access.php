@@ -1,5 +1,5 @@
 <?php
-App::import('CakeSession', 'Model');
+App::uses('CakeSession', 'Model/Datasource');
 /**
  * Static User Session detection class
  */
