@@ -982,6 +982,15 @@ li.comment .text {
 		font-size: 0.8em;
 		width: 7em;
 	}
+
+	.action-bar {
+		text-align: left;
+	}
+
+	.action-bar .actions li {
+		display: inline-block;
+		padding: 0.25em 0.5em;
+	}
 }
 
 /* smallest screen-size, tighten up spacing */

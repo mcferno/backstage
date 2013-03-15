@@ -20,7 +20,7 @@
 	<tr>
 		<td class="time"><?php echo h(date('Y.m.d H:i:s',$post['Post']['date'])); ?>&nbsp;</td>
 		<td><?php echo h($post['Post']['model']); ?>&nbsp;</td>
-		<td>
+		<td class="post-body">
 			<?php echo $post['Post']['body']; ?>&nbsp;
 			<?php if(!empty($handle)) : ?>
 			<div class="source">&mdash; @<?php echo $handle; ?></div>
