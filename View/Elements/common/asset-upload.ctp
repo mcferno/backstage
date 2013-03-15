@@ -23,4 +23,5 @@
 	</div>
 	<?php echo $this->Form->end();?>
 </div>
+<div id="dropzone"></div>
 <?php endif; ?>
