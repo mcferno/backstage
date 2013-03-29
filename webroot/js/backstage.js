@@ -169,6 +169,14 @@ Backstage = {};
 					});
 					data.append(submitForm.find('input[type=file]').attr('name'), event.originalEvent.dataTransfer.files[0]);
 
+					var uploadStatus = $('#dropzone-upload');
+					var info = uploadStatus.find('.info');
+					info.text('Uploading ...');
+					uploadStatus.modal('show');
+
+					var progressBar = uploadStatus.find('.bar');
+					progressBar.css('width', '0');
+
 					$.ajax({
 						url : submitForm.attr('action'),
 						data: data,
@@ -177,16 +185,27 @@ Backstage = {};
 						processData: false,
 						type: 'POST',
 						error: function(request, status, error) {
-							alert('Error during file upload! Please try again');
+							info.text('Error during file upload! Please try again');
+						},
+						xhr: function(){
+							var xhr = new window.XMLHttpRequest();
+							xhr.upload.addEventListener("progress", function(e) {
+								if (e.lengthComputable) {
+									var percent = Math.round(e.loaded / e.total * 100);
+									progressBar.css('width', percent + '%');
+								}
+							}, false);
+							return xhr;
 						},
 						success: function(response) {
 							if(response.error === false && response.redirect) {
+								info.text('Upload Complete! Redirecting ...');
 								window.location = response.redirect;
 							} else {
 								if(response.message) {
-									alert(response.message);
+									info.text(response.message);
 								} else {
-									alert('Error during upload! Please try again');
+									info.text('Error during upload! Please try again');
 								}
 							}
 						}
@@ -219,6 +238,9 @@ Backstage = {};
 
 		var progressBar = obj.find('.bar');
 		progressBar.css('width', '0');
+
+		var submitButton = obj.find('.btn-upload');
+		submitButton.button('loading');
 
 		obj.find('.progress').show();
 
@@ -255,6 +277,7 @@ Backstage = {};
 			},
 			complete: function() {
 				obj.find('.progress').hide();
+				submitButton.button('reset');
 			}
 		});
 	};
