@@ -119,7 +119,9 @@ class AssetsController extends AppController {
 	 * Saves single file uploads
 	 */
 	public function admin_upload() {
-
+		$redirect = false;
+		$message = false;
+		$error = false;
 		if ($this->request->is('post') || $this->request->is('put')) {
 
 			// base file path of the eventual new image original
@@ -142,15 +144,17 @@ class AssetsController extends AppController {
 						$new_file .= $save . '.' . $this->Upload->getExtension($this->request->data['Asset']['image']['name']);
 						move_uploaded_file($this->request->data['Asset']['image']['tmp_name'], $new_file);
 
-						$this->Session->setFlash('The image has been uploaded successfully!','messaging/alert-success');
-						$this->redirect(array('action'=>'view', $save));
+						$message = 'The image has been uploaded successfully!';
+						$redirect = array('action' => 'view', $save);
 					
 					} else {
-						$this->Session->setFlash('Image processing has failed, please try again.','messaging/alert-error');
+						$message = 'Image processing has failed, please try again.';
+						$error = true;
 					}
 
 				} else {
-					$this->Session->setFlash($valid, 'messaging/alert-error');
+					$message = $valid;
+					$error = true;
 				}
 
 			// URL grab
@@ -167,23 +171,43 @@ class AssetsController extends AppController {
 							$new_file .= $asset_id . '.' . $this->Upload->getExtension($this->request->data['Asset']['url']);
 							rename($file, $new_file);
 
-							$this->Session->setFlash('The image has been downloaded successfully!','messaging/alert-success');
-							$this->redirect(array('action'=>'view', $asset_id));
+							$message = 'The image has been downloaded successfully!';
+							$redirect = array('action'=>'view', $asset_id);
 						} else {
-							$this->Session->setFlash('Image processing has failed, please try again.','messaging/alert-error');
+							$message = 'Image processing has failed, please try again.';
+							$error = true;
 						}
 
 					} else {
-						$this->Session->setFlash('The URL could not be downloaded, please try again.','messaging/alert-error');
+						$message = 'The URL could not be downloaded, please try again.';
+						$error = true;
 					}
 
 				} else {
-					$this->Session->setFlash($valid, 'messaging/alert-error');
+					$message = $valid;
+					$error = true;
 				}
 			}
 		}
-		
-		$this->redirect(array('action'=>'index'));
+
+		if($this->request->is('ajax')) {
+			if($redirect) {
+				$redirect = Router::url($redirect);
+			}
+			$response = compact('error', 'redirect', 'message');
+			$this->set($response);
+			$this->set('_serialize', array_keys($response));
+
+			// JS redirect will reveal this message
+			if($error === false) {
+				$this->Session->setFlash($message, 'messaging/alert-success');
+			}
+			return;
+		}
+
+		$this->Session->setFlash($message, ($error === false) ? 'messaging/alert-success' : 'messaging/alert-error');
+		$redirect = ($redirect) ? $redirect : array('action'=>'index');
+		$this->redirect($redirect);
 	}
 	
 	/**
