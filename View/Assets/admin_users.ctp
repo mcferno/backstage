@@ -13,7 +13,14 @@
 	<div class="span10">
 
 		<h1>Images From All Users</h1>
-		<p class="tall">We have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count((int)$this->Paginator->counter('{:count}')))?'badge-custom':''; ?>"><?= $this->Paginator->counter('{:count}'); ?></span> images.</p>
+		<p class="tall">We have a total of <span class="badge <?= (count($contributingUsers))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count($image_total))?'badge-custom':''; ?>"><?= $image_total; ?></span> images.</p>
+
+		<?php if(!empty($tag['Tag'])) : ?>
+		<h3 class="cozy">
+			Viewing Images in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+			<?= $this->Html->link('Clear &times;', array('action' => $this->request->action), array('class' => 'badge badge-muted', 'escape' => false)); ?>
+		</h3>
+		<?php endif; //tag ?>
 		
 		<?= $this->element('admin/pagination'); ?>
 
@@ -28,3 +35,5 @@
 		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>
+
+<?php $this->element('common/tag-tally'); ?>

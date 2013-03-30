@@ -43,8 +43,11 @@ class AssetsController extends AppController {
 	 * Personalized asset index (for the current user)
 	 */
 	public function admin_index() {
+		$this->defaultPagination();
 		$this->paginate['conditions']['Asset.user_id'] = $this->Auth->user('id');
+		$this->set('tag_tally', $this->Asset->getTagTally($this->paginate['conditions']['Asset.user_id']));
 		$this->set('images', $this->paginate());
+		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 		$this->set('user_dir', $this->Asset->folderPathRelative . $this->Auth->user('id').'/');
 	}
 	
@@ -60,8 +63,11 @@ class AssetsController extends AppController {
 		}
 		$this->paginate['conditions']['Asset.user_id'] = $user_id;
 		
+		$this->defaultPagination();
+		$this->set('tag_tally', $this->Asset->getTagTally($user_id));
 		$this->set('user',$this->Asset->User->findById($user_id));
 		$this->set('images',$this->paginate());
+		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $user_id))));
 		$this->set('user_dir', $this->Asset->folderPathRelative . $user_id . DS);
 	}
 	
@@ -74,10 +80,33 @@ class AssetsController extends AppController {
 			'contain' => 'User',
 			'group' => 'Asset.user_id'
 		));
+
+		$this->defaultPagination();
+		$this->set('tag_tally', $this->Asset->getTagTally());
 		$this->paginate = array_merge($this->paginate, $paginate);
 		$this->set('images',$this->paginate());
+		$this->set('image_total', $this->Asset->find('count'));
 		$this->set('contributingUsers',$contributingUsers);
 		$this->set('user_dir', $this->Asset->folderPathRelative);
+	}
+
+	protected function defaultPagination() {
+		if(isset($this->request->params['named']['tag'])) {
+			$tag = $this->Asset->Tag->findById($this->request->params['named']['tag']);
+			$this->set('tag', $tag);
+
+			$this->paginate['Asset']['joins'][] = array(
+				'alias' => 'Tagging',
+				'type' => 'INNER',
+				'table' => 'taggings',
+				'conditions'=> array(
+					'Asset.id = Tagging.foreign_id',
+					'Tagging.model' => 'Asset'
+				)
+			);
+			$this->paginate['Asset']['group'] = 'Asset.id';
+			$this->paginate['Asset']['conditions']['Tagging.tag_id'] = $tag['Tag']['id'];
+		}
 	}
 	
 	/**
@@ -218,7 +247,7 @@ class AssetsController extends AppController {
 	public function admin_view($id = null) {
 
 		$asset = $this->Asset->find('first', array(
-			'contain' => 'User',
+			'contain' => array('User', 'Tag'),
 			'conditions' => array(
 				'Asset.id' => $id
 			)
@@ -234,6 +263,8 @@ class AssetsController extends AppController {
 		$this->set('asset', $asset);
 		$this->set('types', $this->Asset->getTypes());
 		$this->set('user_dir', $this->Asset->folderPathRelative . $asset['Asset']['user_id'].'/');
+		$this->set('tags', array_values($this->Asset->Tag->getListForModel('Asset')));
+		$this->request->data['Tagging']['tags'] = implode(Hash::extract($this->request->data['Tag'], '{n}.name'), ',');
 	}
 
 	/**

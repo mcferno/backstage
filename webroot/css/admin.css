@@ -493,6 +493,17 @@ li.comment .text {
 	background-color: rgba(87, 184, 70, 0.3);
 }
 
+.select2-container-multi .select2-choices {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.cozy {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */

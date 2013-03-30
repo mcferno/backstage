@@ -10,12 +10,19 @@ class Asset extends AppModel {
 			'foreignKey' => 'winning_asset_id'
 	));
 	public $hasMany = array('Contest');
+	public $hasAndBelongsToMany = array(
+		'Tag' => array(
+			'joinTable' => 'taggings',
+			'foreignKey' => 'foreign_id'
+		)
+	);
 
 	public $actsAs = array(
 		'Postable.Postable' => array(
 			'storageModel' => 'Activity'
 		),
-		'Ownable'
+		'Ownable',
+		'Taggable'
 	);
 	
 	// recognized dataURL image types

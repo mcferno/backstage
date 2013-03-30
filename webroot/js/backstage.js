@@ -53,10 +53,30 @@ Backstage = {};
 		$('body').removeClass('no-js').addClass('js');
 
 		if($('.content-tags').length){
+			
+			var placeholder_str = '';
+			if(ns.selectTags.length === 0) {
+				placeholder_str = '';
+			} else {
+				// randomly select 
+				var sampleTags = ns.selectTags
+					.slice()
+					.sort(function() { return 0.5 - Math.random();})
+					.slice(0,3);
+
+				placeholder_str = 'Example: ' + sampleTags.join(', ');
+			}
+
 			$('.content-tags').select2({
 				tags : ns.selectTags,
-				tokenSeparators : [",", " "]
+				tokenSeparators : [",", "  "],
+				width : '100%',
+				placeholder: placeholder_str
 			});
+
+			if(ns.taggingMode == 'live') {
+				$('.content-tags').on('change', ns.saveTags);
+			}
 		}
 
 		// configure image cropper
@@ -164,6 +184,13 @@ Backstage = {};
 				drop: function(event) {
 					event.preventDefault();
 					$('#dropzone').fadeOut(200);
+
+					// halt if the dropped content is not an image
+					if(typeof event.originalEvent.dataTransfer.files[0] == 'undefined' ||
+						event.originalEvent.dataTransfer.files[0].type.indexOf('image') === -1
+					) {
+						return false;
+					}
 
 					var data = new FormData();
 					var submitForm = $('.asset-upload-popin form');
@@ -283,6 +310,23 @@ Backstage = {};
 				obj.find('.progress').hide();
 				submitButton.button('reset');
 			}
+		});
+	};
+
+	// Live update the database of tags
+	ns.saveTags = function() {
+		var payload =  {
+			'Tag' : {
+				'id' : $('#TaggingForeignId').val(),
+				'tags' : $('#TaggingTags').val(),
+				'model' : $('#TaggingModel').val(),
+			}
+		}
+
+		$.ajax({
+			url : AppBaseURL + 'backstage/tags/update',
+			data : payload,
+			type : 'POST'
 		});
 	};
 
