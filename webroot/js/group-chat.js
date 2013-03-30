@@ -214,9 +214,9 @@ var GroupChat = {
 			// Backspace
 			case 8:
 				// erase the @mention block, keeping only the @
-				if(msg.toLowerCase().match(/@([_a-z0-9-]+)$/)) {
+				if(msg.toLowerCase().match(/@[_a-z0-9-]+$/)) {
 					event.preventDefault();
-					ns.msgBar.val(msg.replace(/@[_a-zA-Z0-9]+$/, '@'));
+					ns.msgBar.val(msg.replace(/@[_a-zA-Z0-9-]+$/, '@'));
 				}
 				break;
 
@@ -229,9 +229,13 @@ var GroupChat = {
 
 					var match = false;
 
-					// '@' with only one user online
-					if(user_callout[1] == '@' && ns.users.length === 1) {
-						match = ns.users[0];
+					if(user_callout[0] == '@') {
+						// '@' with only one user online
+						if(ns.users.length === 2) {
+							match = (ns.users[0] == ns.config.self) ? ns.users[1] : ns.users[0];
+						} else {
+							break;
+						}
 
 					} else {
 						for(var i = 0; i < ns.users.length; i++) {
@@ -249,7 +253,7 @@ var GroupChat = {
 
 					// set the autocompletion
 					if(match !== false) {
-						ns.msgBar.val(msg.replace(/@[_a-zA-Z0-9]*$/, '@' + match + ' '));
+						ns.msgBar.val(msg.replace(/@[_a-zA-Z0-9-]*$/, '@' + match + ' '));
 					}
 				}
 				break;
