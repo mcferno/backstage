@@ -497,6 +497,13 @@ li.comment .text {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+
+	background: none;
+	border: 1px solid #555;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+	color: #eee;
 }
 
 .cozy {
@@ -912,7 +919,7 @@ li.comment .text {
 	padding-top: 5px;
 }
 
-.link-exchange .badge {
+.link-exchange .badge, .image-tags .badge {
 	font-size: 0.9em;
 	font-weight: normal;
 	line-height: 2em;

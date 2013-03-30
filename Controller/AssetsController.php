@@ -27,8 +27,8 @@ class AssetsController extends AppController {
 		parent::adminBeforeFilter();
 	}
 
-	public function beforeRender() {
-		parent::beforeRender();
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
 
 		$page_limits = array($this->paginate['limit'], 80, 150);
 
@@ -71,6 +71,9 @@ class AssetsController extends AppController {
 		$this->set('user_dir', $this->Asset->folderPathRelative . $user_id . DS);
 	}
 	
+	/**
+	 * Assets from all users
+	 */
 	public function admin_users() {
 		$paginate = array(
 			'contain' => 'User',
@@ -90,7 +93,12 @@ class AssetsController extends AppController {
 		$this->set('user_dir', $this->Asset->folderPathRelative);
 	}
 
+	/**
+	 * Generic pagination augmentation based on the existance of specific URL flag
+	 */
 	protected function defaultPagination() {
+
+		// tagged asset filtering
 		if(isset($this->request->params['named']['tag'])) {
 			$tag = $this->Asset->Tag->findById($this->request->params['named']['tag']);
 			$this->set('tag', $tag);

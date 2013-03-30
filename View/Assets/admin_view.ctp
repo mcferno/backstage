@@ -76,7 +76,7 @@
 
 		<p class="text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename'], array('class' => ($load_cropper) ? 'cropable' : '', 'data-image-id' => $asset['Asset']['id'])); ?></p>
 
-		<p>
+		<p class="image-tags text-right">
 		<?php foreach($asset['Tag'] as $idx => $tag) : ?>
 		<a href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'users', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
 		<?php endforeach; ?>
@@ -88,7 +88,7 @@
 		<?= $this->element('common/chat-module', array('model' => 'Asset', 'foreign_key' => $asset['Asset']['id'])); ?>
 
 		<div class="clearfix cozy">
-			<h4 class="cozy">Add or Remove Tags</h4>
+			<h4 class="cozy text-right">Add or Remove Tags</h4>
 			<form>
 				<?= $this->element('common/tagging', array('model' => 'Asset', 'foreign_key' => $this->request->data['Asset']['id'], 'mode' => 'live')); ?>
 			</form>
