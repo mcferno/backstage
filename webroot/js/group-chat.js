@@ -14,7 +14,8 @@ var GroupChat = {
 	idleTimeMax : 300,
 	userIcon : '<i class="icon-white icon-user"></i>',
 	playNotifications : null,
-	playMentions : null
+	playMentions : null,
+	users : []
 };
 /*global Backbone _ AppBaseURL */
 (function($, ns) {
@@ -197,6 +198,71 @@ var GroupChat = {
 
 		ns.msgBar.val('');
 	};
+
+	/**
+	 * Deeper inspection on keypresses to enrich the messaging options
+	 */
+	ns.messageInput = function(event) {
+		var msg = ns.msgBar.val();
+		switch(event.keyCode) {
+
+			// ESC to erase the line
+			case 27:
+				ns.msgBar.val('');
+				break;
+
+			// Backspace
+			case 8:
+				// erase the @mention block, keeping only the @
+				if(msg.toLowerCase().match(/@([_a-z0-9-]+)$/)) {
+					event.preventDefault();
+					ns.msgBar.val(msg.replace(/@[_a-zA-Z0-9]+$/, '@'));
+				}
+				break;
+
+			// TAB for autocompletion
+			case 9 :
+				// match a partial @ callout
+				var user_callout = msg.toLowerCase().match(/@([_a-z0-9-]*)$/);
+				if(user_callout) {
+					event.preventDefault();
+
+					var match = false;
+
+					// '@' with only one user online
+					if(user_callout[1] == '@' && ns.users.length === 1) {
+						match = ns.users[0];
+
+					} else {
+						for(var i = 0; i < ns.users.length; i++) {
+							if(ns.users[i].toLowerCase().indexOf(user_callout[1]) === 0) {
+								match = ns.users[i];
+								break;
+							}
+						}
+					}
+
+					// shortcut for @all
+					if(!match && user_callout[1].indexOf('a') === 0) {
+						match = 'all';
+					}
+
+					// set the autocompletion
+					if(match !== false) {
+						ns.msgBar.val(msg.replace(/@[_a-zA-Z0-9]*$/, '@' + match + ' '));
+					}
+				}
+				break;
+
+			// Return key
+			case 13:
+				// Shift-return inserts a new line
+				if(event.shiftKey === true) {
+					event.preventDefault();
+				}
+				break;
+		}
+	};
 	
 	// testing function which injects messages directly into the chat, bypassing the server
 	ns.addMessage = function(date,timestamp,text,handle) {
@@ -318,6 +384,9 @@ var GroupChat = {
 				idleUsers.push(data.online[i].User.username);
 			}
 		}
+
+		// track all online users
+		ns.users = activeUsers.concat(idleUsers);
 
 		var notificationCount = data.new_messages + data.new_updates;
 
@@ -489,9 +558,15 @@ var GroupChat = {
 		ns.chatRowStripe = (ns.chatOrder === 1) ? 1 : 0;
 		ns.chatLogView = new ns.ChatLogView();
 
-		// initialize chat sounds for non-mobile users
-		if(ns.config.scope == 'Chat' && ns.config.mobile === false) {
-			ns.initChatSounds();
+		// Chat specific configurations
+		if(ns.config.scope == 'Chat') {
+			ns.msgBar.focus();
+			
+			// initialize for non-mobile users
+			if(ns.config.mobile === false) {
+				ns.initChatSounds();
+				ns.msgBar.on('keydown', ns.messageInput);
+			}
 		}
 
 		$('.loading').hide();
