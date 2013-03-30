@@ -10,6 +10,10 @@ Backstage = {};
 		e.preventDefault();
 		
 		$('.asset-upload-popin').modal();
+		
+		if(User.isMobile) {
+			$('#AssetImage').focus();
+		}
 	});
 
 	$(document).on('click', '.contest-start', function(e) {

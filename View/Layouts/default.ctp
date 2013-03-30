@@ -20,7 +20,7 @@
 			
 			// cache-busting site-wide js code.
 			'jquery.site.js?t='.filemtime(JS.'jquery.site.js')
-		)); 
+		));
 		
 		echo $this->fetch('script');
 		echo $this->fetch('css');

@@ -60,4 +60,13 @@ class SiteHelper extends AppHelper {
 			)
 		);
 	}
+
+	/**
+	 * Collects various visitor details for feature detection and UX
+	 */
+	public function userDetails() {
+		return json_encode(array(
+			'isMobile' => $this->request->is('mobile')
+		));
+	}
 }

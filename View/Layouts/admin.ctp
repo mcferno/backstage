@@ -42,6 +42,7 @@
 	?>
 	<script>
 		var AppBaseURL = <?= json_encode($this->Html->url('/',true)); ?>;
+		var User = <?= $this->Site->userDetails(); ?>;
 	</script>
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
