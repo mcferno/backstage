@@ -54,7 +54,8 @@
 							<li><?= $this->Html->link('<i class="icon-plus-sign icon-white"></i> Add New User',array('controller'=>'users','action'=>'add'), array('escape' => false)); ?></li>
 							<li><?= $this->Html->link('<i class="icon-th-list icon-white"></i> List Users',array('controller'=>'users','action'=>'index'), array('escape' => false)); ?></li>
 							<li class="divider"></li>
-							<li><?= $this->Html->link('<i class="icon-th-list icon-white"></i> Message Log',array('controller'=>'messages', 'action'=>'index'), array('escape' => false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-comment icon-white"></i> Message Log',array('controller'=>'messages', 'action'=>'index'), array('escape' => false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-tags icon-white"></i> Tag List',array('controller'=>'tags', 'action'=>'index'), array('escape' => false)); ?></li>
 							<li class="divider"></li>
 							<li><?= $this->Html->link('<i class="icon-refresh icon-white"></i> Clear Cache',array('controller'=>'pages','action'=>'clear_cache'), array('escape' => false)); ?></li>
 							<li></li>

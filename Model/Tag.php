@@ -6,6 +6,15 @@ class Tag extends AppModel {
 	public $displayField = 'name';
 	public $order = array('Tag.name' => 'ASC');
 	public $belongsTo = array('User');
+	public $hasMany = array(
+		'Tagging' => array(
+			'dependent' => true,
+			'exclusive' => true
+		)
+	);
+	public $virtualFields = array(
+		'count' => 'COUNT(*)'
+	);
 
 	public function getListForModel($model) {
 		return $this->find('list', array(
