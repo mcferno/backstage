@@ -20,7 +20,7 @@
 				<?php foreach ($activeContests as $idx => $contest) : ?>
 				<li class="span4">
 					<div class="thumbnail text-center">
-						<?= $this->Html->link($this->Html->image("user/{$contest['Asset']['user_id']}/200/{$contest['Asset']['filename']}"),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false, 'class' => '')); ?>
+						<?= $this->Html->link($this->Html->image($contest['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false, 'class' => '')); ?>
 						<dl class="text-left">
 							<dt>Started by</dt><dd><i class="icon-user icon-white"></i> <?= $contest['User']['username']; ?> on <?= date('l, F jS', strtotime($contest['Contest']['created'])); ?></dd>
 						<?php if(!empty($contest['Contest']['message'])) : ?>
@@ -63,7 +63,7 @@
 			<?php foreach ($contests as $contest) : ?>
 				<li class="span2 text-center">
 					<div class="thumbnail">
-						<?= $this->Html->link($this->Html->image("user/{$contest['Asset']['user_id']}/200/{$contest['Asset']['filename']}"),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false)); ?>
+						<?= $this->Html->link($this->Html->image($contest['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false)); ?>
 						<p>Started by <strong><?= $contest['User']['username']; ?></strong></p>
 						<p class="date"><?= date('Y.m.d H:m:s',strtotime($contest['Contest']['created'])); ?></p>
 					</div>

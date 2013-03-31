@@ -48,7 +48,6 @@ class AssetsController extends AppController {
 		$this->set('tag_tally', $this->Asset->getTagTally($this->paginate['conditions']['Asset.user_id']));
 		$this->set('images', $this->paginate());
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
-		$this->set('user_dir', $this->Asset->folderPathRelative . $this->Auth->user('id').'/');
 	}
 	
 	/**
@@ -68,7 +67,6 @@ class AssetsController extends AppController {
 		$this->set('user',$this->Asset->User->findById($user_id));
 		$this->set('images',$this->paginate());
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $user_id))));
-		$this->set('user_dir', $this->Asset->folderPathRelative . $user_id . DS);
 	}
 	
 	/**
@@ -90,7 +88,6 @@ class AssetsController extends AppController {
 		$this->set('images',$this->paginate());
 		$this->set('image_total', $this->Asset->find('count'));
 		$this->set('contributingUsers',$contributingUsers);
-		$this->set('user_dir', $this->Asset->folderPathRelative);
 	}
 
 	/**
@@ -270,7 +267,6 @@ class AssetsController extends AppController {
 
 		$this->set('asset', $asset);
 		$this->set('types', $this->Asset->getTypes());
-		$this->set('user_dir', $this->Asset->folderPathRelative . $asset['Asset']['user_id'].'/');
 		$this->set('tags', array_values($this->Asset->Tag->getListForModel('Asset')));
 		$this->request->data['Tagging']['tags'] = implode(Hash::extract($this->request->data['Tag'], '{n}.name'), ',');
 	}

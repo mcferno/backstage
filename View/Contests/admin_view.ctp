@@ -19,12 +19,12 @@
 		</ul>
 
 		<?php if(!empty($contest['Contest']['winning_asset_id'])) : ?>
-		<p><strong>Winner</strong><br><?= $this->Html->image('user/' . $contest['Winner']['user_id'] . "/200/" .$contest['Winner']['filename'], array('url' => array('action' => 'view', $contest['Contest']['id'], 'page' => 1), 'title' => 'Caption Battle overview')); ?></p>
+		<p><strong>Winner</strong><br><?= $this->Html->image($contest['Winner']['image-thumb'], array('url' => array('action' => 'view', $contest['Contest']['id'], 'page' => 1), 'title' => 'Caption Battle overview')); ?></p>
 		<?php endif; ?>
 
 		<?php if(!$landing_page) : ?>
 
-		<p><strong>Original</strong><br><?= $this->Html->image('user/' . $contest['Asset']['user_id'] . "/200/" .$contest['Asset']['filename'], array('url' => array('action' => 'view', $contest['Contest']['id']), 'title' => 'Caption Battle overview')); ?></p>
+		<p><strong>Original</strong><br><?= $this->Html->image($contest['Asset']['image-thumb'], array('url' => array('action' => 'view', $contest['Contest']['id']), 'title' => 'Caption Battle overview')); ?></p>
 
 		<?php if(empty($contest['Contest']['winning_asset_id']) && !empty($assets) && Access::isOwner($contest['Contest']['user_id'])) : ?>
 
@@ -51,11 +51,14 @@
 
 		<?php if($landing_page) : ?>
 
-		<?php if(!empty($contest['Contest']['message'])) : ?>
-		<h2><?= nl2br($contest['Contest']['message']); ?></h2>
-		<?php endif; ?>
+		<div class="text-center">
 
-		<p><?= $this->Html->image('user/' . $contest['Asset']['user_id'] . '/' .$contest['Asset']['filename']); ?></p>
+			<?php if(!empty($contest['Contest']['message'])) : ?>
+			<h2><?= nl2br($contest['Contest']['message']); ?></h2>
+			<?php endif; ?>
+
+			<p><?= $this->Html->image($contest['Asset']['image-full'], array('style' => 'max-height: 500px;')); ?></p>
+		</div>
 
 		<?php if(empty($assets)) : ?>
 
@@ -74,7 +77,7 @@
 
 			<li class="span2 text-center">
 				<div class="thumbnail">
-					<?= $this->Html->link($this->Html->image("user/{$asset['User']['id']}/200/{$asset['Asset']['filename']}"),array('action'=>'view',$contest['Contest']['id'], 'page'=> $page),array('escape'=>false)); ?>
+					<?= $this->Html->link($this->Html->image($asset['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id'], 'page'=> $page),array('escape'=>false)); ?>
 					<p>
 						<?php if($winner) { echo $this->Html->image('ui/icons/trophy.png', array('title' => 'Winning Entry!')); } ?> 
 						by <strong><?= $asset['User']['username']; ?></strong>
@@ -102,9 +105,9 @@
 		?>
 			Entry by <i class="icon-white icon-user"></i> <strong><?= $assets[0]['User']['username']; ?></strong> on <i class="icon-white icon-time"></i> <?= $assets[0]['Asset']['created']; ?>
 		</p>
-		<p class="text-center"><?= $this->Html->image('user/' . $assets[0]['User']['id'] . '/' .$assets[0]['Asset']['filename']); ?></p>
+		<p class="text-center"><?= $this->Html->image($assets[0]['Asset']['image-full']); ?></p>
 
-		<p class="text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . "user/{$assets[0]['Asset']['user_id']}/{$assets[0]['Asset']['filename']}"); ?>"></p>
+		<p class="text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . $assets[0]['Asset']['image-full']); ?>"></p>
 
 		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 

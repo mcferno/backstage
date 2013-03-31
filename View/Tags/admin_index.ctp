@@ -5,6 +5,7 @@ $filters = array_intersect_key($this->request->params['named'], array_flip($filt
 ?>
 <div class="posts index">
 	<h2>Tag List</h2>
+	<p class="text-right"><?= $this->Html->link('<i class="icon-white icon-plus-sign"></i> Add new Tag', array('action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false)); ?>
 	<?php if(!empty($filters)) : ?>
 	<h5>
 		Filtered by

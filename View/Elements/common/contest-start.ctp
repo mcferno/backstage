@@ -11,7 +11,7 @@
 					echo $this->Form->input('asset_id', array('type' => 'hidden', 'value' => $asset['Asset']['id']));
 					echo $this->Form->input('user_id', array('type' => 'hidden', 'value' => $this->Session->read('Auth.User.id')));
 				?>
-				<p class="pull-right image"><?= $this->Html->image($user_dir . '200/' . $asset['Asset']['filename']); ?></p>
+				<p class="pull-right image"><?= $this->Html->image($asset['Asset']['image-thumb']); ?></p>
 				<p>This will start a caption contest with the current image. Other users will be able to submit their own captions using the Meme Generator, and you choose a winner at the end.</p>
 				<p class="alert alert-warning"><strong>Do not use images with text already on it!</strong></p>
 

@@ -31,7 +31,7 @@
 		<div class="image-wall">
 		<?php 
 			foreach ($images as $image) {
-				echo $this->Html->link($this->Html->image($user_dir . '200/' . $image['Asset']['filename']),array('action'=>'view',$image['Asset']['id']),array('escape'=>false));
+				echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']),array('action'=>'view',$image['Asset']['id']),array('escape'=>false));
 			} 
 		?>
 		</div>
