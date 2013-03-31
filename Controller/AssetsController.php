@@ -13,9 +13,11 @@ class AssetsController extends AppController {
 	);
 
 	public $paginate = array(
-		'order' => 'Asset.created DESC',
-		'limit' => 40,
-		'maxLimit' => 150
+		'Asset' => array(
+			'order' => 'Asset.created DESC',
+			'limit' => 40,
+			'maxLimit' => 150
+		)
 	);
 	
 	public function adminBeforeFilter() {
@@ -30,10 +32,10 @@ class AssetsController extends AppController {
 	public function adminBeforeRender() {
 		parent::adminBeforeRender();
 
-		$page_limits = array($this->paginate['limit'], 80, 150);
+		$page_limits = array($this->paginate['Asset']['limit'], 80, 150);
 
 		if($this->RequestHandler->isMobile()) {
-			$page_limits = array($this->paginate['limit'], 30, 60);
+			$page_limits = array($this->paginate['Asset']['limit'], 30, 60);
 		}
 
 		$this->set('page_limits', $page_limits);
@@ -44,9 +46,9 @@ class AssetsController extends AppController {
 	 */
 	public function admin_index() {
 		$this->defaultPagination();
-		$this->paginate['conditions']['Asset.user_id'] = $this->Auth->user('id');
-		$this->set('tag_tally', $this->Asset->getTagTally($this->paginate['conditions']['Asset.user_id']));
-		$this->set('images', $this->paginate());
+		$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->Auth->user('id');
+		$this->set('tag_tally', $this->Asset->getTagTally($this->paginate['Asset']['conditions']['Asset.user_id']));
+		$this->set('images', $this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 	}
 	
@@ -60,12 +62,12 @@ class AssetsController extends AppController {
 		if(Access::isOwner($user_id)) {
 			$this->redirect(array('action'=>'admin_index'));
 		}
-		$this->paginate['conditions']['Asset.user_id'] = $user_id;
+		$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_id;
 		
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Asset->getTagTally($user_id));
 		$this->set('user',$this->Asset->User->findById($user_id));
-		$this->set('images',$this->paginate());
+		$this->set('images',$this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $user_id))));
 	}
 	
@@ -85,7 +87,7 @@ class AssetsController extends AppController {
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Asset->getTagTally());
 		$this->paginate = array_merge($this->paginate, $paginate);
-		$this->set('images',$this->paginate());
+		$this->set('images',$this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count'));
 		$this->set('contributingUsers',$contributingUsers);
 	}
@@ -112,6 +114,27 @@ class AssetsController extends AppController {
 			$this->paginate['Asset']['group'] = 'Asset.id';
 			$this->paginate['Asset']['conditions']['Tagging.tag_id'] = $tag['Tag']['id'];
 		}
+
+		if(isset($this->request->params['named']['type'])) {
+			$this->paginate['Asset']['conditions']['Asset.type'] = $this->request->params['named']['type'];
+		}
+	}
+
+	/**
+	 * Obtains Meme Generator-ready images via AJAX.
+	 */
+	public function admin_find() {
+		$response = array();
+
+		$query = array(
+			'fields' => array('id', 'user_id', 'filename'),
+			'conditions' => $this->Asset->getCleanImageConditions()
+		);
+
+		$response['images'] = $this->Asset->find('all', $query);
+
+		$this->set($response);
+		$this->set('_serialize', array_keys($response));
 	}
 	
 	/**

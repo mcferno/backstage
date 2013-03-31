@@ -76,8 +76,13 @@ var MemeGenerator = {
 		.on('click','.reset',function() {
 			window.location.reload();
 		})
-		.on('click','.choose-background',function() {
-			ns.swapImages();
+		.on('click','.choose-background', function() {
+			if(ns.images.length > 1) {
+				ns.rotateImage();
+			} else {
+				ns.workspace.hide();
+				ns.imagePicker.show();
+			}
 		})
 		.on('click','.meme-generator .save',function() {
 			$(this).button('loading');
@@ -89,12 +94,7 @@ var MemeGenerator = {
 		});
 		
 
-	/**
-	 * Cycles to the next backdrop option in the series (wraps at end)
-	 */
-	ns.swapImages = function() {
-		ns.imageOffset = (ns.imageOffset + 1) % ns.images.length;
-		var obj = ns.images[ns.imageOffset];
+	ns.loadImage = function(obj) {
 		
 		// image is not yet loaded
 		if(!obj.image) {
@@ -119,6 +119,24 @@ var MemeGenerator = {
 			ns.render();
 			ns.canvasToImage();
 		}
+	};
+
+	/**
+	 * Cycles to the next backdrop option in the series (wraps at end)
+	 */
+	ns.rotateImage = function() {
+		ns.imageOffset = (ns.imageOffset + 1) % ns.images.length;
+		var obj = ns.images[ns.imageOffset];
+
+		ns.loadImage(obj);
+	};
+
+	ns.imageSelection = function(event) {
+		var obj = $(event.target).data('full-image');
+
+		ns.imagePicker.hide();
+		ns.loadImage(obj);
+		ns.firstLineText.focus();
 	};
 	
 	/**
@@ -166,6 +184,7 @@ var MemeGenerator = {
 		}
 		
 		image.get(0).src = ns.canvas.toDataURL('image/jpeg');
+		ns.workspace.show();
 	};
 	
 	/**
@@ -402,13 +421,19 @@ var MemeGenerator = {
 	 * Initialize the app by attaching DOM elements
 	 */
 	ns.init = function() {
-		ns.canvas = $('#workspace').get(0); // dom object
+		ns.canvas = $('#rasterizer').get(0); // dom object
 		ns.context = ns.canvas.getContext('2d');
 		ns.images = ns.config.baseImages;
 		ns.firstLineText = $('#first-line');
 		ns.lastLineText = $('#last-line');
+		ns.imageTemplate = $('#imagePickerTemplate').html();
+		ns.imagePicker = $('#backgrounds');
+		ns.imageChoices = $('#backgrounds .mini-wall');
+		ns.workspace = $('.workspace');
+
+		ns.imageChoices.on('click', '.image-option', ns.imageSelection);
 		
-		if(ns.images.length < 2) {
+		if(ns.images.length === 1) {
 			$('.choose-background').hide();
 		}
 
@@ -461,6 +486,37 @@ var MemeGenerator = {
 		return !!(elem.getContext && elem.getContext('2d'));
 	}
 
+	/**
+	 * Initializes the image selector, allowing users to pick a Meme image within
+	 * the interface directly.
+	 */
+	ns.invokePicker = function() {
+
+		ns.imagePicker.show();
+
+		$.ajax({
+			url : AppBaseURL + 'backstage/assets/find',
+			success : ns.showImageChoices
+		})
+	};
+
+	/**
+	 * AJAX image feed callback. Parse the results and adds them to the list of
+	 * usage image options.
+	 */
+	ns.showImageChoices = function(payload) {
+		var images = '';
+
+		$(payload.images).each(function(idx, data) {
+			images += _.template(ns.imageTemplate, {
+				thumb_url : AppBaseURL + 'img/' + data.Asset['image-tiny'],
+				full_url : AppBaseURL + 'img/' + data.Asset['image-full']
+			});
+		});
+
+		ns.imageChoices.append(images);
+	};
+
 	$(document).ready(function() {
 		// early exit if canvas is not supported
 		if(!isCanvasSupported()) {
@@ -476,12 +532,19 @@ var MemeGenerator = {
 		}
 		
 		ns.init();
+
+		if(ns.images.length === 0) {
+
+			ns.invokePicker();
+
+		} else {
 		
-		// randomly shuffle the available backdrops
-		ns.images.sort(function() { return 0.5 - Math.random(); });
-		
-		// choose the first image (random) to display
-		ns.swapImages();
+			// randomly shuffle the available backdrops
+			ns.images.sort(function() { return 0.5 - Math.random(); });
+			
+			// choose the first image (random) to display
+			ns.rotateImage();
+		}
 
 		// toggle live-mode on by default
 		ns.toggleLiveMode();

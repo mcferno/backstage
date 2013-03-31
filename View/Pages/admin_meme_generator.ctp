@@ -76,27 +76,26 @@ MemeGenerator.config.type = 'Meme';
 		</div>
 	</div>
 	
-	<div class="row-fluid output">
+	<div class="row-fluid output workspace" style="display:none;">
 		<div class="span12">
-			<canvas id="workspace" height="450" width="600"></canvas>
+			<canvas id="rasterizer" height="450" width="600" style="display:none;"></canvas>
 		</div>
 	</div>
-	<?php /*
-	<div class="row">
-		<div class="span8" style="display:none;">
-			<div id="backgrounds" class="carousel">
-				<div class="carousel-inner">
-					<?php $first = true; foreach ($base_images as $image) : ?>
-					<div class="item <?if($first) { echo 'active'; } ?>"><?= $this->Html->image($image,array('alt'=>'')); ?></div>
-					<?php $first = false; endforeach; ?>
-				</div>
-				<a class="carousel-control left" href="#backgrounds" data-slide="prev">&lsaquo;</a>
-				<a class="carousel-control right" href="#backgrounds" data-slide="next">&rsaquo;</a>
-			</div>
+	
+	<div class="row-fluid" id="backgrounds" style="display:none;">
+		<div class="span12">
+			<h2>Choose an image</h2>
+			<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'Filter by Tag ...', 'label' => false)); ?>
+			<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'Filter by User ...', 'label' => false)); ?>
+			<div class="mini-wall"></div>
 		</div>
 	</div>
-	*/ ?>
-	<div class="row-fluid">
+
+	<script type="text/template" id="imagePickerTemplate">
+	<img src="<%= thumb_url %>" data-full-image="<%= full_url %>" class="image-option">
+	</script>
+	
+	<div class="row-fluid workspace" style="display:none;">
 		<div class="span12">
 			<div class="btn-group">
 				<?php if(!empty($contest['Contest']['id'])) : ?>
@@ -109,7 +108,7 @@ MemeGenerator.config.type = 'Meme';
 			<a href="#" style="display:none;" class="btn btn-huge btn-info view-last" title="View the last image you saved"><i class="icon-white icon-search"></i> View Last Saved</a>
 		</div>
 	</div>
-	<div class="row-fluid resize-reset">
+	<div class="row-fluid resize-reset workspace" style="display:none;">
 		<div class="span12">
 			<select name="canvasSize" class="canvasSize" title="Change the size of this meme when saved">
 				<option data-max="full">Image Size: Full</option>
