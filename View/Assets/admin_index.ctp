@@ -41,3 +41,13 @@
 </div>
 
 <?php $this->element('common/tag-tally'); ?>
+
+<?php $this->append('sidebar-bottom'); ?>
+<div class="tips">
+
+<?php if(!$this->request->is('mobile')): ?>
+	<p><i class="icon-white icon-info-sign"></i> You can upload new images by dragging and dropping them onto the browser, on any page.</p>
+<?php endif; ?>
+
+</div>
+<?php $this->end(); ?>

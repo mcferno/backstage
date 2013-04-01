@@ -12,13 +12,13 @@
 	</div>
 	<div class="span10">
 
-		<h1>Images From All Users</h1>
+		<h1><?= isset($this->request->params['named']['type']) ? 'Memes' : 'Images'; ?> From All Users</h1>
 		<p class="tall">We have a total of <span class="badge <?= (count($contributingUsers))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count($image_total))?'badge-custom':''; ?>"><?= $image_total; ?></span> images.</p>
 
 		<?php if(!empty($tag['Tag'])) : ?>
 		<h3 class="cozy">
 			Viewing Images in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
-			<?= $this->Html->link('Clear &times;', array('action' => $this->request->action), array('class' => 'badge badge-muted', 'escape' => false)); ?>
+			<?= $this->Paginator->link('Clear &times;', array('tag' => false), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
 		<?php endif; //tag ?>
 		
