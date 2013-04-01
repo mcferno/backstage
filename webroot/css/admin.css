@@ -647,74 +647,6 @@ li.comment .text {
 	}
 }
 
-.mini-wall {
-	line-height: 0;
-	-webkit-column-count: 6;
-	-webkit-column-gap:   5px;
-	-moz-column-count:    6;
-	-moz-column-gap:      5px;
-	column-count:         6;
-	column-gap:           5px;
-
-	margin-bottom: 1em;
-}
-
-.mini-wall img {
-	width: 100% !important;
-	height: auto !important;
-	max-width: 70px;
-	margin-bottom: 5px;
-}
-
-@media (max-width: 2600px) {
-	.mini-wall {
-		-moz-column-count:    15;
-		-webkit-column-count: 15;
-		column-count:         15;
-	}
-}
-
-@media (max-width: 1800px) {
-	.mini-wall {
-		-moz-column-count:    13;
-		-webkit-column-count: 13;
-		column-count:         13;
-	}
-}
-
-@media (max-width: 1400px) {
-	.mini-wall {
-		-moz-column-count:    11;
-		-webkit-column-count: 11;
-		column-count:         11;
-	}
-}
-
-@media (max-width: 1100px) { /* for 1024x */
-	.mini-wall {
-		-moz-column-count:    9;
-		-webkit-column-count: 9;
-		column-count:         9;
-	}
-}
-
-@media (max-width: 800px) {
-	.mini-wall {
-		-moz-column-count:    6;
-		-webkit-column-count: 6;
-		column-count:         6;
-	}
-}
-
-@media (max-width: 480px) {
-	.mini-wall {
-		-moz-column-count:    4;
-		-webkit-column-count: 4;
-		column-count:         4;
-	}
-}
-
-
 /* @end image wall ========================================================= */
 
 /* @start meme-generator =================================================== */
@@ -776,6 +708,22 @@ li.comment .text {
 
 .meme-generator .btn {
 	margin-bottom: 0.5em;
+}
+
+.mini-wall {
+	padding-bottom: 1em;
+	text-align: center;
+}
+
+.mini-wall img {
+	display: inline-block;
+	height: 75px;
+	width: auto !important;
+	padding-bottom: 5px;
+}
+
+.meme-generator .image-option:hover {
+	cursor: pointer;
 }
 
 /* @end meme-generator ===================================================== */

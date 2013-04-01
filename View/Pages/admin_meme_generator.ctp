@@ -84,10 +84,11 @@ MemeGenerator.config.type = 'Meme';
 	
 	<div class="row-fluid" id="backgrounds" style="display:none;">
 		<div class="span12">
-			<h2>Choose an image</h2>
-			<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'Filter by Tag ...', 'label' => false)); ?>
-			<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'Filter by User ...', 'label' => false)); ?>
-			<div class="mini-wall"></div>
+			<h2 class="cozy">Choose an image</h2>
+			<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'All Images', 'label' => false, 'div' => false, 'class' => 'input-medium')); ?> 
+			<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'All Users', 'label' => false, 'div' => false, 'class' => 'input-medium')); ?>
+			<div class="mini-wall clearfix"></div>
+			<button class="load-more btn btn-large btn-primary"><i class="icon-white icon-retweet"></i> <span class="extra">Load </span>More Images</button>
 		</div>
 	</div>
 

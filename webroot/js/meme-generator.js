@@ -431,6 +431,18 @@ var MemeGenerator = {
 		ns.imageChoices = $('#backgrounds .mini-wall');
 		ns.workspace = $('.workspace');
 
+		ns.paging = {
+			tag_filter : $('#image_tags'),
+			user_filter : $('#image_owners'),
+			more : $('.load-more'),
+			page : 1,
+			max_page : 1,
+			filters : false
+		};
+		ns.paging.tag_filter.on('change', ns.invokePicker);
+		ns.paging.user_filter.on('change', ns.invokePicker);
+		ns.paging.more.on('click', ns.invokePicker);
+
 		ns.imageChoices.on('click', '.image-option', ns.imageSelection);
 		
 		if(ns.images.length === 1) {
@@ -494,8 +506,35 @@ var MemeGenerator = {
 
 		ns.imagePicker.show();
 
+		var tag = ns.paging.tag_filter.val();
+		var user = ns.paging.user_filter.val();
+
+		var endpoint = AppBaseURL + 'backstage/assets/find';
+
+		if($.trim(tag) != '') {
+			endpoint += '/tag:' + tag;
+		}
+		if($.trim(user) != '') {
+			endpoint += '/user:' + user;
+		}
+		var filter = tag + '/' + user;
+
+		// change in filters, or initial invoke.
+		if(ns.paging.filters === false || ns.paging.filters != filter) {
+			ns.paging.filters = filter;
+			ns.paging.page = 1;
+			ns.paging.max = 1;
+			ns.imageChoices.html('');
+
+		// existing filters, advance in pagination if possible
+		} else if(ns.paging.page < ns.paging.max) {
+			ns.paging.page += 1;
+		}
+
+		endpoint += '/page:' + ns.paging.page;
+
 		$.ajax({
-			url : AppBaseURL + 'backstage/assets/find',
+			url : endpoint,
 			success : ns.showImageChoices
 		})
 	};
@@ -507,6 +546,21 @@ var MemeGenerator = {
 	ns.showImageChoices = function(payload) {
 		var images = '';
 
+		ns.paging.page = parseInt(payload.page, 10);
+		ns.paging.max = parseInt(payload.max_page, 10);
+
+		if(ns.paging.page < ns.paging.max) {
+			ns.paging.more.show();
+		} else {
+			ns.paging.more.hide();
+		}
+
+		// no results for the current filters
+		if(payload.images.length === 0 && ns.paging.page === 1) {
+			images += '<p class="alert alert-danger"><strong>Sorry</strong>, no images found. Try removing or changing search filters.</p>';
+		}
+
+		// compile image matches
 		$(payload.images).each(function(idx, data) {
 			images += _.template(ns.imageTemplate, {
 				thumb_url : AppBaseURL + 'img/' + data.Asset['image-tiny'],

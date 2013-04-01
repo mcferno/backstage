@@ -23,7 +23,7 @@ class AssetsController extends AppController {
 	public function adminBeforeFilter() {
 
 		if($this->RequestHandler->isMobile()) {
-			$this->paginate['limit'] = 15;
+			$this->paginate['Asset']['limit'] = 15;
 		}
 
 		parent::adminBeforeFilter();
@@ -118,6 +118,10 @@ class AssetsController extends AppController {
 		if(isset($this->request->params['named']['type'])) {
 			$this->paginate['Asset']['conditions']['Asset.type'] = $this->request->params['named']['type'];
 		}
+
+		if(isset($this->request->params['named']['user'])) {
+			$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->request->params['named']['user'];
+		}
 	}
 
 	/**
@@ -126,12 +130,13 @@ class AssetsController extends AppController {
 	public function admin_find() {
 		$response = array();
 
-		$query = array(
-			'fields' => array('id', 'user_id', 'filename'),
-			'conditions' => $this->Asset->getCleanImageConditions()
-		);
+		$this->paginate['Asset']['fields'] = array('id', 'user_id', 'filename');
+		$this->paginate['Asset']['conditions'] = $this->Asset->getCleanImageConditions();
+		$this->defaultPagination();
 
-		$response['images'] = $this->Asset->find('all', $query);
+		$response['images'] = $this->paginate('Asset');
+		$response['page'] = $this->request->params['paging']['Asset']['page'];
+		$response['max_page'] = $this->request->params['paging']['Asset']['pageCount'];
 
 		$this->set($response);
 		$this->set('_serialize', array_keys($response));

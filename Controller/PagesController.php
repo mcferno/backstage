@@ -96,6 +96,7 @@ class PagesController extends AppController {
 						'fields' => 'id, username'
 					)
 				),
+				'conditions' => $this->Asset->getCleanImageConditions(),
 				'fields' => 'id',
 				'group' => 'Asset.user_id',
 				'order' => 'User.username ASC'
