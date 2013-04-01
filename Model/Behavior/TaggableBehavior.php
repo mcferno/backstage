@@ -25,9 +25,12 @@ class TaggableBehavior extends ModelBehavior {
 
 	/**
 	 * Retrieves a count of all tags, and how many times they've been used for
-	 * a specific Model. Optionally filtered to only one User's content.
+	 * a specific Model.
+	 *
+	 * @param {Array} $model_conditions Joins the current Model and applies these optional conditions
+	 * @return {Array} Order Tagging results with count
 	 */
-	public function getTagTally(Model $Model, $by_user = false) {
+	public function getTagTally(Model $Model, $model_conditions = array()) {
 		$options = array(
 			'contain' => array('Tag'),
 			'fields' => 'COUNT(*) as count, Tagging.tag_id, Tag.*',
@@ -38,10 +41,10 @@ class TaggableBehavior extends ModelBehavior {
 			'order' => 'count DESC'
 		);
 
-		if($by_user) {
+		if(!empty($model_conditions)) {
 
 			$options['fields'] .= ", {$Model->alias}.*";
-			$options['conditions']["{$Model->alias}.user_id"] = $by_user;
+			$options['conditions'] = array_merge_recursive($options['conditions'], $model_conditions);
 			$options['joins'][] = array(
 				'alias' => $Model->alias,
 				'type' => 'INNER',

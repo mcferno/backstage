@@ -47,7 +47,7 @@ class AssetsController extends AppController {
 	public function admin_index() {
 		$this->defaultPagination();
 		$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->Auth->user('id');
-		$this->set('tag_tally', $this->Asset->getTagTally($this->paginate['Asset']['conditions']['Asset.user_id']));
+		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $this->paginate['Asset']['conditions']['Asset.user_id'])));
 		$this->set('images', $this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 	}
@@ -65,7 +65,7 @@ class AssetsController extends AppController {
 		$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_id;
 		
 		$this->defaultPagination();
-		$this->set('tag_tally', $this->Asset->getTagTally($user_id));
+		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $user_id)));
 		$this->set('user',$this->Asset->User->findById($user_id));
 		$this->set('images',$this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $user_id))));
@@ -75,18 +75,15 @@ class AssetsController extends AppController {
 	 * Assets from all users
 	 */
 	public function admin_users() {
-		$paginate = array(
-			'contain' => 'User',
-			'order' => 'Asset.created DESC'
-		);
+		$this->paginate['Asset']['contain'][] = 'User';
 		$contributingUsers = $this->Asset->find('all',array(
 			'contain' => 'User',
 			'group' => 'Asset.user_id'
 		));
 
 		$this->defaultPagination();
-		$this->set('tag_tally', $this->Asset->getTagTally());
-		$this->paginate = array_merge($this->paginate, $paginate);
+		$tag_conditions = isset($this->paginate['Asset']['conditions']) ? $this->paginate['Asset']['conditions'] : array();
+		$this->set('tag_tally', $this->Asset->getTagTally($tag_conditions));
 		$this->set('images',$this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count'));
 		$this->set('contributingUsers',$contributingUsers);
@@ -116,7 +113,18 @@ class AssetsController extends AppController {
 		}
 
 		if(isset($this->request->params['named']['type'])) {
-			$this->paginate['Asset']['conditions']['Asset.type'] = $this->request->params['named']['type'];
+			
+			// special type converted to multiple types
+			if($this->request->params['named']['type'] == 'Meme-Ready') {
+				if(isset($this->paginate['Asset']['conditions'])) {
+					$this->paginate['Asset']['conditions'] = array_merge($this->paginate['Asset']['conditions'], $this->Asset->getCleanImageConditions());
+				} else {
+					$this->paginate['Asset']['conditions'] = $this->Asset->getCleanImageConditions();
+				}
+			// standard single type lookup
+			} else {
+				$this->paginate['Asset']['conditions']['Asset.type'] = $this->request->params['named']['type'];
+			}
 		}
 
 		if(isset($this->request->params['named']['user'])) {

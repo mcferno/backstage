@@ -28,7 +28,6 @@
 							<li class="divider"></li>
 							<li><?= $this->Html->link('<i class="icon-home icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
 							<li><?= $this->Html->link('<i class="icon-th icon-white"></i> From All Users',array('controller'=>'assets','action'=>'admin_users'),array('escape'=>false)); ?></li>
-							<li><?= $this->Html->link('<i class="icon-th icon-white"></i> All Memes',array('controller'=>'assets','action'=>'users', 'type' => 'Meme'),array('escape'=>false)); ?></li>
 							
 						</ul>
 					</li>

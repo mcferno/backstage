@@ -49,6 +49,8 @@ Router::connect("/{$admin_url}/link-exchange/my-links/*", array('controller'=>'l
 Router::connect("/{$admin_url}/link-exchange/:action/*", array('controller'=>'links', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/link-exchange/*", array('controller'=>'links', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 
+Router::connect("/{$admin_url}/videos/my-videos/*", array('controller'=>'videos', 'action' => 'my_videos', 'prefix' => 'admin', 'admin' => true));
+
 Router::connect("/{$admin_url}/:controller", array('action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/:controller/:action/", array('prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/:controller/:action/*", array('prefix' => 'admin', 'admin' => true));

@@ -3,17 +3,33 @@
 ?>	
 <div class="row-fluid">
 	<div class="span2 text-right action-bar">
-		<h3>Contributing Users</h3>
-		<ul class="unstyled">
-			<?php foreach($contributingUsers as $user) : ?>
-			<li><strong><?= $this->Html->link($user['User']['username'],array('action'=>'user', $user['User']['id']),array('escape'=>false)); ?></strong> <i class="icon-white icon-user"></i></li>
-			<?php endforeach; ?>
-		</ul>	
+		<div class="extra">
+			<h3>Contributing Users</h3>
+			<ul class="unstyled">
+				<?php foreach($contributingUsers as $user) : ?>
+				<li><strong><?= $this->Html->link($user['User']['username'],array('action'=>'user', $user['User']['id']),array('escape'=>false)); ?></strong> <i class="icon-white icon-user"></i></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
 	</div>
 	<div class="span10">
 
-		<h1><?= isset($this->request->params['named']['type']) ? 'Memes' : 'Images'; ?> From All Users</h1>
+		<?php if(isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') : ?>
+
+		<h1>Memes From All Users</h1>
+		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> memes saved.</p>
+
+		<?php elseif (isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Ready') : ?>
+
+		<h1>Memes-Ready Images</h1>
+		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> images ready for the <?= $this->Html->link('Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator')); ?>.</p>
+
+		<?php else : ?>
+
+		<h1>Images From All Users</h1>
 		<p class="tall">We have a total of <span class="badge <?= (count($contributingUsers))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count($image_total))?'badge-custom':''; ?>"><?= $image_total; ?></span> images.</p>
+
+		<?php endif; // various Index diffentiations ?>
 
 		<?php if(!empty($tag['Tag'])) : ?>
 		<h3 class="cozy">

@@ -17,7 +17,14 @@ if(!empty($tag_tally)) :
 				$options['class'] = 'active';
 			}
 
-			echo $this->Html->tag('li', $this->Paginator->link("{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>", array('tag' => $tag['Tag']['id']), array('escape' => false)), $options);
+			$link_name = "{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>";
+			if(empty($this->request->params['paging'])) {
+				$link_tag = $this->Html->link($link_name, array('action' => 'index', 'tag' => $tag['Tag']['id']), array('escape' => false));
+			} else {
+				$link_tag = $this->Paginator->link($link_name, array('tag' => $tag['Tag']['id']), array('escape' => false));
+			}
+
+			echo $this->Html->tag('li', $link_tag, $options);
 		}
 	?>
 </ul>
