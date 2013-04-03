@@ -511,6 +511,10 @@ li.comment .text {
 	padding-bottom: 1em;
 }
 
+.tagged {
+	opacity: 0.4;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */

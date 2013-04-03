@@ -82,8 +82,12 @@ class AssetsController extends AppController {
 		));
 
 		$this->defaultPagination();
+
+		// filter tags by the existing pagination filters, except tags themselves
 		$tag_conditions = isset($this->paginate['Asset']['conditions']) ? $this->paginate['Asset']['conditions'] : array();
+		unset($tag_conditions['Tagging.tag_id']);
 		$this->set('tag_tally', $this->Asset->getTagTally($tag_conditions));
+
 		$this->set('images',$this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count'));
 		$this->set('contributingUsers',$contributingUsers);

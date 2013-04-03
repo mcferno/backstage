@@ -245,6 +245,10 @@ Backstage = {};
 			});
 
 			$('.asset-upload-popin form').submit(ns.ajaxFileUpload);
+
+			if($('.quick-tagger').length !== 0) {
+				ns.configureQuickTagging();
+			}
 		}
 	});
 
@@ -328,6 +332,75 @@ Backstage = {};
 			data : payload,
 			type : 'POST'
 		});
+	};
+
+	ns.configureQuickTagging = function() {
+
+		var req = $.ajax({
+			url : AppBaseURL + 'backstage/tags/list',
+			type : 'GET'
+		});
+
+		var tagSelection = $('.quick-tagger');
+		var taggableContainer = $('[data-role="taggable"]');
+		var tagSave = $('.save-quick-tags');
+
+		req.done(function(tags) {
+			tagSelection.select2({
+				tags : tags
+			});
+
+			// toggle selected objects as 'tagged'
+			taggableContainer.on('click', '[data-id]', function(e) {
+				e.preventDefault();
+				var obj = $(this);
+
+				if(obj.hasClass('tagged')) {
+					obj.removeClass('tagged');
+				} else {
+					obj.addClass('tagged');
+				}
+			});
+
+			// persist tags
+			tagSave.click(function() {
+				var tags = tagSelection.select2('val');
+				var tagged = [];
+				taggableContainer.find('.tagged').each(function() {
+					tagged.push($(this).data('id'));
+				});
+
+				if(tagged.length < 1) {
+					return;
+				}
+
+				var payload = {
+					data : {
+						tags : tags,
+						model : taggableContainer.data('model'),
+						tagged : tagged
+					}
+				};
+
+				$.ajax({
+					url : AppBaseURL + 'backstage/tags/add_tags',
+					type : 'POST',
+					cache : false,
+					data : payload,
+					success : function() {
+						tagSelection.select2('val', '');
+						taggableContainer.find('.tagged').removeClass('tagged');
+						tagSave.tooltip({ title : 'Tagging Saved!'}).tooltip('show');
+						setTimeout(function() { tagSave.tooltip('destroy'); }, 2000);
+					},
+					error : function() {
+						tagSave.tooltip({ title : 'Tags could not be saved.'}).tooltip('show');
+						setTimeout(function() { tagSave.tooltip('destroy'); }, 2000);
+					}, 
+				});
+			});
+		});
+
 	};
 
 })(jQuery, Backstage);

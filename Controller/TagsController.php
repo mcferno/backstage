@@ -47,7 +47,7 @@ class TagsController extends AppController {
 	}
 
 	/**
-	 * AJAX-driven tag updates
+	 * AJAX-driven tag updates. Requires all tags to be sent for a single item.
 	 */
 	public function admin_update() {
 		if($this->request->is('ajax') && ($this->request->is('post') || $this->request->is('put'))) {
@@ -61,6 +61,50 @@ class TagsController extends AppController {
 
 			$this->Tagging->saveTags($data);
 			$this->set('_serialize', true);
+		}
+	}
+
+	/**
+	 * AJAX-driven tagging additions. Allows multiple tags (existing and new) to
+	 * be associated to a set of images.
+	 */
+	public function admin_add_tags() {
+		if($this->request->is('ajax') && ($this->request->is('post') || $this->request->is('put'))) {
+
+			$user_id = $this->Auth->user('id');
+			$model = $this->request->data['model'];
+
+			foreach($this->request->data['tags'] as $tag) {
+
+				// UUIDs for existing tags
+				if(strlen($tag) === 36 && substr_count($tag, '-') === 4) {
+					$this->Tagging->addTagToMany($tag, $user_id, $model, $this->request->data['tagged']);
+				
+				// string-based Tag to save first.
+				} else {
+
+					$this->Tag->save(array(
+						'user_id' => $user_id,
+						'name' => $tag
+					));
+
+					$this->Tagging->addTagToMany($this->Tag->id, $user_id, $model, $this->request->data['tagged']);
+				}
+			}
+		}
+		exit();
+	}
+
+	/**
+	 * Obtains the current full set of Tags in the system
+	 */
+	public function admin_list() {
+		if($this->request->is('ajax')) {
+
+			// pull tags in a Select2 compatible format
+			$tags = $this->Tag->find('all', array('fields' => 'id, name AS text'));
+			$this->set('tags', Hash::extract($tags, '{n}.Tag'));
+			$this->set('_serialize', 'tags');
 		}
 	}
 

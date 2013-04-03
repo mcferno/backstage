@@ -91,4 +91,38 @@ class Tagging extends AppModel {
 			$this->saveMany($add_tag_ids);
 		}
 	}
+
+	/**
+	 * Add a tagging association to many records of the same type.
+	 */
+	public function addTagToMany($tag_id, $user_id, $model, $targets) {
+
+		$existing_tags = $this->find('all', array(
+			'conditions' => array(
+				'tag_id' => $tag_id,
+				'model' => $model,
+				'foreign_id' => $targets
+			)
+		));
+
+		$existing_targets = Hash::extract($existing_tags, '{n}.Tagging.foreign_id');
+
+		$to_tag = array_diff($targets, $existing_targets);
+
+		if(empty($to_tag)) {
+			return true;
+		}
+
+		$add_tags = array();
+		foreach ($to_tag as $foreign_id) {
+			$add_tags[] = array(
+				'tag_id' => $tag_id,
+				'model' => $model,
+				'foreign_id' => $foreign_id,
+				'user_id' => $user_id
+			);
+		}
+
+		return $this->saveMany($add_tags);
+	}
 }
