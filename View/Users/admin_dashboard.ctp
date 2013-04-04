@@ -112,6 +112,7 @@
 <div class="span12">
 	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
+		<tr><td class="short-date">Apr 04</td><td>Many improvements made to the organization of images on the site.</td></tr>
 		<tr><td class="short-date">Mar 03</td><td>Meme Generator font has been improved for Android and iOS users</td></tr>
 		<tr><td class="short-date">Feb 24</td><td>Group Chat has optional notification sounds for new messages and @mentions.</td></tr>
 		<tr><td class="short-date">Feb 02</td><td>Video section launched!</td></tr>

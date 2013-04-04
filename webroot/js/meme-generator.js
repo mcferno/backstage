@@ -56,7 +56,7 @@ var MemeGenerator = {
 			ns.canvasToImage();
 		})
 		.on('keyup','#first-line, #last-line',function() {
-			if(ns.liveMode === true) {
+			if(ns.liveMode === true && ns.currentImage !== false) {
 				ns.render();
 				ns.canvasToImage();
 			}
