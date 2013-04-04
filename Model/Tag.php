@@ -12,9 +12,6 @@ class Tag extends AppModel {
 			'exclusive' => true
 		)
 	);
-	public $virtualFields = array(
-		'count' => 'COUNT(*)'
-	);
 
 	public function getListForModel($model) {
 		return $this->find('list', array(

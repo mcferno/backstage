@@ -10,10 +10,10 @@
 
 <?= $this->element('admin/pagination'); ?>
 
-<div class="image-wall">
+<div class="image-wall" data-role="taggable" data-model="Asset">
 <?php 
 	foreach ($images as $image) {
-		echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']),array('action'=>'view',$image['Asset']['id']),array('escape'=>false));
+		echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action'=>'view',$image['Asset']['id']), array('data-id' => $image['Asset']['id'], 'escape'=>false));
 	} 
 ?>
 </div>
@@ -21,3 +21,12 @@
 <?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 
 <?php $this->element('common/tag-tally'); ?>
+
+<?php
+// optional quick-tagging mode
+if(isset($this->request->params['named']['mode']) && $this->request->params['named']['mode'] == 'tag') {
+	$this->append('sidebar-bottom');
+	echo $this->element('common/quick-tagging');
+	$this->end();
+}
+?>

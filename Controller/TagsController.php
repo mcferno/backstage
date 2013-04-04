@@ -35,6 +35,8 @@ class TagsController extends AppController {
 	 * Admin overview index
 	 */
 	public function admin_index() {
+		$this->Tag->virtualFields['count'] = 'COUNT(*)';
+
 		if(!empty($this->request->params['named']['user'])) {
 			$this->paginate['Tag']['conditions']['Tag.user_id'] = $this->request->params['named']['user'];
 		}
