@@ -56,7 +56,7 @@
 
 <?php
 // optional quick-tagging mode
-if(isset($this->request->params['named']['mode']) && $this->request->params['named']['mode'] == 'tag') {
+if(isset($this->request->params['named']['mode']) && $this->request->params['named']['mode'] == 'tag' && !$this->request->is('mobile')) {
 	$this->append('sidebar-bottom');
 	echo $this->element('common/quick-tagging');
 	$this->end();

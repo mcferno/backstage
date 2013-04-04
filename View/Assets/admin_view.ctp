@@ -87,12 +87,14 @@
 		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
 		<?= $this->element('common/chat-module', array('model' => 'Asset', 'foreign_key' => $asset['Asset']['id'])); ?>
 
+		<?php if(!$this->request->is('mobile')) : ?>
 		<div class="clearfix cozy">
 			<h4 class="cozy text-right">Add or Remove Tags</h4>
 			<form>
 				<?= $this->element('common/tagging', array('model' => 'Asset', 'foreign_key' => $this->request->data['Asset']['id'], 'mode' => 'live')); ?>
 			</form>
 		</div>
+		<?php endif; // desktop only ?>
 	</div>
 </div>
 
