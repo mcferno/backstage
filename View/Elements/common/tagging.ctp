@@ -10,4 +10,5 @@ echo $this->Form->input('Tagging.user_id', array('type' => 'hidden', 'value' => 
 ?>
 <script type="text/javascript">
 Backstage.selectTags = <?= json_encode($tags); ?>;
+Backstage.taggingMode = <?= json_encode(isset($mode) ? $mode : false); ?>;
 </script>

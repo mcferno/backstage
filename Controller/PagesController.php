@@ -62,21 +62,10 @@ class PagesController extends AppController {
 	public function admin_meme_generator() {
 
 		$img_path_count = strlen(IMAGES);
-
-		// specific subset of images specified
-		if(!empty($this->request->pass[0])) {
-
-			// find any images matching the parameter (absolute paths)
-			$images = glob(IMAGES.'user'.DS.$this->request->pass[0].'*');
-			$images = array_merge($images, glob(IMAGES.'base-meme'.DS.$this->request->pass[0].'*'));
-
-			// convert paths to make them relative to the image folder
-			foreach($images as &$image) {
-				$image = substr($image, $img_path_count);
-			}
+		$images = array();
 		
 		// meme of a specific user-uploaded image
-		} elseif(!empty($this->request->params['named']['asset'])) {
+		if(!empty($this->request->params['named']['asset'])) {
 			$path = $this->Asset->getPath($this->request->params['named']['asset']);
 			
 			if(!empty($path)) {
@@ -97,30 +86,28 @@ class PagesController extends AppController {
 			$this->set('contest', $contest);
 		}
 		
-		// fallback set of images
+		// fallback allowing users to choose an image
 		if(empty($images)) {
-			$images = glob(IMAGES.'base-meme'.DS.'*.*');
-			foreach ($images as &$image) {
-				$image = substr($image, $img_path_count);
-			}
 
-			// get all user images without text
-			$plain_images = $this->Asset->find('all', array(
-				'fields' => array('user_id', 'filename'),
-				'conditions' => array(
-					'type' => array('URLgrab', 'Upload')
-				)
+			$this->set('image_tags', $this->Asset->Tag->getListForModel('Asset'));
+			$contributingUsers = $this->Asset->find('all',array(
+				'contain' => array(
+					'User' => array(
+						'fields' => 'id, username'
+					)
+				),
+				'conditions' => $this->Asset->getCleanImageConditions(),
+				'fields' => 'id',
+				'group' => 'Asset.user_id',
+				'order' => 'User.username ASC'
 			));
+			$this->set('image_owners', Hash::combine($contributingUsers, '{n}.User.id', '{n}.User.username'));
 
-			// add to pool of images
-			foreach ($plain_images as $asset) {
-				$images[] = $this->Asset->folderPathRelative . $asset['Asset']['user_id'] . DS . $asset['Asset']['filename'];
-			}
 		}
 
 		$this->set('first_line', (!empty($this->request->query['first-line'])) ? $this->request->query['first-line'] : '' );
 		$this->set('last_line', (!empty($this->request->query['last-line'])) ? $this->request->query['last-line'] : '' );
-		$this->set('base_images',$images);
+		$this->set('base_images', $images);
 	}
 	
 	/**

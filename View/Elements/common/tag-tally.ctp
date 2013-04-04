@@ -1,6 +1,6 @@
-<?php 
+<?php
 if(!empty($tag_tally)) :
-	$this->start('sidebar-bottom');
+	$this->append('sidebar-bottom');
 	$action = (isset($action) ? $action : $this->request->params['action']);
 ?>
 <ul class="nav nav-list tags-tally">
@@ -10,12 +10,21 @@ if(!empty($tag_tally)) :
 		if(isset($this->request->params['named']['tag'])) {
 			$tag_id = $this->request->params['named']['tag'];
 		}
+
 		foreach ($tag_tally as $tag) {
 			$options = array();
 			if($tag['Tag']['id'] == $tag_id) {
 				$options['class'] = 'active';
 			}
-			echo $this->Html->tag('li', $this->Html->link("{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>", array('action' => $action, 'tag' => $tag['Tag']['id']), array('escape' => false)), $options);
+
+			$link_name = "{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>";
+			if(empty($this->request->params['paging'])) {
+				$link_tag = $this->Html->link($link_name, array('action' => 'index', 'tag' => $tag['Tag']['id']), array('escape' => false));
+			} else {
+				$link_tag = $this->Paginator->link($link_name, array('tag' => $tag['Tag']['id'], 'page' => false), array('escape' => false));
+			}
+
+			echo $this->Html->tag('li', $link_tag, $options);
 		}
 	?>
 </ul>

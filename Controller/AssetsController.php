@@ -13,27 +13,29 @@ class AssetsController extends AppController {
 	);
 
 	public $paginate = array(
-		'order' => 'Asset.created DESC',
-		'limit' => 40,
-		'maxLimit' => 150
+		'Asset' => array(
+			'order' => 'Asset.created DESC',
+			'limit' => 40,
+			'maxLimit' => 150
+		)
 	);
 	
 	public function adminBeforeFilter() {
 
 		if($this->RequestHandler->isMobile()) {
-			$this->paginate['limit'] = 15;
+			$this->paginate['Asset']['limit'] = 15;
 		}
 
 		parent::adminBeforeFilter();
 	}
 
-	public function beforeRender() {
-		parent::beforeRender();
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
 
-		$page_limits = array($this->paginate['limit'], 80, 150);
+		$page_limits = array($this->paginate['Asset']['limit'], 80, 150);
 
 		if($this->RequestHandler->isMobile()) {
-			$page_limits = array($this->paginate['limit'], 30, 60);
+			$page_limits = array($this->paginate['Asset']['limit'], 30, 60);
 		}
 
 		$this->set('page_limits', $page_limits);
@@ -43,9 +45,11 @@ class AssetsController extends AppController {
 	 * Personalized asset index (for the current user)
 	 */
 	public function admin_index() {
-		$this->paginate['conditions']['Asset.user_id'] = $this->Auth->user('id');
-		$this->set('images', $this->paginate());
-		$this->set('user_dir', $this->Asset->folderPathRelative . $this->Auth->user('id').'/');
+		$this->defaultPagination();
+		$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->Auth->user('id');
+		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $this->paginate['Asset']['conditions']['Asset.user_id'])));
+		$this->set('images', $this->paginate('Asset'));
+		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 	}
 	
 	/**
@@ -58,26 +62,96 @@ class AssetsController extends AppController {
 		if(Access::isOwner($user_id)) {
 			$this->redirect(array('action'=>'admin_index'));
 		}
-		$this->paginate['conditions']['Asset.user_id'] = $user_id;
+		$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_id;
 		
+		$this->defaultPagination();
+		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $user_id)));
 		$this->set('user',$this->Asset->User->findById($user_id));
-		$this->set('images',$this->paginate());
-		$this->set('user_dir', $this->Asset->folderPathRelative . $user_id . DS);
+		$this->set('images',$this->paginate('Asset'));
+		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $user_id))));
 	}
 	
+	/**
+	 * Assets from all users
+	 */
 	public function admin_users() {
-		$paginate = array(
-			'contain' => 'User',
-			'order' => 'Asset.created DESC'
-		);
+		$this->paginate['Asset']['contain'][] = 'User';
 		$contributingUsers = $this->Asset->find('all',array(
 			'contain' => 'User',
 			'group' => 'Asset.user_id'
 		));
-		$this->paginate = array_merge($this->paginate, $paginate);
-		$this->set('images',$this->paginate());
+
+		$this->defaultPagination();
+
+		// filter tags by the existing pagination filters, except tags themselves
+		$tag_conditions = isset($this->paginate['Asset']['conditions']) ? $this->paginate['Asset']['conditions'] : array();
+		unset($tag_conditions['Tagging.tag_id']);
+		$this->set('tag_tally', $this->Asset->getTagTally($tag_conditions));
+
+		$this->set('images',$this->paginate('Asset'));
+		$this->set('image_total', $this->Asset->find('count'));
 		$this->set('contributingUsers',$contributingUsers);
-		$this->set('user_dir', $this->Asset->folderPathRelative);
+	}
+
+	/**
+	 * Generic pagination augmentation based on the existance of specific URL flag
+	 */
+	protected function defaultPagination() {
+
+		// tagged asset filtering
+		if(isset($this->request->params['named']['tag'])) {
+			$tag = $this->Asset->Tag->findById($this->request->params['named']['tag']);
+			$this->set('tag', $tag);
+
+			$this->paginate['Asset']['joins'][] = array(
+				'alias' => 'Tagging',
+				'type' => 'INNER',
+				'table' => 'taggings',
+				'conditions'=> array(
+					'Asset.id = Tagging.foreign_id',
+					'Tagging.model' => 'Asset'
+				)
+			);
+			$this->paginate['Asset']['group'] = 'Asset.id';
+			$this->paginate['Asset']['conditions']['Tagging.tag_id'] = $tag['Tag']['id'];
+		}
+
+		if(isset($this->request->params['named']['type'])) {
+			
+			// special type converted to multiple types
+			if($this->request->params['named']['type'] == 'Meme-Ready') {
+				if(isset($this->paginate['Asset']['conditions'])) {
+					$this->paginate['Asset']['conditions'] = array_merge($this->paginate['Asset']['conditions'], $this->Asset->getCleanImageConditions());
+				} else {
+					$this->paginate['Asset']['conditions'] = $this->Asset->getCleanImageConditions();
+				}
+			// standard single type lookup
+			} else {
+				$this->paginate['Asset']['conditions']['Asset.type'] = $this->request->params['named']['type'];
+			}
+		}
+
+		if(isset($this->request->params['named']['user'])) {
+			$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->request->params['named']['user'];
+		}
+	}
+
+	/**
+	 * Obtains Meme Generator-ready images via AJAX.
+	 */
+	public function admin_find() {
+		$response = array();
+
+		$this->paginate['Asset']['fields'] = array('id', 'user_id', 'filename');
+		$this->paginate['Asset']['conditions'] = $this->Asset->getCleanImageConditions();
+		$this->defaultPagination();
+
+		$response['images'] = $this->paginate('Asset');
+		$response['page'] = $this->request->params['paging']['Asset']['page'];
+		$response['max_page'] = $this->request->params['paging']['Asset']['pageCount'];
+
+		$this->set($response);
+		$this->set('_serialize', array_keys($response));
 	}
 	
 	/**
@@ -218,7 +292,7 @@ class AssetsController extends AppController {
 	public function admin_view($id = null) {
 
 		$asset = $this->Asset->find('first', array(
-			'contain' => 'User',
+			'contain' => array('User', 'Tag'),
 			'conditions' => array(
 				'Asset.id' => $id
 			)
@@ -233,7 +307,8 @@ class AssetsController extends AppController {
 
 		$this->set('asset', $asset);
 		$this->set('types', $this->Asset->getTypes());
-		$this->set('user_dir', $this->Asset->folderPathRelative . $asset['Asset']['user_id'].'/');
+		$this->set('tags', array_values($this->Asset->Tag->getListForModel('Asset')));
+		$this->request->data['Tagging']['tags'] = implode(Hash::extract($this->request->data['Tag'], '{n}.name'), ',');
 	}
 
 	/**

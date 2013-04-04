@@ -28,7 +28,7 @@ class LinksController extends AppController {
 		$this->paginate['Link']['conditions']['Link.user_id'] = $this->Auth->user('id');
 		$this->set('sectionTitle', 'My Links');
 		$this->defaultPagination();
-		$this->set('tag_tally', $this->Link->getTagTally($this->Auth->user('id')));
+		$this->set('tag_tally', $this->Link->getTagTally(array('Link.user_id' => $this->Auth->user('id'))));
 		$this->render('admin_index');
 	}
 
@@ -98,7 +98,7 @@ class LinksController extends AppController {
 
 		// owner
 		if(Access::isOwner($link['Link']['user_id'])) {
-			$this->set('tag_tally', $this->Link->getTagTally($this->Auth->user('id')));
+			$this->set('tag_tally', $this->Link->getTagTally(array('Link.user_id' => $this->Auth->user('id'))));
 		} else {
 			$this->set('tag_tally', $this->Link->getTagTally());
 		}

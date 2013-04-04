@@ -30,7 +30,7 @@ class VideosController extends AppController {
 		$this->paginate['Video']['conditions']['Video.user_id'] = $this->Auth->user('id');
 		$this->set('sectionTitle', 'My Video');
 		$this->defaultPagination();
-		$this->set('tag_tally', $this->Video->getTagTally($this->Auth->user('id')));
+		$this->set('tag_tally', $this->Video->getTagTally(array('Video.user_id' => $this->Auth->user('id'))));
 		$this->render('admin_index');
 	}
 
@@ -295,7 +295,7 @@ class VideosController extends AppController {
 
 		// owner
 		if(Access::isOwner($video['Video']['user_id'])) {
-			$this->set('tag_tally', $this->Video->getTagTally($this->Auth->user('id')));
+			$this->set('tag_tally', $this->Video->getTagTally(array('Video.user_id' => $this->Auth->user('id'))));
 		} else {
 			$this->set('tag_tally', $this->Video->getTagTally());
 		}

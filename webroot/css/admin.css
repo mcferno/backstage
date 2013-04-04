@@ -493,6 +493,28 @@ li.comment .text {
 	background-color: rgba(87, 184, 70, 0.3);
 }
 
+.select2-container-multi .select2-choices {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+
+	background: none;
+	border: 1px solid #555;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+	color: #eee;
+}
+
+.cozy {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.tagged {
+	opacity: 0.4;
+}
+
 /* @end misc-ui-elements =================================================== */
 
 /* @start tabulation-and-pagination ======================================== */
@@ -690,6 +712,22 @@ li.comment .text {
 
 .meme-generator .btn {
 	margin-bottom: 0.5em;
+}
+
+.mini-wall {
+	padding-bottom: 1em;
+	text-align: center;
+}
+
+.mini-wall img {
+	display: inline-block;
+	height: 75px;
+	width: auto !important;
+	padding-bottom: 5px;
+}
+
+.meme-generator .image-option:hover {
+	cursor: pointer;
 }
 
 /* @end meme-generator ===================================================== */
@@ -901,7 +939,7 @@ li.comment .text {
 	padding-top: 5px;
 }
 
-.link-exchange .badge {
+.link-exchange .badge, .image-tags .badge {
 	font-size: 0.9em;
 	font-weight: normal;
 	line-height: 2em;

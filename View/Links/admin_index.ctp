@@ -22,12 +22,12 @@
 	<div class="span10">
 		<h1><?= (!empty($sectionTitle)) ? $sectionTitle : 'Link Exchange'; ?></h1>
 	<?php if(!empty($tag['Tag'])) : ?>
-		<h3>
+		<h3 class="cozy">
 			Viewing Links in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
 			<?= $this->Html->link('Clear &times;', array('action' => 'index'), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
 	<?php elseif (!empty($user['User'])) : ?>
-		<h3>
+		<h3 class="cozy">
 			Viewing Links submitted by: <?= $user['User']['username']; ?> 
 		</h3>
 	<?php else: ?>

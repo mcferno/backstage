@@ -10,12 +10,19 @@ class Asset extends AppModel {
 			'foreignKey' => 'winning_asset_id'
 	));
 	public $hasMany = array('Contest');
+	public $hasAndBelongsToMany = array(
+		'Tag' => array(
+			'joinTable' => 'taggings',
+			'foreignKey' => 'foreign_id'
+		)
+	);
 
 	public $actsAs = array(
 		'Postable.Postable' => array(
 			'storageModel' => 'Activity'
 		),
-		'Ownable'
+		'Ownable',
+		'Taggable'
 	);
 	
 	// recognized dataURL image types
@@ -38,6 +45,41 @@ class Asset extends AppModel {
 		parent::__construct();
 		$this->folderPathRelative = 'user' . DS;
 		$this->folderPath = WWW_ROOT . 'img' . DS . $this->folderPathRelative;
+	}
+
+	/**
+	 * Attach useful information after retrieval
+	 */
+	public function afterFind($results, $primary = false) {
+
+		// multi-array format
+		if(isset($results[0]['Asset'])) {
+			foreach($results as &$result) {
+				$this->addMetaData($result['Asset']);
+			}
+
+		// single direct result format
+		} elseif(isset($results['id'])) {
+			$this->addMetaData($results);
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Adds meta-data information to a single Asset record.
+	 *
+	 * @param {Asset} Direct Asset reference to attach meta-data
+	 */
+	public function addMetaData(&$result) {
+		// add image references
+		if(!empty($result['filename']) && !empty($result['user_id'])) {
+			$base = "{$this->folderPathRelative}{$result['user_id']}";
+
+			$result['image-full'] = "{$base}/{$result['filename']}";
+			$result['image-thumb'] = "{$base}/200/{$result['filename']}";
+			$result['image-tiny'] = "{$base}/75/{$result['filename']}";
+		}
 	}
 	
 	/**
@@ -349,5 +391,28 @@ class Asset extends AppModel {
 		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Asset']['id']);
 		$activity['Activity']['preview'] = "{$this->folderPathRelative}{$activity['Asset']['user_id']}/200/{$activity['Asset']['filename']}";
 		$activity['Activity']['preview-small'] = "{$this->folderPathRelative}{$activity['Asset']['user_id']}/75/{$activity['Asset']['filename']}";
+	}
+
+	/**
+	 * Obtains the conditions to find Assets which are ready for the Meme 
+	 * Generator. This is typically images without text on them.
+	 *
+	 * @return {Array} Find conditions
+	 */
+	public function getCleanImageConditions() {
+		return array(
+			'Asset.type' => array(
+				'Crop', 'Upload', 'URLgrab'
+			)
+		);
+	}
+
+	/**
+	 * Count-wrapper for getCleanImageConditions
+	 */
+	public function getCleanImageCount() {
+		return $this->find('count', array(
+			'conditions' => $this->getCleanImageConditions()
+		));
 	}
 }

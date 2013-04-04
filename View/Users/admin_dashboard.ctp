@@ -17,7 +17,7 @@
 				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
 					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'Meme Generator')); ?>
 				</a>
-				<h4 class="text-right">Total Images <span class="badge badge-custom"><?= $meme_count; ?></span></h4>
+				<h4 class="text-right">Meme-Ready Images <span class="badge badge-custom"><?= $meme_count; ?></span></h4>
 			</div>
 		</li>
 		<li class="span3">
@@ -25,7 +25,7 @@
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
 					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'Group Chat')); ?>
 				</a>
-				<h4 class="text-right">Chat with other online users</h4>
+				<h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"></span></h4>
 			</div>
 		</li>
 		<li class="span3">

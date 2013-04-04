@@ -60,7 +60,7 @@ class UsersController extends AppController {
 		));
 		$asset_count_all = $this->User->Asset->find('count');
 		$this->set('recent_users', $users);
-		$this->set('meme_count', count(glob(IMAGES.'base-meme'.DS.'*.*')));
+		$this->set('meme_count', $this->User->Asset->getCleanImageCount());
 		$this->set('contest_count', ClassRegistry::init('Contest')->find('count'));
 		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));
 		$this->set('links_count', ClassRegistry::init('Link')->find('count'));

@@ -23,11 +23,12 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-picture icon-white"></i> Images <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><?= $this->Html->link('<i class="icon-edit icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
-							<li><?= $this->Html->link('<i class="icon-picture icon-white"></i> Caption Battles',array('controller'=>'contests','action'=>'index'),array('escape'=>false)); ?></li>
-							<li><?= $this->Html->link('<i class="icon-th-large icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
-							<li><?= $this->Html->link('<i class="icon-th icon-white"></i> From All Users',array('controller'=>'assets','action'=>'admin_users'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-fire icon-white"></i> Caption Battles',array('controller'=>'contests','action'=>'index'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-upload icon-white"></i> <strong>Upload Image</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false, 'class' => 'image-upload-btn')); ?></li>
 							<li class="divider"></li>
-							<li><?= $this->Html->link('<i class="icon-upload icon-white"></i> Upload New Image',array('controller'=>'assets','action'=>'index'),array('escape'=>false, 'class' => 'image-upload-btn')); ?></li>
+							<li><?= $this->Html->link('<i class="icon-home icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-th icon-white"></i> From All Users',array('controller'=>'assets','action'=>'admin_users'),array('escape'=>false)); ?></li>
+							
 						</ul>
 					</li>
 					
@@ -54,7 +55,8 @@
 							<li><?= $this->Html->link('<i class="icon-plus-sign icon-white"></i> Add New User',array('controller'=>'users','action'=>'add'), array('escape' => false)); ?></li>
 							<li><?= $this->Html->link('<i class="icon-th-list icon-white"></i> List Users',array('controller'=>'users','action'=>'index'), array('escape' => false)); ?></li>
 							<li class="divider"></li>
-							<li><?= $this->Html->link('<i class="icon-th-list icon-white"></i> Message Log',array('controller'=>'messages', 'action'=>'index'), array('escape' => false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-comment icon-white"></i> Message Log',array('controller'=>'messages', 'action'=>'index'), array('escape' => false)); ?></li>
+							<li><?= $this->Html->link('<i class="icon-tags icon-white"></i> Tag List',array('controller'=>'tags', 'action'=>'index'), array('escape' => false)); ?></li>
 							<li class="divider"></li>
 							<li><?= $this->Html->link('<i class="icon-refresh icon-white"></i> Clear Cache',array('controller'=>'pages','action'=>'clear_cache'), array('escape' => false)); ?></li>
 							<li></li>

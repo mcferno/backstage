@@ -33,11 +33,11 @@
 		
 		echo $this->Html->css(array(
 			'bootstrap.min.css?t='.filemtime(CSS.'bootstrap.min.css'),
-			'bootstrap-responsive.min.css?t='.filemtime(CSS.'bootstrap-responsive.min.css'),
-			'admin.css?t='.filemtime(CSS.'admin.css')
+			'bootstrap-responsive.min.css?t='.filemtime(CSS.'bootstrap-responsive.min.css')
 		));
-		
 		echo $this->fetch('css');
+		echo $this->Html->css('admin.css?t='.filemtime(CSS.'admin.css'));
+		
 		echo $this->element('ga');
 	?>
 	<script>

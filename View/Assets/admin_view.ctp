@@ -1,21 +1,11 @@
 <?php 
-	$rel_path = IMAGES.$user_dir.$asset['Asset']['filename'];
+	$rel_path = IMAGES . $asset['Asset']['image-full'];
 	$specs = getimagesize($rel_path);
 	$filesize = filesize($rel_path);
 	$this->set('contentSpan',10);
 
 	// load cropping library if the image is not too small (crop-worthy)
-	$load_cropper = (
-		!$this->request->is('mobile') 
-		&& ($specs[0] >= 600 || $specs[1] >= 600)
-		&& Access::isOwner($asset['Asset']['user_id'])
-		&& $asset['Asset']['type'] != 'Crop'
-	);
-
-	// force cropper if in the URL request
-	if(isset($this->request->params['named']['crop'])) {
-		$load_cropper = true;
-	}
+	$load_cropper = isset($this->request->params['named']['crop']);
 ?>
 <div class="row-fluid">
 	<div class="span12">
@@ -84,12 +74,25 @@
 
 		<?php if($load_cropper) { echo $this->element('common/image-cropper'); } ?>
 
-		<p class=" text-center"><?= $this->Html->image($user_dir.$asset['Asset']['filename'], array('class' => ($load_cropper) ? 'cropable' : '', 'data-image-id' => $asset['Asset']['id'])); ?></p>
+		<p class="text-center"><?= $this->Html->image($asset['Asset']['image-full'], array('class' => ($load_cropper) ? 'cropable' : '', 'data-image-id' => $asset['Asset']['id'])); ?></p>
 
-		<p class=" text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $user_dir . $asset['Asset']['filename']; ?>"></p>
+		<p class="image-tags text-right">
+		<?php foreach($asset['Tag'] as $idx => $tag) : ?>
+		<a href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'users', 'tag' => $tag['id'])); ?>"><span class="badge badge-<?= ($idx % 2 == 0) ? 'info' : 'pale'; ?>"><?= $tag['name']; ?></span></a>
+		<?php endforeach; ?>
+		</p>
+
+		<p class=" text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $asset['Asset']['image-full']; ?>"></p>
 
 		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
 		<?= $this->element('common/chat-module', array('model' => 'Asset', 'foreign_key' => $asset['Asset']['id'])); ?>
+
+		<div class="clearfix cozy">
+			<h4 class="cozy text-right">Add or Remove Tags</h4>
+			<form>
+				<?= $this->element('common/tagging', array('model' => 'Asset', 'foreign_key' => $this->request->data['Asset']['id'], 'mode' => 'live')); ?>
+			</form>
+		</div>
 	</div>
 </div>
 
