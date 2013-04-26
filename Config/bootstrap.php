@@ -5,11 +5,12 @@ App::uses('CakeLog', 'Log');
 Cache::config('default', array('engine' => 'File'));
 
 $engine = 'File';
+$prefix = Configure::read('App.cache_prefix');
 
 // short cache
 Cache::config('short', array(
 	'engine' => $engine,
-	'prefix' => 'app_short_',
+	'prefix' => $prefix . 'app_short_',
 	'path' => CACHE . 'persistent' . DS,
 	'serialize' => ($engine === 'File'),
 	'duration' => '5 minutes'
@@ -17,7 +18,7 @@ Cache::config('short', array(
 
 Cache::config('online_status', array(
 	'engine' => $engine,
-	'prefix' => 'app_online_status_',
+	'prefix' => $prefix . 'app_online_status_',
 	'path' => CACHE . 'persistent' . DS,
 	'serialize' => ($engine === 'File'),
 	'duration' => '20 seconds'

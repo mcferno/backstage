@@ -29,7 +29,7 @@ class UsersController extends AppController {
 
 	public function admin_login() {
 		if($this->Auth->user('id')) {
-			$this->redirect($this->Auth->redirect());
+			$this->redirect($this->Auth->redirectUrl());
 		}
 		
 		if ($this->request->is('post')) {
@@ -38,7 +38,7 @@ class UsersController extends AppController {
 				$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
 				$this->User->resetUserCache();
 				$this->persistSession();
-				$this->redirect($this->Auth->redirect());
+				$this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Session->setFlash('Invalid username or password, try again','messaging/alert-error');
 			}
