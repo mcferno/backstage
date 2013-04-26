@@ -1,15 +1,20 @@
 <?php
 
 class Account extends AppModel {
-	
+
+	/**
+	 * Tracks a Twitter user by storing their latest profile information and
+	 * profile image.
+	 *
+	 * @param {String} $handle Twitter account name to track
+	 */
 	public function follow($handle) {
 				
-		$base_url = 'https://api.twitter.com/1/users/show.json';
 		$params = array(
 			'screen_name'=>$handle,
 		);
 		
-		$record = $this->_readJson($base_url, $params);
+		$record = ClassRegistry::init('Twitter')->getAPIObject()->users_show($params, true);
 		
 		if(!empty($record['id'])) {
 						
@@ -32,14 +37,19 @@ class Account extends AppModel {
 				'data' => json_encode($record)
 			);
 			
-			$data['profile_image'] = $this->saveProfileImage($record['profile_image_url'], $record['screen_name']);
+			$data['profile_image'] = $this->saveProfileImage($record['profile_image_url']);
 			
 			$this->save($data);
 		}
 	}
-	
-	// keep a local copy of the profile image for display purposes
-	public function saveProfileImage($url, $handle) {		
+
+	/**
+	 * Keep a local copy of the profile image for display purposes
+	 *
+	 * @param {String} $url URL of the profile image we wish to save.
+	 * @return {String} Relative path to the stored image.
+	 */
+	public function saveProfileImage($url) {
 		// create curl resource
 		$ch = curl_init();
 		
