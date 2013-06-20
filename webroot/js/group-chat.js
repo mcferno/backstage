@@ -75,9 +75,6 @@ var GroupChat = {
 			if(this.$el.find('.active-user').length) {
 				this.el.className = this.el.className + ' highlight';
 			}
-			if(ns.messageCount() %2 === ns.chatRowStripe) {
-				this.el.className = this.el.className + ' alt-row';
-			}
 		},
 		render : function() {
 			var timestamp = this.model.get('timestamp');

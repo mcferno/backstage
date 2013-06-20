@@ -89,9 +89,11 @@ hr {
 	border-bottom: 1px solid #888;
 }
 
-.table .alt-row, .table .alt-row td, .table .alt-row th,
+/* table-striped-inverse */
 .table-striped tbody > tr:nth-child(odd) > td,
-.table-striped tbody > tr:nth-child(odd) > th {
+.table-striped tbody > tr:nth-child(odd) > th,
+.table-striped-inverse tr:nth-last-child(2n + 1),
+.table-striped-inverse tr:nth-last-child(2n + 1) td {
 	background-color: #444;
 }
 

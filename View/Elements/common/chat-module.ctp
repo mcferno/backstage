@@ -79,7 +79,7 @@ if($chatSettings['scope'] === 'Chat') {
 </div>
 <div class="row-fluid chat-window">
 	<div class="span12">
-		<table class="table chat table-condensed"></table>
+		<table class="table chat table-condensed <?= ($reverseChat) ? 'table-striped-inverse' : 'table-striped'; ?>"></table>
 	</div>
 </div>
 
