@@ -20,7 +20,7 @@
 /* @start color-treatment ================================================== */
 
 body {
-	background:#ffffff url('../img/ui/darkdenim3.png');
+	background: #333 url('../img/ui/darkdenim3.png');
 	color: #DDD;
 }
 
@@ -175,6 +175,10 @@ input.copier {
 	border-color: #666;
 }
 
+.navbar .nav > li > a .glyphicon, .status .glyphicon {
+	color: #EEE;
+}
+
 /* @end color-treatment ==================================================== */
 
 body {
@@ -196,4 +200,8 @@ body {
 
 .status .badge {
 	margin-left: 3px;
+}
+
+img, iframe, embed, object {
+	max-width: 100%;
 }
