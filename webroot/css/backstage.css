@@ -98,7 +98,7 @@ hr {
 	background-color: #444;
 }
 
-.navbar .brand {
+.navbar .navbar-brand {
 	color: #FC6626;
 }
 /*
@@ -178,6 +178,22 @@ input.copier {
 /* @end color-treatment ==================================================== */
 
 body {
-	padding-top: 90px;
-	padding-bottom: 90px;
+	padding-top: 70px;
+	padding-bottom: 100px;
+}
+
+.navbar .username-dd {
+	padding-right: 25px;
+	background: url('../img/emblem.png') no-repeat right center;
+	margin-right: 5px;
+}
+
+.status > div {
+	float: left;
+	display: block;
+	padding: 15px 3px;
+}
+
+.status .badge {
+	margin-left: 3px;
 }

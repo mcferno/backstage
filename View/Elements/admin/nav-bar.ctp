@@ -5,14 +5,14 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'brand')); ?>
+		<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'navbar-brand')); ?>
 	</div>
 
 	<?php if($this->Session->check('Auth.User')) : ?>
 	<div class="status navbar-left">
-		<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-off updates-count">0</span></a>
-		<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-off message-count">0</span></a>
-		<span class="glyphicon-user glyphicon" title="Online Users"></span><span class="badge badge-info online-count" title="Online Users"><?= count($onlineUsers); ?></span>
+		<div><a class="navbar-link" href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-off updates-count">0</span></a></div>
+		<div><a class="navbar-link" href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-off message-count">0</span></a></div>
+		<div><span class="glyphicon-user glyphicon" title="Online Users"></span><span class="badge badge-info online-count" title="Online Users"><?= count($onlineUsers); ?></span></div>
 	</div>
 	<?php endif; // authenticated ?>
 
@@ -68,7 +68,7 @@
 			<?php endif; // admin-only ?>
 
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?= $this->Session->read('Auth.User.username');?> <?= $this->Html->image('emblem.png'); ?><b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle username-dd" data-toggle="dropdown"><?= $this->Session->read('Auth.User.username');?></a>
 				<ul class="dropdown-menu">
 					<li><?= $this->Html->link('<span class="glyphicon-pencil glyphicon"></span> Edit Account',array('controller'=>'users','action'=>'edit',$this->Session->read('Auth.User.id')),array('escape'=>false)); ?></li>
 					<li class="divider"></li>
