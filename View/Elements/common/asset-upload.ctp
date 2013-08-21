@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<?= $this->Form->button('<i class="icon-white icon-upload"></i> Upload', array('class'=>'btn btn-large btn-success btn-upload', 'data-loading-text' => "<i class='icon-white icon-upload'></i> Uploading ...")); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-large btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Uploading ...")); ?>
 	</div>
 	<?php echo $this->Form->end();?>
 </div>

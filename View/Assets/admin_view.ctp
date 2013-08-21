@@ -7,54 +7,54 @@
 	// load cropping library if the image is not too small (crop-worthy)
 	$load_cropper = isset($this->request->params['named']['crop']);
 ?>
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-md-12">
 		<h1>Saved Image</h1>
 	</div>
 </div>
 	
-<div class="row-fluid">
-	<div class="span2 asset-view text-right action-bar">
+<div class="row">
+	<div class="col-md-2 asset-view text-right action-bar">
 		<ul class="unstyled">
-			<li><strong><?= $asset['User']['username']; ?></strong> <i class="icon-white icon-user"></i></li>
-			<li><?= $asset['Asset']['created']; ?> <i class="icon-white icon-time"></i></li>
-			<li><?= $specs['mime']; ?> <i class="icon-white icon-picture"></i></li>
-			<li><?= $specs[0]; ?> x <?= $specs[1]; ?> px (W x H) <i class="icon-white icon-resize-full"></i></li>
-			<li><?= round($filesize / 1024.0,2); ?> KB <i class="icon-white icon-file"></i></li>
+			<li><strong><?= $asset['User']['username']; ?></strong> <span class="glyphicon glyphicon-user"></span></li>
+			<li><?= $asset['Asset']['created']; ?> <span class="glyphicon glyphicon-time"></span></li>
+			<li><?= $specs['mime']; ?> <span class="glyphicon glyphicon-picture"></span></li>
+			<li><?= $specs[0]; ?> x <?= $specs[1]; ?> px (W x H) <span class="glyphicon glyphicon-resize-full"></span></li>
+			<li><?= round($filesize / 1024.0,2); ?> KB <span class="glyphicon glyphicon-file"></span></li>
 		</ul>
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
 			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
-			<li><?= $this->Html->link('<i class="icon-white icon-picture"></i> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-large btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
-			<li><?= $this->Html->link('<i class="icon-white icon-play-circle"></i> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-large btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
 
 			<?php endif; // upload or url download ?>
 
-			<li><?= $this->Html->link('<i class="icon icon-comment"></i> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn','escape'=>false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-comment"></span> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn','escape'=>false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
 
 			<?php if(!$load_cropper) : ?>
-			<li><?= $this->Html->link('<i class="icon icon-fullscreen"></i> Crop Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false, 'title' => 'Save a slice of this image')); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-fullscreen"></span> Crop Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false, 'title' => 'Save a slice of this image')); ?></li>
 			<?php endif; // cropper option ?>
 
 			<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
 
 			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
-			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
 			<?php endif; // image is Facebook shareable ?>
 
-			<li><?= $this->Html->link('<i class="icon-white icon-remove"></i> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
 
 			<?php else : // someone else's image ?>
 
-			<li><?= $this->Html->link('<i class="icon-white icon-user"></i> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-user"></span> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
 			
 			<?php endif; ?>
 
 			<?php if(Access::hasRole('Admin')) : ?>
 
 			<li>
-			<p>Change Type <i class="icon-white icon-question-sign"></i></p>
+			<p>Change Type <span class="glyphicon glyphicon-question-sign"></span></p>
 			<?php 
 				echo $this->Form->create('Asset', array('url' => array('action' => 'edit'), 'class' => 'asset-type-form'));
 				echo $this->Form->input('id', array('value' => $asset['Asset']['id']));
@@ -67,9 +67,9 @@
 			<?php endif; ?>
 		</ul>
 	</div>
-	<div class="span10">
+	<div class="col-md-10">
 		<?php if($load_cropper && isset($this->request->params['named']['crop'])) : ?>
-		<p><i class="icon-white icon-info-sign"></i> Click and drag a region on this image to begin a crop.</p>
+		<p><span class="glyphicon glyphicon-info-sign"></span> Click and drag a region on this image to begin a crop.</p>
 		<?php endif; // cropper tooltip ?>
 
 		<?php if($load_cropper) { echo $this->element('common/image-cropper'); } ?>
@@ -82,7 +82,7 @@
 		<?php endforeach; ?>
 		</p>
 
-		<p class=" text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $asset['Asset']['image-full']; ?>"></p>
+		<p class=" text-center">Direct URL to Image<br><input type="text" class="col-md-4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $asset['Asset']['image-full']; ?>"></p>
 
 		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
 		<?= $this->element('common/chat-module', array('model' => 'Asset', 'foreign_key' => $asset['Asset']['id'])); ?>
@@ -115,7 +115,7 @@
 		<?= $this->Form->input('message',array('type'=>'text','label'=>'Message to post with image (optional)', 'class' => 'span5', 'placeholder' => 'Check this shit out', 'spellcheck' => 'true')); ?>
 	</div>
 	<div class="modal-footer">
-		<?= $this->Form->button('<i class="icon-white icon-upload"></i> Upload', array('class' => 'btn btn-primary')); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class' => 'btn btn-primary')); ?>
 		<a href="#" class="btn btn-danger" data-dismiss="modal">Cancel</a>
 	</div>
 	<?= $this->Form->end(); ?>

@@ -1,0 +1,183 @@
+/** 
+ * Backstage App
+ *
+ * Color Scheme
+ *   #FC6626 > branding and accent
+ *   #DDDDDD > feature unit background-color
+ *   #DDDDDD > default body color
+ *   #EEEEEE > active links
+ *   #888888 > pane
+ *   #666666 > border-color
+ *   #444444 > dark alternate background-color
+ *
+ *   #AAAAAA > subdued text against dark
+ *
+ * bootstrap-responsive.css tweaks (nav bar @ 768px +)
+ * - Switched compact nav jump point from 979px -> 767px
+ * - Switched the nav adjustment jump point from 980px -> 786px
+ */
+
+/* @start color-treatment ================================================== */
+
+body {
+	background:#ffffff url('../img/ui/darkdenim3.png');
+	color: #DDD;
+}
+
+legend, label {
+	color: #DDD;
+}
+
+a {
+	color: #FC6626;
+}
+
+.alert a, .alert a:hover, h1 a, h2 a, h3 a {
+	color: inherit;
+}
+
+a:hover {
+	color: #EEEEEE;
+}
+
+.muted a {
+	color: #AAA;
+}
+
+.muted a:hover {
+	color: #EEE;
+}
+
+hr {
+	border-top: 1px solid #888;
+	border-bottom: 1px solid #666;
+}
+
+.nav-list > .active > a, .nav-list > .active > a:hover {
+	background-color: #FC6626;
+}
+
+.nav-list .divider {
+	background-color: #666;
+	border-bottom: 1px solid #666;
+}
+
+.features .thumbnail {
+	background-color: #888;
+	color: #EEE;
+	border: 3px solid #888;
+}
+
+.active-contests .thumbnail {
+	border: 3px solid #888;
+}
+/*
+.dropdown-menu {
+	background-color: #666;
+}
+
+.dropdown-menu li>a:hover,.dropdown-menu .active>a,.dropdown-menu .active>a:hover{
+	background-color:#FC6626;
+}
+
+.dropdown-menu a {
+	color: #EEE;
+}
+
+.dropdown-menu .divider {
+	background-color: #888;
+	border-bottom: 1px solid #888;
+}
+*/
+
+/* table-striped-inverse */
+.table-striped tbody > tr:nth-child(odd) > td,
+.table-striped tbody > tr:nth-child(odd) > th,
+.table-striped-inverse tr:nth-last-child(2n + 1),
+.table-striped-inverse tr:nth-last-child(2n + 1) td {
+	background-color: #444;
+}
+
+.navbar .brand {
+	color: #FC6626;
+}
+/*
+.navbar .dropdown-menu::after {
+	border-bottom: 6px solid #666;
+}
+
+.nav > li > a:hover {
+	background-color: #444;
+	color: #EEE;
+}
+
+.navbar .nav .active > a, .navbar .nav .active > a:hover {
+	color: #EEE;
+}
+*/
+.table tbody tr:hover, .table tbody tr:hover td, .table tbody tr:hover th {
+	background-color: #666;
+	color: #DDD;
+}
+
+.table a:hover {
+	color: #EEE;
+}
+
+.badge-custom {
+	background-color: #FC6626;
+}
+
+.badge-custom:hover {
+	background-color: #d95821;
+}
+
+.badge-muted {
+	background-color: #999;
+}
+
+.badge-muted:hover {
+	background-color: #BBB;
+	color: #666;
+}
+
+.badge-pale {
+	background-color: #DD7500;
+	background-color: #6996AD;
+}
+
+.badge-pale:hover {
+	background-color: #E38217;
+	background-color: #42647F;
+}
+
+span.badge-off {
+	background-color: #666;
+}
+
+.slideout {
+	background-color: #666;
+	border-color: #666;
+	color: #EEE;
+}
+
+.thumbnails .date {
+	color: #888;
+}
+
+.modal, .modal legend, .modal label {
+	color: #444
+}
+
+input.copier {
+	background-color: #444;
+	color: #EEE;
+	border-color: #666;
+}
+
+/* @end color-treatment ==================================================== */
+
+body {
+	padding-top: 90px;
+	padding-bottom: 90px;
+}

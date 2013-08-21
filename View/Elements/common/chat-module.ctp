@@ -52,7 +52,7 @@ if($chatSettings['scope'] === 'Chat') {
 ?>
 <a name="comments"></a><a name="chat"></a>
 <?php $this->start('chat-bar'); ?>
-<div class="row-fluid">
+<div class="row">
 <div class="navbar chat-bar">
 	<div class="navbar-inner">
 		<div class="container">
@@ -72,13 +72,13 @@ if($chatSettings['scope'] === 'Chat') {
 
 <?php if($reverseChat) { echo $this->fetch('chat-bar'); } ?>
 
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-md-12">
 		<div class="loading">Loading ...</div>
 	</div>
 </div>
-<div class="row-fluid chat-window">
-	<div class="span12">
+<div class="row chat-window">
+	<div class="col-md-12">
 		<table class="table chat table-condensed <?= ($reverseChat) ? 'table-striped-inverse' : 'table-striped'; ?>"></table>
 	</div>
 </div>

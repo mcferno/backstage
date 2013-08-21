@@ -1,14 +1,14 @@
 <?php
 	$this->set('contentSpan',10);
 ?>	
-<div class="row-fluid">
-	<div class="span2 action-bar">
+<div class="row">
+	<div class="col-md-2 action-bar">
 		&nbsp;
 		<?php if(!empty($activeContests)) : ?>
-		<p><i class="icon-white icon-info-sign"></i> To start a caption battle of your own, pick an image from <?= $this->Html->link('Your Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?>.</p>
+		<p><span class="glyphicon glyphicon-info-sign"></span> To start a caption battle of your own, pick an image from <?= $this->Html->link('Your Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?>.</p>
 		<?php endif; ?>
 	</div>
-	<div class="span10">
+	<div class="col-md-10">
 		<h1>Caption Battles</h1>
 		<p class="tall">There have been <span class="badge <?= (count($contests))?'badge-custom':''; ?>"><?= $this->Paginator->counter(array('format' =>'{:count}')); ?></span> battles.</p>
 
@@ -18,19 +18,19 @@
 
 			<ul class="row thumbnails">
 				<?php foreach ($activeContests as $idx => $contest) : ?>
-				<li class="span4">
+				<li class="col-md-4">
 					<div class="thumbnail text-center">
 						<?= $this->Html->link($this->Html->image($contest['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false, 'class' => '')); ?>
 						<dl class="text-left">
-							<dt>Started by</dt><dd><i class="icon-user icon-white"></i> <?= $contest['User']['username']; ?> on <?= date('l, F jS', strtotime($contest['Contest']['created'])); ?></dd>
+							<dt>Started by</dt><dd><span class="glyphicon-user glyphicon"></span> <?= $contest['User']['username']; ?> on <?= date('l, F jS', strtotime($contest['Contest']['created'])); ?></dd>
 						<?php if(!empty($contest['Contest']['message'])) : ?>
 							<dt>Description</dt><dd><?= $contest['Contest']['message']; ?></dd>
 						<?php endif; ?>
 						</dl>
 						<p>
-							<?= $this->Html->link('<i class="icon-white icon-pencil"></i> Add Caption',array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-large btn-success','escape'=>false)); ?>
+							<?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption',array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-large btn-success','escape'=>false)); ?>
 							&nbsp;
-							<?= $this->Html->link('<i class="icon-white icon-search"></i> View Entries',array('action'=>'view', $contest['Contest']['id']),array('class'=>'btn btn-large btn-primary','escape'=>false)); ?>
+							<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Entries',array('action'=>'view', $contest['Contest']['id']),array('class'=>'btn btn-large btn-primary','escape'=>false)); ?>
 						</p>
 					</div>
 				</li>
@@ -58,7 +58,7 @@
 			<?php endif; ?>
 			<ul class="row thumbnails">
 			<?php foreach ($contests as $contest) : ?>
-				<li class="span2 text-center">
+				<li class="col-md-2 text-center">
 					<div class="thumbnail">
 						<?= $this->Html->link($this->Html->image($contest['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false)); ?>
 						<p>Started by <strong><?= $contest['User']['username']; ?></strong></p>

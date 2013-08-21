@@ -1,25 +1,25 @@
 <?php
 	$this->set('contentSpan', 10);
 ?>
-<div class="row-fluid">
-	<div class="span2 text-right action-bar">
+<div class="row">
+	<div class="col-md-2 text-right action-bar">
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
-			<li><?= $this->Html->link('<i class="icon-white icon-pencil"></i> Add a Link', array('controller' => 'links', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false, 'title' => 'Submit a Link of your own')); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add a Link', array('controller' => 'links', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false, 'title' => 'Submit a Link of your own')); ?></li>
 			<li>
 				<div class="dropdown">
-					<a class="dropdown-toggle btn btn" data-toggle="dropdown" href="#" title="Change the order of the Links list"><i class="icon icon-random"></i> Sort Links</a>
+					<a class="dropdown-toggle btn btn" data-toggle="dropdown" href="#" title="Change the order of the Links list"><span class="glyphicon glyphicon-random"></span> Sort Links</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-							<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <i class="icon-white icon-time"></i>', array('direction' => 'desc', 'escape'=>false)); ?></li>
-							<li><?php echo $this->Paginator->sort('title', 'by Link Name <i class="icon-white icon-comment"></i>', array('escape'=>false)); ?></li>
-							<li><?php echo $this->Paginator->sort('url', 'by URL <i class="icon-white icon-share-alt"></i>', array('escape'=>false)); ?></li>
+							<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape'=>false)); ?></li>
+							<li><?php echo $this->Paginator->sort('title', 'by Link Name <span class="glyphicon glyphicon-comment"></span>', array('escape'=>false)); ?></li>
+							<li><?php echo $this->Paginator->sort('url', 'by URL <span class="glyphicon glyphicon-share-alt"></span>', array('escape'=>false)); ?></li>
 					</ul>
 				</div>
 			</li>
 		</ul>
 	</div>
 
-	<div class="span10">
+	<div class="col-md-10">
 		<h1><?= (!empty($sectionTitle)) ? $sectionTitle : 'Link Exchange'; ?></h1>
 	<?php if(!empty($tag['Tag'])) : ?>
 		<h3 class="cozy">

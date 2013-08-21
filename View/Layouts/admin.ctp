@@ -18,7 +18,7 @@
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
 			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js',
 			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js ',
-			'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.1.1/bootstrap.min.js',
+			'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js',
 			'jquery.site.js?t='.filemtime(JS.'jquery.site.js'),
 			'backstage.js?t='.filemtime(JS.'backstage.js')
 		);
@@ -30,13 +30,12 @@
 		echo $this->Html->script($scripts);
 		
 		echo $this->fetch('script');
-		
+
 		echo $this->Html->css(array(
-			'bootstrap.min.css?t='.filemtime(CSS.'bootstrap.min.css'),
-			'bootstrap-responsive.min.css?t='.filemtime(CSS.'bootstrap-responsive.min.css')
+			'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css'
 		));
 		echo $this->fetch('css');
-		echo $this->Html->css('admin.css?t='.filemtime(CSS.'admin.css'));
+		echo $this->Html->css('backstage.css?t='.filemtime(CSS.'backstage.css'));
 		
 		echo $this->element('ga');
 	?>
@@ -47,20 +46,20 @@
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
 		<?= $this->element('admin/nav-bar'); ?>
-		<div class="container-fluid">
+		<div class="container">
 			<div class="content">
-				<div class="row-fluid">
+				<div class="row">
 					<?php if($contentSpan <= 8) : ?>
-					<div class="span2">&nbsp;</div>
+					<div class="col-md-2">&nbsp;</div>
 					<?php endif; ?>
 					
-					<div class="span<?= $contentSpan; ?> main">
+					<div class="col-md-<?= $contentSpan; ?> main">
 						<?= $this->Session->flash(); ?>
 						<?php echo $this->fetch('content'); ?>
 					</div>
 					
 					<?php if($contentSpan <= 10) : ?>
-					<div class="span2 subnav">
+					<div class="col-md-2 subnav">
 						<?= $this->element('admin/subnav'); ?>
 						&nbsp;
 					</div>

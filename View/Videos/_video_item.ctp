@@ -33,17 +33,17 @@
 </div>
 
 <div class="stats">
-	&mdash; <i class="icon-white icon-time"></i> <?php printf('%d min %02d sec', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?>
+	&mdash; <span class="glyphicon glyphicon-time"></span> <?php printf('%d min %02d sec', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?>
 	<?php if($video['Video']['filmed'] != '0000-00-00') : ?>
-	&middot; <i class="icon-white icon-facetime-video"></i> <?= date('M Y', strtotime($video['Video']['filmed'])); ?>
+	&middot; <span class="glyphicon glyphicon-facetime-video"></span> <?= date('M Y', strtotime($video['Video']['filmed'])); ?>
 	<?php endif; ?>
 	<?php if($video_sizes) : ?>
-	&middot; <i class="icon-white icon-file"></i> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
+	&middot; <span class="glyphicon glyphicon-file"></span> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
 	<!-- <?= json_encode($video_sizes); ?> -->
 	<?php endif; ?>
-	&middot; <i class="icon-white icon-film"></i> <?= ($video['Video']['hd'])? 'HD' : 'SD'; ?>
+	&middot; <span class="glyphicon glyphicon-film"></span> <?= ($video['Video']['hd'])? 'HD' : 'SD'; ?>
 	<?php if(!empty($video['Video']['url'])) : $video_url = parse_url($video['Video']['url']); ?>
-	&middot; <i class="icon-white icon-globe"></i> <?= str_replace('www.', '', $video_url['host']); ?>
+	&middot; <span class="glyphicon glyphicon-globe"></span> <?= str_replace('www.', '', $video_url['host']); ?>
 	<?php endif; ?>
 </div>
 

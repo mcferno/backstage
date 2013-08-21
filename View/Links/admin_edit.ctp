@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="links form span12">
 	<?php echo $this->Form->create('Link'); ?>
 		<h1>Edit Link</h1>
@@ -18,10 +18,10 @@
 		<div class="clearfix">
 			<?= $this->element('common/tagging', array('model' => 'Link', 'foreign_key' => $this->request->data['Link']['id'])); ?>
 		</div>
-		<p class="muted"><br><i class="icon-white icon-info-sign"></i> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many links per tag.</p>
+		<p class="muted"><br><span class="glyphicon glyphicon-info-sign"></span> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many links per tag.</p>
 
-		<?= $this->Form->button('<i class="icon-white icon-plus-sign"></i> Submit',array('class'=>'btn btn-large btn-primary')); ?>
-		<?= $this->Html->link('<i class="icon icon-ban-circle"></i> Cancel Edit', array('action' => 'view', $this->request->data['Link']['id']), array('class' => 'btn btn-large', 'escape' => false)); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit',array('class'=>'btn btn-large btn-primary')); ?>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel Edit', array('action' => 'view', $this->request->data['Link']['id']), array('class' => 'btn btn-large', 'escape' => false)); ?>
 	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

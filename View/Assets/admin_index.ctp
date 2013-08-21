@@ -1,19 +1,19 @@
 <?php
 	$this->set('contentSpan',10);
 ?>	
-<div class="row-fluid">
-	<div class="span2 text-right action-bar">
+<div class="row">
+	<div class="col-md-2 text-right action-bar">
 		<h3>Specs</h3>
 		<ul class="unstyled">
-			<li><strong><?= $this->Session->read('Auth.User.username'); ?></strong> <i class="icon-white icon-user"></i></li>
-			<li><?= $image_total; ?> <i class="icon-white icon-picture"></i></li>
+			<li><strong><?= $this->Session->read('Auth.User.username'); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
+			<li><?= $image_total; ?> <span class="glyphicon glyphicon-picture"></span></li>
 		</ul>
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
-			<li><?= $this->Html->link('<i class="icon-white icon-upload"></i> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success image-upload-btn','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success image-upload-btn','escape'=>false)); ?></li>
 		</ul>
 	</div>
-	<div class="span10">
+	<div class="col-md-10">
 		<h1>Your Images</h1>
 		<?php if(!empty($images)) : ?>
 		<p class="tall">You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $image_total; ?></span> images</p>
@@ -55,7 +55,7 @@ if(isset($this->request->params['named']['mode']) && $this->request->params['nam
 <div class="tips">
 
 <?php if(!$this->request->is('mobile')): ?>
-	<p><i class="icon-white icon-info-sign"></i> You can upload new images by dragging and dropping them onto the browser, on any page.</p>
+	<p><span class="glyphicon glyphicon-info-sign"></span> You can upload new images by dragging and dropping them onto the browser, on any page.</p>
 <?php endif; ?>
 
 </div>

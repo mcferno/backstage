@@ -2,19 +2,19 @@
 	$this->set('contentSpan',10);
 	$landing_page = (empty($this->request->params['named']['page']));
 ?>	
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-md-12">
 		<h1>Caption Battle</h1>
 	</div>
 </div>
-<div class="row-fluid">
-	<div class="span2 text-right action-bar">
+<div class="row">
+	<div class="col-md-2 text-right action-bar">
 		<ul class="unstyled">
-			<li><strong><?= $contest['User']['username']; ?></strong> <i class="icon-white icon-user"></i></li>
-			<li><?= $contest['Contest']['created']; ?> <i class="icon-white icon-time"></i></li>
-			<li><span class="badge badge-custom"><?= ($landing_page) ? count($assets) : (int)$this->Paginator->counter('{:count}'); ?></span> total entries <i class="icon-white icon-folder-open"></i></li>
+			<li><strong><?= $contest['User']['username']; ?></strong> <span class="glyphicon glyphicon-user"></span></li>
+			<li><?= $contest['Contest']['created']; ?> <span class="glyphicon glyphicon-time"></span></li>
+			<li><span class="badge badge-custom"><?= ($landing_page) ? count($assets) : (int)$this->Paginator->counter('{:count}'); ?></span> total entries <span class="glyphicon glyphicon-folder-open"></span></li>
 			<?php if(!$landing_page && !empty($contest['Contest']['message'])) : ?>
-			<li class="comment"><i class="icon-white icon-comment pull-right"></i> <div class="text">&ldquo; <?= nl2br($contest['Contest']['message']); ?> &rdquo;</div></li>
+			<li class="comment"><span class="glyphicon glyphicon-comment pull-right"></span> <div class="text">&ldquo; <?= nl2br($contest['Contest']['message']); ?> &rdquo;</div></li>
 			<?php endif; ?>
 		</ul>
 
@@ -33,7 +33,7 @@
 			$winner_confirm = "Do you wish to choose the current caption by {$assets[0]['User']['username']} as the Caption Battle Champion? This will end the contest and halt any further submissions.";
 		?>
 		<ul class="unstyled actions">
-			<li><?= $this->Html->link('<i class="icon-white icon-star"></i> Declare as Winner', array('controller'=>'contests', 'action' => 'set_winner', $contest['Contest']['id'], $assets[0]['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false), $winner_confirm); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-star"></span> Declare as Winner', array('controller'=>'contests', 'action' => 'set_winner', $contest['Contest']['id'], $assets[0]['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false), $winner_confirm); ?></li>
 		</ul>
 
 		<?php endif; // admin tools for open contest ?>
@@ -42,12 +42,12 @@
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
 			<?php if(empty($contest['Contest']['winning_asset_id'])) : ?>
-			<li><?= $this->Html->link('<i class="icon-white icon-pencil"></i> Add Caption', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-large btn-success','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-large btn-success','escape'=>false)); ?></li>
 			<?php endif; ?>
-			<li><?= $this->Html->link('<i class="icon icon-chevron-left"></i> View Caption Battles', array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> View Caption Battles', array('action'=>'index'),array('class'=>'btn','escape'=>false)); ?></li>
 		</ul>
 	</div>
-	<div class="span10">
+	<div class="col-md-10">
 
 		<?php if($landing_page) : ?>
 
@@ -75,7 +75,7 @@
 			$page++; 
 			$winner = ($contest['Contest']['winning_asset_id'] === $asset['Asset']['id']); ?>
 
-			<li class="span2 text-center">
+			<li class="col-md-2 text-center">
 				<div class="thumbnail">
 					<?= $this->Html->link($this->Html->image($asset['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id'], 'page'=> $page),array('escape'=>false)); ?>
 					<p>
@@ -103,11 +103,11 @@
 			echo $this->Html->image('ui/icons/trophy.png') . " <strong>Winning</strong> ";
 		}
 		?>
-			Entry by <i class="icon-white icon-user"></i> <strong><?= $assets[0]['User']['username']; ?></strong> on <i class="icon-white icon-time"></i> <?= $assets[0]['Asset']['created']; ?>
+			Entry by <span class="glyphicon glyphicon-user"></span> <strong><?= $assets[0]['User']['username']; ?></strong> on <span class="glyphicon glyphicon-time"></span> <?= $assets[0]['Asset']['created']; ?>
 		</p>
 		<p class="text-center"><?= $this->Html->image($assets[0]['Asset']['image-full']); ?></p>
 
-		<p class="text-center">Direct URL to Image<br><input type="text" class="span4 copier" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . $assets[0]['Asset']['image-full']); ?>"></p>
+		<p class="text-center">Direct URL to Image<br><input type="text" class="col-md-4 copier" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . $assets[0]['Asset']['image-full']); ?>"></p>
 
 		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 

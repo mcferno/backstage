@@ -30,17 +30,17 @@
 				default:
 				?>
 					<li class="nav-header">Tools</li>
-					<li <?php if($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-edit icon-white"></i> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
-					<li <?php if($this->request->controller == 'contests') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-fire icon-white"></i> Caption Battles',array('controller'=>'contests','action'=>'admin_index'),array('escape'=>false)); ?></li>
-					<li><?= $this->Html->link('<i class="icon-upload icon-white"></i> <strong>Upload Image</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false, 'class' => 'image-upload-btn')); ?></li>
+					<li <?php if($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-edit glyphicon"></span> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
+					<li <?php if($this->request->controller == 'contests') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-fire glyphicon"></span> Caption Battles',array('controller'=>'contests','action'=>'admin_index'),array('escape'=>false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon-upload glyphicon"></span> <strong>Upload Image</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false, 'class' => 'image-upload-btn')); ?></li>
 					<li class="divider"></li>
 					<li class="nav-header">Images</li>
 					<?php $is_asset = ($this->request->controller == 'assets'); ?>
-					<li <?php if($is_asset && $this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-home icon-white"></i> <strong>My Images</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
+					<li <?php if($is_asset && $this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-home glyphicon"></span> <strong>My Images</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
 					<?php $is_assets_index = in_array($this->request->action,array('admin_user','admin_users')); ?>
-					<li <?php if($is_asset && $is_assets_index && !isset($this->request->params['named']['type'])) { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-th icon-white"></i> All User Images',array('controller'=>'assets','action'=>'users'),array('escape'=>false)); ?></li>
-					<li <?php if($is_asset && $is_assets_index && isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-th-large icon-white"></i> All Memes',array('controller'=>'assets','action'=>'users', 'type' => 'Meme'),array('escape'=>false)); ?></li>
-					<li <?php if($is_asset && $is_assets_index && isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Ready') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-th-large icon-white"></i> Meme-Ready',array('controller'=>'assets','action'=>'users', 'type' => 'Meme-Ready'),array('escape'=>false)); ?></li>
+					<li <?php if($is_asset && $is_assets_index && !isset($this->request->params['named']['type'])) { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-th glyphicon"></span> All User Images',array('controller'=>'assets','action'=>'users'),array('escape'=>false)); ?></li>
+					<li <?php if($is_asset && $is_assets_index && isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-th-large glyphicon"></span> All Memes',array('controller'=>'assets','action'=>'users', 'type' => 'Meme'),array('escape'=>false)); ?></li>
+					<li <?php if($is_asset && $is_assets_index && isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Ready') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-th-large glyphicon"></span> Meme-Ready',array('controller'=>'assets','action'=>'users', 'type' => 'Meme-Ready'),array('escape'=>false)); ?></li>
 				<?	break;
 			}
 		}

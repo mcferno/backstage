@@ -2,7 +2,7 @@
 	$this->set('suppressSubnav', true);
 	$this->set('contentSpan',12);
 ?>
-<div class="span3 login">
+<div class="col-md-3 login">
 	<h1>Login</h1>
 	<?= $this->Session->flash(); ?>
 	<?= $this->Session->flash('auth'); ?>

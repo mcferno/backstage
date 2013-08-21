@@ -1,5 +1,5 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-md-12">
 		<h2>Change Screenshot Image</h2>
 		<div class="link-exchange link-view">
 			<?= $this->element('../Links/_link_item', array('link' => $link, 'hideComments' => true)); ?>
@@ -19,8 +19,8 @@
 ?>
 
 <?php if(!empty($this->request->params['named']['mode']) && $this->request->params['named']['mode'] == 'crop') : ?>
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-md-12">
 		<h3>Crop this image</h3>
 		<p>Please select a segment of this image to generate a thumbnail.</p>
 		<?php
@@ -28,7 +28,7 @@
 			if($image) {
 				echo $this->element('common/image-cropper');
 				echo $this->Html->image($image, array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id'], 'cachebust' => true));
-				echo $this->Html->link('<i class="icon icon-chevron-left"></i> Return to Link', array('action' => 'view', $link['Link']['id']), array('class' => 'btn', 'escape' => false));
+				echo $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> Return to Link', array('action' => 'view', $link['Link']['id']), array('class' => 'btn', 'escape' => false));
 			} else {
 				echo $this->Html->link('No Image Found! Please upload an image to continue', array('action' => 'image', $link['Link']['id']));
 			}
@@ -38,8 +38,8 @@
 
 <?php else: ?>
 
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+	<div class="col-md-12">
 		<h3>Choose an image to represent this link</h3>
 		<p>If an image already exists, it will be replaced with the one you provide.</p>
 
@@ -53,12 +53,12 @@
 			
 
 			<?php
-				echo $this->Form->button('<i class="icon-white icon-upload"></i> Upload', array('class'=>'btn btn-large btn-success'));
+				echo $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-large btn-success'));
 				echo '&nbsp;';
-				echo $this->Html->link('<i class="icon icon-ban-circle"></i> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-large', 'escape' => false));
+				echo $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-large', 'escape' => false));
 				if($image) {
 					echo '&nbsp;';
-					echo $this->Html->link('<i class="icon-white icon-pencil"></i> Re-Crop Existing', array('action' => 'image', $link['Link']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info btn-large', 'escape' => false));
+					echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Re-Crop Existing', array('action' => 'image', $link['Link']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info btn-large', 'escape' => false));
 				} 
 			?>
 			</div>

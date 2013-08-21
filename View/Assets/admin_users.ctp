@@ -1,18 +1,18 @@
 <?php
 	$this->set('contentSpan',10);
 ?>	
-<div class="row-fluid">
-	<div class="span2 text-right action-bar">
+<div class="row">
+	<div class="col-md-2 text-right action-bar">
 		<div class="extra">
 			<h3>Contributing Users</h3>
 			<ul class="unstyled">
 				<?php foreach($contributingUsers as $user) : ?>
-				<li><strong><?= $this->Html->link($user['User']['username'],array('action'=>'user', $user['User']['id']),array('escape'=>false)); ?></strong> <i class="icon-white icon-user"></i></li>
+				<li><strong><?= $this->Html->link($user['User']['username'],array('action'=>'user', $user['User']['id']),array('escape'=>false)); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
 	</div>
-	<div class="span10">
+	<div class="col-md-10">
 
 		<?php if(isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') : ?>
 

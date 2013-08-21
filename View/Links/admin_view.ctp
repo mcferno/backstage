@@ -1,15 +1,15 @@
 <?php
 	$this->set('contentSpan', 10);
 ?>
-<div class="row-fluid">
-	<div class="span2 text-right action-bar">
+<div class="row">
+	<div class="col-md-2 text-right action-bar">
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
-			<li><?= $this->Html->link('<i class="icon icon-pencil"></i> Edit this Link', array('controller' => 'links', 'action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
-			<li><?= $this->Html->link('<i class="icon icon-picture"></i> Screenshot', array('controller' => 'links', 'action' => 'image', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Edit this Link', array('controller' => 'links', 'action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> Screenshot', array('controller' => 'links', 'action' => 'image', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 		</ul>
 	</div>
-	<div class="span10">
+	<div class="col-md-10">
 		<div class="link-exchange link-view">
 			<?= $this->element('../Links/_link_item', array('link' => $link)); ?>
 		</div>

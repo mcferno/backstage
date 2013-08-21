@@ -10,18 +10,18 @@
 		$video_sizes['webm'] = filesize(IMAGES . "${video_path}.webm");
 	}
 ?>
-<div class="row-fluid">
-	<div class="span2 text-right action-bar">&nbsp;
+<div class="row">
+	<div class="col-md-2 text-right action-bar">&nbsp;
 		<?php if(Access::isOwner($video['Video']['user_id']) || Access::hasRole('Admin')) : ?>
 		<h3>Actions</h3>
 		<ul class="unstyled actions">
-			<li><?= $this->Html->link('<i class="icon icon-facetime-video"></i> Upload video files', array('controller' => 'videos', 'action' => 'upload', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
-			<li><?= $this->Html->link('<i class="icon icon-pencil"></i> Change video text', array('controller' => 'videos', 'action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
-			<li><?= $this->Html->link('<i class="icon icon-picture"></i> Screenshot', array('controller' => 'videos', 'action' => 'image', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-facetime-video"></span> Upload video files', array('controller' => 'videos', 'action' => 'upload', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Change video text', array('controller' => 'videos', 'action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> Screenshot', array('controller' => 'videos', 'action' => 'image', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 		</ul>
 		<?php endif; ?>
 	</div>
-	<div class="span10">
+	<div class="col-md-10">
 		<div class="link-exchange link-view video-embed text-center">
 			<h2><?= $video['Video']['title']; ?></h2>
 			<p><?= $video['Video']['description']; ?><br><br></p>
@@ -67,17 +67,17 @@
 		</div>
 
 		<p class="stats text-center"><br>
-			<i class="icon-white icon-time"></i> <?php printf('%d min %02d sec', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?>
+			<span class="glyphicon glyphicon-time"></span> <?php printf('%d min %02d sec', (int)($video['Video']['duration'] / 60), ($video['Video']['duration'] % 60)); ?>
 			<?php if($video['Video']['filmed'] != '0000-00-00') : ?>
-			&middot; <i class="icon-white icon-facetime-video"></i> <?= date('M Y', strtotime($video['Video']['filmed'])); ?>
+			&middot; <span class="glyphicon glyphicon-facetime-video"></span> <?= date('M Y', strtotime($video['Video']['filmed'])); ?>
 			<?php endif; ?>
 			<?php if($video_sizes) : ?>
-			&middot; <i class="icon-white icon-file"></i> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
+			&middot; <span class="glyphicon glyphicon-file"></span> <?= CakeNumber::toReadableSize(max($video_sizes)); ?>
 			<!-- <?= json_encode($video_sizes); ?> -->
 			<?php endif; ?>
-			&middot; <i class="icon-white icon-film"></i> <?= ($video['Video']['hd'])? 'HD' : 'SD'; ?>
+			&middot; <span class="glyphicon glyphicon-film"></span> <?= ($video['Video']['hd'])? 'HD' : 'SD'; ?>
 			<?php if(!empty($video['Video']['url'])) : $video_url = parse_url($video['Video']['url']); ?>
-			&middot; <i class="icon-white icon-globe"></i> <?= str_replace('www.', '', $video_url['host']); ?>
+			&middot; <span class="glyphicon glyphicon-globe"></span> <?= str_replace('www.', '', $video_url['host']); ?>
 			<?php endif; ?>
 		</p>
 		<p class="text-center muted">Uploaded by <strong><?= $this->Html->link($video['User']['username'], array('controller' => 'videos', 'action' => 'index', 'user' => $video['User']['id'])); ?></strong> <?= $this->Time->timeAgoInWords($video['Video']['created']); ?>

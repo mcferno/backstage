@@ -14,7 +14,7 @@
 
 <ul class="link-exchange unstyled striped"><li><?= $this->element('../Videos/_video_item', array('video' => $videos[0], 'hideComments' => true)); ?></li></ul>
 
-<div class="row-fluid">
+<div class="row">
 	<div class="links form span12">
 	<?php echo $this->Form->create('Video', array('type' => 'file', 'url' => array('action' => 'upload', $videos[0]['Video']['id']))); ?>
 		<p>Currently, both the pre-encoded .mp4 and .webm files must be provided in order for all users to be able to view them.</p>
@@ -31,11 +31,11 @@
 		<?= $this->Form->input('mp4_file', array('type' => 'file', 'label' => 'MP4 video')); ?>
 		<?= $this->Form->input('webm_file', array('type' => 'file', 'label' => 'WebM video')); ?>
 
-		<p><i class="icon-white icon-info-sign"></i> Uploading may take several minutes or longer depending on your connection, and the length/quality of the video you upload. Thank you for your patience.</p>
+		<p><span class="glyphicon glyphicon-info-sign"></span> Uploading may take several minutes or longer depending on your connection, and the length/quality of the video you upload. Thank you for your patience.</p>
 
-		<?= $this->Form->button('<i class="icon-white icon-plus-sign"></i> Submit',array('class'=>'btn btn-large btn-primary')); ?><br><br>
-		<?= $this->Html->link('<i class="icon icon-pencil"></i> Edit Video Details', array('action' => 'edit', $videos[0]['Video']['id']), array('class' => 'btn', 'escape' => false)); ?>
-		<?= $this->Html->link('<i class="icon icon-search"></i> View Video', array('action' => 'view', $videos[0]['Video']['id']), array('class' => 'btn btn', 'escape' => false)); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit',array('class'=>'btn btn-large btn-primary')); ?><br><br>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Edit Video Details', array('action' => 'edit', $videos[0]['Video']['id']), array('class' => 'btn', 'escape' => false)); ?>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Video', array('action' => 'view', $videos[0]['Video']['id']), array('class' => 'btn btn', 'escape' => false)); ?>
 	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

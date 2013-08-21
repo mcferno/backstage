@@ -11,8 +11,8 @@
 <ul class="idle-users unstyled"></ul>
 
 <div class="tips">
-	<p><i class="icon-white icon-info-sign"></i> Use <strong>@username</strong> to get that user's attention with your message.</p>
-	<p><i class="icon-white icon-info-sign"></i> Use <strong>@all</strong> to highlight a message to all users.</p>
+	<p><span class="glyphicon glyphicon-info-sign"></span> Use <strong>@username</strong> to get that user's attention with your message.</p>
+	<p><span class="glyphicon glyphicon-info-sign"></span> Use <strong>@all</strong> to highlight a message to all users.</p>
 </div>
 
 <?php if(!$this->request->is('mobile')) : ?>
@@ -20,10 +20,10 @@
 <h4>Sound Settings</h4>
 <ul class="unstyled">
 <li class="mention-setting">
-	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF &#64;mention notification"><i class="icon-white icon-volume-up"></i></button><button class="btn btn-danger btn-mini state-off" title="Turn ON &#64;mention notification" style="display: none;"><i class="icon-white icon-volume-off"></i></button> direct messages
+	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF &#64;mention notification"><span class="glyphicon glyphicon-volume-up"></span></button><button class="btn btn-danger btn-mini state-off" title="Turn ON &#64;mention notification" style="display: none;"><span class="glyphicon glyphicon-volume-off"></span></button> direct messages
 </li>
 <li class="notification-setting">
-	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF new message notification"><i class="icon-white icon-volume-up"></i></button><button class="btn btn-danger btn-mini state-off" title="Turn ON new message notification" style="display: none;"><i class="icon-white icon-volume-off"></i></button> new messages
+	<button class="btn btn-mini btn-inverse state-on" title="Turn OFF new message notification"><span class="glyphicon glyphicon-volume-up"></span></button><button class="btn btn-danger btn-mini state-off" title="Turn ON new message notification" style="display: none;"><span class="glyphicon glyphicon-volume-off"></span></button> new messages
 </li>
 </ul>
 

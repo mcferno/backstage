@@ -2,17 +2,17 @@
 	$this->set('suppressSubnav', true); 
 	$this->set('contentSpan', 11); 
 ?>
-<div class="row-fluid">
-<div class="span1">&nbsp;</div>
+<div class="row">
+<div class="col-md-1">&nbsp;</div>
 
-<div class="span11">
+<div class="col-md-11">
 <div class="dash">
 	<h1>dashboard</h1>
 	<p>Welcome <?= $this->Session->read('Auth.User.username'); ?>.</p>
 	<p>Get started on your choice of site features</p>
 	
 	<ul class="thumbnails features">
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
 					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'Meme Generator')); ?>
@@ -20,7 +20,7 @@
 				<h4 class="text-right">Meme-Ready Images <span class="badge badge-custom"><?= $meme_count; ?></span></h4>
 			</div>
 		</li>
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
 					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'Group Chat')); ?>
@@ -28,7 +28,7 @@
 				<h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"></span></h4>
 			</div>
 		</li>
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/my-images-callout.jpg',array('alt'=>'My Images')); ?>
@@ -36,7 +36,7 @@
 				<h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4>
 			</div>
 		</li>
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
 					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
@@ -44,7 +44,7 @@
 				<h4 class="text-right">Image Count <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4>
 			</div>
 		</li>
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'videos','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/videos-callout.jpg',array('alt'=>'Videos')); ?>
@@ -52,7 +52,7 @@
 				<h4 class="text-right">Total Videos <span class="badge badge-custom"><?= $videos_count; ?></span></h4>
 			</div>
 		</li>
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'contests','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/contest-callout.jpg',array('alt'=>'Caption Battles')); ?>
@@ -60,7 +60,7 @@
 				<h4 class="text-right">Battles Fought <span class="badge badge-custom"><?= $contest_count; ?></span></h4>
 			</div>
 		</li>
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'links','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/link-exchange-callout.jpg',array('alt'=>'All Images')); ?>
@@ -68,7 +68,7 @@
 				<h4 class="text-right">Links Tracked <span class="badge badge-custom"><?= $links_count; ?></span></h4>
 			</div>
 		</li>
-		<li class="span3">
+		<li class="col-md-3">
 			<div class="thumbnail">
 				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
 					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'Quotes')); ?>
@@ -79,10 +79,10 @@
 	</ul>
 </div>
 
-<div class="row-fluid">
-<div class="span12">
+<div class="row">
+<div class="col-md-12">
 
-	<?= $this->Html->link('<i class="icon-white icon-search"></i> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse pull-right', 'escape' => false)); ?>
+	<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse pull-right', 'escape' => false)); ?>
 	<h3><a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>"><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</a></h3>
 	<?= $this->element('common/updates-list', array('hideSmallPreview' => true)); ?>
 
@@ -90,8 +90,8 @@
 </div>
 
 <?php if(Access::hasRole('Admin')): ?>
-<div class="row-fluid">
-<div class="span12">
+<div class="row">
+<div class="col-md-12">
 	<h3><?= $this->Html->image('ui/icons/clock.png'); ?> Recent Users</h3>
 	<table class="table table-striped activity">
 		<?php foreach($recent_users as $user) : ?>
@@ -108,8 +108,8 @@
 </div>
 <?php endif; ?>
 
-<div class="row-fluid">
-<div class="span12">
+<div class="row">
+<div class="col-md-12">
 	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
 		<tr><td class="short-date">Apr 04</td><td>Many improvements made to the organization of images on the site.</td></tr>

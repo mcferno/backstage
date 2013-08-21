@@ -18,13 +18,13 @@
 				<h4><?= $this->Html->image('ui/icons/sticky-note.png'); ?> Contest Description (optional)</h4>
 				<?= $this->Form->input('message',array('type' => 'textarea', 'label' =>'', 'class' => 'asset-url', 'placeholder' => 'Who can do the best caption with this?', 'spellcheck' => 'true')); ?>
 				<?php $fb_target = $this->Session->read('Auth.User.fb_target'); if(!empty($fb_target)): ?>
-				<p><i class="icon icon-info-sign"></i> This new battle will be annouced automatically on TYS.</p>
+				<p><span class="glyphicon glyphicon-info-sign"></span> This new battle will be annouced automatically on TYS.</p>
 				<?php endif; ?>
 			</fieldset>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<?= $this->Form->button('<i class="icon-white icon-ok"></i> Start',array('class'=>'btn btn-large btn-success')); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-ok"></span> Start',array('class'=>'btn btn-large btn-success')); ?>
 	</div>
 	<?php echo $this->Form->end();?>
 </div>

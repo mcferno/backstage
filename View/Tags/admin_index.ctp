@@ -5,7 +5,7 @@ $filters = array_intersect_key($this->request->params['named'], array_flip($filt
 ?>
 <div class="posts index">
 	<h2>Tag List</h2>
-	<p class="text-right"><?= $this->Html->link('<i class="icon-white icon-plus-sign"></i> Add new Tag', array('action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false)); ?>
+	<p class="text-right"><?= $this->Html->link('<span class="glyphicon glyphicon-plus-sign"></span> Add new Tag', array('action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false)); ?>
 	<?php if(!empty($filters)) : ?>
 	<h5>
 		Filtered by
@@ -37,7 +37,7 @@ $filters = array_intersect_key($this->request->params['named'], array_flip($filt
 				<?= $tag['Tag']['count']; ?>
 
 				<?php echo $this->Form->postLink('×', array('action' => 'delete', $tag['Tag']['id']), array('class' => 'close'), "Are you sure you want to delete the Message by {$tag['User']['username']}?"); ?>
-				<?= $this->Html->link('<i class="icon icon-pencil"></i>', array('action' => 'edit', $tag['Tag']['id']), array('escape' => false, 'class' => 'pull-right')); ?>
+				<?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span>', array('action' => 'edit', $tag['Tag']['id']), array('escape' => false, 'class' => 'pull-right')); ?>
 			</td>
 		</tr>
 
