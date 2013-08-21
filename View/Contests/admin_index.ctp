@@ -34,9 +34,6 @@
 						</p>
 					</div>
 				</li>
-				<?php if($idx % 2 === 1) : ?>
-				<div class="clearfix"></div>
-				<?php endif; ?>
 
 				<?php endforeach; ?>
 

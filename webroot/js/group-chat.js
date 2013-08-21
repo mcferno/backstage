@@ -284,7 +284,7 @@ var GroupChat = {
 
 	// convert URLs to active hyperlinks
 	ns.autolinkUrls = function(text) {
-		var url_regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		var url_regex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&$@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 		return text.replace(url_regex, '<a href="$1" target="_blank">$1</a>');
 	};
 
@@ -300,7 +300,7 @@ var GroupChat = {
 	// parses text for image links and converts them to embedded images
 	ns.autoViewImages = function(text, handle) {
 		// depends on being previously hyperlinked
-		var imgRegex = "<a[^>]*>([^<]+\.(jpeg|jpg|png|gif))<\/a>";
+		var imgRegex = "<a[^>]*>([^<]+\.(jpeg|jpg|jpe|png|gif|bmp|webp)[^<]*)<\/a>";
 		var linkToImageURL = text.match(new RegExp(imgRegex, 'g'));
 
 		if(linkToImageURL) {

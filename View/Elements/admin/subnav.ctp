@@ -36,7 +36,7 @@
 					<li class="divider"></li>
 					<li class="nav-header">Images</li>
 					<?php $is_asset = ($this->request->controller == 'assets'); ?>
-					<li <?php if($is_asset && $this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-home icon-white"></i> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
+					<li <?php if($is_asset && $this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-home icon-white"></i> <strong>My Images</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
 					<?php $is_assets_index = in_array($this->request->action,array('admin_user','admin_users')); ?>
 					<li <?php if($is_asset && $is_assets_index && !isset($this->request->params['named']['type'])) { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-th icon-white"></i> All User Images',array('controller'=>'assets','action'=>'users'),array('escape'=>false)); ?></li>
 					<li <?php if($is_asset && $is_assets_index && isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') { echo 'class="active"'; } ?>><?= $this->Html->link('<i class="icon-th-large icon-white"></i> All Memes',array('controller'=>'assets','action'=>'users', 'type' => 'Meme'),array('escape'=>false)); ?></li>
