@@ -8,75 +8,58 @@
 <div class="col-md-11">
 <div class="dash">
 	<h1>dashboard</h1>
-	<p>Welcome <?= $this->Session->read('Auth.User.username'); ?>.</p>
-	<p>Get started on your choice of site features</p>
+	<h4>Welcome <span class="attn"><?= $this->Session->read('Auth.User.username'); ?></span>.</h4>
 	
-	<ul class="thumbnails features">
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
-					<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'Meme Generator')); ?>
-				</a>
-				<h4 class="text-right">Meme-Ready Images <span class="badge badge-custom"><?= $meme_count; ?></span></h4>
-			</div>
-		</li>
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
-					<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'Group Chat')); ?>
-				</a>
-				<h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"></span></h4>
-			</div>
-		</li>
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/my-images-callout.jpg',array('alt'=>'My Images')); ?>
-				</a>
-				<h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4>
-			</div>
-		</li>
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
-					<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
-				</a>
-				<h4 class="text-right">Image Count <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4>
-			</div>
-		</li>
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'videos','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/videos-callout.jpg',array('alt'=>'Videos')); ?>
-				</a>
-				<h4 class="text-right">Total Videos <span class="badge badge-custom"><?= $videos_count; ?></span></h4>
-			</div>
-		</li>
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'contests','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/contest-callout.jpg',array('alt'=>'Caption Battles')); ?>
-				</a>
-				<h4 class="text-right">Battles Fought <span class="badge badge-custom"><?= $contest_count; ?></span></h4>
-			</div>
-		</li>
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'links','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/link-exchange-callout.jpg',array('alt'=>'All Images')); ?>
-				</a>
-				<h4 class="text-right">Links Tracked <span class="badge badge-custom"><?= $links_count; ?></span></h4>
-			</div>
-		</li>
-		<li class="col-md-3">
-			<div class="thumbnail">
-				<a href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
-					<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'Quotes')); ?>
-				</a>
-				<h4 class="text-right">Total Quotes <span class="badge badge-custom"><?= $quotes_count; ?></span></h4>
-			</div>
-		</li>
-	</ul>
+	<div class="row thumbnails features">
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
+				<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'Meme Generator')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Meme-Ready Images <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
+				<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'Group Chat')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"></span></h4></div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'assets','action'=>'index')); ?>">
+				<?= $this->Html->image('ui/my-images-callout.jpg',array('alt'=>'My Images')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4></div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
+				<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Image Count <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4></div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'videos','action'=>'index')); ?>">
+				<?= $this->Html->image('ui/videos-callout.jpg',array('alt'=>'Videos')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Total Videos <span class="badge badge-custom"><?= $videos_count; ?></span></h4></div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'contests','action'=>'index')); ?>">
+				<?= $this->Html->image('ui/contest-callout.jpg',array('alt'=>'Caption Battles')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Battles Fought <span class="badge badge-custom"><?= $contest_count; ?></span></h4></div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'links','action'=>'index')); ?>">
+				<?= $this->Html->image('ui/link-exchange-callout.jpg',array('alt'=>'All Images')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Links Tracked <span class="badge badge-custom"><?= $links_count; ?></span></h4></div>
+		</div>
+		<div class="col-xs-6 col-sm-4 col-md-3">
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
+				<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'Quotes')); ?>
+			</a>
+			<div class="caption"><h4 class="text-right">Total Quotes <span class="badge badge-custom"><?= $quotes_count; ?></span></h4></div>
+		</div>
+	</div>
 </div>
 
 <div class="row">

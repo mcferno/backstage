@@ -6,15 +6,15 @@
 			<span class="icon-bar"></span>
 		</button>
 		<?= $this->Html->link('backstage',array('controller'=>'users','action'=>'dashboard'),array('class'=>'navbar-brand')); ?>
-	</div>
 
-	<?php if($this->Session->check('Auth.User')) : ?>
-	<div class="status navbar-left">
-		<div><a class="navbar-link" href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-off updates-count">0</span></a></div>
-		<div><a class="navbar-link" href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-off message-count">0</span></a></div>
-		<div><span class="glyphicon-user glyphicon" title="Online Users"></span><span class="badge badge-info online-count" title="Online Users"><?= count($onlineUsers); ?></span></div>
+		<?php if($this->Session->check('Auth.User')) : ?>
+		<div class="status navbar-left">
+			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-off updates-count">0</span></a></div>
+			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-off message-count">0</span></a></div>
+			<div><span class="glyphicon-user glyphicon" title="Online Users"></span><span class="badge badge-info online-count" title="Online Users"><?= count($onlineUsers); ?></span></div>
+		</div>
+		<?php endif; // authenticated ?>
 	</div>
-	<?php endif; // authenticated ?>
 
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">

@@ -28,7 +28,7 @@ legend, label {
 	color: #DDD;
 }
 
-a {
+a, .attn, .navbar .navbar-brand {
 	color: #FC6626;
 }
 
@@ -98,9 +98,6 @@ hr {
 	background-color: #444;
 }
 
-.navbar .navbar-brand {
-	color: #FC6626;
-}
 /*
 .navbar .dropdown-menu::after {
 	border-bottom: 6px solid #666;
@@ -181,9 +178,23 @@ input.copier {
 
 /* @end color-treatment ==================================================== */
 
+/* @start bootstrap overrides ============================================== */
+
+.table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td {
+	border-top: none;
+}
+
+/* @end bootstrap overrides ================================================ */
+
 body {
-	padding-top: 70px;
+	padding-top: 80px;
 	padding-bottom: 100px;
+}
+
+@media all and (max-width: 766px) {
+	body {
+		padding-top: 40px;
+	}
 }
 
 .navbar .username-dd {
@@ -199,9 +210,102 @@ body {
 }
 
 .status .badge {
-	margin-left: 3px;
+	margin-left: 4px;
 }
 
 img, iframe, embed, object {
 	max-width: 100%;
 }
+
+.route-action-admin-dashboard div.time {
+	display: inline-block;
+	float: right;
+}
+
+/* @start system updates =================================================== */
+
+.activity .time {
+	color: #888;
+}
+
+.short-date {
+	color: #888;
+	width: 4.5em;
+}
+
+.activity td.time {
+	width: 9em;
+}
+
+.activity tr:hover .time {
+	color: #AAA;
+}
+
+.activity .type {
+	width: 16px;
+}
+
+.activity .time, .activity .type {
+	vertical-align: middle;
+}
+
+.activity a {
+	color: inherit;
+}
+
+.activity th, .activity td {
+	padding: 5px;
+}
+
+.activity .preview-small {
+	float: right;
+}
+
+.activity .preview-small img {
+	max-height: 36px;
+}
+
+.activity .linked {
+	cursor: pointer;
+}
+
+/* @end system updates ===================================================== */
+
+/* @start user dashboard =================================================== */
+
+.dash h1 {
+	margin-bottom: 0;
+	font-weight: bold;
+	letter-spacing: -1px;
+}
+
+.dash h4 {
+	margin-top: 5px;
+}
+
+.dash .thumbnail {
+	border: 5px solid #666;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+	padding: 0px;
+	margin-top: 1em;
+	background: none;
+
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#000), to(#666));
+	background: -webkit-radial-gradient(circle, #000, #666);
+	background: -moz-radial-gradient(circle, #000, #666);
+	background: -ms-radial-gradient(circle, #000, #666);
+}
+
+.dash .caption h4, .dash .caption h5 {
+	padding-right: 0.5em;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.dash .caption {
+	max-height: 1em;
+}
+
+/* @end user dashboard ===================================================== */
