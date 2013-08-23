@@ -3,7 +3,7 @@ if(!empty($tag_tally)) :
 	$this->append('sidebar-bottom');
 	$action = (isset($action) ? $action : $this->request->params['action']);
 ?>
-<ul class="nav nav-list tags-tally">
+<ul class="nav nav-pills nav-stacked">
 	<li class="nav-header">Tags</li>
 	<?php
 		$tag_id = false;

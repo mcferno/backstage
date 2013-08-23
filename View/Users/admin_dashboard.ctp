@@ -1,11 +1,7 @@
 <?php 
 	$this->set('suppressSubnav', true); 
-	$this->set('contentSpan', 11); 
+	$this->set('contentSpan', 10); 
 ?>
-<div class="row">
-<div class="col-md-1">&nbsp;</div>
-
-<div class="col-md-11">
 <div class="dash">
 	<h1>dashboard</h1>
 	<h4>Welcome <span class="attn"><?= $this->Session->read('Auth.User.username'); ?></span>.</h4>
@@ -123,8 +119,5 @@
 		<tr><td>2012.03.31</td><td>Admin panel launched. Meme generator being worked on.</td></tr>
 */ ?>
 	</table>
-</div>
-</div>
-
 </div>
 </div>

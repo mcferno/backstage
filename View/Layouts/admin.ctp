@@ -49,11 +49,14 @@
 		<div class="container">
 			<div class="content">
 				<div class="row">
-					<?php if($contentSpan <= 8) : ?>
-					<div class="col-md-2">&nbsp;</div>
-					<?php endif; ?>
-					
-					<div class="col-md-<?= $contentSpan; ?> main">
+					<?php
+						$contentClasses = array('main', "col-md-{$contentSpan}");
+						$hideSidebar = isset($suppressSubnav) && $suppressSubnav;
+						if($contentSpan <= 8 || ($contentSpan <= 10 && $hideSidebar)) {
+							$contentClasses[] = 'col-md-offset-' . intval((12 - $contentSpan) / 2);
+						}
+					?>
+					<div class="<?= implode(' ', $contentClasses); ?>">
 						<?= $this->Session->flash(); ?>
 						<?php echo $this->fetch('content'); ?>
 					</div>

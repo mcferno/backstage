@@ -1,7 +1,7 @@
 <?= $this->fetch('sidebar-top'); ?>
 
 <?php if(!isset($suppressSubnav) || $suppressSubnav !== true) : ?>
-<ul class="nav nav-list">
+<ul class="nav nav-pills nav-stacked">
 	<?php 
 		if($this->Session->check('Auth.User')) {
 			switch(true) {
@@ -33,7 +33,6 @@
 					<li <?php if($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-edit glyphicon"></span> Meme Generator',array('controller'=>'pages','action'=>'meme_generator'),array('escape'=>false)); ?></li>
 					<li <?php if($this->request->controller == 'contests') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-fire glyphicon"></span> Caption Battles',array('controller'=>'contests','action'=>'admin_index'),array('escape'=>false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-upload glyphicon"></span> <strong>Upload Image</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false, 'class' => 'image-upload-btn')); ?></li>
-					<li class="divider"></li>
 					<li class="nav-header">Images</li>
 					<?php $is_asset = ($this->request->controller == 'assets'); ?>
 					<li <?php if($is_asset && $this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-home glyphicon"></span> <strong>My Images</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
