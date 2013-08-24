@@ -12,7 +12,7 @@
 ?>
 <h1>Upload Video Files</h1>
 
-<ul class="link-exchange unstyled striped"><li><?= $this->element('../Videos/_video_item', array('video' => $videos[0], 'hideComments' => true)); ?></li></ul>
+<ul class="link-exchange list-unstyled striped"><li><?= $this->element('../Videos/_video_item', array('video' => $videos[0], 'hideComments' => true)); ?></li></ul>
 
 <div class="row">
 	<div class="links form span12">

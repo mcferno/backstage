@@ -5,7 +5,7 @@
 	<div class="col-md-2 text-right action-bar">
 		<div class="extra">
 			<h3>Contributing Users</h3>
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 				<?php foreach($contributingUsers as $user) : ?>
 				<li><strong><?= $this->Html->link($user['User']['username'],array('action'=>'user', $user['User']['id']),array('escape'=>false)); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
 				<?php endforeach; ?>

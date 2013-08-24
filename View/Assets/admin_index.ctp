@@ -4,12 +4,12 @@
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
 		<h3>Specs</h3>
-		<ul class="unstyled">
+		<ul class="list-unstyled">
 			<li><strong><?= $this->Session->read('Auth.User.username'); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
 			<li><?= $image_total; ?> <span class="glyphicon glyphicon-picture"></span></li>
 		</ul>
 		<h3>Actions</h3>
-		<ul class="unstyled actions">
+		<ul class="list-unstyled actions">
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success image-upload-btn','escape'=>false)); ?></li>
 		</ul>
 	</div>

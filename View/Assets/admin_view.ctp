@@ -15,7 +15,7 @@
 	
 <div class="row">
 	<div class="col-md-2 asset-view text-right action-bar">
-		<ul class="unstyled">
+		<ul class="list-unstyled">
 			<li><strong><?= $asset['User']['username']; ?></strong> <span class="glyphicon glyphicon-user"></span></li>
 			<li><?= $asset['Asset']['created']; ?> <span class="glyphicon glyphicon-time"></span></li>
 			<li><?= $specs['mime']; ?> <span class="glyphicon glyphicon-picture"></span></li>
@@ -23,7 +23,7 @@
 			<li><?= round($filesize / 1024.0,2); ?> KB <span class="glyphicon glyphicon-file"></span></li>
 		</ul>
 		<h3>Actions</h3>
-		<ul class="unstyled actions">
+		<ul class="list-unstyled actions">
 			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-large btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>

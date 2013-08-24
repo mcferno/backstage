@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
 		<h3>Actions</h3>
-		<ul class="unstyled actions">
+		<ul class="list-unstyled actions">
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add a Link', array('controller' => 'links', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false, 'title' => 'Submit a Link of your own')); ?></li>
 			<li>
 				<div class="dropdown">
@@ -36,7 +36,7 @@
 
 		<?= $this->element('admin/pagination'); ?>
 
-		<ul class="link-exchange unstyled striped">
+		<ul class="link-exchange list-unstyled striped">
 		<?php foreach ($links as $link): ?>
 		<li>
 			<?= $this->element('../Links/_link_item', array('link' => $link)); ?>

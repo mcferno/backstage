@@ -4,7 +4,7 @@
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
 		<h3>Actions</h3>
-		<ul class="unstyled actions">
+		<ul class="list-unstyled actions">
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Edit this Link', array('controller' => 'links', 'action' => 'edit', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> Screenshot', array('controller' => 'links', 'action' => 'image', $link['Link']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
 		</ul>

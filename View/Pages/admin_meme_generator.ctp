@@ -122,7 +122,7 @@ MemeGenerator.config.type = 'Meme';
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<ul class="unstyled tips">
+			<ul class="list-unstyled tips">
 				<li>If you "<strong>Save on Server</strong>", it will automatically appear in "<strong>My Images</strong>" afterwards.</li>
 				<li><strong>iPhone users</strong> : To save a meme on your phone, press and hold on the image and you will be prompted to "<strong>Save Image</strong>".</li>
 				<li>Disable <strong>Auto-Refresh</strong> if your device is slower, and the interface is lagging.</li>

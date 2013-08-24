@@ -9,7 +9,7 @@
 </div>
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
-		<ul class="unstyled">
+		<ul class="list-unstyled">
 			<li><strong><?= $contest['User']['username']; ?></strong> <span class="glyphicon glyphicon-user"></span></li>
 			<li><?= $contest['Contest']['created']; ?> <span class="glyphicon glyphicon-time"></span></li>
 			<li><span class="badge badge-custom"><?= ($landing_page) ? count($assets) : (int)$this->Paginator->counter('{:count}'); ?></span> total entries <span class="glyphicon glyphicon-folder-open"></span></li>
@@ -32,7 +32,7 @@
 		<?php
 			$winner_confirm = "Do you wish to choose the current caption by {$assets[0]['User']['username']} as the Caption Battle Champion? This will end the contest and halt any further submissions.";
 		?>
-		<ul class="unstyled actions">
+		<ul class="list-unstyled actions">
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-star"></span> Declare as Winner', array('controller'=>'contests', 'action' => 'set_winner', $contest['Contest']['id'], $assets[0]['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false), $winner_confirm); ?></li>
 		</ul>
 
@@ -40,7 +40,7 @@
 		<?php endif; // non-landing page ?>
 
 		<h3>Actions</h3>
-		<ul class="unstyled actions">
+		<ul class="list-unstyled actions">
 			<?php if(empty($contest['Contest']['winning_asset_id'])) : ?>
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-large btn-success','escape'=>false)); ?></li>
 			<?php endif; ?>
