@@ -53,20 +53,16 @@ if($chatSettings['scope'] === 'Chat') {
 <a name="comments"></a><a name="chat"></a>
 <?php $this->start('chat-bar'); ?>
 <div class="row">
-<div class="navbar chat-bar">
-	<div class="navbar-inner">
-		<div class="container">
-			<div class="msg">
-				<form class="navbar-form">
-					<div class="text-input">
-						<input type="text" placeholder="Type something…">
-					</div>
-					<button type="submit" class="btn btn-<?= $submitClass; ?>"><strong><?= $submitLabel; ?></strong></button>
-				</form>
+<nav class="navbar chat-bar">
+	<div class="msg">
+		<form class="form-inline" role="form">
+			<div class="text-input">
+				<textarea type="text" class="form-control" placeholder="Type something…" rows="1"></textarea>
 			</div>
-		</div>
+			<button type="submit" class="btn btn-<?= $submitClass; ?>"><strong><?= $submitLabel; ?></strong></button>
+		</form>
 	</div>
-</div>
+</nav>
 </div>
 <?php $this->end(); ?>
 
@@ -78,17 +74,21 @@ if($chatSettings['scope'] === 'Chat') {
 	</div>
 </div>
 <div class="row chat-window">
-	<div class="col-md-12">
-		<table class="table chat table-condensed <?= ($reverseChat) ? 'table-striped-inverse' : 'table-striped'; ?>"></table>
-	</div>
+	<div class="col-md-12 chat <?= ($reverseChat) ? 'striped-inverse' : 'striped'; ?>"></div>
 </div>
 
 <?php if(!$reverseChat) { echo $this->fetch('chat-bar'); } ?>
 
 <script type="text/template" id="chatRowTemplate">
-<td class="time"><%= date %></td>
-<td class="handle"><%= username %></td>
-<td class="message"><%= message %></td>
+<div class="chat-row">
+	<div class="col-sm-2 col-xs-12">
+		<div class="row">
+			<div class="handle col-xs-6 col-sm-12"><%= username %></div>
+			<div class="time col-xs-6 col-sm-12"><%= date %></div>
+		</div>
+	</div>
+	<div class="message col-xs-12 col-sm-10"><%= message %></div>
+</div>
 </script>
 <script type="text/template" id="embeddedImageTemplate">
 <a href="<%= url %>" target="_blank" class="posted-content"><img src="<%= url %>" title="Image link posted by @<%= username %>"></a><a href="<%= url %>" class="original-link" target="_blank" style="display:none;"><%= url %></a><a class="close" href="#" title="Hide this image">×</a>

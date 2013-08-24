@@ -68,8 +68,8 @@ var GroupChat = {
 	 * ChatMsg View. Visual representation of a single chat message.
 	 */
 	ns.ChatMsgView = Backbone.View.extend({
-		tagName : 'tr',
-		className : 'chat-row',
+		tagName : 'div',
+		className : 'row',
 		initialize : function() {
 			this.render();
 			if(this.$el.find('.active-user').length) {
@@ -80,7 +80,8 @@ var GroupChat = {
 			var timestamp = this.model.get('timestamp');
 			var date = new Date(timestamp * 1000);
 			
-			var msg = ns.autolinkUrls(this.model.get('text'));
+			var msg = ns.nl2br(this.model.get('text'));
+			msg = ns.autolinkUrls(msg);
 			msg = ns.highlightCallouts(msg);
 
 			if(!ns.config.mobile) {
@@ -210,6 +211,7 @@ var GroupChat = {
 
 			// Backspace
 			case 8:
+				if(ns.config.scope != 'Chat') {	break; }
 				// erase the @mention block, keeping only the @
 				if(msg.toLowerCase().match(/@[_a-z0-9-]+$/)) {
 					event.preventDefault();
@@ -218,7 +220,8 @@ var GroupChat = {
 				break;
 
 			// TAB for autocompletion
-			case 9 :
+			case 9 : 
+				if(ns.config.scope != 'Chat') {	break; }
 				// match a partial @ callout
 				var user_callout = msg.toLowerCase().match(/@([_a-z0-9-]*)$/);
 				if(user_callout) {
@@ -258,8 +261,9 @@ var GroupChat = {
 			// Return key
 			case 13:
 				// Shift-return inserts a new line
-				if(event.shiftKey === true) {
+				if(event.shiftKey !== true) {
 					event.preventDefault();
+					ns.submitMessage();
 				}
 				break;
 		}
@@ -280,6 +284,11 @@ var GroupChat = {
 		row.hide();
 		ns.chatWindow.prepend(row);
 		row.show().css('display','table-row');
+	};
+
+	// converts new-line characters to HTML breaks
+	ns.nl2br = function(text) {
+		return (text + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
 	};
 
 	// convert URLs to active hyperlinks
@@ -543,8 +552,8 @@ var GroupChat = {
 
 	// initializes the full chat messaging interface
 	ns.initChat = function() {
-		ns.msgBar = $('.chat-bar .msg input');
-		ns.chatWindow = $('.chat-window table.chat');
+		ns.msgBar = $('.chat-bar .msg textarea');
+		ns.chatWindow = $('.chat-window .chat');
 		ns.handle = $('.chat-bar .handle').text();
 		ns.loadingIndicator = $('#loaderAnim');
 		
@@ -566,8 +575,11 @@ var GroupChat = {
 			// initialize for non-mobile users
 			if(ns.config.mobile === false) {
 				ns.initChatSounds();
-				ns.msgBar.on('keydown', ns.messageInput);
 			}
+		}
+
+		if(ns.config.mobile === false) {
+			ns.msgBar.on('keydown', ns.messageInput);
 		}
 
 		$('.loading').hide();

@@ -1,6 +1,9 @@
 <?php if($this->Session->check('Auth.User')) : ?>
 
-<div class="asset-upload-popin modal" style="display:none;">
+<div class="asset-upload-popin modal" style="display:none;" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
 		<h3><?= $this->Html->image('ui/icons/image-import.png'); ?> Add New Images</h3>
@@ -23,6 +26,9 @@
 		<?= $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-large btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Uploading ...")); ?>
 	</div>
 	<?php echo $this->Form->end();?>
+
+</div>
+</div>	
 </div>
 
 <?php if(!$this->request->is('mobile')): ?>
