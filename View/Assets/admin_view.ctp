@@ -7,65 +7,66 @@
 	// load cropping library if the image is not too small (crop-worthy)
 	$load_cropper = isset($this->request->params['named']['crop']);
 ?>
-<div class="row">
-	<div class="col-md-12">
-		<h1>Saved Image</h1>
-	</div>
-</div>
-	
+
 <div class="row">
 	<div class="col-md-2 asset-view text-right action-bar">
-		<ul class="list-unstyled">
-			<li><strong><?= $asset['User']['username']; ?></strong> <span class="glyphicon glyphicon-user"></span></li>
-			<li><?= $asset['Asset']['created']; ?> <span class="glyphicon glyphicon-time"></span></li>
-			<li><?= $specs['mime']; ?> <span class="glyphicon glyphicon-picture"></span></li>
-			<li><?= $specs[0]; ?> x <?= $specs[1]; ?> px (W x H) <span class="glyphicon glyphicon-resize-full"></span></li>
-			<li><?= round($filesize / 1024.0,2); ?> KB <span class="glyphicon glyphicon-file"></span></li>
-		</ul>
-		<h3>Actions</h3>
-		<ul class="list-unstyled actions">
-			<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
+		<div class="row">
+			<div class="col-xs-6 col-md-12">
+				<ul class="list-unstyled actions">
+					<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-large btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-block btn-large btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-block btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
 
-			<?php endif; // upload or url download ?>
+					<?php endif; // upload or url download ?>
 
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-comment"></span> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn','escape'=>false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-comment"></span> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn btn-block btn-default','escape'=>false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
 
-			<?php if(!$load_cropper) : ?>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-fullscreen"></span> Crop Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn','escape'=>false, 'title' => 'Save a slice of this image')); ?></li>
-			<?php endif; // cropper option ?>
+					<?php if(!$load_cropper) : ?>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-fullscreen"></span> Crop Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn btn-block btn-default','escape'=>false, 'title' => 'Save a slice of this image')); ?></li>
+					<?php endif; // cropper option ?>
 
-			<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
+					<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
 
-			<?php if($this->Session->check('Auth.User.fb_target')) : ?>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
-			<?php endif; // image is Facebook shareable ?>
+					<?php if($this->Session->check('Auth.User.fb_target')) : ?>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-block btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
+					<?php endif; // image is Facebook shareable ?>
 
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-danger delete','escape'=>false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-block btn-xs btn-danger delete','escape'=>false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
 
-			<?php else : // someone else's image ?>
+					<?php else : // someone else's image ?>
 
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-user"></span> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
-			
-			<?php endif; ?>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-user"></span> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-block btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
+					
+					<?php endif; ?>
+				</ul>
+			</div>
+			<div class="col-xs-6 col-md-12">
+				<ul class="list-unstyled">
+					<li><strong><?= $asset['User']['username']; ?></strong> <span class="glyphicon glyphicon-user"></span></li>
+					<li><?= $asset['Asset']['created']; ?> <span class="glyphicon glyphicon-time"></span></li>
+					<li><?= $specs['mime']; ?> <span class="glyphicon glyphicon-picture"></span></li>
+					<li><?= $specs[0]; ?> x <?= $specs[1]; ?> px (W x H) <span class="glyphicon glyphicon-resize-full"></span></li>
+					<li><?= round($filesize / 1024.0,2); ?> KB <span class="glyphicon glyphicon-file"></span></li>
 
-			<?php if(Access::hasRole('Admin')) : ?>
 
-			<li>
-			<p>Change Type <span class="glyphicon glyphicon-question-sign"></span></p>
-			<?php 
-				echo $this->Form->create('Asset', array('url' => array('action' => 'edit'), 'class' => 'asset-type-form'));
-				echo $this->Form->input('id', array('value' => $asset['Asset']['id']));
-				echo $this->Form->input('type', array('label' => false, 'class' => 'asset-type'));
-				echo $this->Form->submit('Save', array('class' => 'asset-type-submit btn-small btn-primary'));
-				echo $this->Form->end();
-			?>
-			</li>
+					<?php if(Access::hasRole('Admin')) : ?>
 
-			<?php endif; ?>
-		</ul>
+					<li>
+					<p>Change Type <span class="glyphicon glyphicon-question-sign"></span></p>
+					<?php 
+						echo $this->Form->create('Asset', array('url' => array('action' => 'edit'), 'class' => 'asset-type-form'));
+						echo $this->Form->input('id', array('value' => $asset['Asset']['id']));
+						echo $this->Form->input('type', array('label' => false, 'class' => 'asset-type form-control'));
+						echo $this->Form->submit('Save', array('class' => 'asset-type-submit btn-sm btn-primary'));
+						echo $this->Form->end();
+					?>
+					</li>
+
+					<?php endif; ?>
+				</ul>
+			</div>
+		</div>
 	</div>
 	<div class="col-md-10">
 		<?php if($load_cropper && isset($this->request->params['named']['crop'])) : ?>
@@ -82,9 +83,14 @@
 		<?php endforeach; ?>
 		</p>
 
-		<p class=" text-center">Direct URL to Image<br><input type="text" class="col-md-4 copier" value="<?= $this->Html->url('/',true) . IMAGES_URL . $asset['Asset']['image-full']; ?>"></p>
+		<div class="text-center">
+			Direct URL to Image<br>
+			<form class="col-md-6 col-md-offset-3">
+				<input type="text" class="copier form-control" value="<?= $this->Html->url('/',true) . IMAGES_URL . $asset['Asset']['image-full']; ?>">
+			</form>
+		</div>
 
-		<h3 class="text-right"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
+		<h3 class="text-right clearfix"><?= $this->Html->image('ui/icons/balloon.png'); ?> Comments</h3>
 		<?= $this->element('common/chat-module', array('model' => 'Asset', 'foreign_key' => $asset['Asset']['id'])); ?>
 
 		<?php if(!$this->request->is('mobile')) : ?>
