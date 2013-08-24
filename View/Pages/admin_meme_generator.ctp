@@ -48,14 +48,9 @@ MemeGenerator.config.type = 'Meme';
 	</div>
 	
 	<div class="row">
-		<div class="col-md-12">
-			<input type="text" name="first-line" id="first-line" class="col-md-5" value="<?= $first_line; ?>" placeholder="First line of text" spellcheck="true" autofocus="true">
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-md-12">
-			<input type="text" name="last-line" id="last-line" class="col-md-5" value="<?= $last_line; ?>" placeholder="Last line of text" spellcheck="true">
+		<div class="col-md-8 col-md-offset-2">
+			<input type="text" name="first-line" id="first-line" class="form-control input-lg" value="<?= $first_line; ?>" placeholder="First line of text" spellcheck="true" autofocus="true">
+			<input type="text" name="last-line" id="last-line" class="form-control input-lg" value="<?= $last_line; ?>" placeholder="Last line of text" spellcheck="true">
 		</div>
 	</div>
 	
@@ -84,9 +79,20 @@ MemeGenerator.config.type = 'Meme';
 	
 	<div class="row" id="backgrounds" style="display:none;">
 		<div class="col-md-12">
-			<h2 class="cozy">Choose an image</h2>
-			<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'All Images', 'label' => false, 'div' => false, 'class' => 'input-medium')); ?> 
-			<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'All Users', 'label' => false, 'div' => false, 'class' => 'input-medium')); ?>
+			<h2>Choose an image</h2>
+
+			<div class="row">
+				<div class="col-md-8 col-md-offset-3">
+					<div class="row">
+						<div class="col-md-4">
+							<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'All Images', 'label' => false, 'div' => false, 'class' => 'form-control input-sm')); ?> 
+						</div>
+						<div class="col-md-4">
+							<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'All Users', 'label' => false, 'div' => false, 'class' => 'form-control input-sm')); ?>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="mini-wall clearfix"></div>
 			<button class="load-more btn btn-large btn-primary"><span class="glyphicon glyphicon-retweet"></span> <span class="extra">Load </span>More Images</button>
 		</div>
@@ -111,13 +117,15 @@ MemeGenerator.config.type = 'Meme';
 	</div>
 	<div class="row resize-reset workspace" style="display:none;">
 		<div class="col-md-12">
-			<select name="canvasSize" class="canvasSize" title="Change the size of this meme when saved">
+			<form>
+			<select name="canvasSize" class="canvasSize input-sm" title="Change the size of this meme when saved">
 				<option data-max="full">Image Size: Full</option>
 				<option data-max="800">Image Size: Large</option>
 				<option data-max="600" selected="selected">Image Size: Regular</option>
 			</select>
+			</form>
 
-			<button class="btn btn-mini btn-danger reset" title="Abandon your work and restart"><span class="glyphicon glyphicon-ban-circle"></span> Start Over</button>
+			<button class="btn btn-sm btn-danger reset" title="Abandon your work and restart"><span class="glyphicon glyphicon-ban-circle"></span> Start Over</button>
 		</div>
 	</div>
 	<div class="row">

@@ -664,3 +664,72 @@ img, iframe, embed, object {
 }
 
 /* @end chat module ======================================================== */
+
+/* @start meme-generator =================================================== */
+
+.meme-generator {
+	text-align: center;
+}
+
+.meme-generator .row {
+	margin-bottom: 1em;
+}
+
+.meme-generator .output {
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+}
+
+#first-line {
+	margin-bottom: 0.5em;
+}
+
+.btn-huge {
+	padding: 1em 1em 1em;
+}
+
+#workspace {
+	display: none;
+}
+
+#rendered {
+	border: 5px solid #666;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+}
+
+.tips {
+	font-size: 1.1em;
+	padding-bottom: 1em;
+}
+
+.tips li {
+	margin-bottom: 0.5em;
+}
+
+.meme-generator .resize-reset {
+	margin-top: 2em;
+}
+
+.resize-reset .reset {
+	margin-left: 1em;
+}
+
+.mini-wall {
+	padding-bottom: 1em;
+	text-align: center;
+}
+
+.mini-wall img {
+	display: inline-block;
+	height: 75px;
+	width: auto !important;
+	padding-bottom: 5px;
+}
+
+.meme-generator .image-option:hover {
+	cursor: pointer;
+}
+
+/* @end meme-generator ===================================================== */
