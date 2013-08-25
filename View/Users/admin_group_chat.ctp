@@ -20,10 +20,10 @@
 <h4>Sound Settings</h4>
 <ul class="list-unstyled">
 <li class="mention-setting">
-	<button class="btn btn-xs btn-inverse state-on" title="Turn OFF &#64;mention notification"><span class="glyphicon glyphicon-volume-up"></span></button><button class="btn btn-danger btn-mini state-off" title="Turn ON &#64;mention notification" style="display: none;"><span class="glyphicon glyphicon-volume-off"></span></button> direct messages
+	<button class="btn btn-xs btn-inverse state-on" title="Turn OFF &#64;mention notification"><span class="glyphicon glyphicon-volume-up"></span></button><button class="btn btn-danger btn-xs state-off" title="Turn ON &#64;mention notification" style="display: none;"><span class="glyphicon glyphicon-volume-off"></span></button> direct messages
 </li>
 <li class="notification-setting">
-	<button class="btn btn-xs btn-inverse state-on" title="Turn OFF new message notification"><span class="glyphicon glyphicon-volume-up"></span></button><button class="btn btn-danger btn-mini state-off" title="Turn ON new message notification" style="display: none;"><span class="glyphicon glyphicon-volume-off"></span></button> new messages
+	<button class="btn btn-xs btn-inverse state-on" title="Turn OFF new message notification"><span class="glyphicon glyphicon-volume-up"></span></button><button class="btn btn-danger btn-xs state-off" title="Turn ON new message notification" style="display: none;"><span class="glyphicon glyphicon-volume-off"></span></button> new messages
 </li>
 </ul>
 

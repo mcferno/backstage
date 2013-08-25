@@ -10,8 +10,8 @@ class AppFormHelper extends FormHelper {
 		$newClass = parent::addClass($options,$class,$key);
 		
 		// inject bootstrap friendly class names
-		if(isset($newClass['class']) && strpos($newClass['class'],'control-group') === false) {
-			$newClass['class'] .= ' control-group';
+		if(isset($newClass['class']) && strpos($newClass['class'], 'control-group') === false) {
+			$newClass['class'] .= ' form-group';
 		}
 		return $newClass;
 	}

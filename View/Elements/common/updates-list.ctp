@@ -1,4 +1,5 @@
 <table class="table table-striped activity">
+<tbody>
 <?php foreach($updates as $update) : ?>
 	<tr <?php if(isset($update['Activity']['link'])) { echo 'data-target="' . $this->Html->url($update['Activity']['link']) . '" '; echo 'class="linked"'; } ?>>
 		<td class="time extra"><?= date('M d h:i A', strtotime($update['Activity']['created'])); ?></td>
@@ -28,6 +29,7 @@
 		</td>
 	</tr>
 <?php endforeach; ?>
+</tbody>
 </table>
 <script>
 $(document).ready(function() {
@@ -36,11 +38,12 @@ $(document).ready(function() {
 	});
 	$('.activity .preview').each(function() {
 		$(this).closest('tr').popover({ 
-			placement : 'top',
+			placement : 'auto top',
 			delay : { show: 250, hide: 100 },
 			trigger : 'hover',
 			html : true,
-			content : $(this).html()
+			content : $(this).html(),
+			container : 'tbody'
 		});
 	});
 	$('.activity .preview-small').click(function(e) {

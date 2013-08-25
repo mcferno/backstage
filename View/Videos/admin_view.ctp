@@ -15,9 +15,9 @@
 		<?php if(Access::isOwner($video['Video']['user_id']) || Access::hasRole('Admin')) : ?>
 		<h3>Actions</h3>
 		<ul class="list-unstyled actions">
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-facetime-video"></span> Upload video files', array('controller' => 'videos', 'action' => 'upload', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Change video text', array('controller' => 'videos', 'action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> Screenshot', array('controller' => 'videos', 'action' => 'image', $video['Video']['id']), array('class' => 'btn btn-small', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-facetime-video"></span> Upload video files', array('controller' => 'videos', 'action' => 'upload', $video['Video']['id']), array('class' => 'btn btn-sm', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Change video text', array('controller' => 'videos', 'action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-sm', 'escape' => false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> Screenshot', array('controller' => 'videos', 'action' => 'image', $video['Video']['id']), array('class' => 'btn btn-sm', 'escape' => false)); ?></li>
 		</ul>
 		<?php endif; ?>
 	</div>

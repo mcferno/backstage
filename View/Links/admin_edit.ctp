@@ -10,9 +10,9 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('user_id', array('type' => 'hidden'));
-		echo $this->Form->input('url', array('label' => 'URL', 'class' => 'full', 'placeholder' => 'http://example.com'));
-		echo $this->Form->input('title', array('label' => 'Link Title', 'class' => 'full', 'placeholder' => 'Website name, content title, or short descriptive name'));
-		echo $this->Form->input('description', array('class' => 'full', 'rows' => 4, 'placeholder' => 'Describe the website or content to entice other users to check it out.'));
+		echo $this->Form->input('url', array('label' => 'URL', 'class' => 'form-control', 'placeholder' => 'http://example.com'));
+		echo $this->Form->input('title', array('label' => 'Link Title', 'class' => 'form-control', 'placeholder' => 'Website name, content title, or short descriptive name'));
+		echo $this->Form->input('description', array('class' => 'form-control', 'rows' => 4, 'placeholder' => 'Describe the website or content to entice other users to check it out.'));
 	?>
 		<label>Tags (to group similar type links together)</label>
 		<div class="clearfix">

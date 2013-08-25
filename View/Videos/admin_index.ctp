@@ -10,7 +10,7 @@
 			<?php endif; // admin-only ?>
 			<li>
 				<div class="dropdown">
-					<a class="dropdown-toggle btn btn" data-toggle="dropdown" href="#" title="Change the order of the Videos list"><span class="glyphicon glyphicon-random"></span> Sort Videos</a>
+					<a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#" title="Change the order of the Videos list"><span class="glyphicon glyphicon-random"></span> Sort Videos</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 							<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape'=>false)); ?></li>
 							<li><?php echo $this->Paginator->sort('title', 'by Video Name <span class="glyphicon glyphicon-comment"></span>', array('escape'=>false)); ?></li>
@@ -39,9 +39,9 @@
 		<?= $this->element('admin/pagination'); ?>
 
 		<?php if(!empty($videos)) : ?>
-		<ul class="link-exchange list-unstyled striped">
+		<ul class="link-exchange media-list">
 		<?php foreach ($videos as $video): ?>
-		<li>
+		<li class="media">
 			<?= $this->element('../Videos/_video_item', array('video' => $video)); ?>
 		</li>
 		<?php endforeach; ?>

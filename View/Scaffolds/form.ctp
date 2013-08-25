@@ -21,7 +21,7 @@
 	echo $this->Form->create();
 	$fields = array_diff($scaffoldFields, array('created', 'modified', 'updated'));
 	foreach($fields as $field) {
-		echo $this->Form->input($field, array('class' => 'full'));
+		echo $this->Form->input($field, array('class' => 'form-control'));
 	}
 	echo $this->Form->end(__d('cake', 'Submit'));
 ?>

@@ -8,7 +8,7 @@
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add a Link', array('controller' => 'links', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false, 'title' => 'Submit a Link of your own')); ?></li>
 			<li>
 				<div class="dropdown">
-					<a class="dropdown-toggle btn btn" data-toggle="dropdown" href="#" title="Change the order of the Links list"><span class="glyphicon glyphicon-random"></span> Sort Links</a>
+					<a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#" title="Change the order of the Links list"><span class="glyphicon glyphicon-random"></span> Sort Links</a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 							<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape'=>false)); ?></li>
 							<li><?php echo $this->Paginator->sort('title', 'by Link Name <span class="glyphicon glyphicon-comment"></span>', array('escape'=>false)); ?></li>
@@ -36,9 +36,9 @@
 
 		<?= $this->element('admin/pagination'); ?>
 
-		<ul class="link-exchange list-unstyled striped">
+		<ul class="link-exchange media-list">
 		<?php foreach ($links as $link): ?>
-		<li>
+		<li class="media">
 			<?= $this->element('../Links/_link_item', array('link' => $link)); ?>
 		</li>
 		<?php endforeach; ?>

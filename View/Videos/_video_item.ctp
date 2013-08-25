@@ -14,9 +14,11 @@
 
 <?php if($screenshot) : ?>
 <div class="screenshot">
-	<?= $this->Html->image($screenshot, array('cachebust' => true, 'url' => array('controller' => 'videos', 'action' => 'view', $video['Video']['id']))); ?>
+	<?= $this->Html->image($screenshot, array('cachebust' => true, 'class' => 'pull-left', 'url' => array('controller' => 'videos', 'action' => 'view', $video['Video']['id']))); ?>
 </div>
 <?php endif; // has screenshot ?>
+
+<div class="media-body">
 
 <div class="title">
 	<?= $this->Html->link($video['Video']['title'], array('controller' => 'videos', 'action' => 'view', $video['Video']['id']), array('class' => 'main')); ?>
@@ -65,11 +67,13 @@
 
 	<?php if(!$this->request->is('mobile') && (Access::isOwner($video['Video']['user_id']) || Access::hasRole('Admin'))) : ?>
 	<div class="controls" style="display:none;">
-		<?= $this->Html->link($this->Html->image('ui/icons/image-pencil.png') . ' Thumbnail', array('action' => 'image', $video['Video']['id']), array('class' => 'btn btn-mini btn-inverse', 'title' => 'Change this video\'s thumnail', 'escape' => false)); ?>
-		<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-mini btn-inverse edit-btn', 'title' => 'Edit this video', 'escape' => false)); ?>
-		<?= $this->Form->postLink($this->Html->image('ui/icons/prohibition.png') . ' Delete', array('action' => 'delete', $video['Video']['id']), array('class' => 'btn btn-mini btn-inverse', 'title' => 'Delete this video', 'escape' => false), "Are you sure you want to delete the {$video['Video']['title']} video?"); ?>
+		<?= $this->Html->link($this->Html->image('ui/icons/image-pencil.png') . ' Thumbnail', array('action' => 'image', $video['Video']['id']), array('class' => 'btn btn-xs btn-inverse', 'title' => 'Change this video\'s thumnail', 'escape' => false)); ?>
+		<?= $this->Html->link($this->Html->image('ui/icons/pencil.png') . ' Edit', array('action' => 'edit', $video['Video']['id']), array('class' => 'btn btn-xs btn-inverse edit-btn', 'title' => 'Edit this video', 'escape' => false)); ?>
+		<?= $this->Form->postLink($this->Html->image('ui/icons/prohibition.png') . ' Delete', array('action' => 'delete', $video['Video']['id']), array('class' => 'btn btn-xs btn-inverse', 'title' => 'Delete this video', 'escape' => false), "Are you sure you want to delete the {$video['Video']['title']} video?"); ?>
 	</div>
 	<?php endif; ?>
+</div>
+
 </div>
 
 </div><!-- closing video item -->
