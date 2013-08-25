@@ -62,7 +62,7 @@ hr {
 }
 
 .nav > li > a:hover {
-	background-color: #444;
+	background-color: #333;
 	color: #EEE;
 }
 
@@ -103,7 +103,7 @@ hr {
 .table-striped tbody > tr:nth-child(odd) > th,
 .table-striped-inverse tr:nth-last-child(2n + 1),
 .table-striped-inverse tr:nth-last-child(2n + 1) td {
-	background-color: #444;
+	background-color: #333;
 }
 
 /*
@@ -275,11 +275,11 @@ span.badge-off {
 }
 
 .modal, .modal legend, .modal label {
-	color: #444
+	color: #333
 }
 
 input.copier {
-	background-color: #444;
+	background-color: #333;
 	color: #EEE;
 	border-color: #666;
 }
@@ -374,6 +374,12 @@ img, iframe, embed, object {
 
 .tagged {
 	opacity: 0.4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 800;
+	margin-top: 0px;
+
 }
 
 /* @start system updates =================================================== */
