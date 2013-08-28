@@ -62,7 +62,7 @@
 <div class="col-md-12">
 
 	<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse btn-sm pull-right', 'escape' => false)); ?>
-	<h3><a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>"><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</a></h3>
+	<h3 class="cozy-lead"><a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>"><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</a></h3>
 	<?= $this->element('common/updates-list', array('hideSmallPreview' => true)); ?>
 
 </div>
@@ -71,7 +71,7 @@
 <?php if(Access::hasRole('Admin')): ?>
 <div class="row">
 <div class="col-md-12">
-	<h3><?= $this->Html->image('ui/icons/clock.png'); ?> Recent Users</h3>
+	<h3 class="cozy-lead"><?= $this->Html->image('ui/icons/clock.png'); ?> Recent Users</h3>
 	<table class="table table-striped activity">
 		<?php foreach($recent_users as $user) : ?>
 		<tr>
@@ -89,7 +89,7 @@
 
 <div class="row">
 <div class="col-md-12">
-	<h3><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
+	<h3 class="cozy-lead"><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
 		<tr><td class="short-date">Apr 04</td><td>Many improvements made to the organization of images on the site.</td></tr>
 		<tr><td class="short-date">Mar 03</td><td>Meme Generator font has been improved for Android and iOS users</td></tr>

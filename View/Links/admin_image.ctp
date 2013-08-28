@@ -28,7 +28,7 @@
 			if($image) {
 				echo $this->element('common/image-cropper');
 				echo $this->Html->image($image, array('class' => 'cropable', 'data-crop-aspect' => '1', 'data-image-id' => $link['Link']['id'], 'cachebust' => true));
-				echo $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> Return to Link', array('action' => 'view', $link['Link']['id']), array('class' => 'btn', 'escape' => false));
+				echo $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> Return to Link', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-default', 'escape' => false));
 			} else {
 				echo $this->Html->link('No Image Found! Please upload an image to continue', array('action' => 'image', $link['Link']['id']));
 			}

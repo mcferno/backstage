@@ -3,8 +3,11 @@ class ContestsController extends AppController {
 
 	public $paginate = array(
 		'Contest' => array(
+			'conditions' => array(
+				'winning_asset_id IS NOT NULL'
+			),
 			'contain' => array('User', 'Asset'),
-			'order' => 'Contest.created DESC'		
+			'order' => 'Contest.created DESC'
 		),
 		'Asset' => array(
 			'contain' => array('User'),
@@ -19,6 +22,7 @@ class ContestsController extends AppController {
 	 */
 	public function admin_index() {
 		$this->set('activeContests', $this->Contest->getActiveContests());
+		$this->paginate['Contest']['limit'] = 100;
 		$this->set('contests', $this->paginate());
 	}
 

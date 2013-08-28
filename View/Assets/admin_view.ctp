@@ -105,7 +105,10 @@
 </div>
 
 <?php if($this->Session->check('Auth.User.fb_target')) : ?>
-<div class="modal" id="fbPostModal" style="display:none;">
+<div class="modal" id="fbPostModal" style="display:none;" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+
 	<div class="modal-header">
 		<button class="close" data-dismiss="modal">×</button>
 		<h3 class="fb">Post to Facebook</h3>
@@ -118,13 +121,16 @@
 		<p class="alert alert-warning">This image has been previously posted.</p>
 		<?php endif; ?>
 		<br>
-		<?= $this->Form->input('message',array('type'=>'text','label'=>'Message to post with image (optional)', 'class' => 'span5', 'placeholder' => 'Check this shit out', 'spellcheck' => 'true')); ?>
+		<?= $this->Form->input('message',array('type'=>'text','label'=>'Message to post with image (optional)', 'class' => 'form-control', 'placeholder' => 'Check this shit out', 'spellcheck' => 'true')); ?>
 	</div>
 	<div class="modal-footer">
 		<?= $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class' => 'btn btn-primary')); ?>
 		<a href="#" class="btn btn-danger" data-dismiss="modal">Cancel</a>
 	</div>
 	<?= $this->Form->end(); ?>
+
+</div>
+</div>
 </div>
 <?php endif; ?>
 

@@ -25,8 +25,8 @@
 		<p class="muted"><br><span class="glyphicon glyphicon-info-sign"></span> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many links per tag.</p>
 
 		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit',array('class'=>'btn btn-large btn-primary')); ?><br><br>
-		<?= $this->Html->link('<span class="glyphicon glyphicon-facetime-video"></span> Upload Video Files', array('action' => 'upload', $this->request->data['Video']['id']), array('class' => 'btn', 'escape' => false)); ?>
-		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Video', array('action' => 'view', $this->request->data['Video']['id']), array('class' => 'btn', 'escape' => false)); ?>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-facetime-video"></span> Upload Video Files', array('action' => 'upload', $this->request->data['Video']['id']), array('class' => 'btn btn-default', 'escape' => false)); ?>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Video', array('action' => 'view', $this->request->data['Video']['id']), array('class' => 'btn btn-default', 'escape' => false)); ?>
 	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

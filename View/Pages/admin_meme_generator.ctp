@@ -65,7 +65,7 @@ MemeGenerator.config.type = 'Meme';
 			
 			<?php 
 				if(!empty($contest['Contest']['id'])) {
-					echo $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Battle', array('controller' => 'contests', 'action' => 'view', $contest['Contest']['id']), array('class' => 'btn', 'escape' => false));
+					echo $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Battle', array('controller' => 'contests', 'action' => 'view', $contest['Contest']['id']), array('class' => 'btn btn-default', 'escape' => false));
 				}
 			?>
 		</div>
