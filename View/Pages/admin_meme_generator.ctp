@@ -61,7 +61,7 @@ MemeGenerator.config.type = 'Meme';
 				<button class="btn btn-huge btn-inverse live-mode" title="Toggles the automatic text refreshing mode"><span class="glyphicon glyphicon-remove"></span> Auto<span class="extra"> Refresh</span></button>
 			</div>
 
-			<button class="btn btn-huge choose-background" data-loading-text='<span class="glyphicon glyphicon-refresh"></span><span class="extra"> Change Image</span>'><span class="glyphicon glyphicon-picture"></span><span class="extra"> Change Image</span></button>
+			<button class="btn btn-huge btn-default choose-background" data-loading-text='<span class="glyphicon glyphicon-refresh"></span><span class="extra"> Change Image</span>'><span class="glyphicon glyphicon-picture"></span><span class="extra"> Change Image</span></button>
 			
 			<?php 
 				if(!empty($contest['Contest']['id'])) {
@@ -79,16 +79,16 @@ MemeGenerator.config.type = 'Meme';
 	
 	<div class="row" id="backgrounds" style="display:none;">
 		<div class="col-md-12">
-			<h2>Choose an image</h2>
+			<h2 class="cozy-top">Choose an image</h2>
 
 			<div class="row">
-				<div class="col-md-8 col-md-offset-3">
+				<div class="col-md-8 col-md-offset-2">
 					<div class="row">
-						<div class="col-md-4">
-							<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'All Images', 'label' => false, 'div' => false, 'class' => 'form-control input-sm')); ?> 
+						<div class="col-md-6">
+							<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'All Images', 'label' => false, 'div' => false, 'class' => 'form-control')); ?> 
 						</div>
-						<div class="col-md-4">
-							<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'All Users', 'label' => false, 'div' => false, 'class' => 'form-control input-sm')); ?>
+						<div class="col-md-6">
+							<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'All Users', 'label' => false, 'div' => false, 'class' => 'form-control')); ?>
 						</div>
 					</div>
 				</div>

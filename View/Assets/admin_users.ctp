@@ -21,7 +21,7 @@
 
 		<?php elseif (isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Ready') : ?>
 
-		<h1>Memes-Ready Images</h1>
+		<h1>Meme-Ready Images</h1>
 		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> images ready for the <?= $this->Html->link('Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator')); ?>.</p>
 
 		<?php else : ?>

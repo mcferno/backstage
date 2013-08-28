@@ -61,8 +61,13 @@
 <div class="row">
 <div class="col-md-12">
 
-	<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse btn-sm pull-right', 'escape' => false)); ?>
-	<h3 class="cozy-lead"><a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>"><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</a></h3>
+	
+	<h3 class="cozy-lead">
+		<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>">
+			<?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates
+		</a>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse btn-sm pull-right', 'escape' => false)); ?>
+	</h3>
 	<?= $this->element('common/updates-list', array('hideSmallPreview' => true)); ?>
 
 </div>

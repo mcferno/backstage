@@ -395,6 +395,7 @@ img, iframe, embed, object {
 
 .select2-container-multi .select2-choices .select2-search-field input {
 	color: #eee;
+	padding: 1em;
 }
 
 .cozy {
@@ -405,6 +406,10 @@ img, iframe, embed, object {
 .cozy-lead {
 	padding-top: 2em;
 	padding-bottom: 1em;
+}
+
+.cozy-top {
+	padding-top: 1em;
 }
 
 .tagged {
@@ -848,6 +853,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .active-contests img {
 	width: 100%;
+}
+
+.subnav {
+	padding-top: 40px;
 }
 
 @media all and (max-width: 765px) {
