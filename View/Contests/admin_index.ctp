@@ -17,7 +17,7 @@
 		<div class="active-contests">
 			<div class="row">
 				<?php foreach ($activeContests as $idx => $contest) : ?>
-				<div class="col-xs-6 col-sm-4 col-lg-3">
+				<div class="col-xs-6 col-sm-4 col-lg-3 contest">
 					<?= $this->Html->link($this->Html->image($contest['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id']),array('escape'=>false, 'class' => '')); ?>
 					<div class="caption">
 						<dl>

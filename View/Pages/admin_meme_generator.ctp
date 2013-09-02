@@ -40,7 +40,7 @@ MemeGenerator.config.type = 'Meme';
 
 	<div class="row no-canvas" style="display:none;">
 		<div class="col-md-12">
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<h2>Your device does not support HTML5 Canvas!</h2>
 				<p>Please consider using a more modern browser, such as <a href="https://www.google.com/chrome" target="_blank">Google Chrome</a>.</p>
 			</div>
@@ -94,7 +94,7 @@ MemeGenerator.config.type = 'Meme';
 				</div>
 			</div>
 			<div class="mini-wall clearfix"></div>
-			<button class="load-more btn btn-large btn-primary"><span class="glyphicon glyphicon-retweet"></span> <span class="extra">Load </span>More Images</button>
+			<button class="load-more btn btn-primary"><span class="glyphicon glyphicon-retweet"></span> <span class="extra">Load </span>More Images</button>
 		</div>
 	</div>
 

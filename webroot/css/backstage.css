@@ -331,7 +331,7 @@ body {
 
 @media all and (max-width: 767px) {
 	body {
-		padding-top: 60px;
+		padding-top: 70px;
 	}
 }
 
@@ -521,6 +521,7 @@ h1, h2, h3, h4, h5, h6 {
 .pager li>a, .pager li>span {
 	background-color: #222;
 	border: 3px solid #666;
+	margin-bottom: 10px;
 }
 
 .pager .disabled>a, .pager .disabled>a:hover, .pager .disabled>a:focus, .pager .disabled>span {
@@ -823,7 +824,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .link-exchange .description {
 	margin: 0.75em;
-	margin-bottom: 4px;
 }
 
 .link-exchange .stats {
@@ -833,6 +833,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .link-exchange .interact {
 	margin: 0.5em;
+}
+
+.interact .badge {
+	margin-bottom: 10px;
 }
 
 .link-exchange .comments {
@@ -855,31 +859,71 @@ h1, h2, h3, h4, h5, h6 {
 	width: 100%;
 }
 
+.active-contests .contest {
+	margin-bottom: 1em;
+}
+
 .subnav {
 	padding-top: 40px;
 }
 
-@media all and (max-width: 765px) {
+
+@media all and (min-width: 768px) and (max-width: 850px) {
+	.nav > li > a {
+		padding-right: 8px;
+		padding-right: 8px;
+	}
+}
+
+@media all and (max-width: 768px) {
+
 	.screenshot img {
 		max-width: 120px;
 	}
+
 	.link-item.no-screenshot {
 		padding-left: 135px;
 	}
+
 	.video-item .screenshot img {
 		max-width: 160px;
 	}
 }
 
 @media all and (max-width: 480px) {
+
 	.screenshot img, .video-item .screenshot img {
 		max-width: 90px;
 	}
+
 	.link-item.no-screenshot {
 		padding-left: 105px;
 	}
 
 	.extra {
 		display: none;
+	}
+}
+
+@media all and (max-width: 350px) {
+	.navbar-brand {
+		padding: 15px 9px;
+	}
+
+	.screenshot img, .video-item .screenshot img {
+		max-width: none;
+		width: auto;
+	}
+
+	.link-item.no-screenshot {
+		padding-left: 0px;
+	}
+
+	.media-body {
+		float: left;
+	}
+
+	.interact .view-link {
+		display:block;
 	}
 }

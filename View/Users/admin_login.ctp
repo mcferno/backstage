@@ -1,8 +1,7 @@
 <?php 
 	$this->set('suppressSubnav', true);
-	$this->set('contentSpan',12);
 ?>
-<div class="col-md-3 login">
+<div class="col-sm-8 col-sm-offset-2 login">
 	<h1>Login</h1>
 	<?= $this->Session->flash(); ?>
 	<?= $this->Session->flash('auth'); ?>
@@ -11,8 +10,8 @@
 		<fieldset>
 			<legend></legend>
 		<?php
-			echo $this->Form->input('username', array('autofocus' => 'autofocus'));
-			echo $this->Form->input('password');
+			echo $this->Form->input('username', array('autofocus' => 'autofocus', 'class' => 'form-control'));
+			echo $this->Form->input('password', array('class' => 'form-control'));
 		?>
 		</fieldset>
 	<?php echo $this->Form->end(array('label' => 'Log In', 'class'=>'btn btn-primary'));?>

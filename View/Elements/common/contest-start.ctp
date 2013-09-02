@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<?= $this->Form->button('<span class="glyphicon glyphicon-ok"></span> Start',array('class'=>'btn btn-large btn-success')); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-ok"></span> Start',array('class'=>'btn btn-success')); ?>
 	</div>
 	<?php echo $this->Form->end();?>
 </div>

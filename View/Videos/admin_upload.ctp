@@ -33,9 +33,9 @@
 
 		<p><span class="glyphicon glyphicon-info-sign"></span> Uploading may take several minutes or longer depending on your connection, and the length/quality of the video you upload. Thank you for your patience.</p>
 
-		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit',array('class'=>'btn btn-large btn-primary')); ?><br><br>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit',array('class'=>'btn btn-primary')); ?><br><br>
 		<?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Edit Video Details', array('action' => 'edit', $videos[0]['Video']['id']), array('class' => 'btn btn-default', 'escape' => false)); ?>
-		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Video', array('action' => 'view', $videos[0]['Video']['id']), array('class' => 'btn btn', 'escape' => false)); ?>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Video', array('action' => 'view', $videos[0]['Video']['id']), array('class' => 'btn btn-default', 'escape' => false)); ?>
 	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

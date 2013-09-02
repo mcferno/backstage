@@ -6,7 +6,7 @@
 	<table cellpadding="0" cellspacing="0" class="table table-striped">
 	<tr>
 		<th><?php echo $this->Paginator->sort('date');?></th>
-		<th><?php echo $this->Paginator->sort('model','Source');?></th>
+		<th class="hidden-xs"><?php echo $this->Paginator->sort('model','Source');?></th>
 		<th><?php echo $this->Paginator->sort('body','Text');?></th>
 	</tr>
 	<?php
@@ -18,8 +18,8 @@
 		}
 	?>
 	<tr>
-		<td class="time"><?php echo h(date('Y.m.d H:i:s',$post['Post']['date'])); ?>&nbsp;</td>
-		<td><?php echo h($post['Post']['model']); ?>&nbsp;</td>
+		<td class="time"><?php echo h(date('Y.m.d',$post['Post']['date'])); ?>&nbsp;</td>
+		<td class="hidden-xs"><?php echo h($post['Post']['model']); ?>&nbsp;</td>
 		<td class="post-body">
 			<?php echo $post['Post']['body']; ?>&nbsp;
 			<?php if(!empty($handle)) : ?>

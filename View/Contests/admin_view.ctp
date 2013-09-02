@@ -42,7 +42,7 @@
 		<h3>Actions</h3>
 		<ul class="list-unstyled actions">
 			<?php if(empty($contest['Contest']['winning_asset_id'])) : ?>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-large btn-success','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-success','escape'=>false)); ?></li>
 			<?php endif; ?>
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> View Caption Battles', array('action'=>'index'),array('class'=>'btn btn-default','escape'=>false)); ?></li>
 		</ul>

@@ -53,12 +53,12 @@
 			
 
 			<?php
-				echo $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-large btn-success'));
+				echo $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-success'));
 				echo '&nbsp;';
-				echo $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-large', 'escape' => false));
+				echo $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-default btn-lg', 'escape' => false));
 				if($image) {
 					echo '&nbsp;';
-					echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Re-Crop Existing', array('action' => 'image', $link['Link']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info btn-large', 'escape' => false));
+					echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Re-Crop Existing', array('action' => 'image', $link['Link']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info btn-lg', 'escape' => false));
 				} 
 			?>
 			</div>

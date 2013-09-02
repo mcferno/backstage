@@ -11,20 +11,18 @@
 	<?php echo $this->Form->create('Asset',array('url'=>array('action'=>'upload'),'type'=>'file'));?>
 	<div class="modal-body">
 		<div class="assets form">
-			<fieldset>
-				<h4><?= $this->Html->image('ui/icons/computer.png'); ?> Upload an image from your device or computer</h4>
-				<?= $this->Form->input('image',array('type'=>'file','label'=>false, 'class' => 'form-sm')); ?>
-				<div class="cozy"></div>
-				<h4><?= $this->Html->image('ui/icons/network-cloud.png'); ?> Upload an image from a URL</h4>
-				<?= $this->Form->input('url',array('type' => 'text', 'label' => false, 'class' => 'asset-url form-control', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
-			</fieldset>
+			<h4><?= $this->Html->image('ui/icons/computer.png'); ?> Upload an image from your device or computer</h4>
+			<?= $this->Form->input('image',array('type'=>'file','label'=>false, 'class' => 'form-sm')); ?>
+			<div class="cozy"></div>
+			<h4><?= $this->Html->image('ui/icons/network-cloud.png'); ?> Upload an image from a URL</h4>
+			<?= $this->Form->input('url',array('type' => 'text', 'label' => false, 'class' => 'asset-url form-control', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
 		</div>
 		<div class="progress progress-striped active" style="display:none;">
 			<div class="progress-bar progress-bar-info bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<?= $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-large btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Uploading ...")); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Uploading ...")); ?>
 	</div>
 	<?php echo $this->Form->end();?>
 

@@ -15,7 +15,7 @@
 				<ul class="list-unstyled actions">
 					<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-block btn-large btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-block  btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-block btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
 
 					<?php endif; // upload or url download ?>
@@ -36,7 +36,7 @@
 
 					<?php else : // someone else's image ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-user"></span> More from '.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-block btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-user"></span> <span class="extra">More from </span>'.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-block btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
 					
 					<?php endif; ?>
 				</ul>

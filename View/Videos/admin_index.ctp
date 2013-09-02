@@ -3,22 +3,25 @@
 ?>
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
-		<h3>Actions</h3>
-		<ul class="list-unstyled actions">
-			<?php if(Access::hasRole('Admin')) : ?>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add a Video', array('controller' => 'videos', 'action' => 'add'), array('class' => 'btn btn-primary', 'escape' => false, 'title' => 'Upload a Video of your own')); ?></li>
-			<?php endif; // admin-only ?>
-			<li>
-				<div class="dropdown">
-					<a class="dropdown-toggle btn btn-default" data-toggle="dropdown" href="#" title="Change the order of the Videos list"><span class="glyphicon glyphicon-random"></span> Sort Videos</a>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-							<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape'=>false)); ?></li>
-							<li><?php echo $this->Paginator->sort('title', 'by Video Name <span class="glyphicon glyphicon-comment"></span>', array('escape'=>false)); ?></li>
-							<li><?php echo $this->Paginator->sort('url', 'by URL <span class="glyphicon glyphicon-share-alt"></span>', array('escape'=>false)); ?></li>
-					</ul>
-				</div>
-			</li>
-		</ul>
+		<div class="row">
+			<div class="col-xs-6 col-md-12">
+				<ul class="list-unstyled actions">
+					<?php if(Access::hasRole('Admin')) : ?>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add a Video', array('controller' => 'videos', 'action' => 'add'), array('class' => 'btn btn-primary btn-block', 'escape' => false, 'title' => 'Upload a Video of your own')); ?></li>
+					<?php endif; // admin-only ?>
+					<li>
+						<div class="dropdown">
+							<a class="dropdown-toggle btn btn-default btn-block" data-toggle="dropdown" href="#" title="Change the order of the Videos list"><span class="glyphicon glyphicon-random"></span> Sort Videos</a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+									<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape'=>false)); ?></li>
+									<li><?php echo $this->Paginator->sort('title', 'by Video Name <span class="glyphicon glyphicon-comment"></span>', array('escape'=>false)); ?></li>
+									<li><?php echo $this->Paginator->sort('url', 'by URL <span class="glyphicon glyphicon-share-alt"></span>', array('escape'=>false)); ?></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-md-10">
