@@ -17,6 +17,17 @@
  * - Switched the nav adjustment jump point from 980px -> 786px
  */
 
+@font-face {
+	font-family: "Passion One";
+	src: url('fonts/passionone-regular-webfont.eot');
+	src: url('fonts/passionone-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		url('fonts/passionone-regular-webfont.woff') format('woff'),
+		url('fonts/passionone-regular-webfont.ttf') format('truetype'),
+		url('fonts/passionone-regular-webfont.svg#passionone') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* @start color-treatment ================================================== */
 
 body {

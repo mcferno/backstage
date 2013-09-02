@@ -28,6 +28,13 @@ AddType video/webm .webm
 AddType video/x-flv .flv
 AddType audio/ogg .oga .ogg
 
+AddType application/font-woff woff
+AddType application/vnd.ms-fontobject eot
+AddType application/x-font-ttf ttc ttf
+AddType font/opentype otf
+AddType image/svg+xml svg svgz
+AddEncoding gzip svgz
+
 SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
 
 # Gzip compression
@@ -103,6 +110,13 @@ SetEnvIfNoCase Request_URI \.(og[gv]|mp4|m4v|webm)$ no-gzip dont-vary
   ExpiresByType video/mp4                 "access plus 1 year"
   ExpiresByType video/webm                "access plus 1 year"
   ExpiresByType audio/mpeg                "access plus 1 year"
+
+  # Web fonts
+  ExpiresByType application/font-woff                 "access plus 1 month"
+  ExpiresByType application/vnd.ms-fontobject         "access plus 1 month"
+  ExpiresByType application/x-font-ttf                "access plus 1 month"
+  ExpiresByType font/opentype                         "access plus 1 month"
+  ExpiresByType image/svg+xml                         "access plus 1 month"
 
   # CSS and JavaScript (cache-busted)
   ExpiresByType text/css                  "access plus 1 year"

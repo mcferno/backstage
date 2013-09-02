@@ -467,6 +467,10 @@ var MemeGenerator = {
 			ns.fontHeightPadding = ns.fontLineHeight['android'];
 		}
 
+		if(User.isMobile) {
+			ns.fontFamily = 'Passion One, sans-serif';
+		}
+
 		// ensure the scale adapting is done at least once
 		ns.adaptToScale();
 	};
