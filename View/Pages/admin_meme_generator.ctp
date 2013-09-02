@@ -107,7 +107,7 @@ MemeGenerator.config.type = 'Meme';
 				<?php else : ?>
 				<button class="btn btn-huge btn-success save" data-loading-text='<span class="glyphicon glyphicon-download-alt"></span> Saving ...' title="Save this image, and stay in the Meme Generator"><span class="glyphicon glyphicon-download"></span> Save<span class="extra"> &amp; Continue</span></button>
 				<?php endif; ?>
-				<button class="btn btn-huge btn save-jump" data-loading-text='<span class="glyphicon glyphicon-download-alt"></span> Saving ...' title="Save Image and Jump to View Page"><span class="glyphicon glyphicon-eye-open"></span> Save &amp; View</button>
+				<button class="btn btn-huge btn-default save-jump" data-loading-text='<span class="glyphicon glyphicon-download-alt"></span> Saving ...' title="Save Image and Jump to View Page"><span class="glyphicon glyphicon-eye-open"></span> Save &amp; View</button>
 			</div>
 			<a href="#" style="display:none;" class="btn btn-huge btn-info view-last" title="View the last image you saved"><span class="glyphicon glyphicon-search"></span> View Last Saved</a>
 		</div>

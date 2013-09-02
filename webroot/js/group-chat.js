@@ -20,8 +20,11 @@ var GroupChat = {
 /*global Backbone _ AppBaseURL */
 (function($, ns) {
 	"use strict";
+
+	var doc = $(document),
+		win = $(window);
 	
-	$(document)
+	doc
 		.on('click','.chat-bar button', function(e) {
 			e.preventDefault(); // disable all buttons's defaults
 		})
@@ -33,8 +36,14 @@ var GroupChat = {
 			e.preventDefault(); // disable all buttons's defaults
 			$('.slideout').slideToggle();
 			
+		})
+		.on('click', '.highlight', function() {
+			$(this).addClass('seen');
+		})
+		.on('message-sent', function() {
+			$('.highlight').addClass('seen');
 		});
-	$(window)
+	win
 		// track window focus for notifications
 		.on('focus',function(){
 			ns.windowFocus = true;
@@ -188,6 +197,7 @@ var GroupChat = {
 		});
 
 		ns.msgBar.val('');
+		doc.triggerHandler('message-sent');
 	};
 
 	/**
@@ -638,7 +648,7 @@ var GroupChat = {
 		});
 	};
 	
-	$(document).ready(function() {
+	doc.ready(function() {
 		ns.originalTitle = document.title;
 		ns.init();
 

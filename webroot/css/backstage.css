@@ -691,6 +691,21 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 
+.active-user {
+	font-weight: 800;
+	color: #FC6626;
+}
+
+.chat-window .highlight {
+	border: 2px solid #FC6626;
+	padding-top: 0.75em;
+	padding-bottom: 0.75em;
+}
+
+.chat-window .highlight.seen {
+	border: none;
+}
+
 .chat-window .message {
 	padding: 0.5em;
 }
