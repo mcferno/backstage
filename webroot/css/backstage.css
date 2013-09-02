@@ -706,6 +706,10 @@ h1, h2, h3, h4, h5, h6 {
 	border: none;
 }
 
+.chat-window .user-mention {
+	font-weight: bold;
+}
+
 .chat-window .message {
 	padding: 0.5em;
 }
@@ -736,7 +740,12 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 1em;
 }
 
+.list-indented {
+	margin-left: 1em;
+}
+
 @media all and (min-width: 768px) {
+
 	.chat-window .handle {
 		text-align: right;
 	}

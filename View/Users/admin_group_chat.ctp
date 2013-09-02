@@ -5,10 +5,10 @@
 <?php $this->start('sidebar-top'); ?>
 
 <h3 class="active-label">Active <span class="badge badge-info active-count"><?= count($onlineUsers); ?></span></h3>
-<ul class="online-users list-unstyled"></ul>
+<ul class="online-users list-unstyled list-indented"></ul>
 
 <h5 class="idle-label">Away from Chat <span class="badge idle-count">0</span></h5>
-<ul class="idle-users list-unstyled"></ul>
+<ul class="idle-users list-unstyled list-indented"></ul>
 
 <div class="tips">
 	<p><span class="glyphicon glyphicon-info-sign"></span> Use <strong>@username</strong> to get that user's attention with your message.</p>

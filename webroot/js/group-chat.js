@@ -302,11 +302,17 @@ var GroupChat = {
 
 	// highlight @mentions within a given text
 	ns.highlightCallouts = function(text) {
+
+		// mark other mentions
+		var markup = text.replace(/(^|\W)(@\w+)(\W|$)/g, '$1<span class="user-mention">$2</span>$3');
+
+		// highlight personal @mentions
 		if(ns.config.self) {
-			var username_regex = new RegExp("@(" + ns.config.self + "|all)", 'gi');
-			return text.replace(username_regex, '<span class="active-user">@' + ns.config.self + '</span>');
+			var username_regex = new RegExp("user-mention\"\>@(" + ns.config.self + "|all)\<", 'gi');
+			markup = markup.replace(username_regex, 'active-user">@' + ns.config.self + '<')
 		}
-		return text;
+
+		return markup;
 	};
 
 	// parses text for image links and converts them to embedded images
