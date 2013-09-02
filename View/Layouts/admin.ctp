@@ -3,8 +3,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>Backstage</title>
-	<meta name="description" content=""/>	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content=""/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="apple-touch-icon-precomposed" href="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem/emblem-large-x144.jpg'); ?>" sizes="144x144">
 	<link rel="apple-touch-icon-precomposed" href="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem/emblem-large-x114.jpg'); ?>" sizes="114x114">
 	<link rel="apple-touch-icon-precomposed" href="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem/emblem-large-x72.jpg'); ?>" sizes="72x72">

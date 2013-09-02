@@ -28,8 +28,10 @@
 					<li><?= $this->Html->link('<span class="glyphicon-fire glyphicon"></span> Caption Battles',array('controller'=>'contests','action'=>'index'),array('escape'=>false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-upload glyphicon"></span> <strong>Upload Image</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false, 'class' => 'image-upload-btn')); ?></li>
 					<li class="divider"></li>
-					<li><?= $this->Html->link('<span class="glyphicon-home glyphicon"></span> My Images',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon-th glyphicon"></span> From All Users',array('controller'=>'assets','action'=>'admin_users'),array('escape'=>false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon-home glyphicon"></span> <strong>My Images</strong>',array('controller'=>'assets','action'=>'index'),array('escape'=>false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon-th-large glyphicon"></span> All Memes',array('controller'=>'assets','action'=>'users', 'type' => 'Meme'),array('escape'=>false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon-th-large glyphicon"></span> Meme-Ready',array('controller'=>'assets','action'=>'users', 'type' => 'Meme-Ready'),array('escape'=>false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon-th glyphicon"></span> All Images',array('controller'=>'assets','action'=>'admin_users'),array('escape'=>false)); ?></li>
 					
 				</ul>
 			</li>
@@ -79,9 +81,10 @@
 			
 		<?php endif; // authenticated ?>
 	</div><!--/.navbar-collapse -->
-</nav>
+
 <?php if($this->Session->check('Auth.User')) : ?>
-<div class="slideout alert alert-info" style="display:none;">
-	<a class="close" href="#">×</a><span class="glyphicon glyphicon-user"></span> <span class="names"></span>
+<div class="slideout" style="display:none;">
+	<span class="title">Online Users</span><span class="glyphicon glyphicon-user"></span><span class="names"></span>
 </div>
 <?php endif; // authenticated ?>
+</nav>

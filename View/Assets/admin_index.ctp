@@ -3,15 +3,19 @@
 ?>	
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
-		<h3>Specs</h3>
-		<ul class="list-unstyled">
-			<li><strong><?= $this->Session->read('Auth.User.username'); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
-			<li><?= $image_total; ?> <span class="glyphicon glyphicon-picture"></span></li>
-		</ul>
-		<h3>Actions</h3>
-		<ul class="list-unstyled actions">
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success image-upload-btn','escape'=>false)); ?></li>
-		</ul>
+		<div class="row">
+			<div class="col-xs-6 col-md-12">
+				<ul class="list-unstyled actions">
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape'=>false)); ?></li>
+				</ul>
+			</div>
+			<div class="col-xs-6 col-md-12">
+				<ul class="list-unstyled">
+					<li><strong><?= $this->Session->read('Auth.User.username'); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
+					<li><?= $image_total; ?> <span class="glyphicon glyphicon-picture"></span></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 	<div class="col-md-10">
 		<h1>Your Images</h1>

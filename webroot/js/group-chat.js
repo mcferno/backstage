@@ -12,7 +12,7 @@ var GroupChat = {
 	windowFocus : true,
 	config : {},
 	idleTimeMax : 300,
-	userIcon : '<i class="icon-white icon-user"></i>',
+	userIcon : '<i class="glyphicon glyphicon-user"></i>',
 	playNotifications : null,
 	playMentions : null,
 	users : []
@@ -29,17 +29,10 @@ var GroupChat = {
 			e.preventDefault(); // disable all buttons's defaults
 			ns.submitMessage();
 		})
-		.on('click','.slideout .close',function(e){
-			e.preventDefault(); // disable all buttons's defaults
-			$('.slideout').animate({left:-1*($('.slideout').width() + 75)},650);
-		})
 		.on('click','.online-count',function(e){
 			e.preventDefault(); // disable all buttons's defaults
-			if($('.slideout').offset().left < 0 || !$('.slideout').is(':visible')) {
-				$('.slideout').css('left',-1*($('.slideout').width() + 75)).show().animate({left:'0',easing:'easeOutExpo'},650);
-			} else {
-				$('.slideout').show().animate({left:-1*($('.slideout').width() + 75),easing:'easeOutExpo'},650);
-			}
+			$('.slideout').slideToggle();
+			
 		});
 	$(window)
 		// track window focus for notifications

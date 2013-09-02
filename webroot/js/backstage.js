@@ -1,12 +1,13 @@
 ;
 Backstage = {};
-(function($, ns) {
+(function($, ns, document, window) {
 	"use strict";
 
 	ns.cropTool = false;
-	var doc = $(document);
+	var doc = $(document),
+		win = $(window);
 	
-	$(document).on('click', '.image-upload-btn', function(e) {
+	doc.on('click', '.image-upload-btn', function(e) {
 		e.preventDefault();
 		
 		$('.asset-upload-popin').modal();
@@ -16,13 +17,13 @@ Backstage = {};
 		}
 	});
 
-	$(document).on('click', '.contest-start', function(e) {
+	doc.on('click', '.contest-start', function(e) {
 		e.preventDefault();
 		
 		$('.contest-start-popin').modal();
 	});
 
-	$(document)
+	doc
 		.on('focus', '.copier', function() {
 			this.select();
 		})
@@ -30,25 +31,13 @@ Backstage = {};
 			e.preventDefault();
 		})
 		.on('mouseover', '.link-exchange li', function() {
-
 			$(this).find('.controls').show();
 		})
 		.on('mouseout', '.link-exchange li', function() {
 			$(this).find('.controls').hide();
 		});
 	
-	$(document).ready(function() {
-		// mouseover icon-color inversion
-		$('.dropdown-menu i.icon').each(function(){
-			$(this).closest('li')
-				.mouseover(function() {
-					$(this).find('.icon').addClass('icon-white').removeClass('icon');
-				})
-				.mouseout(function() {
-					$(this).find('.icon-white').addClass('icon').removeClass('icon-white');
-				});
-		});
-		
+	doc.ready(function() {		
 		// js detection for css tweaks
 		$('body').removeClass('no-js').addClass('js');
 
@@ -403,4 +392,4 @@ Backstage = {};
 
 	};
 
-})(jQuery, Backstage);
+})(jQuery, Backstage, document, window);

@@ -279,9 +279,17 @@ span.badge-off {
 }
 
 .slideout {
-	background-color: #666;
-	border-color: #666;
-	color: #EEE;
+	padding: 0 15px;
+	padding-bottom: 5px;
+}
+
+.slideout .glyphicon {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.slideout .title {
+	font-weight: bold;
 }
 
 .thumbnails .date {

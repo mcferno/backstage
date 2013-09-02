@@ -244,9 +244,9 @@ var MemeGenerator = {
 		$('button.live-mode')
 			.toggleClass('btn-inverse')
 			.toggleClass('btn-success')
-			.find('i')
-				.toggleClass('icon-remove')
-				.toggleClass('icon-ok');
+			.find('.glyphicon')
+				.toggleClass('glyphicon-remove')
+				.toggleClass('glyphicon-ok');
 		$('button.save-image')
 			.toggleClass('btn-inverse')
 			.toggleClass('btn-primary');
