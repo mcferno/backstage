@@ -138,7 +138,7 @@ var GroupChat = {
 					
 				// new view has inner placement (out of order from server?)
 				} else {
-					var ideal = this.$('.'+chatMsgModel.view.className).get(idx);
+					var ideal = this.$el.children('.'+chatMsgModel.view.className).get(idx);
 					$(ideal).before(chatMsgModel.view.el);
 				}
 			} else {
