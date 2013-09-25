@@ -21,7 +21,7 @@ Cache::config('online_status', array(
 	'prefix' => $prefix . 'app_online_status_',
 	'path' => CACHE . 'persistent' . DS,
 	'serialize' => ($engine === 'File'),
-	'duration' => '20 seconds'
+	'duration' => '10 seconds'
 ));
 
 Configure::write('Dispatcher.filters', array(

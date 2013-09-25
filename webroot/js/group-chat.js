@@ -304,7 +304,7 @@ var GroupChat = {
 	ns.highlightCallouts = function(text) {
 
 		// mark other mentions
-		var markup = text.replace(/(^|\W)(@\w+)(\W|$)/g, '$1<span class="user-mention">$2</span>$3');
+		var markup = text.replace(/(^|\W)(@[A-Za-z0-9_-]+)(\W|$)/g, '$1<span class="user-mention">$2</span>$3');
 
 		// highlight personal @mentions
 		if(ns.config.self) {
