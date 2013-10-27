@@ -13,6 +13,9 @@
 		echo $this->Form->input('url', array('label' => 'URL', 'class' => 'form-control', 'placeholder' => 'http://example.com'));
 		echo $this->Form->input('title', array('label' => 'Link Title', 'class' => 'form-control', 'placeholder' => 'Website name, content title, or short descriptive name'));
 		echo $this->Form->input('description', array('class' => 'form-control', 'rows' => 4, 'placeholder' => 'Describe the website or content to entice other users to check it out.'));
+		if(Access::hasRole('Admin')) {
+			echo $this->Form->input('sticky');
+		}
 	?>
 		<label>Tags (to group similar type links together)</label>
 		<div class="clearfix">
@@ -21,7 +24,7 @@
 		<p class="muted"><br><span class="glyphicon glyphicon-info-sign"></span> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many links per tag.</p>
 
 		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit',array('class'=>'btn btn-primary')); ?>
-		<?= $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel Edit', array('action' => 'view', $this->request->data['Link']['id']), array('class' => 'btn btn-default btn-lg', 'escape' => false)); ?>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel Edit', array('action' => 'view', $this->request->data['Link']['id']), array('class' => 'btn btn-default', 'escape' => false)); ?>
 	<?php echo $this->Form->end(); ?>
 	</div>
 </div>

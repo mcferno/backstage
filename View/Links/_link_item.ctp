@@ -28,7 +28,12 @@
 </div>
 
 <div class="stats muted">
-	&mdash; posted <?= date('M j', strtotime($link['Link']['created'])); ?> by <strong><?= $this->Html->link($link['User']['username'], (Access::isOwner($link['Link']['user_id'])) ? array('action' => 'my_links') : array('action' => 'index', 'user' => $link['Link']['user_id'])); ?></strong> <small>(<?= $this->Time->timeAgoInWords($link['Link']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)</small>
+	&mdash; posted <?= date('M j', strtotime($link['Link']['created'])); ?> by 
+	<strong><?= $this->Html->link($link['User']['username'], (Access::isOwner($link['Link']['user_id'])) ? array('action' => 'my_links') : array('action' => 'index', 'user' => $link['Link']['user_id'])); ?></strong> 
+	<small>
+		(<?= $this->Time->timeAgoInWords($link['Link']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?>)
+		<?php if($link['Link']['sticky']) : ?><span class="glyphicon glyphicon-pushpin" title="Pinned"></span><?php endif; ?>
+	</small>
 </div>
 
 <div class="interact">

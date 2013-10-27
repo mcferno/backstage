@@ -15,11 +15,16 @@ class LinksController extends AppController {
 	public $paginate = array(
 		'Link' => array(
 			'contain' => array('User', 'Tag'),
-			'limit' => 10
+			'limit' => 10,
+			'order' => 'Link.created DESC'
 		)
 	);
 
 	public function admin_index() {
+		// show sticky posts at the top if the order is not manually set
+		if(!isset($this->request->params['named']['sort'])) {
+			$this->paginate['Link']['order'] = 'Link.sticky DESC, Link.created DESC';
+		}
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Link->getTagTally());
 	}
