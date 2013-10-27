@@ -44,11 +44,21 @@ CakePlugin::load(array('Postable'));
 
 define('MYSQL_DATE_FORMAT','Y-m-d H:i:s');
 
-// time in seconds after which chat messages are no longer retrievable
-define('MESSAGES_DEFAULT_ROLLOVER', 14400); // 4 hrs
+/**
+ * App Configurations
+ */
+Configure::write('Site', array(
+	// expiry of the remember-me login cookie (strtotime format)
+	'rememberMeExpiry' => '+1 month',
 
-// number of chat messages to retrieve
-define('MESSAGES_DEFAULT_BUFFER', 40);
+	'Chat' => array(
+		// expiry of messages in live chat (time in seconds)
+		'messageExpiry' => 14400,
+
+		// maximum message count in live chat history
+		'maxHistoryCount' => 40
+	)
+));
 
 /**
  * Load any environment-specific configurations

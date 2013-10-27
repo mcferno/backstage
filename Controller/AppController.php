@@ -141,37 +141,28 @@ class AppController extends Controller {
 		if(isset($this->request->query['ack'])) {
 			$clientAck = (int)$this->request->query['ack'];
 			$model = $this->request->query['scope'];
-
-			// set the last ack to no more than 24 hrs ago
-			$since = date(MYSQL_DATE_FORMAT, max($clientAck, $MessageModel->minimumSince));
-			
 			$foreign_key = (!empty($this->request->query['key'])) ? $this->request->query['key'] : false;
 
-			// user's first request
-			if($clientAck === 0) {
+			$options = array();
 
-				// eliminate message cap on non-chat interfaces
-				if($model != 'Chat') {
-					$since = false;
-				}
-				$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $since);
+			if($model == 'Chat') {
+				$options['since'] = date(MYSQL_DATE_FORMAT, max($clientAck, $MessageModel->minimumSince));
+				$options['limit'] = Configure::read('Site.Chat.maxHistoryCount');
 
-			// follow-up request (exclude one's own messages)
-			} else {
-
-				// if on Chat, update the ack value for future revisits, and notification supression
-				if($model == 'Chat') {
+				if($clientAck !== 0) {
 					$this->User->setLastAck($currentUser, $clientAck);
 				}
-				$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $since);
 			}
+
+			$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $options);
 		}
 		
 		$data['new_messages'] = $MessageModel->countNewMessages('Chat', $currentUser);
 
 		// cap the message count if it goes beyond the max buffer size
-		if($data['new_messages'] > MESSAGES_DEFAULT_BUFFER) {
-			$data['new_messages'] = MESSAGES_DEFAULT_BUFFER;
+		$maxHistoryCount = Configure::read('Site.Chat.maxHistoryCount');
+		if($data['new_messages'] > $maxHistoryCount) {
+			$data['new_messages'] = $maxHistoryCount;
 		}
 		$data['new_updates'] = ClassRegistry::init('Activity')->countNewActivity($currentUser);
 		
@@ -187,7 +178,7 @@ class AppController extends Controller {
 		
 		if($identifier !== false) {
 			// store user information in an encrypted cookie
-			$this->Cookie->write('persist', $identifier, true, '+1 month');
+			$this->Cookie->write('persist', $identifier, true, Configure::read('Site.rememberMeExpiry'));
 		}
 	}
 

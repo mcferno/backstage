@@ -8,9 +8,6 @@ App::uses('Sanitize', 'Utility');
  */
 class Message extends AppModel {
 
-	// offset from "now" in seconds, to determine which messages are new
-	public $rolloverTime = MESSAGES_DEFAULT_ROLLOVER;
-
 	// rollover time, based on the current timestamp (computed at runtime)
 	public $minimumSince = -1;
 
@@ -35,7 +32,7 @@ class Message extends AppModel {
 		parent::__construct($id, $table, $ds);
 
 		// compute the utility value timestamp
-		$this->minimumSince = time() - $this->rolloverTime;
+		$this->minimumSince = time() - Configure::read('Site.Chat.messageExpiry');
 	}
 
 	public function beforeSave($options = array()) {
@@ -69,7 +66,15 @@ class Message extends AppModel {
 		));
 	}
 	
-	public function getNewMessages($scope, $scopeId = false, $since = false, $exclude_from = false) {
+	/**
+	 * @param {String} $scope Message container/cluster string
+	 * @param {Mixed} $scopeId Cluster identifier
+	 * @param {Array} $options Configurable options
+	 *	- since {Timestamp} Minimum message creation date
+	 *	- exclude_from {UUID} Omit messages from a specific User
+	 *	- limit {Integer} Maximum number of Messages to return
+	 */
+	public function getNewMessages($scope, $scopeId = false, $options = array()) {
 		$query = array(
 			'contain'=> array(
 				'User' => array(
@@ -88,12 +93,14 @@ class Message extends AppModel {
 		if($scopeId !== false) {
 			$query['conditions']['Message.foreign_id'] = $scopeId;
 		}
-		if($since !== false) {
-			$query['conditions']['Message.created >='] = $since;
-			$query['limit'] = MESSAGES_DEFAULT_BUFFER;
+		if(isset($options['since']) && $options['since'] !== false) {
+			$query['conditions']['Message.created >='] = $options['since'];
 		}
-		if($exclude_from !== false) {
-			$query['conditions']['NOT']['Message.user_id'] = $exclude_from;
+		if(isset($options['limit'])) {
+			$query['limit'] = $options['limit'];
+		}
+		if(isset($options['exclude_from'])) {
+			$query['conditions']['NOT']['Message.user_id'] = $options['exclude_from'];
 		}
 
 		$results = $this->find('all',$query);
