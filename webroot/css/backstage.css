@@ -588,6 +588,18 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
+.image-list .date {
+	font-size: 0.8em;
+}
+
+.image-list p {
+	margin: 0;
+}
+
+.image-list .thumbnail {
+	margin-bottom: 0px;
+}
+
 /* @end image wall ========================================================= */
 
 /* @start chat module ====================================================== */
@@ -776,7 +788,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .mini-wall img {
 	display: inline-block;
-	height: 75px;
+	height: 90px;
+	max-width: 130px;
 	width: auto !important;
 	padding-bottom: 5px;
 }

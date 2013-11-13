@@ -39,12 +39,12 @@
 		<?php endif; // admin tools for open contest ?>
 		<?php endif; // non-landing page ?>
 
-		<h3>Actions</h3>
+		<h3 class="cozy-top">Actions</h3>
 		<ul class="list-unstyled actions">
 			<?php if(empty($contest['Contest']['winning_asset_id'])) : ?>
 			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-success','escape'=>false)); ?></li>
 			<?php endif; ?>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> View Caption Battles', array('action'=>'index'),array('class'=>'btn btn-default','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> Battles', array('action'=>'index'),array('class'=>'btn btn-default','escape'=>false)); ?></li>
 		</ul>
 	</div>
 	<div class="col-md-10">
@@ -68,14 +68,14 @@
 
 		<h2>Entries</h2>
 
-		<ul class="row thumbnails">
+		<ul class="row thumbnails list-unstyled image-list">
 		<?php 
 		$page = 0;
 		foreach ($assets as $asset) : 
 			$page++; 
 			$winner = ($contest['Contest']['winning_asset_id'] === $asset['Asset']['id']); ?>
 
-			<li class="col-md-2 text-center">
+			<li class="col-xs-6 col-sm-4 col-md-3 text-center">
 				<div class="thumbnail">
 					<?= $this->Html->link($this->Html->image($asset['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id'], 'page'=> $page),array('escape'=>false)); ?>
 					<p>

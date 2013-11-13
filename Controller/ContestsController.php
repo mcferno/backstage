@@ -128,6 +128,10 @@ class ContestsController extends AppController {
 			)
 		));
 
+		if(!empty($contest['Winner'])) {
+			$this->Asset->addMetaData($contest['Winner']);
+		}
+
 		$this->set('contest', $contest);
 
 		// fetch all entries for the landing page
