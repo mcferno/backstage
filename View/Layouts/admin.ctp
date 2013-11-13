@@ -17,7 +17,7 @@
 		$scripts = array(
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
 			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js',
-			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js ',
+			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js',
 			'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js',
 			'backstage.js?t='.filemtime(JS.'backstage.js')
 		);
