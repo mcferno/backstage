@@ -57,6 +57,14 @@ Configure::write('Site', array(
 
 		// maximum message count in live chat history
 		'maxHistoryCount' => 40
+	),
+
+	'Images' => array(
+		// pagination limits for desktop users
+		'perPage' => 60,
+
+		// pagination limits for mobile
+		'perPageMobile' => 30
 	)
 ));
 

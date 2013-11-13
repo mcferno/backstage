@@ -23,7 +23,9 @@ class AssetsController extends AppController {
 	public function adminBeforeFilter() {
 
 		if($this->RequestHandler->isMobile()) {
-			$this->paginate['Asset']['limit'] = 15;
+			$this->paginate['Asset']['limit'] = Configure::read('Site.Images.perPageMobile');
+		} else {
+			$this->paginate['Asset']['limit'] = Configure::read('Site.Images.perPage');
 		}
 
 		parent::adminBeforeFilter();
@@ -32,10 +34,10 @@ class AssetsController extends AppController {
 	public function adminBeforeRender() {
 		parent::adminBeforeRender();
 
-		$page_limits = array($this->paginate['Asset']['limit'], 80, 150);
+		$page_limits = array($this->paginate['Asset']['limit'], $this->paginate['Asset']['limit'] * 2, $this->paginate['Asset']['limit'] * 4);
 
 		if($this->RequestHandler->isMobile()) {
-			$page_limits = array($this->paginate['Asset']['limit'], 30, 60);
+			$page_limits = array($this->paginate['Asset']['limit'], $this->paginate['Asset']['limit'] * 2, $this->paginate['Asset']['limit'] * 3);
 		}
 
 		$this->set('page_limits', $page_limits);

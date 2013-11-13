@@ -18,7 +18,7 @@
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
 			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js',
 			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js ',
-			'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js',
+			'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js',
 			'backstage.js?t='.filemtime(JS.'backstage.js')
 		);
 		
@@ -31,7 +31,7 @@
 		echo $this->fetch('script');
 
 		echo $this->Html->css(array(
-			'https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css'
+			'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'
 		));
 		echo $this->fetch('css');
 		echo $this->Html->css('backstage.css?t='.filemtime(CSS.'backstage.css'));

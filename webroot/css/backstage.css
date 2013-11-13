@@ -90,6 +90,7 @@ hr {
 	background-color: #888;
 	color: #EEE;
 	border: 3px solid #888;
+	margin-bottom: 0;
 }
 
 .active-contests .thumbnail {
@@ -441,6 +442,10 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
+.copier {
+	margin-bottom: 1em;
+}
+
 /* @start system updates =================================================== */
 
 .activity .time {
@@ -540,7 +545,8 @@ h1, h2, h3, h4, h5, h6 {
 .pager li>a, .pager li>span {
 	background-color: #222;
 	border: 3px solid #666;
-	margin-bottom: 10px;
+	margin: 0 5px 5px 0;
+
 }
 
 .pager .disabled>a, .pager .disabled>a:hover, .pager .disabled>a:focus, .pager .disabled>span {
@@ -549,6 +555,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .pager li>a:hover, .pager li>span:hover {
 	text-decoration:none;
+}
+
+.pager li>a:hover {
 	background-color: #333;
 	color: #FC6626;
 }
@@ -563,67 +572,19 @@ h1, h2, h3, h4, h5, h6 {
 
 .image-wall {
 	line-height: 0;
-	-webkit-column-count: 5;
-	-webkit-column-gap:   0px;
-	-moz-column-count:    5;
-	-moz-column-gap:      0px;
-	column-count:         5;
-	column-gap:           0px;
-
-	margin-bottom: 1em;
+	text-align: center;
 }
 
 .image-wall img {
-	width: 100% !important;
-	height: auto !important;
-	max-width: 250px;
+	padding: 0 10px 10px 0;
+	height: 140px;
+	max-width: 200px;
+	min-width: 90px;
 }
 
-@media (max-width: 2600px) {
-	.image-wall {
-		-moz-column-count:    7;
-		-webkit-column-count: 7;
-		column-count:         7;
-	}
-}
-
-@media (max-width: 1800px) {
-	.image-wall {
-		-moz-column-count:    6;
-		-webkit-column-count: 6;
-		column-count:         6;
-	}
-}
-
-@media (max-width: 1400px) {
-	.image-wall {
-		-moz-column-count:    5;
-		-webkit-column-count: 5;
-		column-count:         5;
-	}
-}
-
-@media (max-width: 1100px) { /* for 1024x */
-	.image-wall {
-		-moz-column-count:    4;
-		-webkit-column-count: 4;
-		column-count:         4;
-	}
-}
-
-@media (max-width: 800px) {
-	.image-wall {
-		-moz-column-count:    3;
-		-webkit-column-count: 3;
-		column-count:         3;
-	}
-}
-
-@media (max-width: 480px) {
-	.image-wall {
-		-moz-column-count:    2;
-		-webkit-column-count: 2;
-		column-count:         2;
+@media all and (max-width: 480px) {
+	.image-wall img {
+		height: 110px;
 	}
 }
 
@@ -855,7 +816,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .active-tag {
-	font-size: 1em;
+	font-size: 0.7em;
 	font-weight: normal;
 	padding: 2px 12px 3px;
 }
@@ -908,6 +869,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .subnav {
 	padding-top: 40px;
+}
+
+.subnav a .glyphicon {
+	margin-right: 2px;
 }
 
 

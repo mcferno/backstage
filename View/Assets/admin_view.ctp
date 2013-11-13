@@ -83,8 +83,10 @@
 		<?php endforeach; ?>
 		</p>
 
-		<div class="text-center">
-			Direct URL to Image<br>
+		<p class="text-center">
+			Direct URL to Image
+		</p>
+		<div class="row">
 			<form class="col-md-6 col-md-offset-3">
 				<input type="text" class="copier form-control" value="<?= $this->Html->url('/',true) . IMAGES_URL . $asset['Asset']['image-full']; ?>">
 			</form>

@@ -107,7 +107,11 @@
 		</p>
 		<p class="text-center"><?= $this->Html->image($assets[0]['Asset']['image-full']); ?></p>
 
-		<p class="text-center">Direct URL to Image<br><input type="text" class="col-md-4 copier" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . $assets[0]['Asset']['image-full']); ?>"></p>
+		<p class="text-center">Direct URL to Image</p>
+		<div class="row">
+			<form class="col-md-6 col-md-offset-3"><input type="text" class="copier form-control" value="<?= FULL_BASE_URL . $this->Html->webroot(IMAGES_URL . $assets[0]['Asset']['image-full']); ?>">
+			</form>
+		</div>
 
 		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 
