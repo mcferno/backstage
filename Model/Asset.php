@@ -316,7 +316,7 @@ class Asset extends AppModel {
 	 * @param {Boolean} $cascade
 	 * @return {Boolean}
 	 */
-	public function beforeDelete($cascade) {
+	public function beforeDelete($cascade = true) {
 		$res = parent::beforeDelete($cascade);
 		if($res) {
 			$record = $this->findById($this->id);

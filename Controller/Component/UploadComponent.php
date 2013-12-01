@@ -12,7 +12,7 @@ class UploadComponent extends Component {
 	public $fileExtensions = false;
 	public $Controller = false;
 
-	public function initialize(&$controller) {
+	public function initialize(Controller $controller) {
 		parent::initialize($controller);
 		$this->Controller = $controller;
 	}

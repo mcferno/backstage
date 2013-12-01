@@ -40,7 +40,7 @@
 					<li <?php if($is_asset && $is_assets_index && !isset($this->request->params['named']['type'])) { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-th glyphicon"></span> All User Images',array('controller'=>'assets','action'=>'users'),array('escape'=>false)); ?></li>
 					<li <?php if($is_asset && $is_assets_index && isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-th-large glyphicon"></span> All Memes',array('controller'=>'assets','action'=>'users', 'type' => 'Meme'),array('escape'=>false)); ?></li>
 					<li <?php if($is_asset && $is_assets_index && isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Ready') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-th-large glyphicon"></span> Meme-Ready',array('controller'=>'assets','action'=>'users', 'type' => 'Meme-Ready'),array('escape'=>false)); ?></li>
-				<?	break;
+				<?php	break;
 			}
 		}
 	?>

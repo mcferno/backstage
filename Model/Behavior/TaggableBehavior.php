@@ -5,7 +5,7 @@ class TaggableBehavior extends ModelBehavior {
 	// the name of the Tag join model.
 	public $joinModelName = 'Tagging';
 
-	public function setup(Model $Model, array $settings = array()) {
+	public function setup(Model $Model, $settings = array()) {
 		$this->joinModel = ClassRegistry::init($this->joinModelName);
 	}
 
