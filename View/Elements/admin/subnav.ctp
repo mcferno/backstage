@@ -10,23 +10,23 @@
 					<li class="nav-header"><?= $this->request->controller; ?></li>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
 					<li <?php if($this->request->action == 'admin_add') { echo 'class="active"'; } ?>><?= $this->Html->link('Add New',array('action'=>'add')); ?></li>
-				<?	break;
+				<?php break;
 				case ($this->request->controller == 'posts'): 
 				?>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index',array('action'=>'index')); ?></li>
-				<?	break;
+				<?php break;
 				case ($this->request->controller == 'links'):
 				?>
 					<li class="nav-header">Link Exchange</li>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('View All Links',array('action'=>'index')); ?></li>
 					<li <?php if($this->request->action == 'admin_my_links') { echo 'class="active"'; } ?>><?= $this->Html->link('My Links',array('action'=>'my_links')); ?></li>
-				<?	break;
+				<?php break; 
 				case ($this->request->controller == 'videos'):
 				?>
 					<li class="nav-header">Videos</li>
 					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('All Videos',array('action'=>'index')); ?></li>
 					<li <?php if($this->request->action == 'admin_my_videos') { echo 'class="active"'; } ?>><?= $this->Html->link('My Videos',array('action'=>'my_videos')); ?></li>
-				<?	break; 
+				<?php break;
 				default:
 				?>
 					<li class="nav-header">Tools</li>

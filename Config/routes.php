@@ -30,9 +30,14 @@ Router::connect("/{$admin_url}", array('controller'=>'users', 'action' => 'login
 Router::connect("/{$admin_url}/dashboard", array('controller'=>'users', 'action' => 'dashboard', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/dashboard/updates/*", array('controller'=>'users', 'action' => 'updates', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/meme-generator/*", array('controller'=>'pages', 'action' => 'meme_generator', 'prefix' => 'admin', 'admin' => true));
+
+/**
+ * Image Assets
+ */
 Router::connect("/{$admin_url}/my-images/*", array('controller'=>'assets', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/all-images/*", array('controller'=>'assets', 'action' => 'users', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/user/*", array('controller'=>'assets', 'action' => 'user', 'prefix' => 'admin', 'admin' => true));
+
 Router::connect("/{$admin_url}/chat", array('controller'=>'users', 'action' => 'group_chat', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/setup", array('controller' => 'users', 'action' => 'setup', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/quotes/*", array('controller' => 'posts', 'action'=> 'index', 'prefix' => 'admin', 'admin' => true));

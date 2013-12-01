@@ -7,6 +7,7 @@
 			<div class="col-xs-6 col-md-12">
 				<ul class="list-unstyled actions">
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape'=>false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> Create Album',array('controller' => 'albums', 'action' => 'add'),array('class'=>'btn btn-default btn-block album-module-btn','escape'=>false)); ?></li>
 				</ul>
 			</div>
 			<div class="col-xs-6 col-md-12">
@@ -18,17 +19,71 @@
 		</div>
 	</div>
 	<div class="col-md-10">
+	
+	<?php if(isset($album)) : ?>
+
+		<h1><?= (!empty($album['Album']['title'])) ? $album['Album']['title'] : 'Unnamed album'; ?></h1>
+		<?php if(!empty($album['Album']['description'])) : ?>
+		<p><?= nl2br(h($album['Album']['description'])); ?></p>
+		<?php endif; // description ?>
+
+		<?php if(!empty($album['Album']['location'])) : ?>
+		<p class="muted"><?= h($album['Album']['location']); ?></p>
+		<?php endif; // description ?>
+
+	<?php else: ?>
+
 		<h1>Your Images</h1>
+
 		<?php if(!empty($images)) : ?>
-		<p class="tall">You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $image_total; ?></span> images</p>
+		<p class="tall">
+			You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $image_total; ?></span> images
+			<?php if(count($album_list)) : ?>
+			and <span class="badge badge-custom"><?= count($album_list); ?></span> albums.
+			<?php endif; ?>
+		</p>
 		<?php endif; ?>
 
-		<?php if(!empty($tag['Tag'])) : ?>
+	<?php endif; ?>
+
+	<?php if(!empty($tag['Tag'])) : ?>
+
 		<h3 class="cozy">
 			Viewing Images in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
 			<?= $this->Html->link('Clear &times;', array('action' => $this->request->action), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
-		<?php endif; //tag ?>
+
+	<?php endif; //tag ?>
+
+	<?php if(!empty($albums) && $this->Paginator->param('page') === 1) : ?>
+
+	<h3>Recent Albums</h3>
+
+		<ul class="media-list">
+
+		<?php foreach ($albums as $recent_album): ?>
+
+			<li class="media">
+				<a class="pull-left" href="<?= $this->Html->url(array('album' => $recent_album['Album']['id'])); ?>">
+					<?php
+						if(isset($recent_album['Cover']['image-tiny'])) {
+							echo $this->Html->image($recent_album['Cover']['image-tiny']);
+						} elseif (isset($recent_album['DefaultCover']['image-tiny'])) {
+							echo $this->Html->image($recent_album['DefaultCover']['image-tiny']);
+						}
+					?>
+				</a>
+				<div class="media-body">
+					<h5 class="media-heading"><?= $this->Html->link($recent_album['Album']['title'], array('album' => $recent_album['Album']['id'])); ?></h5>
+					<p><?= nl2br(h($recent_album['Album']['description'])); ?></p>
+				</div>
+			</li>
+
+		<?php endforeach; ?>
+
+		</ul>
+
+	<?php endif; // recent albums ?>
 		
 		<?= $this->element('admin/pagination'); ?>
 		
@@ -64,3 +119,5 @@ if(isset($this->request->params['named']['mode']) && $this->request->params['nam
 
 </div>
 <?php $this->end(); ?>
+
+<?= $this->element('common/album-module'); ?>

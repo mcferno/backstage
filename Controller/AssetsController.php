@@ -52,6 +52,31 @@ class AssetsController extends AppController {
 		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $this->paginate['Asset']['conditions']['Asset.user_id'])));
 		$this->set('images', $this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
+		
+		// pull recent albums if we're not currently viewing one
+		if(!isset($this->request->params['named']['album'])) {
+			$albums = $this->Asset->Album->find('all', array(
+				'contain' => array('Cover', 'DefaultCover'),
+				'conditions' => array(
+					'Album.user_id' => $this->Auth->user('id')
+				),
+				'limit' => 4,
+				'order' => 'Album.modified DESC'
+			));
+
+			// attach image references
+			foreach ($albums as &$album) {
+				if(!empty($album['Cover'])) {
+					$this->Asset->addMetaData($album['Cover']);
+				}
+				if(!empty($album['DefaultCover'])) {
+					$this->Asset->addMetaData($album['DefaultCover']);
+				}
+			}
+			$this->set('albums', $albums);
+		}
+		
+		$this->set('album_list', $this->Asset->Album->find('all', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 	}
 	
 	/**
@@ -130,6 +155,14 @@ class AssetsController extends AppController {
 			// standard single type lookup
 			} else {
 				$this->paginate['Asset']['conditions']['Asset.type'] = $this->request->params['named']['type'];
+			}
+		}
+
+		if(isset($this->request->params['named']['album'])) {
+			$album = $this->Asset->Album->findById($this->request->params['named']['album']);
+			if(!empty($album)) {
+				$this->set('album', $album);
+				$this->paginate['Asset']['conditions']['Asset.album_id'] = $this->request->params['named']['album'];
 			}
 		}
 

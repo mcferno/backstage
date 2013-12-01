@@ -50,12 +50,33 @@ CREATE TABLE IF NOT EXISTS `activities` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `albums`
+--
+
+CREATE TABLE IF NOT EXISTS `albums` (
+  `id` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL,
+  `cover_id` char(36) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `location` varchar(50) NOT NULL,
+  `description` TEXT NOT NULL,
+  `shared` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `assets`
 --
 
 CREATE TABLE IF NOT EXISTS `assets` (
   `id` char(36) NOT NULL,
   `user_id` char(36) NOT NULL,
+  `album_id` char(36) NOT NULL,
   `type` varchar(10) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `ext` varchar(10) NOT NULL,

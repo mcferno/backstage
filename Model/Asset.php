@@ -3,7 +3,7 @@ App::uses('Folder', 'Utility');
 class Asset extends AppModel {
 	
 	public $displayField = 'filename';
-	public $belongsTo = array('User');
+	public $belongsTo = array('User', 'Album');
 	public $hasOne = array(
 		'ContestWin' => array(
 			'className' => 'Contest',

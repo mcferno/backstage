@@ -9,7 +9,7 @@ class TaggableBehavior extends ModelBehavior {
 		$this->joinModel = ClassRegistry::init($this->joinModelName);
 	}
 
-	public function afterSave(Model $Model, $created) {
+	public function afterSave(Model $Model, $created, $options = array()) {
 
 		// detect string tags and convert to proper relationships
 		if(!empty($Model->data[$this->joinModelName]['tags'])) {

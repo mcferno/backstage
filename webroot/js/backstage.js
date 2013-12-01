@@ -7,23 +7,26 @@ Backstage = {};
 	var doc = $(document),
 		win = $(window);
 	
-	doc.on('click', '.image-upload-btn', function(e) {
-		e.preventDefault();
-		
-		$('.asset-upload-popin').modal();
-		
-		if(User.isMobile) {
-			$('#AssetImage').focus();
-		}
-	});
-
-	doc.on('click', '.contest-start', function(e) {
-		e.preventDefault();
-		
-		$('.contest-start-popin').modal();
-	});
-
 	doc
+		.on('click', '.image-upload-btn', function(e) {
+			e.preventDefault();
+			
+			$('.asset-upload-popin').modal();
+			
+			if(User.isMobile) {
+				$('#AssetImage').focus();
+			}
+		})
+		.on('click', '.album-module-btn', function(e) {
+			e.preventDefault();
+			
+			$('.album-module').modal();
+		})
+		.on('click', '.contest-start', function(e) {
+			e.preventDefault();
+			
+			$('.contest-start-popin').modal();
+		})
 		.on('focus', '.copier', function() {
 			this.select();
 		})
