@@ -30,10 +30,8 @@ class Asset extends AppModel {
 		'jpg' => 'data:image/jpeg;base64,'
 	);
 	
-	public $maxDimensions = array(
-		'w' => 1200,
-		'h' => 1200
-	);
+	public $minDimensions = null;
+	public $maxDimensions = null;
 	
 	// thumbnail generation size widths
 	public $imageThumbs = array(75, 200);
@@ -45,6 +43,9 @@ class Asset extends AppModel {
 		parent::__construct();
 		$this->folderPathRelative = 'user' . DS;
 		$this->folderPath = WWW_ROOT . 'img' . DS . $this->folderPathRelative;
+
+		$this->minDimensions = Configure::read('Site.Images.minDimension');
+		$this->maxDimensions = Configure::read('Site.Images.maxDimension');
 	}
 
 	/**
@@ -210,8 +211,17 @@ class Asset extends AppModel {
 		
 		if(!empty($options['crop'])) {
 			$cropped = $image->crop($options['crop']['x1'], $options['crop']['y1'], $options['crop']['w'], $options['crop']['h']);
+
+		// resize standard images
 		} else {
-			$cropped = $image->resize($this->maxDimensions['w'],$this->maxDimensions['h']);
+			$sizing = getimagesize($file_path);
+
+			// don't overstretch small images
+			if($sizing[0] < $this->minDimensions && $sizing[1] < $this->minDimensions) {
+				$cropped = $image->resize($this->minDimensions, $this->minDimensions);
+			} else {
+				$cropped = $image->resize($this->maxDimensions, $this->maxDimensions);
+			}
 		}
 
 		// detect if the image needs rotation based on available EXIF data

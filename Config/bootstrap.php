@@ -64,7 +64,13 @@ Configure::write('Site', array(
 		'perPage' => 60,
 
 		// pagination limits for mobile
-		'perPageMobile' => 30
+		'perPageMobile' => 30,
+
+		// minimum image size in pixels
+		'minDimension' => 640,
+
+		// maximum image size in pixels
+		'maxDimension' => 1200
 	)
 ));
 
