@@ -35,6 +35,8 @@ var MemeGenerator = {
 	
 	// font stroke size coefficient to scale accordingly to width
 	fontStrokeWidthScale : 0.01,
+
+	drawStroke : true,
 	
 	// series of coordinates within the canvas
 	coords : {},
@@ -330,11 +332,46 @@ var MemeGenerator = {
 		// write out each line, respecting inner spacing
 		for(var iter = 0; iter < lines.length; iter++) {
 			var line = lines[iter].join(' ');
-			ns.context.strokeText(line, ns.coords.center.x, offsetY + iter * emWidth);
-			ns.context.fillText(line, ns.coords.center.x, offsetY + iter * emWidth);
+			drawTextToCanvas(line, ns.coords.center.x, offsetY + iter * emWidth);
 		}
 		
 		ns.context.restore();
+	};
+
+	/**
+	 * Draws a line of text to the canvas with a stroke effect compatible with
+	 * the font & browser.
+	 */
+	var drawTextToCanvas = function(text, x, y) {
+
+		// draw stroke effect manually
+		if(ns.drawStroke) {
+			var offset = parseInt(ns.context['lineWidth'] / 2, 10),
+				existingColor = ns.context['fillStyle'];
+
+			ns.context['fillStyle'] = ns.context['lineStyle'];
+			ns.context.fillText(text, x+offset, y);
+			ns.context.fillText(text, x+offset, y-offset);
+			ns.context.fillText(text, x+offset, y+offset);
+			ns.context.fillText(text, x-offset, y);
+			ns.context.fillText(text, x-offset, y-offset);
+			ns.context.fillText(text, x-offset, y+offset);
+			ns.context.fillText(text, x, y-offset);
+			ns.context.fillText(text, x, y+offset);
+
+			if(offset > 2) {
+				ns.context.fillText(text, x+offset, y+2);
+				ns.context.fillText(text, x+offset, y-2);
+				ns.context.fillText(text, x-offset, y+2);
+				ns.context.fillText(text, x-offset, y-2);
+			}
+
+			ns.context['fillStyle'] = existingColor;
+			ns.context.fillText(text, x, y);
+		} else {
+			ns.context.strokeText(text, x, y);
+			ns.context.fillText(text, x, y);
+		}
 	};
 	
 	/**
