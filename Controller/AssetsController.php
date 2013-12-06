@@ -343,6 +343,7 @@ class AssetsController extends AppController {
 		$this->set('asset', $asset);
 		$this->set('types', $this->Asset->getTypes());
 		$this->set('tags', array_values($this->Asset->Tag->getListForModel('Asset')));
+		$this->set('albums', $this->Asset->Album->getUserList($this->Session->read('Auth.User.id')));
 		$this->request->data['Tagging']['tags'] = implode(Hash::extract($this->request->data['Tag'], '{n}.name'), ',');
 	}
 
@@ -461,7 +462,7 @@ class AssetsController extends AppController {
 	public function admin_edit($id) {
 		if(!empty($this->request->data)) {
 			if($this->Asset->save($this->request->data, false)) {
-				$this->Session->setFlash('Asset type successfully updated.', 'messaging/alert-success');
+				$this->Session->setFlash('The image has been updated.', 'messaging/alert-success');
 			} else {
 				$this->Session->setFlash('An error occured while saving. Please try again.', 'messaging/alert-error');
 			}

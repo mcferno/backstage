@@ -15,10 +15,15 @@
 				<ul class="list-unstyled actions">
 					<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-block  btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']),array('class'=>'btn btn-block btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class'=>'btn btn-block btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class'=>'btn btn-block btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
 
 					<?php endif; // upload or url download ?>
+
+					<?php if(!empty($asset['Asset']['album_id'])) : ?>
+
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> View Album',array('action' => 'index', 'album' => $asset['Asset']['album_id']), array('class'=>'btn btn-block btn-info','escape'=>false, 'title' => 'View all images that belong to the same album.')); ?></li>
+					<?php endif; // belongs to an album ?>
 
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-comment"></span> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn btn-block btn-default','escape'=>false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
 
@@ -62,6 +67,18 @@
 						echo $this->Form->end();
 					?>
 					</li>
+
+					<?php if(!empty($albums)) : ?>
+					<li class="cozy-top">
+					<?php
+						echo $this->Form->create('Asset', array('url' => array('action' => 'edit'), 'class' => 'asset-type-form'));
+						echo $this->Form->input('id', array('value' => $asset['Asset']['id']));
+						echo $this->Form->input('album_id', array('empty' => ' - no album -', 'class' => 'form-control asset-choose-album', 'label' => 'Assign to album'));
+						echo $this->Form->submit('Save', array('class' => 'asset-type-submit btn-sm btn-primary'));
+						echo $this->Form->end();
+					?>
+					</li>
+					<?php endif; ?>
 
 					<?php endif; ?>
 				</ul>

@@ -6,7 +6,8 @@ class Album extends AppModel {
 		'Cover' => array(
 			'className' => 'Asset',
 			'foreignKey' => 'cover_id'
-		)
+		),
+		'User'
 	);
 
 	public $hasMany = array(
@@ -32,4 +33,18 @@ class Album extends AppModel {
 			'limit' => 1
 		)
 	);
+
+	public function getUserList($for_user) {
+		$albums = $this->find('all', array(
+			'contain' => 'User',
+			'order' => 'title ASC',
+			'conditions' => array(
+				'OR' => array(
+					'user_id' => $for_user,
+					'shared' => true
+				)
+			)
+		));
+		return Hash::combine($albums, '{n}.Album.id', '{n}.Album.title', '{n}.User.username');
+	}
 }
