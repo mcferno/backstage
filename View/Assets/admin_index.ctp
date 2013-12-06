@@ -57,31 +57,42 @@
 
 	<?php if(!empty($albums) && $this->Paginator->param('page') === 1) : ?>
 
-	<h3>Recent Albums</h3>
+	<h3 class="cozy-top">Recent Albums</h3>
 
-		<ul class="media-list">
+		<ul class="media-list link-exchange">
 
 		<?php foreach ($albums as $recent_album): ?>
 
 			<li class="media">
-				<a class="pull-left" href="<?= $this->Html->url(array('album' => $recent_album['Album']['id'])); ?>">
-					<?php
-						if(isset($recent_album['Cover']['image-tiny'])) {
-							echo $this->Html->image($recent_album['Cover']['image-tiny']);
-						} elseif (isset($recent_album['DefaultCover']['image-tiny'])) {
-							echo $this->Html->image($recent_album['DefaultCover']['image-tiny']);
-						}
-					?>
-				</a>
-				<div class="media-body">
-					<h5 class="media-heading"><?= $this->Html->link($recent_album['Album']['title'], array('album' => $recent_album['Album']['id'])); ?></h5>
-					<p><?= nl2br(h($recent_album['Album']['description'])); ?></p>
+				<div class="link-item clearfix">
+					<a class="pull-left screenshot" href="<?= $this->Html->url(array('album' => $recent_album['Album']['id'])); ?>">
+						<?php
+							if(isset($recent_album['Cover']['image-thumb'])) {
+								echo $this->Html->image($recent_album['Cover']['image-thumb']);
+							} elseif (isset($recent_album['DefaultCover'][0]['image-thumb'])) {
+								echo $this->Html->image($recent_album['DefaultCover'][0]['image-thumb']);
+							}
+						?>
+					</a>
+					<div class="media-body">
+						<h5 class="media-heading"><?= $this->Html->link($recent_album['Album']['title'], array('album' => $recent_album['Album']['id']), array('class' => 'main')); ?></h5>
+						<p class="description">
+							<?= nl2br(h($recent_album['Album']['description'])); ?>
+						</p>
+						<h6>
+							Contains <span class="badge badge-inverse"><strong><?= isset($recent_album['AssetCount'][0][0]['count']) ? $recent_album['AssetCount'][0][0]['count'] : 0 ; ?></strong></span>
+							Images &nbsp;&bull;&nbsp;
+							Created <?= $this->Time->timeAgoInWords($recent_album['Album']['created']); ?>
+						</h6>
+					</div>
 				</div>
 			</li>
 
 		<?php endforeach; ?>
 
 		</ul>
+
+	<h3 class="cozy-top">Your Images</h3>
 
 	<?php endif; // recent albums ?>
 		

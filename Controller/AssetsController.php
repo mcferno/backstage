@@ -56,7 +56,7 @@ class AssetsController extends AppController {
 		// pull recent albums if we're not currently viewing one
 		if(!isset($this->request->params['named']['album'])) {
 			$albums = $this->Asset->Album->find('all', array(
-				'contain' => array('Cover', 'DefaultCover'),
+				'contain' => array('Cover', 'DefaultCover', 'AssetCount'),
 				'conditions' => array(
 					'Album.user_id' => $this->Auth->user('id')
 				),

@@ -809,9 +809,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .screenshot img {
-	width: 150px;
 	margin-right: 1em;
 	border: 5px solid #333;
+}
+
+.link-item .screenshot img {
+	width: 150px;
 }
 
 .video-item .screenshot img {
@@ -821,6 +824,11 @@ h1, h2, h3, h4, h5, h6 {
 .link-item {
 	padding-bottom: 15px;
 	border-bottom: 2px solid #333;
+}
+
+.hr {
+	border-bottom: 2px solid #333;
+	margin: 1em 0;
 }
 
 .link-item.no-screenshot {

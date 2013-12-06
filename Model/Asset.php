@@ -64,6 +64,10 @@ class Asset extends AppModel {
 			$this->addMetaData($results);
 		}
 
+		// capture aliased model instances
+		if(isset($results[0]['id'])) {
+			$this->addMetaData($results[0]);
+		}
 		return $results;
 	}
 
