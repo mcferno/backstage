@@ -8,8 +8,16 @@
 		<a class="close" data-dismiss="modal">×</a>
 		<h3><?= $this->Html->image('ui/icons/image-import.png'); ?> Add New Images</h3>
 	</div>
-	<?php echo $this->Form->create('Asset',array('url'=>array('action'=>'upload'),'type'=>'file'));?>
+	<?php 
+		echo $this->Form->create('Asset', array('url' => array('action' => 'upload'), 'type' => 'file'));
+		if(isset($upload_album['id'])) {
+			echo $this->Form->input('album_id', array('type' => 'hidden', 'value' => $upload_album['id']));
+		}
+	?>
 	<div class="modal-body">
+		<?php if(isset($upload_album['id'])) : ?>
+		<div class="alert alert-info">Will be added to the album: <strong><?= $upload_album['title']; ?></strong></div>
+		<?php endif; ?>
 		<div class="assets form">
 			<h4><?= $this->Html->image('ui/icons/computer.png'); ?> Upload an image from your device or computer</h4>
 			<?= $this->Form->input('image',array('type'=>'file','label'=>false, 'class' => 'form-sm')); ?>

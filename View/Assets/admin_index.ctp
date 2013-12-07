@@ -6,14 +6,14 @@
 		<div class="row">
 			<div class="col-xs-6 col-md-12">
 				<ul class="list-unstyled actions">
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape'=>false)); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> Create Album',array('controller' => 'albums', 'action' => 'add'),array('class'=>'btn btn-default btn-block album-module-btn','escape'=>false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album',array('controller' => 'albums', 'action' => 'save'),array('class'=>'btn btn-default btn-block album-module-btn','escape' => false)); ?></li>
 				</ul>
 			</div>
 			<div class="col-xs-6 col-md-12">
 				<ul class="list-unstyled">
 					<li><strong><?= $this->Session->read('Auth.User.username'); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
-					<li><?= $image_total; ?> <span class="glyphicon glyphicon-picture"></span></li>
+					<li><?= $this->Paginator->param('count'); ?> <span class="glyphicon glyphicon-picture"></span></li>
 				</ul>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 		<?php endif; // description ?>
 
 		<?php if(!empty($album['Album']['location'])) : ?>
-		<p class="muted"><?= h($album['Album']['location']); ?></p>
+		<p class="muted">&mdash; <?= h($album['Album']['location']); ?></p>
 		<?php endif; // description ?>
 
 	<?php else: ?>
@@ -37,7 +37,7 @@
 
 		<?php if(!empty($images)) : ?>
 		<p class="tall">
-			You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $image_total; ?></span> images
+			You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->param('count'); ?></span> images
 			<?php if(count($album_list)) : ?>
 			and <span class="badge badge-custom"><?= count($album_list); ?></span> albums.
 			<?php endif; ?>

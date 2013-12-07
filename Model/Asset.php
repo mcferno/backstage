@@ -257,6 +257,10 @@ class Asset extends AppModel {
 			'checksum' => -1,
 			'user_id' => $user_id
 		);
+
+		if(!empty($options['album_id'])) {
+			$data['album_id'] = $options['album_id'];
+		}
 		
 		$this->create();
 		$save_status = $this->save($data);

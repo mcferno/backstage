@@ -6,11 +6,13 @@
 
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
-		<h3><?= $this->Html->image('ui/icons/image-import.png'); ?> <?= (isset($album_id)) ? 'Edit' : 'Create a new'; ?> Album</h3>
+		<h3><?= $this->Html->image('ui/icons/image-import.png'); ?> <?= (isset($this->request->data['Album']['id'])) ? 'Edit' : 'Create a new'; ?> Album</h3>
 	</div>
-	<?= $this->Form->create('Album', array('url'=>array('action' => 'save'), 'type' => 'file')); ?>
-	<?= $this->Form->input('shared', array('type' => 'hidden', 'value' => 1)); ?>
-
+	<?php
+		echo $this->Form->create('Album', array('url' => array('action' => 'save'), 'type' => 'file'));
+		echo $this->Form->input('id', array('type' => 'hidden'));
+		echo $this->Form->input('shared', array('type' => 'hidden', 'value' => 1));
+	?>
 	<div class="modal-body">
 		<div class="assets form">
 			<h4>Album details</h4>
@@ -23,9 +25,9 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Create', array('class'=>'btn btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Uploading ...")); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> ' . (isset($this->request->data['Album']['id']) ? 'Update' : 'Create'), array('class'=>'btn btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Saving ...")); ?>
 	</div>
-	<?php echo $this->Form->end();?>
+	<?php echo $this->Form->end(); ?>
 
 </div>
 </div>	

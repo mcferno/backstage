@@ -51,7 +51,6 @@ class AssetsController extends AppController {
 		$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->Auth->user('id');
 		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $this->paginate['Asset']['conditions']['Asset.user_id'])));
 		$this->set('images', $this->paginate('Asset'));
-		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 		
 		// pull recent albums if we're not currently viewing one
 		if(!isset($this->request->params['named']['album'])) {
@@ -162,6 +161,8 @@ class AssetsController extends AppController {
 			$album = $this->Asset->Album->findById($this->request->params['named']['album']);
 			if(!empty($album)) {
 				$this->set('album', $album);
+				$this->set('upload_album', $album['Album']);
+				$this->request->data = $album;
 				$this->paginate['Asset']['conditions']['Asset.album_id'] = $this->request->params['named']['album'];
 			}
 		}
@@ -239,13 +240,18 @@ class AssetsController extends AppController {
 				$dir = new Folder($new_file, true, 0755);
 			}
 
+			$options = array();
+			if(!empty($this->request->data['Asset']['album_id'])) {
+				$options['album_id'] = $this->request->data['Asset']['album_id'];
+			}
+
 			// file upload
 			if(!empty($this->request->data['Asset']['image']['name'])) {
 
 				$valid = $this->Upload->isValidUpload($this->request->data['Asset']['image']);
 
 				if($valid === true) {
-					$save = $this->Asset->saveImage($this->request->data['Asset']['image']['tmp_name'], $this->Auth->user('id'), 'Upload');
+					$save = $this->Asset->saveImage($this->request->data['Asset']['image']['tmp_name'], $this->Auth->user('id'), 'Upload', $options);
 
 					// save is the new model ID
 					if($save !== false) {
@@ -274,7 +280,7 @@ class AssetsController extends AppController {
 					$file = $this->Upload->saveURLtoFile($this->request->data['Asset']['url']);
 					
 					if($file !== false) {
-						$asset_id = $this->Asset->saveImage($file, $this->Auth->user('id'), 'URLgrab');
+						$asset_id = $this->Asset->saveImage($file, $this->Auth->user('id'), 'URLgrab', $options);
 
 						if($asset_id !== false) {
 							$new_file .= $asset_id . '.' . $this->Upload->getExtension($this->request->data['Asset']['url']);

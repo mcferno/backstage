@@ -11,7 +11,7 @@
 	<link rel="apple-touch-icon-precomposed" href="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem/emblem-large-x57.jpg'); ?>">
 	<meta property="og:image" content="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem-large.jpg'); ?>">
 	<?php
-		echo $this->Html->meta('icon',$this->Html->webroot('img/emblem.png'));
+		echo $this->Html->meta('icon', 'img/emblem.png');
 
 		// base js libraries
 		$scripts = array(
