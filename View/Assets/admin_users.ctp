@@ -3,6 +3,20 @@
 ?>	
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
+
+		<?php if(isset($this->request->params['named']['album'])) : ?>
+
+		<div class="row">
+			<div class="col-xs-6 col-md-12">
+				<ul class="list-unstyled actions">
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album',array('controller' => 'albums', 'action' => 'save'),array('class'=>'btn btn-default btn-block album-module-btn','escape' => false)); ?></li>
+				</ul>
+			</div>
+		</div>
+
+		<?php else : ?>
+
 		<div class="extra">
 			<h3>Contributing Users</h3>
 			<ul class="list-unstyled">
@@ -11,6 +25,9 @@
 				<?php endforeach; ?>
 			</ul>
 		</div>
+
+		<?php endif; ?>
+
 	</div>
 	<div class="col-md-10">
 
@@ -23,6 +40,10 @@
 
 		<h1>Meme-Ready Images</h1>
 		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> images ready for the <?= $this->Html->link('Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator')); ?>.</p>
+
+		<?php elseif(isset($this->request->params['named']['album'])) : ?>
+
+		<?= $this->element('../Albums/_album_overview', array('album' => $album)); ?>
 
 		<?php else : ?>
 

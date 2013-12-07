@@ -62,11 +62,12 @@ class Asset extends AppModel {
 		// single direct result format
 		} elseif(isset($results['id'])) {
 			$this->addMetaData($results);
-		}
 
-		// capture aliased model instances
-		if(isset($results[0]['id'])) {
-			$this->addMetaData($results[0]);
+		// hasMany
+		} elseif(isset($results[0]['id'])) {
+			foreach($results as &$result) {
+				$this->addMetaData($result);
+			}
 		}
 		return $results;
 	}
@@ -395,7 +396,7 @@ class Asset extends AppModel {
 				$activity['Activity']['icon'] = 'network-cloud';
 				break;
 			case 'Upload':
-				$activity['Activity']['phrase'] = ":user uploaded an image.";
+				$activity['Activity']['phrase'] = ":user uploaded a new image.";
 				$activity['Activity']['icon'] = 'drive-upload';
 				break;
 			case 'Crop':

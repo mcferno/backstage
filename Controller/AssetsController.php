@@ -5,6 +5,8 @@ App::uses('Folder', 'Utility');
  */
 class AssetsController extends AppController {
 
+	public $uses = array('Asset', 'Album');
+
 	public $components = array(
 		'Upload' => array(
 			'mimeTypes' => array('image/png', 'image/jpeg', 'image/gif'),
@@ -17,6 +19,13 @@ class AssetsController extends AppController {
 			'order' => 'Asset.created DESC',
 			'limit' => 40,
 			'maxLimit' => 150
+		),
+		'Album' => array(
+			'contain' => array(
+				'Cover', 'DefaultCover', 'AssetCount', 'User'
+			),
+			'order' => 'Album.modified DESC',
+			'limit' => 10
 		)
 	);
 	
@@ -34,10 +43,16 @@ class AssetsController extends AppController {
 	public function adminBeforeRender() {
 		parent::adminBeforeRender();
 
-		$page_limits = array($this->paginate['Asset']['limit'], $this->paginate['Asset']['limit'] * 2, $this->paginate['Asset']['limit'] * 4);
+		$model = $this->modelClass;
+		if(isset($this->request->params['paging'])) {
+			$models = array_keys($this->request->params['paging']);
+			$model = reset($models);
+		}
+
+		$page_limits = array($this->paginate[$model]['limit'], $this->paginate[$model]['limit'] * 2, $this->paginate[$model]['limit'] * 4);
 
 		if($this->RequestHandler->isMobile()) {
-			$page_limits = array($this->paginate['Asset']['limit'], $this->paginate['Asset']['limit'] * 2, $this->paginate['Asset']['limit'] * 3);
+			$page_limits = array($this->paginate[$model]['limit'], $this->paginate[$model]['limit'] * 2, $this->paginate[$model]['limit'] * 3);
 		}
 
 		$this->set('page_limits', $page_limits);
@@ -55,27 +70,27 @@ class AssetsController extends AppController {
 		// pull recent albums if we're not currently viewing one
 		if(!isset($this->request->params['named']['album'])) {
 			$albums = $this->Asset->Album->find('all', array(
-				'contain' => array('Cover', 'DefaultCover', 'AssetCount'),
+				'contain' => array(
+					'Cover', 'DefaultCover', 'AssetCount'
+				),
 				'conditions' => array(
 					'Album.user_id' => $this->Auth->user('id')
 				),
-				'limit' => 4,
+				'limit' => Configure::read('Site.Images.recentAlbums'),
 				'order' => 'Album.modified DESC'
 			));
-
-			// attach image references
-			foreach ($albums as &$album) {
-				if(!empty($album['Cover'])) {
-					$this->Asset->addMetaData($album['Cover']);
-				}
-				if(!empty($album['DefaultCover'])) {
-					$this->Asset->addMetaData($album['DefaultCover']);
-				}
-			}
 			$this->set('albums', $albums);
 		}
 		
-		$this->set('album_list', $this->Asset->Album->find('all', array('conditions' => array('user_id' => $this->Auth->user('id')))));
+		$this->set('album_count', $this->Asset->Album->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
+		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
+	}
+
+	public function admin_albums() {
+		$this->defaultPagination();
+		$this->paginate['Album']['contain']['Asset'] = array('limit' => Configure::read('Site.Images.albumPreviews'), 'offset' => 1);
+		$this->set('albums', $this->paginate('Album'));
+		$this->set('users', $this->Asset->User->find('list'));
 	}
 	
 	/**
@@ -89,6 +104,8 @@ class AssetsController extends AppController {
 			$this->redirect(array('action'=>'admin_index'));
 		}
 		$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_id;
+
+
 		
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $user_id)));
@@ -158,7 +175,16 @@ class AssetsController extends AppController {
 		}
 
 		if(isset($this->request->params['named']['album'])) {
-			$album = $this->Asset->Album->findById($this->request->params['named']['album']);
+			$album = $this->Asset->Album->find('first', array(
+				'contain' => array('User', 'AssetCount'),
+				'conditions' => array(
+					'Album.id' => $this->request->params['named']['album'],
+					'OR' => array(
+						'Album.user_id' => $this->Session->read('Auth.User.id'),
+						'Album.shared' => true
+					)
+				)
+			));
 			if(!empty($album)) {
 				$this->set('album', $album);
 				$this->set('upload_album', $album['Album']);
@@ -169,6 +195,7 @@ class AssetsController extends AppController {
 
 		if(isset($this->request->params['named']['user'])) {
 			$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->request->params['named']['user'];
+			$this->paginate['Album']['conditions']['Album.user_id'] = $this->request->params['named']['user'];
 		}
 	}
 

@@ -22,14 +22,11 @@
 	
 	<?php if(isset($album)) : ?>
 
-		<h1><?= (!empty($album['Album']['title'])) ? $album['Album']['title'] : 'Unnamed album'; ?></h1>
-		<?php if(!empty($album['Album']['description'])) : ?>
-		<p><?= nl2br(h($album['Album']['description'])); ?></p>
-		<?php endif; // description ?>
+		<?= $this->element('../Albums/_album_overview', array('album' => $album)); ?>
 
-		<?php if(!empty($album['Album']['location'])) : ?>
-		<p class="muted">&mdash; <?= h($album['Album']['location']); ?></p>
-		<?php endif; // description ?>
+		<?php if($this->Paginator->param('count') === 0) : ?>
+		<div class="alert alert-info">This album is currently empty, you can <a class="image-upload-btn" href="#"><strong>upload new images</strong></a> or assign existing images to this album.</div>
+		<?php endif; ?>
 
 	<?php else: ?>
 
@@ -38,8 +35,8 @@
 		<?php if(!empty($images)) : ?>
 		<p class="tall">
 			You have a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $this->Paginator->param('count'); ?></span> images
-			<?php if(count($album_list)) : ?>
-			and <span class="badge badge-custom"><?= count($album_list); ?></span> albums.
+			<?php if($album_count > 0) : ?>
+			and <span class="badge badge-custom"><?= $album_count; ?></span> albums.
 			<?php endif; ?>
 		</p>
 		<?php endif; ?>
@@ -59,38 +56,17 @@
 
 	<h3 class="cozy-top">Recent Albums</h3>
 
-		<ul class="media-list link-exchange">
+	<p>
+		<?= $this->Html->link('View All My Albums <span class="glyphicon glyphicon-chevron-right"></span>', array('action' => 'albums', 'user' => $this->Session->read('Auth.User.id')), array('escape' => false)); ?>
+	</p>
 
-		<?php foreach ($albums as $recent_album): ?>
+	<ul class="media-list link-exchange">
 
-			<li class="media">
-				<div class="link-item clearfix">
-					<a class="pull-left screenshot" href="<?= $this->Html->url(array('album' => $recent_album['Album']['id'])); ?>">
-						<?php
-							if(isset($recent_album['Cover']['image-thumb'])) {
-								echo $this->Html->image($recent_album['Cover']['image-thumb']);
-							} elseif (isset($recent_album['DefaultCover'][0]['image-thumb'])) {
-								echo $this->Html->image($recent_album['DefaultCover'][0]['image-thumb']);
-							}
-						?>
-					</a>
-					<div class="media-body">
-						<h5 class="media-heading"><?= $this->Html->link($recent_album['Album']['title'], array('album' => $recent_album['Album']['id']), array('class' => 'main')); ?></h5>
-						<p class="description">
-							<?= nl2br(h($recent_album['Album']['description'])); ?>
-						</p>
-						<h6>
-							Contains <span class="badge badge-inverse"><strong><?= isset($recent_album['AssetCount'][0][0]['count']) ? $recent_album['AssetCount'][0][0]['count'] : 0 ; ?></strong></span>
-							Images &nbsp;&bull;&nbsp;
-							Created <?= $this->Time->timeAgoInWords($recent_album['Album']['created']); ?>
-						</h6>
-					</div>
-				</div>
-			</li>
+	<?php foreach ($albums as $recent_album) : ?>
+		<li class="media"><?= $this->element('../Albums/_album_item', array('album' => $recent_album)); ?></li>
+	<?php endforeach; ?>
 
-		<?php endforeach; ?>
-
-		</ul>
+	</ul>
 
 	<h3 class="cozy-top">Your Images</h3>
 

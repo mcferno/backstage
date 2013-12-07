@@ -36,8 +36,9 @@ class Album extends AppModel {
 
 	public function getUserList($for_user) {
 		$albums = $this->find('all', array(
+			'fields' => 'Album.id, Album.title, Album.user_id, User.username',
 			'contain' => 'User',
-			'order' => 'title ASC',
+			'order' => 'User.username ASC, Album.title ASC',
 			'conditions' => array(
 				'OR' => array(
 					'user_id' => $for_user,

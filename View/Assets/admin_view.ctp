@@ -15,33 +15,36 @@
 				<ul class="list-unstyled actions">
 					<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class'=>'btn btn-block btn-primary','escape'=>false, 'title' => 'Use this image in the Meme Generator')); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class'=>'btn btn-block btn-primary contest-start','escape'=>false, 'title' => 'Start a Caption Battle with this image')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class'=>'btn btn-block btn-primary','escape' => false, 'title' => 'Use this image in the Meme Generator')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle',array('controller'=>'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class'=>'btn btn-block btn-primary contest-start','escape' => false, 'title' => 'Start a Caption Battle with this image')); ?></li>
 
 					<?php endif; // upload or url download ?>
 
-					<?php if(!empty($asset['Asset']['album_id'])) : ?>
+					<?php
+						if(!empty($asset['Asset']['album_id'])) : 
+							$album_action = (!empty($asset['Asset']['user_id']) && Access::isOwner($asset['Asset']['user_id'])) ? 'index' : 'users';
+					?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> View Album',array('action' => 'index', 'album' => $asset['Asset']['album_id']), array('class'=>'btn btn-block btn-info','escape'=>false, 'title' => 'View all images that belong to the same album.')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> View Album',array('action' => $album_action, 'album' => $asset['Asset']['album_id']), array('class'=>'btn btn-block btn-info','escape' => false, 'title' => 'View all images that belong to the same album.')); ?></li>
 					<?php endif; // belongs to an album ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-comment"></span> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn btn-block btn-default','escape'=>false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-comment"></span> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn btn-block btn-default','escape' => false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
 
 					<?php if(!$load_cropper) : ?>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-fullscreen"></span> Crop Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn btn-block btn-default','escape'=>false, 'title' => 'Save a slice of this image')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-fullscreen"></span> Crop Image', array('action'=>'view', $asset['Asset']['id'], 'crop' => 'true'), array('class'=>'btn btn-block btn-default','escape' => false, 'title' => 'Save a slice of this image')); ?></li>
 					<?php endif; // cropper option ?>
 
 					<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
 
 					<?php if($this->Session->check('Auth.User.fb_target')) : ?>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-block btn-success post-to-fb','escape'=>false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-block btn-success post-to-fb','escape' => false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
 					<?php endif; // image is Facebook shareable ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-block btn-xs btn-danger delete','escape'=>false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-block btn-xs btn-danger delete','escape' => false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
 
 					<?php else : // someone else's image ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-user"></span> <span class="extra">More from </span>'.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-block btn-info','escape'=>false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-user"></span> <span class="extra">More from </span>'.$asset['User']['username'],array('action'=>'user',$asset['Asset']['user_id']),array('class'=>'btn btn-block btn-info','escape' => false, 'title' => 'View more images from ' . $asset['User']['username'])); ?></li>
 					
 					<?php endif; ?>
 				</ul>

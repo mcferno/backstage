@@ -35,6 +35,7 @@ Router::connect("/{$admin_url}/meme-generator/*", array('controller'=>'pages', '
  * Image Assets
  */
 Router::connect("/{$admin_url}/my-images/*", array('controller'=>'assets', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/albums/*", array('controller'=>'assets', 'action' => 'albums', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/all-images/*", array('controller'=>'assets', 'action' => 'users', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/user/*", array('controller'=>'assets', 'action' => 'user', 'prefix' => 'admin', 'admin' => true));
 
