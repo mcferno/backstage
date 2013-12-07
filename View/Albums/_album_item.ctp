@@ -30,6 +30,7 @@ $link_action = (!empty($album['Album']['user_id']) && Access::isOwner($album['Al
 		<?php
 			foreach ($album['Asset'] as $asset) {
 				echo $this->Html->link($this->Html->image($asset['image-tiny']), array('action' => $link_action, 'album' => $album['Album']['id']), array('escape' => false));
+				echo ' ';
 			}
 		?>
 		</p>

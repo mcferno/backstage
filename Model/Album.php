@@ -34,6 +34,18 @@ class Album extends AppModel {
 		)
 	);
 
+	public $actsAs = array(
+		'Postable.Postable' => array(
+			'storageModel' => 'Activity'
+		)
+	);
+
+	public function getAlbumCount($user = null) {
+		return $this->find('count', array(
+			'user_id' => $user
+		));
+	}
+
 	public function getUserList($for_user) {
 		$albums = $this->find('all', array(
 			'fields' => 'Album.id, Album.title, Album.user_id, User.username',
@@ -47,5 +59,16 @@ class Album extends AppModel {
 			)
 		));
 		return Hash::combine($albums, '{n}.Album.id', '{n}.Album.title', '{n}.User.username');
+	}
+
+	/**
+	 * Converts the available Activity model and relationship data to reduce
+	 * it to a human-friendly sentence.
+	 * 
+	 * @param  {ActivityModel} $activity Activity to convert
+	 */
+	public function humanizeActivity(&$activity) {
+		$activity['Activity']['phrase'] = ":user started a new album called <strong>{$activity['Album']['title']}</strong>";
+		$activity['Activity']['icon'] = 'photo-album-icon';
 	}
 }

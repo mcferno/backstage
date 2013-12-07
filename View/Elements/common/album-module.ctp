@@ -6,7 +6,7 @@
 
 	<div class="modal-header">
 		<a class="close" data-dismiss="modal">×</a>
-		<h3><?= $this->Html->image('ui/icons/image-import.png'); ?> <?= (isset($this->request->data['Album']['id'])) ? 'Edit' : 'Create a new'; ?> Album</h3>
+		<h3><?= $this->Html->image('ui/icons/photo-album.png'); ?> <?= (isset($this->request->data['Album']['id'])) ? 'Edit' : 'Create a new'; ?> Album</h3>
 	</div>
 	<?php
 		echo $this->Form->create('Album', array('url' => array('action' => 'save'), 'type' => 'file'));

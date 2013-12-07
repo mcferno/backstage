@@ -13,6 +13,7 @@ class Activity extends AppModel {
 		'User',
 
 		// the data the 'activity' corresponds to
+		'Album' => array('foreignKey' => 'foreign_key'),
 		'Asset' => array('foreignKey' => 'foreign_key'),
 		'Contest' => array('foreignKey' => 'foreign_key'),
 		'Message' => array('foreignKey' => 'foreign_key'),

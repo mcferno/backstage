@@ -396,13 +396,23 @@ class Asset extends AppModel {
 				$activity['Activity']['icon'] = 'slide-pencil';
 				$activity['Activity']['icon'] = 'image-pencil';
 				break;
-			case 'URLgrab':
-				$activity['Activity']['phrase'] = ":user saved an image from a URL.";
-				$activity['Activity']['icon'] = 'network-cloud';
+			case 'URLgrab':				
+				if(!empty($activity['Asset']['album_id'])) {
+					$activity['Activity']['phrase'] = ":user saved a web image to an album.";
+					$activity['Activity']['icon'] = 'photo-album-plus';
+				} else {
+					$activity['Activity']['phrase'] = ":user saved a web image from a URL.";
+					$activity['Activity']['icon'] = 'network-cloud';
+				}
 				break;
 			case 'Upload':
-				$activity['Activity']['phrase'] = ":user uploaded a new image.";
-				$activity['Activity']['icon'] = 'drive-upload';
+				if(!empty($activity['Asset']['album_id'])) {
+					$activity['Activity']['phrase'] = ":user uploaded a new album photo.";
+					$activity['Activity']['icon'] = 'photo-album-plus';
+				} else {
+					$activity['Activity']['phrase'] = ":user uploaded a new image.";
+					$activity['Activity']['icon'] = 'drive-upload';
+				}
 				break;
 			case 'Crop':
 				$activity['Activity']['phrase'] = ":user cropped an image.";

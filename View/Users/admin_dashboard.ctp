@@ -8,50 +8,50 @@
 	
 	<div class="row thumbnails features">
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
-				<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'Meme Generator')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'pages', 'action' => 'meme_generator')); ?>">
+				<?= $this->Html->image('ui/meme-generator-callout.png',array('alt' => 'Meme Generator')); ?>
 			</a>
-			<div class="caption"><h4 class="text-right">Meme-Templates<span class="extra"> Images</span> <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
+			<div class="caption"><h4 class="text-right">Meme Templates <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">
-				<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt'=>'Group Chat')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>">
+				<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt' => 'Group Chat')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'assets','action'=>'index')); ?>">
-				<?= $this->Html->image('ui/my-images-callout.jpg',array('alt'=>'My Images')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'index')); ?>">
+				<?= $this->Html->image('ui/my-images-callout.jpg',array('alt' => 'My Images')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'assets','action'=>'users')); ?>">
-				<?= $this->Html->image('ui/all-images-callout.jpg',array('alt'=>'All Images')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id'))); ?>">
+				<?= $this->Html->image('ui/my-albums-callout.jpg',array('alt' => 'My Albums')); ?>
 			</a>
-			<div class="caption"><h4 class="text-right">Images <span class="badge badge-custom"><?= $asset_count_all; ?></span></h4></div>
+			<div class="caption"><h4 class="text-right">Collections <span class="badge badge-custom"><?= $album_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'videos','action'=>'index')); ?>">
-				<?= $this->Html->image('ui/videos-callout.jpg',array('alt'=>'Videos')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'videos', 'action' => 'index')); ?>">
+				<?= $this->Html->image('ui/videos-callout.jpg',array('alt' => 'Videos')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Videos <span class="badge badge-custom"><?= $videos_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'contests','action'=>'index')); ?>">
-				<?= $this->Html->image('ui/contest-callout.jpg',array('alt'=>'Caption Battles')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'contests', 'action' => 'index')); ?>">
+				<?= $this->Html->image('ui/contest-callout.jpg',array('alt' => 'Caption Battles')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Battles <span class="badge badge-custom"><?= $contest_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'links','action'=>'index')); ?>">
-				<?= $this->Html->image('ui/link-exchange-callout.jpg',array('alt'=>'All Images')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'links', 'action' => 'index')); ?>">
+				<?= $this->Html->image('ui/link-exchange-callout.jpg',array('alt' => 'All Images')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Links <span class="badge badge-custom"><?= $links_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
-			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'posts','action'=>'index')); ?>">
-				<?= $this->Html->image('ui/quotes-callout.jpg',array('alt'=>'Quotes')); ?>
+			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'posts', 'action' => 'index')); ?>">
+				<?= $this->Html->image('ui/quotes-callout.jpg',array('alt' => 'Quotes')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Quotes <span class="badge badge-custom"><?= $quotes_count; ?></span></h4></div>
 		</div>
@@ -63,10 +63,10 @@
 
 	
 	<h3 class="cozy-lead">
-		<a href="<?= $this->Html->url(array('controller'=>'users','action'=>'updates')); ?>">
+		<a href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'updates')); ?>">
 			<?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates
 		</a>
-		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View All <span class="extra">Updates</span>', array('controller'=>'users','action'=>'updates'), array('class' => 'btn btn-inverse btn-sm pull-right', 'escape' => false)); ?>
+		<?= $this->Html->link('<span class="glyphicon glyphicon-search"></span> View All <span class="extra">Updates</span>', array('controller' => 'users', 'action' => 'updates'), array('class' => 'btn btn-inverse btn-sm pull-right', 'escape' => false)); ?>
 	</h3>
 	<?= $this->element('common/updates-list', array('hideSmallPreview' => true)); ?>
 
@@ -96,12 +96,13 @@
 <div class="col-md-12">
 	<h3 class="cozy-lead"><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
+		<tr><td class="short-date">Dec 07</td><td>New Album feature to organize photos into sets.</td></tr>
 		<tr><td class="short-date">Sep 02</td><td>Heavy mobile optimizations. All sections reworked. Overall darker theme.</td></tr>
 		<tr><td class="short-date">Apr 04</td><td>Many improvements made to the organization of images on the site.</td></tr>
 		<tr><td class="short-date">Mar 03</td><td>Meme Generator font has been improved for Android and iOS users</td></tr>
 		<tr><td class="short-date">Feb 24</td><td>Group Chat has optional notification sounds for new messages and @mentions.</td></tr>
-		<tr><td class="short-date">Feb 02</td><td>Video section launched!</td></tr>
 <?php /*
+		<tr><td class="short-date">Feb 02</td><td>Video section launched!</td></tr>
 		<tr><td class="short-date">Dec 16</td><td>Link Exchange has easier to navigate tag lists, and allows thumbnail images for each link.</td></tr>
 		<tr><td class="short-date">Nov 20</td><td>New Link Exchange section allows you to save links and tag them.</td></tr>
 		<tr><td class="short-date">Oct 28</td><td>Network Update notifications alert you of all user actions.</td></tr>

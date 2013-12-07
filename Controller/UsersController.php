@@ -10,7 +10,7 @@ class UsersController extends AppController {
 	public $paginate = array(
 		'Activity' => array(
 			'contain' => array(
-				'User', 'Asset', 'Link','Video',
+				'User', 'Asset', 'Album', 'Link','Video',
 				'Contest' => 'Asset', 
 				'Message' => array('Asset', 'Contest' => 'Asset', 'Link', 'Video')
 			),
@@ -18,7 +18,7 @@ class UsersController extends AppController {
 		)
 	);
 	
-	public $uses = array('User', 'Message', 'Activity', 'Link');
+	public $uses = array('User', 'Message', 'Activity', 'Link', 'Album');
 
 	public $restrictedRoutes = array('admin_index', 'admin_add', 'admin_view', 'admin_delete', 'admin_refresh_updates');
 	
@@ -65,6 +65,7 @@ class UsersController extends AppController {
 		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));
 		$this->set('links_count', ClassRegistry::init('Link')->find('count'));
 		$this->set('videos_count', ClassRegistry::init('Video')->find('count', array('conditions' => array('mp4' => 1))));
+		$this->set('album_count', ClassRegistry::init('Album')->getAlbumCount($this->Auth->user('id')));
 		$this->set('asset_count', $asset_count);
 		$this->set('asset_count_all', $asset_count_all);
 
