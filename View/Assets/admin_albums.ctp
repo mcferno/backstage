@@ -15,7 +15,7 @@
 	<div class="col-md-10">
 
 		<?php
-			$title = 'All Albums';
+			$title = 'All User Albums';
 			if(isset($this->request->params['named']['user'])) {
 				if(Access::isOwner($this->request->params['named']['user'])) {
 					$title = 'My Albums';

@@ -23,9 +23,13 @@
 					<?php
 						if(!empty($asset['Asset']['album_id'])) : 
 							$album_action = (!empty($asset['Asset']['user_id']) && Access::isOwner($asset['Asset']['user_id'])) ? 'index' : 'users';
+							$album_title = $asset['Album']['title'];
 					?>
 
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> View Album',array('action' => $album_action, 'album' => $asset['Asset']['album_id']), array('class'=>'btn btn-block btn-info','escape' => false, 'title' => 'View all images that belong to the same album.')); ?></li>
+
+					<li><?= $this->Form->postLink('<span class="glyphicon glyphicon-check"></span> Set As Cover', array('controller' => 'albums' ,'action'=>'set_cover', $asset['Asset']['album_id'], $asset['Asset']['id']), array('class'=>'btn btn-block btn-default','escape' => false, 'title' => 'Use this image as the cover for the album it belongs to.'), "Do you wish to use this image as the cover to the album \"{$album_title}\"?"); ?></li>
+
 					<?php endif; // belongs to an album ?>
 
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-comment"></span> Post to Chat', array('action'=>'chat_post', $asset['Asset']['id']), array('class'=>'btn btn-block btn-default','escape' => false, 'title' => 'Post this image directly into the Group Chat')); ?></li>
@@ -40,7 +44,7 @@
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Post to <strong>Facebook</strong>','#fbPostModal',array('class'=>'btn btn-block btn-success post-to-fb','escape' => false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
 					<?php endif; // image is Facebook shareable ?>
 
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-block btn-xs btn-danger delete','escape' => false, 'title' => 'Delete this image'),'Are you sure you wish to permanently delete this image?'); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image',array('action'=>'delete',$asset['Asset']['id']),array('class'=>'btn btn-block btn-xs btn-danger delete','escape' => false, 'title' => 'Delete this image'), 'Are you sure you wish to permanently delete this image?'); ?></li>
 
 					<?php else : // someone else's image ?>
 

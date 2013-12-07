@@ -59,12 +59,17 @@ class Asset extends AppModel {
 				$this->addMetaData($result['Asset']);
 			}
 
+		} else if(isset($results[0]['Cover'])) {
+			foreach($results as &$result) {
+				$this->addMetaData($result['Cover']);
+			}
+
 		// single direct result format
-		} elseif(isset($results['id'])) {
+		} else if(isset($results['id'])) {
 			$this->addMetaData($results);
 
 		// hasMany
-		} elseif(isset($results[0]['id'])) {
+		} else if(isset($results[0]['id'])) {
 			foreach($results as &$result) {
 				$this->addMetaData($result);
 			}

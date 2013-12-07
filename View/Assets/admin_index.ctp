@@ -46,19 +46,21 @@
 	<?php if(!empty($tag['Tag'])) : ?>
 
 		<h3 class="cozy">
-			Viewing Images in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+			Viewing Images with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
 			<?= $this->Html->link('Clear &times;', array('action' => $this->request->action), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
 
 	<?php endif; //tag ?>
 
-	<?php if(!empty($albums) && $this->Paginator->param('page') === 1) : ?>
+	<?php if(!empty($albums) && $this->Paginator->param('page') === 1 && empty($this->request->params['named'])) : ?>
 
-	<h3 class="cozy-top">Recent Albums</h3>
+	<h3 class="cozy-top">Recent <?= (count($albums) === 1) ? 'Album' : 'Albums'; ?></h3>
 
+	<?php if($album_count > count($albums)) : ?>
 	<p>
 		<?= $this->Html->link('View All My Albums <span class="glyphicon glyphicon-chevron-right"></span>', array('action' => 'albums', 'user' => $this->Session->read('Auth.User.id')), array('escape' => false)); ?>
 	</p>
+	<?php endif; // view all albums ?>
 
 	<ul class="media-list link-exchange">
 

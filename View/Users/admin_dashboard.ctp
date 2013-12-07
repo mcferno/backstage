@@ -11,7 +11,7 @@
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'pages','action'=>'meme_generator')); ?>">
 				<?= $this->Html->image('ui/meme-generator-callout.png',array('alt'=>'Meme Generator')); ?>
 			</a>
-			<div class="caption"><h4 class="text-right">Meme-Ready<span class="extra"> Images</span> <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
+			<div class="caption"><h4 class="text-right">Meme-Templates<span class="extra"> Images</span> <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller'=>'users','action'=>'group_chat')); ?>">

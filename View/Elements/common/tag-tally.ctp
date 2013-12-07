@@ -4,7 +4,7 @@ if(!empty($tag_tally)) :
 	$action = (isset($action) ? $action : $this->request->params['action']);
 ?>
 <ul class="nav nav-pills nav-stacked">
-	<li class="nav-header">Tags</li>
+	<li class="nav-header">Filter By Tag</li>
 	<?php
 		$tag_id = false;
 		if(isset($this->request->params['named']['tag'])) {

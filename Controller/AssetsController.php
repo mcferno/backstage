@@ -24,7 +24,7 @@ class AssetsController extends AppController {
 			'contain' => array(
 				'Cover', 'DefaultCover', 'AssetCount', 'User'
 			),
-			'order' => 'Album.modified DESC',
+			'order' => 'Album.created DESC',
 			'limit' => 10
 		)
 	);
@@ -71,7 +71,10 @@ class AssetsController extends AppController {
 		if(!isset($this->request->params['named']['album'])) {
 			$albums = $this->Asset->Album->find('all', array(
 				'contain' => array(
-					'Cover', 'DefaultCover', 'AssetCount'
+					'Cover', 'DefaultCover', 'AssetCount',
+					'Asset' => array(
+						'limit' => Configure::read('Site.Images.albumPreviews')
+					)
 				),
 				'conditions' => array(
 					'Album.user_id' => $this->Auth->user('id')
@@ -88,7 +91,7 @@ class AssetsController extends AppController {
 
 	public function admin_albums() {
 		$this->defaultPagination();
-		$this->paginate['Album']['contain']['Asset'] = array('limit' => Configure::read('Site.Images.albumPreviews'), 'offset' => 1);
+		$this->paginate['Album']['contain']['Asset'] = array('limit' => Configure::read('Site.Images.albumPreviews'));
 		$this->set('albums', $this->paginate('Album'));
 		$this->set('users', $this->Asset->User->find('list'));
 	}
@@ -162,7 +165,7 @@ class AssetsController extends AppController {
 		if(isset($this->request->params['named']['type'])) {
 			
 			// special type converted to multiple types
-			if($this->request->params['named']['type'] == 'Meme-Ready') {
+			if($this->request->params['named']['type'] == 'Meme-Templates') {
 				if(isset($this->paginate['Asset']['conditions'])) {
 					$this->paginate['Asset']['conditions'] = array_merge($this->paginate['Asset']['conditions'], $this->Asset->getCleanImageConditions());
 				} else {
@@ -360,7 +363,7 @@ class AssetsController extends AppController {
 	public function admin_view($id = null) {
 
 		$asset = $this->Asset->find('first', array(
-			'contain' => array('User', 'Tag'),
+			'contain' => array('User', 'Tag', 'Album'),
 			'conditions' => array(
 				'Asset.id' => $id
 			)

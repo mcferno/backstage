@@ -36,9 +36,9 @@
 		<h1>Memes From All Users</h1>
 		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> memes saved.</p>
 
-		<?php elseif (isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Ready') : ?>
+		<?php elseif (isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Templates') : ?>
 
-		<h1>Meme-Ready Images</h1>
+		<h1>Meme Templates <small>(with no text)</small></h1>
 		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> images ready for the <?= $this->Html->link('Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator')); ?>.</p>
 
 		<?php elseif(isset($this->request->params['named']['album'])) : ?>
@@ -54,7 +54,7 @@
 
 		<?php if(!empty($tag['Tag'])) : ?>
 		<h3 class="cozy">
-			Viewing Images in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+			Viewing Images with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
 			<?= $this->Paginator->link('Clear &times;', array('tag' => false), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
 		<?php endif; //tag ?>

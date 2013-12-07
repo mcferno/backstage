@@ -3,7 +3,7 @@
 
 <?php if(!empty($tag['Tag'])) : ?>
 <h3 class="cozy">
-	Viewing Images in the Category: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+	Viewing Images with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
 	<?= $this->Html->link('Clear &times;', array('action' => $this->request->action, $user['User']['id']), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 </h3>
 <?php endif; //tag ?>
