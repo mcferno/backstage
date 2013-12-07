@@ -33,8 +33,6 @@ class AlbumsController extends AppController {
 	public function admin_set_cover($album_id = null, $asset_id) {
 		$this->Album->id = $album_id;
 		$this->Album->Asset->id = $asset_id;
-		var_dump($album_id);
-		var_dump($asset_id);
 		if($this->request->is('post') && $this->Album->exists() && $this->Album->Asset->exists()) {
 			$this->Album->saveField('cover_id', $asset_id);
 			$this->Session->setFlash('The image has been set as the album cover.', 'messaging/alert-success');

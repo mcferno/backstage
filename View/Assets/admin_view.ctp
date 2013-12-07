@@ -22,7 +22,7 @@
 
 					<?php
 						if(!empty($asset['Asset']['album_id'])) : 
-							$album_action = (!empty($asset['Asset']['user_id']) && Access::isOwner($asset['Asset']['user_id'])) ? 'index' : 'users';
+							$album_action = (!empty($asset['Asset']['user_id']) && Access::isOwner($asset['Album']['user_id'])) ? 'index' : 'users';
 							$album_title = $asset['Album']['title'];
 					?>
 

@@ -67,7 +67,7 @@ Configure::write('Site', array(
 		'perPageMobile' => 30,
 
 		// number of recent albums to show
-		'recentAlbums' => 2,
+		'recentAlbums' => 1,
 
 		// number of images to preview from each album
 		'albumPreviews' => 6,

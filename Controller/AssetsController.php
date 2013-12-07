@@ -63,9 +63,7 @@ class AssetsController extends AppController {
 	 */
 	public function admin_index() {
 		$this->defaultPagination();
-		$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->Auth->user('id');
-		$tag_conditions = array('Asset.user_id' => $this->paginate['Asset']['conditions']['Asset.user_id']);
-		$this->set('images', $this->paginate('Asset'));
+		$tag_conditions = array();
 		
 		// pull recent albums if we're not currently viewing one
 		if(!isset($this->request->params['named']['album'])) {
@@ -83,10 +81,14 @@ class AssetsController extends AppController {
 				'order' => 'Album.modified DESC'
 			));
 			$this->set('albums', $albums);
+
+			$tag_conditions['Asset.user_id'] = $this->Auth->user('id');
+			$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->Auth->user('id');
 		} else {
 			$tag_conditions['Asset.album_id'] = $this->request->params['named']['album'];
 		}
 		
+		$this->set('images', $this->paginate('Asset'));
 		$this->set('tag_tally', $this->Asset->getTagTally($tag_conditions));
 		$this->set('album_count', $this->Asset->Album->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
@@ -110,8 +112,6 @@ class AssetsController extends AppController {
 			$this->redirect(array('action'=>'admin_index'));
 		}
 		$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_id;
-
-
 		
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $user_id)));

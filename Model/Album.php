@@ -68,7 +68,8 @@ class Album extends AppModel {
 	 * @param  {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
-		$activity['Activity']['phrase'] = ":user started a new album called <strong>{$activity['Album']['title']}</strong>";
+		$activity['Activity']['phrase'] = ":user started a new album called “{$activity['Album']['title']}”";
 		$activity['Activity']['icon'] = 'photo-album-icon';
+		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'users', 'album' => $activity['Album']['id']);
 	}
 }
