@@ -8,6 +8,9 @@
 				<ul class="list-unstyled actions">
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album',array('controller' => 'albums', 'action' => 'save'),array('class'=>'btn btn-default btn-block album-module-btn','escape' => false)); ?></li>
+					<?php if(isset($album['Album']['id'])) : ?>
+					<li><?= $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span> Delete Album',array('controller' => 'albums', 'action' => 'delete', $album['Album']['id']),array('class'=>'btn btn-block btn-xs btn-danger delete','escape' => false, 'title' => 'Delete this image'), 'Are you sure you wish to delete this album? It will not delete the photos in it.'); ?></li>
+					<?php endif; ?>
 				</ul>
 			</div>
 			<div class="col-xs-6 col-md-12">

@@ -80,7 +80,10 @@ class UsersController extends AppController {
 	 */
 	public function admin_updates() {
 		$this->User->setLastUpdate($this->Auth->user('id'), Configure::read('App.start'));
-		$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
+		$view_all = (isset($this->request->params['named']['view']) && $this->request->params['named']['view'] === 'all');
+		if(!$view_all) {
+			$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
+		}
 		$this->set('updates', $this->paginate('Activity'));
 		$this->set('page_limits', array(15, 30, 60));
 	}

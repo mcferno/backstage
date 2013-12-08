@@ -1,4 +1,4 @@
-<h1><?= (!empty($album['Album']['title'])) ? $album['Album']['title'] : 'Unnamed album'; ?></h1>
+<h1><?= (!empty($album['Album']['title'])) ? $album['Album']['title'] . ' <small>Photo Album</small>' : 'Unnamed album'; ?></h1>
 <?php if(!empty($album['Album']['description'])) : ?>
 <p><?= nl2br(h($album['Album']['description'])); ?></p>
 <?php endif; // description ?>

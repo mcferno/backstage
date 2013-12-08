@@ -41,7 +41,7 @@
 		<h1>Meme Templates <small>(with no text)</small></h1>
 		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> images ready for the <?= $this->Html->link('Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator')); ?>.</p>
 
-		<?php elseif(isset($this->request->params['named']['album'])) : ?>
+		<?php elseif(isset($this->request->params['named']['album']) && !empty($album['Album']['id'])) : ?>
 
 		<?= $this->element('../Albums/_album_overview', array('album' => $album)); ?>
 

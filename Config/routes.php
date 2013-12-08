@@ -37,6 +37,7 @@ Router::connect("/{$admin_url}/meme-generator/*", array('controller'=>'pages', '
 Router::connect("/{$admin_url}/my-images/*", array('controller'=>'assets', 'action' => 'index', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/albums/set_cover/*", array('controller'=>'albums', 'action' => 'set_cover', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/albums/save/*", array('controller'=>'albums', 'action' => 'save', 'prefix' => 'admin', 'admin' => true));
+Router::connect("/{$admin_url}/albums/delete/*", array('controller'=>'albums', 'action' => 'delete', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/albums/*", array('controller'=>'assets', 'action' => 'albums', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/all-images/*", array('controller'=>'assets', 'action' => 'users', 'prefix' => 'admin', 'admin' => true));
 Router::connect("/{$admin_url}/user/*", array('controller'=>'assets', 'action' => 'user', 'prefix' => 'admin', 'admin' => true));

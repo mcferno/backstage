@@ -35,10 +35,25 @@ class Album extends AppModel {
 	);
 
 	public $actsAs = array(
+		'Ownable',
 		'Postable.Postable' => array(
 			'storageModel' => 'Activity'
 		)
 	);
+
+	public function beforeDelete($cascade = true) {
+		parent::beforeDelete($cascade);
+
+		if($this->id) {
+			// null out the associated photos
+			$this->Asset->updateAll(
+				array('Asset.album_id' => null),
+				array('Asset.album_id' => $this->id)
+			);
+		}
+
+		return true;
+	}
 
 	public function getAlbumCount($user = null) {
 		return $this->find('count', array(

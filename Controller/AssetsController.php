@@ -62,6 +62,22 @@ class AssetsController extends AppController {
 	 * Personalized asset index (for the current user)
 	 */
 	public function admin_index() {
+
+		if(isset($this->request->params['named']['album'])) {
+
+			// non existent album
+			$this->Asset->Album->id = $this->request->params['named']['album'];
+			if(!$this->Asset->Album->exists()) {
+				$this->redirect(array('action' => $this->action));
+			}
+
+			// if not viewing a personal album, send users to the group album view
+			if(!$this->Asset->Album->isOwner($this->Auth->user('id'), $this->request->params['named']['album'])) {
+				$this->redirect(array('action' => 'users', 'album' => $this->request->params['named']['album']));
+			}
+			
+		}
+
 		$this->defaultPagination();
 		$tag_conditions = array();
 		
@@ -121,9 +137,24 @@ class AssetsController extends AppController {
 	}
 	
 	/**
-	 * Assets from all users
+	 * Assets and Albums from all users. Lists images, optionally groups by Album
 	 */
 	public function admin_users() {
+
+		// if  viewing a personal album, send the user to their album page
+		if(isset($this->request->params['named']['album'])) {
+
+			// non existent album
+			$this->Asset->Album->id = $this->request->params['named']['album'];
+			if(!$this->Asset->Album->exists()) {
+				$this->redirect(array('action' => 'albums'));
+			}
+
+			if($this->Asset->Album->isOwner($this->Auth->user('id'), $this->request->params['named']['album'])) {
+				$this->redirect(array('action' => 'index', 'album' => $this->request->params['named']['album']));
+			}
+		}
+
 		$this->paginate['Asset']['contain'][] = 'User';
 		$contributingUsers = $this->Asset->find('all',array(
 			'contain' => 'User',

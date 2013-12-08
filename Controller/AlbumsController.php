@@ -41,4 +41,13 @@ class AlbumsController extends AppController {
 		$this->redirect($this->referer(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id'))));
 	}
 
+	public function admin_delete($id = null) {
+		$this->Album->id = $id;
+		if($this->Album->exists() && $this->Album->isOwner($this->Auth->user('id')) && $this->request->is('post')) {
+			$this->Album->delete($id);
+			$this->Session->setFlash('The album has been deleted.', 'messaging/alert-success');
+		}
+		$this->redirect($this->referer(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Auth->user('id'))));
+	}
+
 }
