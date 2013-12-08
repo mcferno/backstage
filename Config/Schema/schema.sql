@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `user_id` varchar(64) NOT NULL,
   `profile_image` varchar(255) DEFAULT NULL,
   `data` text NOT NULL,
+  `active` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -85,7 +86,8 @@ CREATE TABLE IF NOT EXISTS `assets` (
   `modified` datetime NOT NULL,
   `fb_id` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `album_id` (`album_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

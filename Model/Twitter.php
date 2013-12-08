@@ -30,8 +30,13 @@ class Twitter extends AppModel {
 	 * Pull the latest tweets from all Accounts currently tracked by the system
 	 */
 	public function refresh() {
-		$accounts = ClassRegistry::init('Account')->find('all',array('fields' => array('id', 'handle', 'user_id')));
-		$cb =& $this->getAPIObject();
+		$accounts = ClassRegistry::init('Account')->find('all',array(
+			'fields' => array('id', 'handle', 'user_id'),
+			'conditions' => array(
+				'active' => true
+			)
+		));
+		$cb = $this->getAPIObject();
 		
 		foreach($accounts as $account) {
 

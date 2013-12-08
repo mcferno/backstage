@@ -5,7 +5,7 @@ if(!class_exists('DATABASE_CONFIG')) {
 class DATABASE_CONFIG {
 
 	public $default = array(
-		'datasource' => 'Database/MySql',
+		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'kennysays',
@@ -15,7 +15,7 @@ class DATABASE_CONFIG {
 	);
 
 	public $test = array(
-		'datasource' => 'Database/MySql',
+		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
