@@ -1,8 +1,8 @@
-Config/facebook.php
-Config/twitter.php
-Config/bootstrap.env.php
-tmp/
-webroot/img/profile/twitter/
-webroot/img/base-meme/
-webroot/img/user/
+/Config/facebook.php
+/Config/twitter.php
+/Config/bootstrap.env.php
+/tmp/
+/webroot/img/base-meme/
+/webroot/img/user/
 ._*
+.DS_Store
