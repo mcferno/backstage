@@ -68,7 +68,7 @@ class Access {
 
 		return CakeSession::read('Auth.User.id') === $user_id;
 	}
-	
+
 	/**
 	 * Determines whether the current User has a certain role level. By default,
 	 * this check allows higher roles access as well. Use strict to ensure the
