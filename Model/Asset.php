@@ -1,16 +1,31 @@
 <?php
+/**
+ * User-generated media, primarily in the form of images. Can be uploaded content
+ * or media scraped from the web.
+ */
 App::uses('Folder', 'Utility');
 class Asset extends AppModel {
-	
+
 	public $displayField = 'filename';
-	public $belongsTo = array('User', 'Album');
+	public $belongsTo = array(
+		// owner of the image, video or etc.
+		'User',
+
+		// optional grouping of media into albums
+		'Album'
+	);
 	public $hasOne = array(
+		// Asset is chosen as the winning entry of a caption Contest.
 		'ContestWin' => array(
 			'className' => 'Contest',
 			'foreignKey' => 'winning_asset_id'
 	));
-	public $hasMany = array('Contest');
+	public $hasMany = array(
+		// Asset is the subject of one or more caption Contests
+		'Contest'
+	);
 	public $hasAndBelongsToMany = array(
+		// Asset classification by a set of subject tags
 		'Tag' => array(
 			'joinTable' => 'taggings',
 			'foreignKey' => 'foreign_id'
@@ -24,21 +39,22 @@ class Asset extends AppModel {
 		'Ownable',
 		'Taggable'
 	);
-	
+
 	// recognized dataURL image types
 	public $headers = array(
 		'jpg' => 'data:image/jpeg;base64,'
 	);
-	
+
+	// configurable max and min size of images (in px)
 	public $minDimensions = null;
 	public $maxDimensions = null;
-	
-	// thumbnail generation size widths
+
+	// thumbnail generation size widths (in px)
 	public $imageThumbs = array(75, 200);
-	
+
 	// default quality (out of 100) for image transformations
 	public $jpegQuality = 90;
-	
+
 	public function __construct() {
 		parent::__construct();
 		$this->folderPathRelative = 'user' . DS;
@@ -49,7 +65,7 @@ class Asset extends AppModel {
 	}
 
 	/**
-	 * Attach useful information after retrieval
+	 * Attach useful meta-data after retrieval
 	 */
 	public function afterFind($results, $primary = false) {
 
@@ -80,7 +96,7 @@ class Asset extends AppModel {
 	/**
 	 * Adds meta-data information to a single Asset record.
 	 *
-	 * @param {Asset} Direct Asset reference to attach meta-data
+	 * @param {&Asset} Direct Asset reference to attach meta-data
 	 */
 	public function addMetaData(&$result) {
 		// add image references
@@ -92,7 +108,7 @@ class Asset extends AppModel {
 			$result['image-tiny'] = "{$base}/75/{$result['filename']}";
 		}
 	}
-	
+
 	/**
 	 * Retrieve the images within the user's site folder
 	 *
@@ -102,7 +118,7 @@ class Asset extends AppModel {
 	public function getImages($cluster = false) {
 		return glob($this->getFolderPath($cluster).'*.*');
 	}
-	
+
 	public function getFolderPath($cluster = false) {
 		$path = $this->folderPath;
 		if($cluster !== false) {
@@ -118,21 +134,21 @@ class Asset extends AppModel {
 	 * @return {String} Server path, relative to the weboot image folder
 	 */
 	public function getPath($asset_id, $size = false) {
-		
+
 		$asset = $this->findById($asset_id);
-		
+
 		if(!empty($asset['Asset']['filename'])) {
-			
+
 			$base = $this->folderPathRelative . $asset['Asset']['user_id'] . DS;
 			if($size) {
 				$base .= $size . DS;
 			}
 			return $base . $asset['Asset']['filename'];
 		}
-		
+
 		return '';
 	}
-	
+
 	/**
 	 * Saves and processes an base64 encoded image.
 	 *
@@ -142,25 +158,25 @@ class Asset extends AppModel {
 	 * @return {Boolean}
 	 */
 	public function saveEncodedImage(&$data, $user_id, $type = 'Image') {
-		
+
 		// skim the header data to avoid searching over large data strings
 		$header = substr($data,0,30);
-		
+
 		if(stripos($header,$this->headers['jpg']) !== false) {
-			
+
 			$image_name = String::uuid().'.jpg';
 			$folder = $this->folderPath . $user_id . DS;
 			if(!file_exists($folder)) {
 				$dir = new Folder($folder, true, 0755);
 			}
 			$new_path =  $folder . $image_name;
-			
+
 			$new_image = fopen($new_path,'w');
 			if($new_image === false) {
 				$this->log("Can't open {$new_path} for writing.");
 				return false;
 			}
-			
+
 			$image_data = base64_decode(substr($data,strlen($this->headers['jpg'])));
 			$write_status = fwrite($new_image,$image_data);
 			fclose($new_image);
@@ -168,7 +184,7 @@ class Asset extends AppModel {
 				$this->log("Can't write image data into {$new_path}.");
 				return false;
 			}
-			
+
 			$data = array(
 				'type' => $type,
 				'filename' => $image_name,
@@ -176,22 +192,22 @@ class Asset extends AppModel {
 				'checksum' => sha1($image_data),
 				'user_id' => $user_id
 			);
-			
+
 			$save_status = $this->save($data);
 			if($write_status === false) {
 				$this->log("Can't record image {$new_path} meta to db.");
 				return false;
 			}
-			
+
 			// process image into multiple subsizes
 			$this->saveThumbs($new_path);
 			return true;
 		}
-		
+
 		$this->log("No asset handler found.");
 		return false;
 	}
-	
+
 	/**
 	 * Saves and processes a file upload.
 	 *
@@ -204,21 +220,21 @@ class Asset extends AppModel {
 		if(!class_exists('WideImage')) {
 			App::import('Vendor', 'WideImage/WideImage');
 		}
-		
+
 		$image = WideImage::load($file_path);
-		
+
 		if($image === false) {
 			$this->log('Could not open file upload.');
 			return false;
 		}
-		
+
 		$image_name = String::uuid().'.jpg';
 		$folder = $this->folderPath . $user_id . DS;
 		if(!file_exists($folder)) {
 			$dir = new Folder($folder, true, 0755);
 		}
 		$new_path =  $folder . $image_name;
-		
+
 		if(!empty($options['crop'])) {
 			$cropped = $image->crop($options['crop']['x1'], $options['crop']['y1'], $options['crop']['w'], $options['crop']['h']);
 
@@ -255,7 +271,7 @@ class Asset extends AppModel {
 		$cropped->saveToFile($new_path, $this->jpegQuality);
 		$cropped->releaseHandle();
 		$image->releaseHandle();
-		
+
 		$data = array(
 			'type' => $type,
 			'filename' => $image_name,
@@ -267,21 +283,21 @@ class Asset extends AppModel {
 		if(!empty($options['album_id'])) {
 			$data['album_id'] = $options['album_id'];
 		}
-		
+
 		$this->create();
 		$save_status = $this->save($data);
 		if($save_status === false) {
 			$this->log("Can't record image {$new_path} meta to db.");
 			return false;
 		}
-		
+
 		// process image into multiple subsizes
 		$this->saveThumbs($new_path);
 		return $this->id;
 	}
-	
+
 	/**
-	 * Resizes an image on disk to 
+	 * Resizes an image on disk, generating thumbnail versions of the original
 	 *
 	 * @param {String} $imagePath Path to image to process
 	 */
@@ -291,24 +307,24 @@ class Asset extends AppModel {
 		}
 
 		$image = WideImage::load($imagePath);
-		
+
 		if($image === false) {
 			$this->log('Could not open original image for thumb generation');
 			return false;
 		}
-		
+
 		$base_path = dirname($imagePath).DS;
 		$filename = substr($imagePath,strlen($base_path));
-				
+
 		foreach($this->imageThumbs as $width) {
 			$cropped = $image->resize($width,$width);
-			
+
 			$folder = $base_path . DS . $width . DS;
 			if(!file_exists($folder)) {
 				$dir = new Folder($folder, true, 0755);
 				unset($dir);
 			}
-			
+
 			$cropped->saveToFile($folder . $filename, $this->jpegQuality);
 			$cropped->releaseHandle();
 			unset($cropped);
@@ -317,7 +333,7 @@ class Asset extends AppModel {
 		$image->releaseHandle();
 		return true;
 	}
-	
+
 	/**
 	 * Prepare a single asset to post to Facebook
 	 *
@@ -333,7 +349,7 @@ class Asset extends AppModel {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Clean up files before a record is deleted
 	 *
@@ -345,7 +361,7 @@ class Asset extends AppModel {
 		if($res) {
 			$record = $this->findById($this->id);
 			$base_path = "{$this->folderPath}{$record['Asset']['user_id']}/";
-			
+
 			if(!empty($record)) {
 				foreach($this->imageThumbs as $width) {
 					$path = "{$base_path}{$width}/{$record['Asset']['filename']}";
@@ -382,7 +398,7 @@ class Asset extends AppModel {
 	/**
 	 * Converts the available Activity model and relationship data to reduce
 	 * it to a human-friendly sentence.
-	 * 
+	 *
 	 * @param  {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
@@ -396,7 +412,7 @@ class Asset extends AppModel {
 				$activity['Activity']['icon'] = 'slide-pencil';
 				$activity['Activity']['icon'] = 'image-pencil';
 				break;
-			case 'URLgrab':				
+			case 'URLgrab':
 				if(!empty($activity['Asset']['album_id'])) {
 					$activity['Activity']['phrase'] = ":user saved a web image to an album.";
 					$activity['Activity']['icon'] = 'photo-album-plus';
@@ -428,7 +444,7 @@ class Asset extends AppModel {
 	}
 
 	/**
-	 * Obtains the conditions to find Assets which are ready for the Meme 
+	 * Obtains the conditions to find Assets which are ready for the Meme
 	 * Generator. This is typically images without text on them.
 	 *
 	 * @return {Array} Find conditions

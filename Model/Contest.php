@@ -1,24 +1,24 @@
 <?php
-
 /**
- * Contest Model
+ * Contest
  *
  * A caption contest between users, all using the same base image in the Meme
- * Generation tool. One user initializes the contest, and all users can 
- * participate by submitting their own entries.
+ * Generation tool. One user initializes the contest, and all users can
+ * participate by submitting their own entries. The winner is chosen by the
+ * contest creator.
  */
 class Contest extends AppModel {
 
 	public $displayField = 'message';
 
 	public $belongsTo = array(
-		
+
 		// the creator of the contest
 		'User',
-		
+
 		// the base image for this contest
 		'Asset',
-		
+
 		// the winning asset
 		'Winner' => array(
 			'className' => 'Asset',
@@ -66,7 +66,7 @@ class Contest extends AppModel {
 
 	/**
 	 * Obtains the set of all active contests
-	 * 
+	 *
 	 * @return {Asset[]} All active contests
 	 */
 	public function getActiveContests() {
@@ -83,7 +83,7 @@ class Contest extends AppModel {
 
 	/**
 	 * Determines whether the Contest is owned by a specific user.
-	 * 
+	 *
 	 * @param {UUID} $contest_id Contest to determine ownership
 	 * @param {UUID} $user_id User in question
 	 * @return {Boolean} Whether or not the User provided is the Contest owner
@@ -101,7 +101,7 @@ class Contest extends AppModel {
 
 	/**
 	 * Determines if a Contest is newer than a specific time period
-	 * 
+	 *
 	 * @param {UUID} $contest_id Contest to determine freshness
 	 * @param {Integer} $duration Length in seconds by which the Contest must be older (default: 24hrs)
 	 * @return {Boolean} Whether or not the contest is considered recent
@@ -119,14 +119,14 @@ class Contest extends AppModel {
 
 	/**
 	 * Sets the winning Asset for a specific Contest
-	 * 
+	 *
 	 * @param {UUID} $contest_id Contest to set the winner for
 	 * @param {UUID} $asset_id Asset to set as the winner
 	 * @param {Boolean} $force Whether or not to override an existing winner
 	 * @return {Boolean} Save status
 	 */
 	public function setWinningAsset($contest_id, $asset_id, $force = false) {
-		
+
 		// verify that this Contest has no existing winner
 		if(!$force && !$this->hasAny(array('id' => $contest_id, 'winning_asset_id IS NULL'))) {
 			return false;
@@ -140,7 +140,7 @@ class Contest extends AppModel {
 	/**
 	 * Converts the available Activity model and relationship data to reduce
 	 * it to a human-friendly sentence.
-	 * 
+	 *
 	 * @param {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {

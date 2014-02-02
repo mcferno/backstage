@@ -1,7 +1,14 @@
 <?php
-
+/**
+ * Manages the creation and modification of Albums (groupings of images)
+ */
 class AlbumsController extends AppController {
 
+	/**
+	 * Create or update Album meta-data
+	 *
+	 * @param {UUID} Album to modify
+	 */
 	public function admin_save($id = null) {
 
 		$redirect = $this->referer(array('action' => 'index'));
@@ -11,6 +18,8 @@ class AlbumsController extends AppController {
 				$status = 'updated';
 			} else {
 				$status = 'created';
+
+				// force user ownership
 				$this->request->data['Album']['user_id'] = $this->Session->read('Auth.User.id');
 				if(trim($this->request->data['Album']['title']) == '') {
 					$this->request->data['Album']['title'] = 'Untitled Album';
@@ -30,6 +39,12 @@ class AlbumsController extends AppController {
 		$this->redirect($redirect);
 	}
 
+	/**
+	 * Set the Asset (image) to use as the Album cover
+	 *
+	 * @param {UUID} $album_id Album to affect
+	 * @param {UUID} $asset_id Asset to associate as the Album's cover
+	 */
 	public function admin_set_cover($album_id = null, $asset_id) {
 		$this->Album->id = $album_id;
 		$this->Album->Asset->id = $asset_id;
@@ -41,6 +56,11 @@ class AlbumsController extends AppController {
 		$this->redirect($this->referer(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id'))));
 	}
 
+	/**
+	 * Remove an Album, detaching its Asset associations
+	 *
+	 * @param {UUID} Album to remove
+	 */
 	public function admin_delete($id = null) {
 		$this->Album->id = $id;
 		if($this->Album->exists() && $this->Album->isOwner($this->Auth->user('id')) && $this->request->is('post')) {

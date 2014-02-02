@@ -1,9 +1,11 @@
 <?php
-
+/**
+ * Simple Twitter Model/Datasource. Assists in content scraping and local mirroring
+ */
 class Twitter extends AppModel {
-	
+
 	public $useTable = 'twitter';
-	
+
 	public $actsAs = array('Postable.Postable'=>array(
 		'mapping'=>array(
 			'body'=>'text',
@@ -13,18 +15,6 @@ class Twitter extends AppModel {
 		),
 		'inclusionCallback'=>'postableInclusion'
 	));
-
-	/**
-	 * Triggers a scraping for new Twitter feed data. Throttle limited to avoid
-	 * abusing the API.
-	 */
-	public function lazyCron() {
-		
-		if(Cache::read($this->alias.'_cron','short') === false) {
-			Cache::write($this->alias.'_cron', 'x', 'short');
-			$this->refresh();
-		}
-	}
 
 	/**
 	 * Pull the latest tweets from all Accounts currently tracked by the system
@@ -37,7 +27,7 @@ class Twitter extends AppModel {
 			)
 		));
 		$cb = $this->getAPIObject();
-		
+
 		foreach($accounts as $account) {
 
 			// Refresh the user's meta data (profile image)
@@ -120,7 +110,7 @@ class Twitter extends AppModel {
 			'order' => 'created_at DESC'
 		));
 	}
-	
+
 	/**
 	 * Postable Behavior callback to determine which Twitter messages are included
 	 * in the "Post" index.

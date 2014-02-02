@@ -1,9 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
 /**
- * Users Controller
- *
- * @property User $User
+ * Manages a site's user accounts and authentication
  */
 class UsersController extends AppController {
 
@@ -11,17 +9,17 @@ class UsersController extends AppController {
 		'Activity' => array(
 			'contain' => array(
 				'User', 'Asset', 'Album', 'Link','Video',
-				'Contest' => 'Asset', 
+				'Contest' => 'Asset',
 				'Message' => array('Asset', 'Contest' => 'Asset', 'Link', 'Video')
 			),
 			'limit' => 15
 		)
 	);
-	
+
 	public $uses = array('User', 'Message', 'Activity', 'Link', 'Album');
 
 	public $restrictedRoutes = array('admin_index', 'admin_add', 'admin_view', 'admin_delete', 'admin_refresh_updates');
-	
+
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
 		$this->Auth->allow(array('admin_login', 'admin_setup'));
@@ -31,7 +29,7 @@ class UsersController extends AppController {
 		if($this->Auth->user('id')) {
 			$this->redirect($this->Auth->redirectUrl());
 		}
-		
+
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				$this->User->setLastLogin($this->Auth->user('id'), Configure::read('App.start'));
@@ -44,9 +42,9 @@ class UsersController extends AppController {
 			}
 		}
 	}
-	
+
 	/**
-	 * User landing page
+	 * User landing page with a number of app content summaries
 	 */
 	public function admin_dashboard() {
 		$users = $this->User->find('all',array(
@@ -99,7 +97,10 @@ class UsersController extends AppController {
 		}
 		$this->redirect($this->referer(array('action' => 'admin_updates')));
 	}
-	
+
+	/**
+	 * Terminate a user session
+	 */
 	public function admin_logout() {
 		$this->Cookie->delete('persist');
 		$this->redirect($this->Auth->logout());
@@ -114,42 +115,37 @@ class UsersController extends AppController {
 		}
 		$this->admin_add();
 	}
-	
+
 	/**
-	 * Tracks periodic "live" status of the user, returning application 'state'
+	 * Tracks periodic "live" status of the user, returning application state
 	 */
 	public function admin_heartbeat() {
 		$this->cacheAction = false;
 		$this->disableCache(); // expire cache immediately
 		$this->RequestHandler->renderAs($this, 'json');
-		
+
 		$data = $this->_getHeartbeatData();
-		
+
 		$this->set($data);
 		$this->set('_serialize', array_keys($data));
 	}
-	
+
 	/**
 	 * Group chat interface
 	 */
 	public function admin_group_chat() {
 		$this->User->setLastAck($this->Auth->user('id'), Configure::read('App.start'));
 	}
-	
+
 	/**
-	 * admin_index method
-	 *
-	 * @return void
+	 * Site administrator view of all User accounts
 	 */
 	public function admin_index() {
 		$this->set('users', $this->paginate('User'));
 	}
 
 	/**
-	 * admin_view method
-	 *
-	 * @param string $id
-	 * @return void
+	 * Site administrator review of a single User's account
 	 */
 	public function admin_view($id = null) {
 		$this->User->id = $id;
@@ -160,9 +156,7 @@ class UsersController extends AppController {
 	}
 
 	/**
-	 * admin_add method
-	 *
-	 * @return void
+	 * Add a new User account
 	 */
 	public function admin_add() {
 		if ($this->request->is('post')) {
@@ -177,10 +171,7 @@ class UsersController extends AppController {
 	}
 
 	/**
-	 * admin_edit method
-	 *
-	 * @param string $id
-	 * @return void
+	 * User account update.
 	 */
 	public function admin_edit($id = null) {
 		$this->User->id = $id;
@@ -195,7 +186,7 @@ class UsersController extends AppController {
 		}
 
 		if ($this->request->is('post') || $this->request->is('put')) {
-			
+
 			// skip password manipulation if left blank
 			if(empty($this->request->data['User']['password'])) {
 				unset($this->request->data['User']['password']);
@@ -215,10 +206,7 @@ class UsersController extends AppController {
 	}
 
 	/**
-	 * admin_delete method
-	 *
-	 * @param string $id
-	 * @return void
+	 * Terminates a User's account
 	 */
 	public function admin_delete($id = null) {
 		if (!$this->request->is('post')) {

@@ -9,7 +9,7 @@ class PostsController extends AppController {
 	);
 	
 	public $cacheAction = array(
-		'view'=>'+1 hour'
+		'view' => '+1 hour'
 	);
 		
 	/**
@@ -29,16 +29,6 @@ class PostsController extends AppController {
 		// pull Twitter accounts to obtain their most recent profile image
 		$accounts = ClassRegistry::init('Account')->find('all',array('fields'=>array('handle','profile_image')));
 		$this->set('accounts',Set::combine($accounts,'/Account/handle','/Account/profile_image'));
-	}
-	
-	/**
-	 * URL triggered data refresh. Rate limited to avoid abuse of taxing db
-	 * operations.
-	 */
-	public function refresh() {
-		ClassRegistry::init('Tumblr')->lazyCron();
-		ClassRegistry::init('Twitter')->lazyCron();
-		$this->redirect('/');
 	}
 	
 	/**

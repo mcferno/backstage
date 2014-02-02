@@ -4,15 +4,15 @@ App::uses('CakeNumber', 'Utility');
 App::uses('Access', 'Model');
 
 class AppController extends Controller {
-	
+
 	public $uses = array('User');
-	
+
 	public $helpers = array(
 		'Site', 'Cache',
 		'Form' => array('className' => 'AppForm'),
 		'Html' => array('className' => 'AppHtml')
 	);
-	
+
 	public $components = array(
 		'RequestHandler', 'Session', 'Cookie',
 		'Auth' => array(
@@ -33,11 +33,11 @@ class AppController extends Controller {
 
 	// routes reserved for high-level roles only
 	public $restrictedRoutes = array();
-	
+
 	public function beforeFilter() {
 		$this->setSecurity();
-		
-		if(isset($this->request->params['prefix']) 
+
+		if(isset($this->request->params['prefix'])
 		&& $this->request->params['prefix'] == 'admin'
 		&& $this->request->params['admin'] == '1') {
 			$this->adminBeforeFilter();
@@ -46,14 +46,14 @@ class AppController extends Controller {
 		}
 		parent::beforeFilter();
 	}
-	
+
 	public function siteBeforeFilter() {
 		$this->Auth->allow();
-		
+
 		// compress all output
 		$this->response->compress();
 	}
-	
+
 	public function adminBeforeFilter() {
 		$this->layout = 'admin';
 		$this->userHome = array('controller'=>'users', 'action' => 'dashboard');
@@ -86,7 +86,7 @@ class AppController extends Controller {
 
 		$this->detectAjax();
 	}
-	
+
 	public function beforeRender() {
 		if(!$this->request->is('ajax')) {
 			$this->set('breadcrumbs',array());
@@ -94,22 +94,25 @@ class AppController extends Controller {
 			$this->set('onlineUsers',$this->User->getOnlineUsers());
 		}
 
-		if(isset($this->request->params['prefix']) 
+		if(isset($this->request->params['prefix'])
 		&& $this->request->params['prefix'] == 'admin'
 		&& $this->request->params['admin'] == '1') {
 			$this->adminBeforeRender();
 		}
 	}
 
+	/**
+	 * Pre-view generation processing for authenticated users
+	 */
 	public function adminBeforeRender() {
 	}
-	
+
 	/**
-	 * Post-processing which should not hold up a request
+	 * Post-processing which is not specific to the generated response
 	 */
 	public function afterFilter() {
 		if($this->Auth->loggedIn()) {
-			
+
 			// track the time of the last activity from a specific user
 			$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
 		}
@@ -125,19 +128,23 @@ class AppController extends Controller {
 		$this->Cookie->key = Configure::read('Cookie.key');
 		$this->Cookie->httpOnly = true;
 	}
-	
+
 	/**
-	 * Set of data needed by the front-end application to maintain state and 
-	 * user interactivity.
+	 * Compiles the app-state packet used by the front-end to alert the user to
+	 * any unseen activity, and overall app statistics.
+	 *
+	 * This packet of information should remain lightweight as it is drawn
+	 * frequently to give live-like response times.
 	 */
 	protected function _getHeartbeatData() {
 		$MessageModel = ClassRegistry::init('Message');
 		$currentUser = $this->Auth->user('id');
-		
+
 		$data = array();
 		$data['online'] = $this->User->getOnlineUsers();
 		$data['ack'] = time();
-		
+
+		// process the acknowledgement packet (TCP-like), updating stored user state
 		if(isset($this->request->query['ack'])) {
 			$clientAck = (int)$this->request->query['ack'];
 			$model = $this->request->query['scope'];
@@ -149,14 +156,17 @@ class AppController extends Controller {
 				$options['since'] = date(MYSQL_DATE_FORMAT, max($clientAck, $MessageModel->minimumSince));
 				$options['limit'] = Configure::read('Site.Chat.maxHistoryCount');
 
+				// store the acknowledgement timestamp, limiting wasteful re-sending of history
 				if($clientAck !== 0) {
 					$this->User->setLastAck($currentUser, $clientAck);
 				}
 			}
 
+			// pull chat messages the user has not yet seen (all for first visits)
 			$data['messages'] = $MessageModel->getNewMessages($model, $foreign_key, $options);
 		}
-		
+
+		// count the chat messages a user has not yet seen
 		$data['new_messages'] = $MessageModel->countNewMessages('Chat', $currentUser);
 
 		// cap the message count if it goes beyond the max buffer size
@@ -164,8 +174,10 @@ class AppController extends Controller {
 		if($data['new_messages'] > $maxHistoryCount) {
 			$data['new_messages'] = $maxHistoryCount;
 		}
+
+		// pull the count of new activity updates for the user
 		$data['new_updates'] = ClassRegistry::init('Activity')->countNewActivity($currentUser);
-		
+
 		return $data;
 	}
 
@@ -175,7 +187,7 @@ class AppController extends Controller {
 	protected function persistSession() {
 
 		$identifier = $this->User->getSessionIdentifier($this->Auth->user('id'));
-		
+
 		if($identifier !== false) {
 			// store user information in an encrypted cookie
 			$this->Cookie->write('persist', $identifier, true, Configure::read('Site.rememberMeExpiry'));
@@ -194,6 +206,11 @@ class AppController extends Controller {
 		}
 	}
 
+	/**
+	 * Utility function allowing a force-reindexing of Models controlled by the
+	 * Postable behavior. This can serve as a maintenance function for admin
+	 * users.
+	 */
 	public function admin_refresh_model() {
 		if(Access::hasRole('Admin') && $this->{$this->modelClass}->Behaviors->attached('Postable')) {
 			$this->{$this->modelClass}->refreshPostableIndex();

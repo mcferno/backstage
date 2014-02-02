@@ -1,6 +1,8 @@
 <?php
 App::uses('AppModel', 'Model');
-
+/**
+ * A user owned URL bookmarking and classification system
+ */
 class Link extends AppModel {
 
 	public $displayField = 'title';
@@ -8,7 +10,7 @@ class Link extends AppModel {
 
 	public $belongsTo = array('User');
 	public $actsAs = array(
-		'Taggable', 
+		'Taggable',
 		'Ownable',
 		'Postable.Postable' => array(
 			'storageModel' => 'Activity'
@@ -77,7 +79,7 @@ class Link extends AppModel {
 		if(!class_exists('WideImage')) {
 			App::import('Vendor', 'WideImage/WideImage');
 		}
-		
+
 		$screenshot = $this->thumbnailPath . DS . 'full' . DS . $link_id;
 		$thumbnail = $this->thumbnailPath . DS . $link_id;
 
@@ -94,7 +96,7 @@ class Link extends AppModel {
 			return false;
 		}
 		$image = WideImage::load(IMAGES_URL . $screenshot);
-		
+
 		if($image === false) {
 			$this->log('Could not open file upload.');
 			return false;
