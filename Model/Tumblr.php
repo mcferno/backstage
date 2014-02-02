@@ -15,23 +15,54 @@ class Tumblr extends AppModel {
 		'inclusionCallback'=>'postableInclusion'
 	));
 
+	public $uses = array('Account');
+
+	protected $api_key = null;
+
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		try {
+			Configure::load('tumblr');
+			$this->api_key = Configure::read('Tumblr_App.api_key');
+		} catch (ConfigureException $e) {
+			$this->log('Could not load the Tumbler app settings');
+			return false;
+		}
+	}
+
 	/**
 	 * Pulls the latest post from the Tumblr source, saving or updating any
 	 * existing records applicable.
 	 */
 	public function refresh() {
+		if(is_null($this->api_key)) {
+			$this->log('Cant refresh accounts without api keys');
+			return false;
+		}
+
+		$accounts = ClassRegistry::init('Account')->find('all',array(
+			'fields' => array('id', 'handle'),
+			'conditions' => array(
+				'type' => 'Tumblr',
+				'active' => true
+			)
+		));
+
+		foreach($accounts as $account) {
+			$this->_pullRecentPosts($account['Account']['handle']);
+		}
+	}
+
+	protected function _pullRecentPosts($base) {
 
 		/**
 		 * Build up the request for new posts
 		 * http://www.tumblr.com/docs/en/api/v2#posts
 		 */
-		$base_url = 'http://api.tumblr.com/v2/blog/kennyquotemachine.tumblr.com';
+		$base_url = "http://api.tumblr.com/v2/blog/{$base}";
 		$params = array(
-			'api_key'=>'sRZhuUQgFJ5vArAbDrf9nglWzsPnu5vXKwKLDspeuGXvABEqw9',
-			'format'=>'text',
-
-			// offset by the number of posts we have on hand
-			//'offset' => $this->find('count')
+			'api_key' => $this->api_key,
+			'format' => 'text'
 		);
 
 		$records = $this->_readJson("{$base_url}/posts",$params);

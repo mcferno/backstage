@@ -23,7 +23,8 @@
 	foreach($fields as $field) {
 		echo $this->Form->input($field, array('class' => 'form-control'));
 	}
-	echo $this->Form->end(__d('cake', 'Submit'));
+	echo $this->Form->button('Save', array('class' => 'btn btn-primary'));
+	echo $this->Form->end();
 ?>
 </div>
 <div class="actions">

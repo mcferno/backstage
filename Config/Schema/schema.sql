@@ -1,18 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.4
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 27, 2013 at 04:45 PM
--- Server version: 5.1.61
--- PHP Version: 5.3.3
+-- Generation Time: Feb 01, 2014 at 08:38 PM
+-- Server version: 5.5.34
+-- PHP Version: 5.4.22
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
---
--- Database: `kennyquotemachine`
---
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 -- --------------------------------------------------------
 
@@ -24,12 +26,14 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `id` char(36) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `type` varchar(60) NOT NULL,
   `handle` varchar(64) NOT NULL,
   `user_id` varchar(64) NOT NULL,
   `profile_image` varchar(255) DEFAULT NULL,
   `data` text NOT NULL,
-  `active` TINYINT( 1 ) UNSIGNED NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
+  `active` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -62,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `modified` datetime NOT NULL,
   `title` varchar(50) NOT NULL,
   `location` varchar(50) NOT NULL,
-  `description` TEXT NOT NULL,
+  `description` text NOT NULL,
   `shared` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
@@ -77,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `albums` (
 CREATE TABLE IF NOT EXISTS `assets` (
   `id` char(36) NOT NULL,
   `user_id` char(36) NOT NULL,
-  `album_id` char(36) NOT NULL,
   `type` varchar(10) NOT NULL,
   `filename` varchar(255) NOT NULL,
   `ext` varchar(10) NOT NULL,
@@ -85,9 +88,9 @@ CREATE TABLE IF NOT EXISTS `assets` (
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `fb_id` varchar(50) DEFAULT NULL,
+  `album_id` varchar(36) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `album_id` (`album_id`)
+  KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -139,6 +142,7 @@ CREATE TABLE IF NOT EXISTS `links` (
   `url` varchar(512) NOT NULL,
   `title` varchar(300) NOT NULL,
   `description` text NOT NULL,
+  `sticky` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -313,3 +317,7 @@ CREATE TABLE IF NOT EXISTS `videos` (
   `state` tinyint(2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

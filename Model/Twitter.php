@@ -23,6 +23,7 @@ class Twitter extends AppModel {
 		$accounts = ClassRegistry::init('Account')->find('all',array(
 			'fields' => array('id', 'handle', 'user_id'),
 			'conditions' => array(
+				'type' => 'Twitter',
 				'active' => true
 			)
 		));
