@@ -1,4 +1,4 @@
-/** 
+/**
  * Backstage App
  *
  * Color Scheme
@@ -363,6 +363,10 @@ body {
 
 .nav-header {
 	font-weight: bold;
+}
+
+.navbar-brand {
+	text-transform: lowercase;
 }
 
 .status > div {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?>Backstage</title>
+	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?><?= $siteName; ?></title>
 	<meta name="description" content=""/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<link rel="apple-touch-icon-precomposed" href="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem/emblem-large-x144.jpg'); ?>" sizes="144x144">
@@ -39,8 +39,9 @@
 		echo $this->element('ga');
 	?>
 	<script>
-		var AppBaseURL = <?= json_encode($this->Html->url('/',true)); ?>;
-		var User = <?= $this->Site->userDetails(); ?>;
+		var AppBaseURL = <?= json_encode($this->Html->url('/', true)); ?>,
+			BackendURL = <?= json_encode($this->Html->url($backend, true)); ?>,
+			User = <?= $this->Site->userDetails(); ?>;
 	</script>
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">

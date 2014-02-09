@@ -6,25 +6,25 @@ Backstage = {};
 	ns.cropTool = false;
 	var doc = $(document),
 		win = $(window);
-	
+
 	doc
 		.on('click', '.image-upload-btn', function(e) {
 			e.preventDefault();
-			
+
 			$('.asset-upload-popin').modal();
-			
+
 			if(User.isMobile) {
 				$('#AssetImage').focus();
 			}
 		})
 		.on('click', '.album-module-btn', function(e) {
 			e.preventDefault();
-			
+
 			$('.album-module').modal();
 		})
 		.on('click', '.contest-start', function(e) {
 			e.preventDefault();
-			
+
 			$('.contest-start-popin').modal();
 		})
 		.on('focus', '.copier', function() {
@@ -39,18 +39,18 @@ Backstage = {};
 		.on('mouseout', '.link-exchange li', function() {
 			$(this).find('.controls').hide();
 		});
-	
-	doc.ready(function() {		
+
+	doc.ready(function() {
 		// js detection for css tweaks
 		$('body').removeClass('no-js').addClass('js');
 
 		if($('.content-tags').length){
-			
+
 			var placeholder_str = '';
 			if(ns.selectTags.length === 0) {
 				placeholder_str = '';
 			} else {
-				// randomly select 
+				// randomly select
 				var sampleTags = ns.selectTags
 					.slice()
 					.sort(function() { return 0.5 - Math.random();})
@@ -317,10 +317,10 @@ Backstage = {};
 				'tags' : $('#TaggingTags').val(),
 				'model' : $('#TaggingModel').val(),
 			}
-		}
+		};
 
 		$.ajax({
-			url : AppBaseURL + 'backstage/tags/update',
+			url : BackendURL + 'tags/update',
 			data : payload,
 			type : 'POST'
 		});
@@ -329,7 +329,7 @@ Backstage = {};
 	ns.configureQuickTagging = function() {
 
 		var req = $.ajax({
-			url : AppBaseURL + 'backstage/tags/list',
+			url : BackendURL + 'tags/list',
 			type : 'GET'
 		});
 
@@ -375,7 +375,7 @@ Backstage = {};
 				};
 
 				$.ajax({
-					url : AppBaseURL + 'backstage/tags/add_tags',
+					url : BackendURL + 'tags/add_tags',
 					type : 'POST',
 					cache : false,
 					data : payload,
@@ -388,7 +388,7 @@ Backstage = {};
 					error : function() {
 						tagSave.tooltip({ title : 'Tags could not be saved.'}).tooltip('show');
 						setTimeout(function() { tagSave.tooltip('destroy'); }, 2000);
-					}, 
+					},
 				});
 			});
 		});

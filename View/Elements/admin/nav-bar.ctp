@@ -5,7 +5,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<?= $this->Html->link('backstage', array('controller' => 'users','action' => 'dashboard'), array('class' => 'navbar-brand')); ?>
+		<?= $this->Html->link($siteName, array('controller' => 'users','action' => 'dashboard'), array('class' => 'navbar-brand')); ?>
 
 		<?php if($this->Session->check('Auth.User')) : ?>
 		<div class="status navbar-left">
@@ -18,9 +18,9 @@
 
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			
+
 			<?php if($this->Session->check('Auth.User')) : ?>
-			
+
 			<li <?= ($this->request->controller == 'assets') ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon-picture glyphicon"></span> Images <b class="caret"></b></a>
 				<ul class="dropdown-menu">
@@ -60,18 +60,18 @@
 			<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-list glyphicon"></span> Chat ', array('controller' => 'users','action' => 'group_chat'), array('escape' => false,'class' => 'chat-link', 'title' => 'Chat with online users')); ?></li>
 
 			<li><a href="" class="image-upload-btn" title="Upload an image"><span class="glyphicon glyphicon-cloud-upload"></span></a></li>
-		
+
 			<?php else: // non-authenticated ?>
 
 			<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_dashboard') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-home glyphicon"></span> Home', array('controller' => 'users','action' => 'dashboard'), array('escape' => false)); ?></li>
 
 			<?php endif; ?>
 		</ul>
-		
+
 		<?php if($this->Session->check('Auth.User')) : ?>
-		
+
 		<ul class="nav navbar-nav navbar-right">
-		
+
 			<?php if(Access::hasRole('Admin')) : ?>
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
@@ -98,7 +98,7 @@
 				</ul>
 			</li>
 		</ul>
-			
+
 		<?php endif; // authenticated ?>
 	</div><!--/.navbar-collapse -->
 
