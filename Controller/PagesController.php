@@ -23,7 +23,7 @@ class PagesController extends AppController {
 	 *
 	 * @param mixed What page to display
 	 */
-	public function display() {				
+	public function display() {
 		$path = func_get_args();
 
 		$count = count($path);
@@ -44,30 +44,29 @@ class PagesController extends AppController {
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));
 	}
-	
+
 	public function quote_generator() {
 		$quote = ClassRegistry::init('Quote')->generate();
 		$this->set(compact('quote'));
-		
+
 		if($this->request->is('ajax')) {
 			$this->disableCache(); // expire cache immediately
 			$this->RequestHandler->renderAs($this, 'json');
 			$this->set('_serialize', array('quote'));
 		}
 	}
-	
+
 	/**
 	 * Presents the interface for the js-driven meme generator tool.
 	 */
 	public function admin_meme_generator() {
 
-		$img_path_count = strlen(IMAGES);
 		$images = array();
-		
+
 		// meme of a specific user-uploaded image
 		if(!empty($this->request->params['named']['asset'])) {
 			$path = $this->Asset->getPath($this->request->params['named']['asset']);
-			
+
 			if(!empty($path)) {
 				$images[] = $path;
 			}
@@ -85,7 +84,7 @@ class PagesController extends AppController {
 
 			$this->set('contest', $contest);
 		}
-		
+
 		// fallback allowing users to choose an image
 		if(empty($images)) {
 
@@ -109,7 +108,7 @@ class PagesController extends AppController {
 		$this->set('last_line', (!empty($this->request->query['last-line'])) ? $this->request->query['last-line'] : '' );
 		$this->set('base_images', $images);
 	}
-	
+
 	/**
 	 * Clears the view cache.
 	 */
@@ -132,7 +131,7 @@ class PagesController extends AppController {
 	 */
 	public function admin_content() {
 		$page = false;
-		if(!empty($this->request->params['uri'])) { 
+		if(!empty($this->request->params['uri'])) {
 			$page = $this->Page->findByUri($this->request->params['uri']);
 		}
 

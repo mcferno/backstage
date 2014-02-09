@@ -21,13 +21,13 @@
 			'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js',
 			'backstage.js?t='.filemtime(JS.'backstage.js')
 		);
-		
+
 		if($this->Session->check('Auth.User.id')) {
 			$scripts[] = 'group-chat.js?t='.filemtime(JS.'group-chat.js');
 		}
-		
+
 		echo $this->Html->script($scripts);
-		
+
 		echo $this->fetch('script');
 
 		echo $this->Html->css(array(
@@ -35,7 +35,7 @@
 		));
 		echo $this->fetch('css');
 		echo $this->Html->css('backstage.css?t='.filemtime(CSS.'backstage.css'));
-		
+
 		echo $this->element('ga');
 	?>
 	<script>
@@ -59,7 +59,7 @@
 						<?= $this->Session->flash(); ?>
 						<?php echo $this->fetch('content'); ?>
 					</div>
-					
+
 					<?php if($contentSpan <= 10) : ?>
 					<div class="col-md-2 subnav">
 						<?= $this->element('admin/subnav'); ?>
@@ -69,7 +69,7 @@
 				</div>
 			</div>
 		</div> <!-- /container -->
-		
+
 		<?= $this->element('common/asset-upload'); ?>
 		<?= $this->element('sql_dump'); ?>
 </body>

@@ -18,7 +18,7 @@ class AssetsController extends AppController {
 		'Asset' => array(
 			'order' => 'Asset.created DESC',
 			'limit' => 40,
-			'maxLimit' => 150
+			'maxLimit' => 1000
 		),
 		'Album' => array(
 			'contain' => array(
@@ -28,7 +28,7 @@ class AssetsController extends AppController {
 			'limit' => 10
 		)
 	);
-	
+
 	public function adminBeforeFilter() {
 
 		if($this->RequestHandler->isMobile()) {
@@ -57,7 +57,7 @@ class AssetsController extends AppController {
 
 		$this->set('page_limits', $page_limits);
 	}
-	
+
 	/**
 	 * Personalized asset index (for the current user)
 	 */
@@ -75,12 +75,12 @@ class AssetsController extends AppController {
 			if(!$this->Asset->Album->isOwner($this->Auth->user('id'), $this->request->params['named']['album'])) {
 				$this->redirect(array('action' => 'users', 'album' => $this->request->params['named']['album']));
 			}
-			
+
 		}
 
 		$this->defaultPagination();
 		$tag_conditions = array();
-		
+
 		// pull recent albums if we're not currently viewing one
 		if(!isset($this->request->params['named']['album'])) {
 			$albums = $this->Asset->Album->find('all', array(
@@ -103,7 +103,7 @@ class AssetsController extends AppController {
 		} else {
 			$tag_conditions['Asset.album_id'] = $this->request->params['named']['album'];
 		}
-		
+
 		$this->set('images', $this->paginate('Asset'));
 		$this->set('tag_tally', $this->Asset->getTagTally($tag_conditions));
 		$this->set('album_count', $this->Asset->Album->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
@@ -116,7 +116,7 @@ class AssetsController extends AppController {
 		$this->set('albums', $this->paginate('Album'));
 		$this->set('users', $this->Asset->User->find('list'));
 	}
-	
+
 	/**
 	 * Personalized asset index (for a specific user)
 	 */
@@ -128,14 +128,14 @@ class AssetsController extends AppController {
 			$this->redirect(array('action'=>'admin_index'));
 		}
 		$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_id;
-		
+
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $user_id)));
 		$this->set('user',$this->Asset->User->findById($user_id));
 		$this->set('images',$this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $user_id))));
 	}
-	
+
 	/**
 	 * Assets and Albums from all users. Lists images, optionally groups by Album
 	 */
@@ -197,7 +197,7 @@ class AssetsController extends AppController {
 		}
 
 		if(isset($this->request->params['named']['type'])) {
-			
+
 			// special type converted to multiple types
 			if($this->request->params['named']['type'] == 'Meme-Templates') {
 				if(isset($this->paginate['Asset']['conditions'])) {
@@ -253,20 +253,20 @@ class AssetsController extends AppController {
 		$this->set($response);
 		$this->set('_serialize', array_keys($response));
 	}
-	
+
 	/**
 	 * Saves ajax posted image data
 	 */
 	public function admin_save() {
 
 		$response = array('image_saved' => false);
-		
+
 		// process upload
 		if(!empty($this->request->data['image'])) {
 
 			$type = (!empty($this->request->data['type'])) ? $this->request->data['type'] : 'Meme';
 			$status = $this->Asset->saveEncodedImage($this->request->data['image'], $this->Auth->user('id'), $type);
-			
+
 			if($status === true) {
 				$response['image_saved'] = true;
 				$response['asset_id'] = $this->Asset->id;
@@ -284,11 +284,11 @@ class AssetsController extends AppController {
 				}
 			}
 		}
-		
+
 		$this->set($response);
 		$this->set('_serialize', array_keys($response));
 	}
-	
+
 	/**
 	 * Saves single file uploads
 	 */
@@ -325,7 +325,7 @@ class AssetsController extends AppController {
 
 						$message = 'The image has been uploaded successfully!';
 						$redirect = array('action' => 'view', $save);
-					
+
 					} else {
 						$message = 'Image processing has failed, please try again.';
 						$error = true;
@@ -339,10 +339,10 @@ class AssetsController extends AppController {
 			// URL grab
 			} else {
 				$valid = $this->Upload->isValidURL($this->request->data['Asset']['url']);
-				
+
 				if($valid === true) {
 					$file = $this->Upload->saveURLtoFile($this->request->data['Asset']['url']);
-					
+
 					if($file !== false) {
 						$asset_id = $this->Asset->saveImage($file, $this->Auth->user('id'), 'URLgrab', $options);
 
@@ -388,7 +388,7 @@ class AssetsController extends AppController {
 		$redirect = ($redirect) ? $redirect : array('action'=>'index');
 		$this->redirect($redirect);
 	}
-	
+
 	/**
 	 * View an individual asset
 	 *
@@ -464,7 +464,7 @@ class AssetsController extends AppController {
 		}
 		$this->redirect($this->referer(array('controller' => 'users', 'action' => 'group_chat')));
 	}
-	
+
 	/**
 	 * Posts a single image to a specific Facebook group
 	 *
@@ -475,57 +475,57 @@ class AssetsController extends AppController {
 			'Asset.id' => $id,
 			'Asset.user_id' => $this->Auth->user('id')
 		));
-		
+
 		// only owners of the image and users who are cleared for fb integration can continue
 		if($asset !== true || $this->Session->check('Auth.User.fb_target') === false) {
 			$this->Session->setFlash('Sorry, you can\'t post this image at this time.','messaging/alert-error');
 			$this->redirect($this->referer(array('action'=>'index')));
 		}
-		
+
 		$fbSDK = $this->User->getFacebookObject();
-		
+
 		// verify active FB user session
 		if($fbSDK->getUser()) {
-			
+
 			$imagePost = $this->Asset->castToFacebook($id);
-			
+
 			// attach optional message
 			if(!empty($this->request->query['message'])) {
 				$imagePost['message'] = $this->request->query['message'];
 			}
-			
+
 			try {
 				// post to the api (upload)
 				$fbSDK->setFileUploadSupport(true);
 				$res = $fbSDK->api('/'.$this->Session->read('Auth.User.fb_target').'/photos','POST',$imagePost);
-				
+
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
 					$this->Asset->id = $id;
 					$this->Asset->saveField('fb_id',$res['id']);
-					
+
 					$this->Session->setFlash('This image has been posted to Facebook.','messaging/alert-success');
 					$this->redirect($this->referer(array('action'=>'view',$id)));
 				}
 			} catch (FacebookApiException $e) {}
-			
+
 			$this->Session->setFlash('An error occurred while attempting to post to Facebook.','messaging/alert-error');
 			$this->redirect($this->referer(array('action'=>'view',$id)));
 		}
-		
+
 		$redirectParams = array(
 			'action'=>'post', $id
 		);
 		if(!empty($this->request->query['message'])) {
 			$redirectParams['?'] = array('message' => $this->request->query['message']);
 		}
-		
+
 		// send the user away to authenticate
 		$login_params = array(
 			'scope' => $this->User->getFacebookPermissions(),
 			'redirect_uri' => Router::url($redirectParams,true)
 		);
-		
+
 		$this->redirect($fbSDK->getLoginUrl($login_params));
 	}
 
@@ -539,7 +539,7 @@ class AssetsController extends AppController {
 		}
 		$this->redirect($this->referer(array('action' => 'admin_view', $id)));
 	}
-	
+
 	/**
 	 * Delete a user's image
 	 *
@@ -550,7 +550,7 @@ class AssetsController extends AppController {
 			$this->Session->setFlash('Image could not be found.','messaging/alert-error');
 			$this->redirect($this->referer('index'));
 		}
-		
+
 		if($this->Asset->delete($id)) {
 			$this->Session->setFlash('The image has been deleted.','messaging/alert-success');
 			$this->redirect(array('action'=>'index'));
