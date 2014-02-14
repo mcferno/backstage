@@ -1,52 +1,9 @@
 <?php
-App::uses('CakeLog', 'Log');
-
-// Setup a 'default' cache configuration for use in the application.
-Cache::config('default', array('engine' => 'File'));
-
-$engine = 'File';
-$prefix = Configure::read('App.cache_prefix');
-
-// short cache
-Cache::config('short', array(
-	'engine' => $engine,
-	'prefix' => $prefix . 'app_short_',
-	'path' => CACHE . 'persistent' . DS,
-	'serialize' => ($engine === 'File'),
-	'duration' => '5 minutes'
-));
-
-Cache::config('online_status', array(
-	'engine' => $engine,
-	'prefix' => $prefix . 'app_online_status_',
-	'path' => CACHE . 'persistent' . DS,
-	'serialize' => ($engine === 'File'),
-	'duration' => '10 seconds'
-));
-
-Configure::write('Dispatcher.filters', array(
-	//'AssetDispatcher',
-	'CacheDispatcher'
-));
-
-CakeLog::config('debug', array(
-	'engine' => 'FileLog',
-	'types' => array('notice', 'info', 'debug'),
-	'file' => 'debug',
-));
-CakeLog::config('error', array(
-	'engine' => 'FileLog',
-	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
-	'file' => 'error',
-));
-
-CakePlugin::load(array('Postable'));
-
-define('MYSQL_DATE_FORMAT','Y-m-d H:i:s');
 
 /**
- * App Configurations
+ * App configurations
  */
+
 Configure::write('Site', array(
 	// expiry of the remember-me login cookie (strtotime format)
 	'rememberMeExpiry' => '+1 month',
@@ -81,9 +38,95 @@ Configure::write('Site', array(
 ));
 
 /**
+ * General configurations
+ */
+
+App::uses('CakeLog', 'Log');
+
+CakeLog::config('debug', array(
+	'engine' => 'FileLog',
+	'types' => array('notice', 'info', 'debug'),
+	'file' => 'debug',
+));
+CakeLog::config('error', array(
+	'engine' => 'FileLog',
+	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
+	'file' => 'error',
+));
+
+CakePlugin::load(array('Postable'));
+
+Configure::write('Dispatcher.filters', array(
+	'CacheDispatcher'
+));
+
+define('MYSQL_DATE_FORMAT','Y-m-d H:i:s');
+
+/**
+ * Caching configurations
+ */
+
+$engine = 'File';
+if (extension_loaded('apc') && (php_sapi_name() !== 'cli' || ini_get('apc.enable_cli'))) {
+	$engine = 'Apc';
+}
+
+$duration = '+999 days';
+if (Configure::read('debug') >= 1) {
+	$duration = '+1 second';
+}
+
+Configure::write('App.cache_engine', $engine);
+Configure::write('App.cache_duration_default', $duration);
+Configure::write('App.cache_prefix', 'kqm_');
+
+/**
  * Load any environment-specific configurations
  */
+
 $bootstrap_environment = APP . 'Config' . DS . 'bootstrap.env.php';
 if(file_exists($bootstrap_environment)) {
 	include($bootstrap_environment);
 }
+
+/**
+ * Configure cacheable instances
+ */
+
+$engine = Configure::read('App.cache_engine');
+$duration = Configure::read('App.cache_duration_default');
+$prefix = Configure::read('App.cache_prefix');
+
+Cache::config('default', array('engine' => $engine));
+
+Cache::config('_cake_core_', array(
+	'engine' => $engine,
+	'prefix' => $prefix . 'cake_core_',
+	'path' => CACHE . 'persistent' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => $duration
+));
+
+Cache::config('_cake_model_', array(
+	'engine' => $engine,
+	'prefix' => $prefix . 'cake_model_',
+	'path' => CACHE . 'models' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => $duration
+));
+
+Cache::config('short', array(
+	'engine' => $engine,
+	'prefix' => $prefix . 'app_short_',
+	'path' => CACHE . 'persistent' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => '5 minutes'
+));
+
+Cache::config('online_status', array(
+	'engine' => $engine,
+	'prefix' => $prefix . 'app_online_status_',
+	'path' => CACHE . 'persistent' . DS,
+	'serialize' => ($engine === 'File'),
+	'duration' => '10 seconds'
+));
