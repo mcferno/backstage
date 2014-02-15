@@ -334,10 +334,10 @@ var GroupChat = {
 
 	// parses text for video site links, converting them to embed codes
 	ns.autoEmbedVideos = function(text) {
-		var youtubeLink = text.match(/<a.*>(.*youtube\.com\/watch.*v=([\-\_a-zA-Z0-9]*).*)<\/a>/);
+		var youtubeLink = text.match(/<a.*>(.*(youtube\.com\/watch.*v=|youtu\.be\/)([\-\_a-zA-Z0-9]*).*)<\/a>/);
 		var embedTag = false;
 		if(youtubeLink) {
-			embedTag = _.template(ns.templates.embeddedYoutube, { video_id : youtubeLink[2], url : youtubeLink[1] });
+			embedTag = _.template(ns.templates.embeddedYoutube, { video_id : youtubeLink[3], url : youtubeLink[1] });
 			text = text.replace(youtubeLink[0], embedTag);
 		}
 
