@@ -4,22 +4,22 @@
  * @author Patrick McFern <mcferno AT gmail.com>
  */
 var MemeGenerator = {
-	
+
 	// timestamp of the last canvas render
 	lastRender : 0,
-	
+
 	// whether to update the rendering at every keypress
 	liveMode : false,
-	
+
 	// current backdrop
 	currentImage : false,
-	
+
 	// image in use based on series of backdrop options
 	imageOffset : -1,
-	
+
 	// main font + fallbacks for various devices
 	fontFamily : 'Impact, Passion One, sans-serif',
-	
+
 	// font size coefficient to scale accordingly to height
 	fontToHeightScale : {
 		base : (60 / 450), // 0.0711+, from 32pt @ 450px
@@ -32,12 +32,12 @@ var MemeGenerator = {
 		ios : 1.1,
 		android : 1.1
 	},
-	
+
 	// font stroke size coefficient to scale accordingly to width
 	fontStrokeWidthScale : 0.01,
 
 	drawStroke : true,
-	
+
 	// series of coordinates within the canvas
 	coords : {},
 
@@ -48,7 +48,7 @@ var MemeGenerator = {
 /*global AppBaseURL */
 (function($, ns) {
 	"use strict";
-	
+
 	$(document)
 		.on('click','.meme-generator button', function(e) {
 			e.preventDefault(); // disable all buttons's defaults
@@ -94,10 +94,10 @@ var MemeGenerator = {
 			$(this).button('loading');
 			ns.sendImageToServer(ns.config.type, true);
 		});
-		
+
 
 	ns.loadImage = function(obj) {
-		
+
 		// image is not yet loaded
 		if(!obj.image) {
 			$('.choose-background').button('loading');
@@ -113,7 +113,7 @@ var MemeGenerator = {
 			};
 			obj.image.src = obj.href;
 			ns.currentImage = obj.image;
-		
+
 		// set the image and refresh the canvas
 		} else {
 			ns.currentImage = obj.image;
@@ -140,18 +140,18 @@ var MemeGenerator = {
 		ns.loadImage(obj);
 		ns.firstLineText.focus();
 	};
-	
+
 	/**
 	 * Selects the Image Size dropdown which matches the orientation of the
 	 * current image.
 	 */
 	ns.matchCanvasToImage = function() {
 		var sizing = $('.canvasSize option:selected');
-		
+
 		if(ns.currentImage.height !== 0 && ns.currentImage.width !== 0) {
 			var max = sizing.data('max');
 			var desiredWidth, desiredHeight;
-			
+
 			// keep the image in its original form
 			if(max == 'full') {
 				desiredWidth = ns.currentImage.width;
@@ -163,32 +163,32 @@ var MemeGenerator = {
 				desiredHeight = max;
 				desiredWidth = parseInt(max / ns.currentImage.height * ns.currentImage.width, 10);
 			}
-			
+
 			// verify that the canvas size matches the selected option
 			if(ns.canvas.height != desiredHeight || ns.canvas.width != desiredWidth) {
 				ns.canvas.height = desiredHeight;
 				ns.canvas.width = desiredWidth;
-				
+
 				ns.adaptToScale();
 			}
 		}
 	};
-	
+
 	/**
 	 * Converts the canvas to an inline downloadable JPEG. Expensive operation.
 	 */
 	ns.canvasToImage = function() {
 		var image = $('#rendered');
-		
+
 		if(image.length === 0) {
 			image = $('<img id="rendered" />');
 			$(ns.canvas).parent().append(image);
 		}
-		
+
 		image.get(0).src = ns.canvas.toDataURL('image/jpeg');
 		ns.workspace.show();
 	};
-	
+
 	/**
 	 * Saves a base64 encoded image on the server
 	 *
@@ -210,7 +210,7 @@ var MemeGenerator = {
 			}
 
 			$.post(
-				AppBaseURL + 'backstage/assets/save',
+				BackendURL + 'assets/save',
 				payload,
 				function(data) {
 					if(data.image_saved) {
@@ -237,7 +237,7 @@ var MemeGenerator = {
 			);
 		}
 	};
-	
+
 	/**
 	 * Enable/disable on-the-fly image-generation mode
 	 */
@@ -253,14 +253,14 @@ var MemeGenerator = {
 			.toggleClass('btn-inverse')
 			.toggleClass('btn-primary');
 	};
-	
+
 	/**
 	 * Paints all data to the canvas.
 	 */
 	ns.render = function() {
 		var canvas = ns.canvas;
 		var context = ns.context;
-		
+
 		if(ns.currentImage === false) {
 			var backdrop = context.createLinearGradient(0, 0, canvas.width, canvas.height);
 			backdrop.addColorStop(0, "#000");
@@ -270,16 +270,16 @@ var MemeGenerator = {
 		} else {
 			context.drawImage(ns.currentImage, 0, 0, canvas.width, canvas.height);
 		}
-		
+
 		var firstLineText = ns.firstLineText.val().toUpperCase();
 		var lastLineText = ns.lastLineText.val().toUpperCase();
-		
+
 		ns.writeText(firstLineText, true);
 		ns.writeText(lastLineText);
-		
+
 		ns.lastRender = new Date().getTime();
 	};
-	
+
 	/**
 	 * Writes text to the canvas, auto-adjusting for word-wrap
 	 *
@@ -288,7 +288,7 @@ var MemeGenerator = {
 	 */
 	ns.writeText = function(text, top) {
 		ns.context.save();
-		
+
 		top = (top === true);
 		var lineWidth = parseInt(ns.canvas.width * 0.97, 10); // slight width padding
 		var textWidth = ns.context.measureText(text).width;
@@ -297,17 +297,17 @@ var MemeGenerator = {
 		ns.context.font = bestFit;
 		var lines = ns.breakTextIntoLines(text, lineWidth);
 		var originalLines = lines.length;
-		
+
 		// determine if a font size change yeilds less rows
 		if(lines.length > 1) {
 			var idealLines = Math.ceil(lines.length / 2);
-			
+
 			// determine the optimal font-size
 			for(var i = 1; i < 5; i++) {
-				
+
 				ns.context.font = parseInt(ns.fontSize * (1 - 0.1 * i), 10) + "pt " + ns.fontFamily;
 				lines = ns.breakTextIntoLines(text, lineWidth);
-				
+
 				if(lines.length < originalLines) {
 					bestFit = ns.context.font;
 
@@ -325,16 +325,16 @@ var MemeGenerator = {
 
 		ns.context.font = bestFit;
 		lines = ns.breakTextIntoLines(text, lineWidth);
-		
+
 		var emWidth = parseInt(ns.context.measureText('M').width * ns.fontHeightPadding, 10);
 		var offsetY = (top) ? emWidth : parseInt(ns.canvas.height * 0.97 - ((lines.length - 1) * emWidth), 10);
-		
+
 		// write out each line, respecting inner spacing
 		for(var iter = 0; iter < lines.length; iter++) {
 			var line = lines[iter].join(' ');
 			drawTextToCanvas(line, ns.coords.center.x, offsetY + iter * emWidth);
 		}
-		
+
 		ns.context.restore();
 	};
 
@@ -373,7 +373,7 @@ var MemeGenerator = {
 			ns.context.fillText(text, x, y);
 		}
 	};
-	
+
 	/**
 	 * Breaks a string into an array of substrings, all of which fit within
 	 * the provided width maximum. The font size of the current canvas is used
@@ -395,7 +395,7 @@ var MemeGenerator = {
 
 		// iterate through the words, collecting length and the greedy-wrap max line count.
 		for(var iter = 0; iter < words.length ; iter++) {
-			
+
 			var cost = ns.context.measureText(words[iter]).width;
 
 			// single word exceeds line-width, split word onto new line
@@ -411,36 +411,36 @@ var MemeGenerator = {
 				// recompute costs of this newly split line
 				cost = ns.context.measureText(words[iter]).width;
 			}
-			
+
 			// word falls on a new line
 			if(typeof lines[row] == 'undefined' || rowSum + gapWidth + cost > lineWidth) {
 				row++;
 				rowSum = 0;
 				lines[row] = [];
 			}
-			
+
 			lines[row].push(words[iter]);
 			rowSum = (rowSum === 0) ? cost : rowSum + gapWidth + cost;
 		}
-		
+
 		// balance rows lengths if there are more than one
 		if(row > 0) {
-			
+
 			// iterate backwards through the lines, balancing their widths pairwise
 			for(var i = lines.length - 1; i > 0; i--) {
 				var j = i-1;
-				
+
 				for(var k = lines[j].length - 1; k > 0; k--) {
-					
+
 					// difference in row lengths before word is moved
 					var deltaBefore = Math.abs(ns.context.measureText(lines[j].join(' ')).width - ns.context.measureText(lines[i].join(' ')).width);
 
 					// move a word down
 					lines[i].unshift(lines[j].pop());
-					
+
 					// difference in row lengths after word is moved
 					var deltaAfter = Math.abs(ns.context.measureText(lines[j].join(' ')).width - ns.context.measureText(lines[i].join(' ')).width);
-					
+
 					// restore if difference is now worse, skip the remainder of the words on the line
 					if(deltaAfter >= deltaBefore) {
 						lines[j].push(lines[i].shift());
@@ -449,11 +449,11 @@ var MemeGenerator = {
 				}
 			}
 		}
-		
+
 		return lines;
 	};
-	
-	
+
+
 	/**
 	 * Initialize the app by attaching DOM elements
 	 */
@@ -481,7 +481,7 @@ var MemeGenerator = {
 		ns.paging.more.on('click', ns.invokePicker);
 
 		ns.imageChoices.on('click', '.image-option', ns.imageSelection);
-		
+
 		if(ns.images.length === 1) {
 			$('.choose-background').hide();
 		}
@@ -511,7 +511,7 @@ var MemeGenerator = {
 		// ensure the scale adapting is done at least once
 		ns.adaptToScale();
 	};
-	
+
 	/**
 	 * Calculates all sizing & placements which are relative to the canvas
 	 * dimensions. Must be ran after every change in canvas size.
@@ -526,14 +526,14 @@ var MemeGenerator = {
 		ns.fontSize = parseInt(ns.fontScale * canvasHeight, 10);
 		ns.context.font = ns.fontSize + "pt " + ns.fontFamily;
 		ns.context.lineWidth = parseInt(ns.fontStrokeWidthScale * canvasWidth, 10);
-		
+
 		// calculate the canvas centerpoint
 		ns.coords.center = {
 			x : ns.canvas.width/2,
 			y : ns.canvas.height/2
 		};
 	};
-	
+
 	function isCanvasSupported() {
 		var elem = document.createElement('canvas');
 		return !!(elem.getContext && elem.getContext('2d'));
@@ -550,7 +550,7 @@ var MemeGenerator = {
 		var tag = ns.paging.tag_filter.val();
 		var user = ns.paging.user_filter.val();
 
-		var endpoint = AppBaseURL + 'backstage/assets/find';
+		var endpoint = BackendURL + 'assets/find';
 
 		if($.trim(tag) != '') {
 			endpoint += '/tag:' + tag;
@@ -618,14 +618,14 @@ var MemeGenerator = {
 			$('.no-canvas').show().siblings().hide();
 			return;
 		}
-		
+
 		// pre-select the larger meme size based on available screen real estate
 		if(window.outerWidth > 850) {
 			$('.canvasSize option:selected').removeAttr('selected');
 			var larger = $('.canvasSize [data-max=800]');
 			larger.attr('selected','selected');
 		}
-		
+
 		ns.init();
 
 		if(ns.images.length === 0) {
@@ -633,10 +633,10 @@ var MemeGenerator = {
 			ns.invokePicker();
 
 		} else {
-		
+
 			// randomly shuffle the available backdrops
 			ns.images.sort(function() { return 0.5 - Math.random(); });
-			
+
 			// choose the first image (random) to display
 			ns.rotateImage();
 		}
@@ -644,5 +644,5 @@ var MemeGenerator = {
 		// toggle live-mode on by default
 		ns.toggleLiveMode();
 	});
-	
+
 })(jQuery, MemeGenerator);

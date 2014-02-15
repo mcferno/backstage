@@ -1,7 +1,7 @@
 	<div class="row">
 		<div class="span3 post-meta">
 			<?= $this->Site->profileImage($post); ?>
-			
+
 			<span class="post-date">
 				<span class="month-and-year"><?php
 					$title = date('F jS, Y',$post['Post']['date']);
@@ -22,6 +22,3 @@
 			<?php endif; ?>
 		</div>
 	</div><!-- .row -->
-	<div class="actions">
-		<?= $this->Html->link('permalink',array('controller'=>'posts', 'action'=>'view', 'slug'=>$this->Site->postSlug($post), 'id'=>$post['Post']['id'])); ?>
-	</div>

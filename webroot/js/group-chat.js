@@ -23,7 +23,7 @@ var GroupChat = {
 
 	var doc = $(document),
 		win = $(window);
-	
+
 	doc
 		.on('click','.chat-bar button', function(e) {
 			e.preventDefault(); // disable all buttons's defaults
@@ -35,7 +35,7 @@ var GroupChat = {
 		.on('click','.online-count',function(e){
 			e.preventDefault(); // disable all buttons's defaults
 			$('.slideout').slideToggle();
-			
+
 		})
 		.on('click', '.highlight', function() {
 			$(this).addClass('seen');
@@ -81,7 +81,7 @@ var GroupChat = {
 		render : function() {
 			var timestamp = this.model.get('timestamp');
 			var date = new Date(timestamp * 1000);
-			
+
 			var msg = ns.nl2br(this.model.get('text'));
 			msg = ns.autolinkUrls(msg);
 			msg = ns.highlightCallouts(msg);
@@ -100,21 +100,21 @@ var GroupChat = {
 			return this;
 		}
 	});
-	
+
 	/**
 	 * ChatLog Collection. Maintains the relative ordering of individual ChatMsg
 	 * models, which in turn orders the views.
 	 */
 	ns.ChatLog = Backbone.Collection.extend({
-		
+
 		model : ns.ChatMsg,
-		
+
 		// reverse chronological sort for newest-on-top
 		comparator : function(chatMsgModel) {
 			return ns.chatOrder * parseInt(chatMsgModel.get('timestamp'), 10);
 		}
 	});
-	
+
 	/**
 	 * ChatLog View, controls the visual presentation of the ChatLog collection.
 	 * Handles relative ordering, regardless of insertion time.
@@ -131,11 +131,11 @@ var GroupChat = {
 				// new view belongs at the front
 				if(idx === 0) {
 					this.$el.prepend(chatMsgModel.view.el);
-					
+
 				// new view belongs at the end
 				} else if(idx == ns.chatLog.length - 1) {
 					this.$el.append(chatMsgModel.view.el);
-					
+
 				// new view has inner placement (out of order from server?)
 				} else {
 					var ideal = this.$el.children('.'+chatMsgModel.view.className).get(idx);
@@ -147,7 +147,7 @@ var GroupChat = {
 
 			if(
 				ns.playMentions === true
-				&& $(chatMsgModel.view.el).hasClass('highlight') 
+				&& $(chatMsgModel.view.el).hasClass('highlight')
 				&& chatMsgModel.get('handle') != ns.config.self
 			) {
 
@@ -163,7 +163,7 @@ var GroupChat = {
 			}
 		}
 	});
-	
+
 	// submits a message to the server
 	ns.submitMessage = function() {
 		var text = ns.msgBar.val();
@@ -174,7 +174,7 @@ var GroupChat = {
 
 		var now = new Date();
 		var date = ns.formatDate(now);
-		
+
 		var postData = {
 			Message : {
 				text: text,
@@ -187,10 +187,10 @@ var GroupChat = {
 		if(ns.lastAck !== 0) {
 			postData.ack = ns.lastAck;
 		}
-		
+
 		$.ajax({
 			type: 'POST',
-			url: AppBaseURL + 'backstage/messages/add',
+			url: BackendURL + 'messages/add',
 			data: postData,
 			dataType: 'json',
 			success : ns.processHeartbeat
@@ -223,7 +223,7 @@ var GroupChat = {
 				break;
 
 			// TAB for autocompletion
-			case 9 : 
+			case 9 :
 				if(ns.config.scope != 'Chat') {	break; }
 				// match a partial @ callout
 				var user_callout = msg.toLowerCase().match(/@([_a-z0-9-]*)$/);
@@ -271,7 +271,7 @@ var GroupChat = {
 				break;
 		}
 	};
-	
+
 	// testing function which injects messages directly into the chat, bypassing the server
 	ns.addMessage = function(date,timestamp,text,handle) {
 		var rowData = _.template(ns.templates.chatRowTemplate, {
@@ -366,13 +366,13 @@ var GroupChat = {
 		}
 		return ns.chatLog.length;
 	};
-	
+
 	// polls the server for new status
 	ns.sendHeartbeat = function() {
 		var data = {
 			scope : ns.config.scope
 		};
-		
+
 		if(typeof ns.chatWindow != 'undefined') {
 			data.ack = ns.lastAck;
 		}
@@ -381,11 +381,11 @@ var GroupChat = {
 		}
 		$.ajax({
 			data : data,
-			url : AppBaseURL+'backstage/users/heartbeat',
+			url : BackendURL + 'users/heartbeat',
 			success : ns.processHeartbeat
 		});
 	};
-	
+
 	// processes the results from a server status update
 	ns.processHeartbeat = function(data) {
 		var allUsers = '';
@@ -422,7 +422,7 @@ var GroupChat = {
 			ns.activeList.hide();
 		}
 		ns.activeCount.text(activeUsers.length);
-		
+
 		if(idleUsers.length) {
 			ns.idleList.empty().show().html('<li>' + idleUsers.join('</li><li>') + '</li>');
 		} else {
@@ -473,20 +473,20 @@ var GroupChat = {
 			if(data.ack > ns.lastAck && ns.windowFocus) {
 				ns.lastAck = data.ack;
 			}
-			
+
 			if(data.messages.length > 0) {
 				ns.processMessages(data.messages);
 			}
 		}
 	};
-	
+
 	// parses a series of new messages
 	ns.processMessages = function(data) {
-		
+
 		$(data).each(function(){
 			var message = this;
 			var date = this.Message.created;
-			
+
 			ns.chatLog.add(new ns.ChatMsg({
 				id : message.Message.id,
 				date : date,
@@ -496,7 +496,7 @@ var GroupChat = {
 			}));
 		});
 	};
-	
+
 	// converts a message date to a human-friendly format
 	ns.formatDate = function(dateObj) {
 		var date = ns.padNumber((dateObj.getMonth() + 1))
@@ -506,11 +506,11 @@ var GroupChat = {
 			+ ':' + ns.padNumber(dateObj.getSeconds());
 		return date;
 	};
-	
+
 	ns.padNumber = function(str) {
 		return String('00'+str).match(/[0-9]{2}$/);
 	};
-	
+
 	// wrapper for a multi-format audio element, with browser support detection
 	ns.sound = function(config, volumeLevel) {
 		var obj = this;
@@ -557,7 +557,7 @@ var GroupChat = {
 		ns.idleList = $('.idle-users');
 		ns.idleCount = $('.idle-count');
 	};
-	
+
 
 	// initializes the full chat messaging interface
 	ns.initChat = function() {
@@ -565,7 +565,7 @@ var GroupChat = {
 		ns.chatWindow = $('.chat-window .chat');
 		ns.handle = $('.chat-bar .handle').text();
 		ns.loadingIndicator = $('#loaderAnim');
-		
+
 		ns.templates.chatRowTemplate = $('#chatRowTemplate').html();
 		ns.templates.embeddedImage = $('#embeddedImageTemplate').html();
 		ns.templates.embeddedYoutube = $('#embeddedYouTubeTemplate').html();
@@ -580,7 +580,7 @@ var GroupChat = {
 		// Chat specific configurations
 		if(ns.config.scope == 'Chat') {
 			ns.msgBar.focus();
-			
+
 			// initialize for non-mobile users
 			if(ns.config.mobile === false) {
 				ns.initChatSounds();
@@ -653,7 +653,7 @@ var GroupChat = {
 			$.cookie('play_mentions', 'no', cookieConfig);
 		});
 	};
-	
+
 	doc.ready(function() {
 		ns.originalTitle = document.title;
 		ns.init();
@@ -667,8 +667,8 @@ var GroupChat = {
 		if($('.chat-window').length) {
 			ns.initChat();
 		}
-		
+
 		ns.sendHeartbeat();
 	});
-	
+
 })(jQuery, GroupChat);

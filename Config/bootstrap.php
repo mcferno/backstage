@@ -5,8 +5,15 @@
  */
 
 Configure::write('Site', array(
+
+	// choose the site title
+	'name' => 'Backstage',
+
 	// expiry of the remember-me login cookie (strtotime format)
 	'rememberMeExpiry' => '+1 month',
+
+	// whether to present the authed back-end at the base URL
+	'showPublicPages' => false,
 
 	'Chat' => array(
 		// expiry of messages in live chat (time in seconds)

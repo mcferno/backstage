@@ -105,6 +105,8 @@ class AppController extends Controller {
 	 * Pre-view generation processing for authenticated users
 	 */
 	public function adminBeforeRender() {
+		$this->set('siteName', Configure::read('Site.name'));
+		$this->set('backend', Configure::read('Site.backendUrl'));
 	}
 
 	/**
