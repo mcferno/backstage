@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 App::uses('Helper', 'AppHelper');
 
 class SiteHelper extends AppHelper {
-	
+
 	public $helpers = array('Html','Text');
-	
+
 	/**
 	 * Inspects the Post Model data to determine the most appropriate profile
 	 * image.
@@ -36,10 +36,10 @@ class SiteHelper extends AppHelper {
 			}
 		}
 	}
-	
+
 	/**
 	 * Produce an SEO-friendly slug from the Post body
-	 * 
+	 *
 	 * @param {Array} $post Post model data
 	 * @return {String} Sluggified, truncated slug
 	 */
@@ -68,5 +68,13 @@ class SiteHelper extends AppHelper {
 		return json_encode(array(
 			'isMobile' => $this->request->is('mobile')
 		));
+	}
+
+	public function jsBasePath($str) {
+		if(substr($str, -1) !== '/') {
+			$str .= '/';
+		}
+
+		return json_encode($str);
 	}
 }

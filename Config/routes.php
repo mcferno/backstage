@@ -51,7 +51,7 @@ $appRoute = function($uri, $route = array(), $params = array()) use ($app_prefix
 /**
  * User dashboard & login
  */
-$appRoute("/", Configure::read('Site.backendUrl'));
+$appRoute((empty($app_prefix) ? '/' : ''), Configure::read('Site.backendUrl'));
 $appRoute("/dashboard", array('controller' => 'users', 'action' => 'dashboard'));
 $appRoute("/dashboard/updates/*", array('controller' => 'users', 'action' => 'updates'));
 $appRoute("/users/heartbeat/*", array('controller' => 'users', 'action' => 'heartbeat'));

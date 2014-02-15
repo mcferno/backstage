@@ -39,8 +39,8 @@
 		echo $this->element('ga');
 	?>
 	<script>
-		var AppBaseURL = <?= json_encode($this->Html->url('/', true)); ?>,
-			BackendURL = <?= json_encode($this->Html->url($backend, true)); ?>,
+		var AppBaseURL = <?= $this->Site->jsBasePath($this->Html->url('/', true)); ?>,
+			BackendURL = <?= $this->Site->jsBasePath($this->Html->url($backend, true)); ?>,
 			User = <?= $this->Site->userDetails(); ?>;
 	</script>
 </head>
