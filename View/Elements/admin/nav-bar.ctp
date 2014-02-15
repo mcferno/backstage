@@ -81,6 +81,7 @@
 					<li class="divider"></li>
 					<li><?= $this->Html->link('<span class="glyphicon-comment glyphicon"></span> Message Log', array('controller' => 'messages', 'action' => 'index'), array('escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-tags glyphicon"></span> Tag List', array('controller' => 'tags', 'action' => 'index'), array('escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon-flash glyphicon"></span> Social Scraper', array('controller' => 'accounts', 'action' => 'index'), array('escape' => false)); ?></li>
 					<li class="divider"></li>
 					<li><?= $this->Html->link('<span class="glyphicon-refresh glyphicon"></span> Clear Cache', array('controller' => 'pages','action' => 'clear_cache'), array('escape' => false)); ?></li>
 					<li></li>

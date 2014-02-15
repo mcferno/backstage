@@ -63,7 +63,7 @@ $appRoute("/setup", array('controller' => 'users', 'action' => 'setup'));
 $appRoute("/my-images/*", array('controller' => 'assets', 'action' => 'index'));
 $appRoute("/all-images/*", array('controller' => 'assets', 'action' => 'users'));
 $appRoute("/user/*", array('controller' => 'assets', 'action' => 'user'));
-$appRoute("/assets/:action/*", array('controller' => 'assets'), array('action' => '(find|save|view|upload)'));
+$appRoute("/assets/:action/*", array('controller' => 'assets'));
 
 $appRoute("/albums/set_cover/*", array('controller' => 'albums', 'action' => 'set_cover'));
 $appRoute("/albums/save/*", array('controller' => 'albums', 'action' => 'save'));
@@ -105,6 +105,7 @@ $appRoute("/messages/add/*", array('controller' => 'messages', 'action' => 'add'
 $appRoute("/quotes/*", array('controller' => 'posts', 'action'=> 'index'));
 $appRoute("/tags/:action/*", array('controller' => 'tags'));
 $appRoute("/users/:action/*", array('controller' => 'users'));
+$appRoute("/accounts/:action/*", array('controller' => 'accounts'));
 $appRoute("/messages/:action/*", array('controller' => 'messages'));
 $appRoute("/pages/clear_cache", array('controller' => 'pages', 'action' => 'clear_cache'));
 
