@@ -97,7 +97,7 @@ class VideosController extends AppController {
 				$this->Session->setFlash('Your new video could not be saved. Please, try again.', 'messaging/alert-error');
 			}
 		}
-		
+
 		$this->set('tags', array_values($this->Video->Tag->getListForModel('Video')));
 	}
 
@@ -151,7 +151,7 @@ class VideosController extends AppController {
 	 * Manages the creation of a thumbnail image. Allows the user to upload an
 	 * image, or download one from a URL. Once an image is set, the user may
 	 * choose the proper thumbnail crop from it.
-	 * 
+	 *
 	 * @param {UUID} $id Link to set an image
 	 */
 	public function admin_image($id = null) {
@@ -175,7 +175,7 @@ class VideosController extends AppController {
 					$this->Upload->cleanPath(IMAGES . $new_file . '.jpg'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Video']['image']['name']);
 					move_uploaded_file($this->request->data['Video']['image']['tmp_name'], IMAGES . $new_file);
-					
+
 					$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
 					$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
 				} else {
@@ -185,13 +185,13 @@ class VideosController extends AppController {
 			// URL grab
 			} else {
 				$valid = $this->Upload->isValidURL($this->request->data['Video']['url']);
-				
+
 				if($valid === true) {
 					$this->Upload->cleanPath(IMAGES . $new_file . '.png'); // remove existing images
 					$this->Upload->cleanPath(IMAGES . $new_file . '.jpg'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Video']['url']);
 					$file = $this->Upload->saveURLtoFile($this->request->data['Video']['url'], IMAGES . $new_file);
-					
+
 					if($file !== false) {
 						$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
 						$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
@@ -224,7 +224,7 @@ class VideosController extends AppController {
 
 			$this->Video->id = $this->data['image_id'];
 			if($this->Video->exists()) {
-				
+
 				// remove existing thumbs before proceeding
 				$this->Upload->cleanPath(IMAGES .  "{$this->Video->thumbnailPath}/{$this->data['image_id']}.png"); // remove existing images
 				$this->Upload->cleanPath(IMAGES .  "{$this->Video->thumbnailPath}/{$this->data['image_id']}.jpg"); // remove existing images
@@ -256,7 +256,7 @@ class VideosController extends AppController {
 				$this->Session->setFlash('The video could not be updated. Please, try again.', 'messaging/alert-error');
 			}
 		} else {
-			
+
 			$this->request->data = $this->Video->find('first', array(
 				'contain' => 'Tag',
 				'conditions' => array(
@@ -264,7 +264,7 @@ class VideosController extends AppController {
 				)
 			));
 			$this->request->data['Video']['duration'] = $this->request->data['Video']['duration_nice'];
-			
+
 			// compile existing tags
 			if(!empty($this->request->data['Tag'])) {
 				$this->request->data['Tagging']['tags'] = implode(Hash::extract($this->request->data['Tag'], '{n}.name'), ',');

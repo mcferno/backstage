@@ -1,9 +1,9 @@
 <?php
 /**
- * Video Model : video content represented by URL for streaming videos, or an 
- * uploaded video file. 
+ * Video Model : video content represented by URL for streaming videos, or an
+ * uploaded video file.
  *
- * Online videos are restricted only by the number of adapters written (Youtube, 
+ * Online videos are restricted only by the number of adapters written (Youtube,
  * Vimeo, etc). HTML5 mp4 or webm are supported for local videos, which must be
  * in the correct format, no conversions offered at this time.
  */
@@ -113,7 +113,7 @@ class Video extends AppModel {
 		if(!class_exists('WideImage')) {
 			App::import('Vendor', 'WideImage/WideImage');
 		}
-		
+
 		$screenshot = $this->thumbnailPath . DS . 'full' . DS . $video_id;
 		$thumbnail = $this->thumbnailPath . DS . $video_id;
 
@@ -126,7 +126,7 @@ class Video extends AppModel {
 			return false;
 		}
 		$image = WideImage::load(IMAGES_URL . $screenshot);
-		
+
 		if($image === false) {
 			$this->log('Could not open file upload.');
 			return false;

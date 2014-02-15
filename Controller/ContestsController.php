@@ -32,7 +32,7 @@ class ContestsController extends AppController {
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->Contest->create();
-			if ($this->Contest->save($this->request->data)) {			
+			if ($this->Contest->save($this->request->data)) {
 				$this->Session->setFlash('Your caption battle has started!', 'messaging/alert-success');
 
 				// announce contest if FB integration exists
@@ -42,7 +42,7 @@ class ContestsController extends AppController {
 				} else {
 					$this->redirect(array('action' => 'view', $this->Contest->id));
 				}
-				
+
 			} else {
 				$this->Session->setFlash('There was an error with your caption battle set up. Please try again.','messaging/alert-error');
 			}
@@ -53,7 +53,7 @@ class ContestsController extends AppController {
 	 * Announces a caption battle over Facebook
 	 */
 	public function admin_announce($id = null) {
-		
+
 		if(!$id || !$this->Session->check('Auth.User.fb_target')) {
 			$this->redirect(array('action' => 'index'));
 		}
@@ -81,7 +81,7 @@ class ContestsController extends AppController {
 				'caption' => $this->Auth->user('username') . ' has declared a new battle.',
 				'description' => $this->Contest->fbStrings['new_desc']
 			);
-			
+
 			// attach optional message
 			if(!empty($contest['Contest']['message']) && trim($contest['Contest']['message']) != '') {
 				$fbPost['message'] = $contest['Contest']['message'];
@@ -89,7 +89,7 @@ class ContestsController extends AppController {
 
 			try {
 				$res = $fbSDK->api('/'.$this->Session->read('Auth.User.fb_target').'/feed','POST', $fbPost);
-				
+
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
 					$this->Session->setFlash('Your caption battle has been announced on Facebook!', 'messaging/alert-success');
@@ -106,7 +106,7 @@ class ContestsController extends AppController {
 			'scope' => $this->User->getFacebookPermissions(),
 			'redirect_uri' => Router::url(array('action' => 'announce', $id), true)
 		);
-		
+
 		$this->redirect($fbSDK->getLoginUrl($login_params));
 	}
 
@@ -254,10 +254,10 @@ class ContestsController extends AppController {
 				'caption' => $winner,
 				'description' => $this->Contest->fbStrings['winner_desc']
 			);
-			
+
 			try {
 				$res = $fbSDK->api('/' . $this->Session->read('Auth.User.fb_target') . '/feed','POST', $fbPost);
-				
+
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
 					$this->Session->setFlash('The caption battle winner has been announced on Facebook!', 'messaging/alert-success');
@@ -274,7 +274,7 @@ class ContestsController extends AppController {
 			'scope' => $this->User->getFacebookPermissions(),
 			'redirect_uri' => Router::url(array('action' => 'announce_winner', $id), true)
 		);
-		
+
 		$this->redirect($fbSDK->getLoginUrl($login_params));
 	}
 
