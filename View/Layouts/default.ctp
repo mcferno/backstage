@@ -63,7 +63,6 @@
 				<div class="row">
 					<div class="span6 nav">
 						<a href="<?= $this->Html->url('/'); ?>" title="Return to the homepage">Home</a>
-						<?= $this->Html->link('— Quote Generator', array('controller'=>'pages', 'action'=>'quote_generator')); ?>
 					</div>
 
 					<div class="span7">
