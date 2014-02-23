@@ -9,7 +9,7 @@
 	<div class="modal-body">
 		<div class="assets form">
 			<fieldset>
-				<?php 
+				<?php
 					echo $this->Form->input('asset_id', array('type' => 'hidden', 'value' => $asset['Asset']['id']));
 					echo $this->Form->input('user_id', array('type' => 'hidden', 'value' => $this->Session->read('Auth.User.id')));
 				?>

@@ -1,5 +1,5 @@
-<?php 
-$this->set('suppressSubnav', true); 
+<?php
+$this->set('suppressSubnav', true);
 $filter_names = array('model', 'user', 'text');
 $filters = array_intersect_key($this->request->params['named'], array_flip($filter_names));
 ?>

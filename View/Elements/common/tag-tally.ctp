@@ -19,7 +19,7 @@ if(!empty($tag_tally)) :
 				$link_name = "{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>";
 			}
 
-			
+
 			if(empty($this->request->params['paging'])) {
 				$link_tag = $this->Html->link($link_name, array('action' => 'index', 'tag' => $tag['Tag']['id']), array('escape' => false));
 			} else {
@@ -31,6 +31,6 @@ if(!empty($tag_tally)) :
 	?>
 </ul>
 
-<?php 
+<?php
 	$this->end();
 endif;

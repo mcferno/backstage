@@ -37,7 +37,7 @@ $(document).ready(function() {
 		window.location = $(this).data('target');
 	});
 	$('.activity .preview').each(function() {
-		$(this).closest('tr').popover({ 
+		$(this).closest('tr').popover({
 			placement : 'auto top',
 			delay : { show: 250, hide: 100 },
 			trigger : 'hover',

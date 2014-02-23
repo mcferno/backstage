@@ -50,7 +50,7 @@
 				<?= $this->Form->input('image', array('type'=>'file','label'=>'')); ?>
 				<h4><?= $this->Html->image('ui/icons/network-cloud.png'); ?> Upload an image from a URL</h4>
 				<?= $this->Form->input('url', array('type' => 'text', 'label' =>'', 'class' => 'asset-url', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
-			
+
 
 			<?php
 				echo $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-success'));
@@ -59,7 +59,7 @@
 				if($image) {
 					echo '&nbsp;';
 					echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Re-Crop Existing', array('action' => 'image', $video['Video']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info btn-lg', 'escape' => false));
-				} 
+				}
 			?>
 			</div>
 		</fieldset>

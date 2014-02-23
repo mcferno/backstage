@@ -1,7 +1,7 @@
 <?php
 	$this->set('contentSpan',10);
 	$landing_page = (empty($this->request->params['named']['page']));
-?>	
+?>
 <div class="row">
 	<div class="col-md-12">
 		<h1>Caption Battle</h1>
@@ -69,17 +69,17 @@
 		<h2>Entries</h2>
 
 		<ul class="row thumbnails list-unstyled image-list">
-		<?php 
+		<?php
 		$page = 0;
-		foreach ($assets as $asset) : 
-			$page++; 
+		foreach ($assets as $asset) :
+			$page++;
 			$winner = ($contest['Contest']['winning_asset_id'] === $asset['Asset']['id']); ?>
 
 			<li class="col-xs-6 col-sm-4 col-md-3 text-center">
 				<div class="thumbnail">
 					<?= $this->Html->link($this->Html->image($asset['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id'], 'page'=> $page),array('escape'=>false)); ?>
 					<p>
-						<?php if($winner) { echo $this->Html->image('ui/icons/trophy.png', array('title' => 'Winning Entry!')); } ?> 
+						<?php if($winner) { echo $this->Html->image('ui/icons/trophy.png', array('title' => 'Winning Entry!')); } ?>
 						by <strong><?= $asset['User']['username']; ?></strong>
 					</p>
 					<p class="date"><?= date('Y.m.d H:m:s',strtotime($asset['Asset']['created'])); ?></p>
