@@ -1,5 +1,5 @@
 <?php
-	$this->Html->script(array('meme-generator.js?t='.filemtime(JS.'meme-generator.js')), array('inline' => false));
+	$this->Html->script(array('meme-generator.js?t='.filemtime(JS . 'meme-generator.js')), array('inline' => false));
 
 	foreach ($base_images as &$image) {
 		$image = $this->Html->webroot(IMAGES_URL . $image);

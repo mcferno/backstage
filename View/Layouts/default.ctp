@@ -12,14 +12,14 @@
 
 	<meta name="viewport" content="width=device-width"/>
 	<?= $this->Html->meta('icon'); ?>
-	<?= $this->Html->css('theme.css?t='.filemtime(CSS.'theme.css')); ?>
+	<?= $this->Html->css('theme.css?t='.filemtime(CSS . 'theme.css')); ?>
 
 	<?php
 		echo $this->Html->script(array(
 			'https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
 
 			// cache-busting site-wide js code.
-			'jquery.site.js?t='.filemtime(JS.'jquery.site.js')
+			'jquery.site.js?t='.filemtime(JS . 'jquery.site.js')
 		));
 
 		echo $this->fetch('script');

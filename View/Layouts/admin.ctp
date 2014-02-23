@@ -23,7 +23,7 @@
 			'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'
 		));
 		echo $this->fetch('css');
-		echo $this->Html->css('backstage.css?t='.filemtime(CSS.'backstage.css'));
+		echo $this->Html->css('backstage.css?t=' . filemtime(CSS . 'backstage.css'));
 
 		echo $this->element('ga');
 	?>
@@ -68,14 +68,14 @@
 	);
 
 	if($this->Session->check('Auth.User.id')) {
-		$scripts[] = 'group-chat.js?t='.filemtime(JS.'group-chat.js');
+		$scripts[] = 'group-chat.js?t=' . filemtime(JS . 'group-chat.js');
 	}
 
 	echo $this->Html->script($scripts);
 
 	echo $this->fetch('script');
 
-	echo $this->Html->script('backstage.js?t='.filemtime(JS.'backstage.js'));
+	echo $this->Html->script('backstage.js?t=' . filemtime(JS . 'backstage.js'));
 ?>
 
 </body>
