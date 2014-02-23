@@ -1,6 +1,8 @@
-;
-Backstage = {};
-(function($, ns, document, window) {
+/**
+ * Backstage User Realm
+ * @author Patrick McFern <mcferno AT gmail.com>
+ */
+(function($, ns, env, document, window) {
 	"use strict";
 
 	ns.cropTool = false;
@@ -13,7 +15,7 @@ Backstage = {};
 
 			$('.asset-upload-popin').modal();
 
-			if(User.isMobile) {
+			if(env.User.isMobile) {
 				$('#AssetImage').focus();
 			}
 		})
@@ -320,7 +322,7 @@ Backstage = {};
 		};
 
 		$.ajax({
-			url : BackendURL + 'tags/update',
+			url : env.backendURL + 'tags/update',
 			data : payload,
 			type : 'POST'
 		});
@@ -329,7 +331,7 @@ Backstage = {};
 	ns.configureQuickTagging = function() {
 
 		var req = $.ajax({
-			url : BackendURL + 'tags/list',
+			url : env.backendURL + 'tags/list',
 			type : 'GET'
 		});
 
@@ -375,7 +377,7 @@ Backstage = {};
 				};
 
 				$.ajax({
-					url : BackendURL + 'tags/add_tags',
+					url : env.backendURL + 'tags/add_tags',
 					type : 'POST',
 					cache : false,
 					data : payload,
@@ -395,4 +397,4 @@ Backstage = {};
 
 	};
 
-})(jQuery, Backstage, document, window);
+})(jQuery, Backstage, AppEnv, document, window);

@@ -100,5 +100,5 @@ if($chatSettings['scope'] === 'Chat') {
 <iframe src="https://player.vimeo.com/video/<%= video_id %>" width="640" height="360" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen class="posted-content"></iframe><a href="<%= url %>" target="_blank" class="original-link"><%= url %></a><a class="close" href="#" title="Hide this video">×</a><br>
 </script>
 <script type="text/javascript">
-GroupChat.config = <?= json_encode($chatSettings); ?>;
+AppEnv['Config']['GroupChat'] = <?= json_encode($chatSettings); ?>;
 </script>

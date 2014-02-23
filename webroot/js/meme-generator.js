@@ -1,9 +1,8 @@
-;
 /**
  * Meme Generator App
  * @author Patrick McFern <mcferno AT gmail.com>
  */
-var MemeGenerator = {
+Backstage['MemeGenerator'] = {
 
 	// timestamp of the last canvas render
 	lastRender : 0,
@@ -39,15 +38,13 @@ var MemeGenerator = {
 	drawStroke : true,
 
 	// series of coordinates within the canvas
-	coords : {},
-
-	// set of external configurations
-	config : {}
+	coords : {}
 };
 
-/*global AppBaseURL */
-(function($, ns) {
+(function($, ns, env) {
 	"use strict";
+
+	ns.config = env.Config.MemeGenerator || {};
 
 	$(document)
 		.on('click','.meme-generator button', function(e) {
@@ -210,7 +207,7 @@ var MemeGenerator = {
 			}
 
 			$.post(
-				BackendURL + 'assets/save',
+				env.backendURL + 'assets/save',
 				payload,
 				function(data) {
 					if(data.image_saved) {
@@ -504,7 +501,7 @@ var MemeGenerator = {
 			ns.fontHeightPadding = ns.fontLineHeight['android'];
 		}
 
-		if(User.isMobile) {
+		if(env.User.isMobile) {
 			ns.fontFamily = 'Passion One, sans-serif';
 		}
 
@@ -550,7 +547,7 @@ var MemeGenerator = {
 		var tag = ns.paging.tag_filter.val();
 		var user = ns.paging.user_filter.val();
 
-		var endpoint = BackendURL + 'assets/find';
+		var endpoint = env.backendURL + 'assets/find';
 
 		if($.trim(tag) != '') {
 			endpoint += '/tag:' + tag;
@@ -604,8 +601,8 @@ var MemeGenerator = {
 		// compile image matches
 		$(payload.images).each(function(idx, data) {
 			images += _.template(ns.imageTemplate, {
-				thumb_url : AppBaseURL + 'img/' + data.Asset['image-tiny'],
-				full_url : AppBaseURL + 'img/' + data.Asset['image-full']
+				thumb_url : env.appBaseURL + 'img/' + data.Asset['image-tiny'],
+				full_url : env.appBaseURL + 'img/' + data.Asset['image-full']
 			});
 		});
 
@@ -645,4 +642,4 @@ var MemeGenerator = {
 		ns.toggleLiveMode();
 	});
 
-})(jQuery, MemeGenerator);
+})(jQuery, Backstage['MemeGenerator'], AppEnv);

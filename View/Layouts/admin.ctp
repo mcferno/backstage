@@ -10,25 +10,14 @@
 	<link rel="apple-touch-icon-precomposed" href="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem/emblem-large-x72.jpg'); ?>" sizes="72x72">
 	<link rel="apple-touch-icon-precomposed" href="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem/emblem-large-x57.jpg'); ?>">
 	<meta property="og:image" content="<?= FULL_BASE_URL . $this->Html->webroot('img/emblem-large.jpg'); ?>">
+	<script>var Backstage = {}, AppEnv = <?= json_encode(array(
+		'appBaseURL' => $this->Site->jsBasePath($this->Html->url('/', true)),
+		'backendURL' => $this->Site->jsBasePath($this->Html->url($backend, true)),
+		'User' => $this->Site->userDetails(),
+		'Config' => new Object()
+	)); ?>;</script>
 	<?php
 		echo $this->Html->meta('icon', 'img/emblem.png');
-
-		// base js libraries
-		$scripts = array(
-			'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
-			'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js',
-			'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js',
-			'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js',
-			'backstage.js?t='.filemtime(JS.'backstage.js')
-		);
-
-		if($this->Session->check('Auth.User.id')) {
-			$scripts[] = 'group-chat.js?t='.filemtime(JS.'group-chat.js');
-		}
-
-		echo $this->Html->script($scripts);
-
-		echo $this->fetch('script');
 
 		echo $this->Html->css(array(
 			'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'
@@ -38,11 +27,6 @@
 
 		echo $this->element('ga');
 	?>
-	<script>
-		var AppBaseURL = <?= $this->Site->jsBasePath($this->Html->url('/', true)); ?>,
-			BackendURL = <?= $this->Site->jsBasePath($this->Html->url($backend, true)); ?>,
-			User = <?= $this->Site->userDetails(); ?>;
-	</script>
 </head>
 <body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
 		<?= $this->element('admin/nav-bar'); ?>
@@ -73,5 +57,25 @@
 
 		<?= $this->element('common/asset-upload'); ?>
 		<?= $this->element('sql_dump'); ?>
+
+<?php
+	// base js libraries
+	$scripts = array(
+		'https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+		'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js',
+		'https://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.10/backbone-min.js',
+		'https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js'
+	);
+
+	if($this->Session->check('Auth.User.id')) {
+		$scripts[] = 'group-chat.js?t='.filemtime(JS.'group-chat.js');
+	}
+
+	echo $this->Html->script($scripts);
+
+	echo $this->fetch('script');
+
+	echo $this->Html->script('backstage.js?t='.filemtime(JS.'backstage.js'));
+?>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 	$this->Html->script(array('meme-generator.js?t='.filemtime(JS.'meme-generator.js')), array('inline' => false));
-	
+
 	foreach ($base_images as &$image) {
 		$image = $this->Html->webroot(IMAGES_URL . $image);
 	}
@@ -9,22 +9,24 @@
 	if(!empty($contest)) {
 		$title = 'Caption Battle';
 	}
+
+	// javascript app configurations
+	$config = array(
+		'baseImages' => $base_images,
+		'type' => 'Meme'
+	);
+	if(!empty($contest['Contest']['id'])) {
+		$config['type'] = 'Contest';
+		$config['contestEntryId'] = $contest['Contest']['id'];
+	}
 ?>
-<script>
-MemeGenerator.config.baseImages = <?php echo json_encode($base_images); ?>;
-<?php if(!empty($contest['Contest']['id'])) : ?>
-MemeGenerator.config.type = 'Contest';
-MemeGenerator.config.contestEntryId = <?php echo json_encode($contest['Contest']['id']); ?>;
-<?php else: ?>
-MemeGenerator.config.type = 'Meme';
-<?php endif; ?>
-</script>
+<script>AppEnv['Config']['MemeGenerator'] = <?= json_encode($config); ?>;</script>
 <form class="meme-generator">
 	<div class="row">
 		<div class="col-md-12">
 			<h1><?= $title; ?></h1>
 
-			<?php 
+			<?php
 				if(!empty($contest['User'])) {
 					echo $this->Html->tag('p', "Started by <span class=\"glyphicon glyphicon-user\"></span> {$contest['User']['username']}");
 				}
@@ -43,14 +45,14 @@ MemeGenerator.config.type = 'Meme';
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
 			<input type="text" name="first-line" id="first-line" class="form-control input-lg" value="<?= $first_line; ?>" placeholder="First line of text" spellcheck="true" autofocus="true">
 			<input type="text" name="last-line" id="last-line" class="form-control input-lg" value="<?= $last_line; ?>" placeholder="Last line of text" spellcheck="true">
 		</div>
 	</div>
-	
+
 	<div class="row actions">
 		<div class="col-md-12">
 			<div class="btn-group">
@@ -59,21 +61,21 @@ MemeGenerator.config.type = 'Meme';
 			</div>
 
 			<button class="btn btn-huge btn-default choose-background" data-loading-text='<span class="glyphicon glyphicon-refresh"></span><span class="extra"> Change Image</span>'><span class="glyphicon glyphicon-picture"></span><span class="extra"> Change Image</span></button>
-			
-			<?php 
+
+			<?php
 				if(!empty($contest['Contest']['id'])) {
 					echo $this->Html->link('<span class="glyphicon glyphicon-search"></span> View Battle', array('controller' => 'contests', 'action' => 'view', $contest['Contest']['id']), array('class' => 'btn btn-default', 'escape' => false));
 				}
 			?>
 		</div>
 	</div>
-	
+
 	<div class="row output workspace" style="display:none;">
 		<div class="col-md-12">
 			<canvas id="rasterizer" height="450" width="600" style="display:none;"></canvas>
 		</div>
 	</div>
-	
+
 	<div class="row" id="backgrounds" style="display:none;">
 		<div class="col-md-12">
 			<h2 class="cozy-top">Choose an image</h2>
@@ -82,7 +84,7 @@ MemeGenerator.config.type = 'Meme';
 				<div class="col-md-8 col-md-offset-2">
 					<div class="row">
 						<div class="col-md-6">
-							<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'All Images', 'label' => false, 'div' => false, 'class' => 'form-control')); ?> 
+							<?= $this->Form->input('image_tags', array('type' => 'select', 'options' => $image_tags, 'empty' => 'All Images', 'label' => false, 'div' => false, 'class' => 'form-control')); ?>
 						</div>
 						<div class="col-md-6">
 							<?= $this->Form->input('image_owners', array('type' => 'select', 'options' => $image_owners, 'empty' => 'All Users', 'label' => false, 'div' => false, 'class' => 'form-control')); ?>
@@ -98,7 +100,7 @@ MemeGenerator.config.type = 'Meme';
 	<script type="text/template" id="imagePickerTemplate">
 	<img src="<%= thumb_url %>" data-full-image="<%= full_url %>" class="image-option">
 	</script>
-	
+
 	<div class="row workspace" style="display:none;">
 		<div class="col-md-12">
 			<div class="btn-group">

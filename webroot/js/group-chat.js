@@ -1,9 +1,8 @@
-;
 /**
  * Group Chat App
  * @author Patrick McFern <mcferno AT gmail.com>
  */
-var GroupChat = {
+Backstage['GroupChat'] = {
 	dateFormat : 'mmm-dd, h:MM:ss TT',
 	templates : {
 		chatRowTemplate : false
@@ -17,9 +16,10 @@ var GroupChat = {
 	playMentions : null,
 	users : []
 };
-/*global Backbone _ AppBaseURL */
-(function($, ns) {
+(function($, ns, env) {
 	"use strict";
+
+	ns.config = env['Config']['GroupChat'] || {};
 
 	var doc = $(document),
 		win = $(window);
@@ -190,7 +190,7 @@ var GroupChat = {
 
 		$.ajax({
 			type: 'POST',
-			url: BackendURL + 'messages/add',
+			url: env.backendURL + 'messages/add',
 			data: postData,
 			dataType: 'json',
 			success : ns.processHeartbeat
@@ -381,7 +381,7 @@ var GroupChat = {
 		}
 		$.ajax({
 			data : data,
-			url : BackendURL + 'users/heartbeat',
+			url : env.backendURL + 'users/heartbeat',
 			success : ns.processHeartbeat
 		});
 	};
@@ -671,4 +671,4 @@ var GroupChat = {
 		ns.sendHeartbeat();
 	});
 
-})(jQuery, GroupChat);
+})(jQuery, Backstage['GroupChat'], AppEnv);
