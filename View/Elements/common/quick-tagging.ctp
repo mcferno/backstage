@@ -1,6 +1,10 @@
 <?php
 
-$this->Html->script('/lib/select2-3.2/select2.min.js', array('inline' => false));
+$this->Html->script(array(
+	'/lib/select2-3.2/select2.min.js',
+	'tagging.js?t=' . filemtime(JS . 'tagging.js')
+), array('inline' => false));
+
 $this->Html->css('/lib/select2-3.2/select2.css', null, array('inline' => false));
 
 ?>

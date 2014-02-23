@@ -45,35 +45,14 @@
 		// js detection for css tweaks
 		$('body').removeClass('no-js').addClass('js');
 
+		// initialize the image cropping tool if loaded
 		if(ns.CropTool) {
 			ns.CropTool.init();
 		}
 
-		if($('.content-tags').length){
-
-			var placeholder_str = '';
-			if(ns.selectTags.length === 0) {
-				placeholder_str = '';
-			} else {
-				// randomly select
-				var sampleTags = ns.selectTags
-					.slice()
-					.sort(function() { return 0.5 - Math.random();})
-					.slice(0,3);
-
-				placeholder_str = 'Example: ' + sampleTags.join(', ');
-			}
-
-			$('.content-tags').select2({
-				tags : ns.selectTags,
-				tokenSeparators : [",", "  "],
-				width : '100%',
-				placeholder: placeholder_str
-			});
-
-			if(ns.taggingMode == 'live') {
-				$('.content-tags').on('change', ns.saveTags);
-			}
+		// initialze the content tagging tool if loaded
+		if(ns.Tagging) {
+			ns.Tagging.init();
 		}
 
 		if(ns.supportsFileApi()) {
@@ -166,10 +145,6 @@
 			});
 
 			$('.asset-upload-popin form').submit(ns.ajaxFileUpload);
-
-			if($('.quick-tagger').length !== 0) {
-				ns.configureQuickTagging();
-			}
 		}
 	});
 
@@ -236,92 +211,6 @@
 				submitButton.button('reset');
 			}
 		});
-	};
-
-	// Live update the database of tags
-	ns.saveTags = function() {
-		var payload =  {
-			'Tag' : {
-				'id' : $('#TaggingForeignId').val(),
-				'tags' : $('#TaggingTags').val(),
-				'model' : $('#TaggingModel').val()
-			}
-		};
-
-		$.ajax({
-			url : env.backendURL + 'tags/update',
-			data : payload,
-			type : 'POST'
-		});
-	};
-
-	ns.configureQuickTagging = function() {
-
-		var req = $.ajax({
-			url : env.backendURL + 'tags/list',
-			type : 'GET'
-		});
-
-		var tagSelection = $('.quick-tagger');
-		var taggableContainer = $('[data-role="taggable"]');
-		var tagSave = $('.save-quick-tags');
-
-		req.done(function(tags) {
-			tagSelection.select2({
-				tags : tags
-			});
-
-			// toggle selected objects as 'tagged'
-			taggableContainer.on('click', '[data-id]', function(e) {
-				e.preventDefault();
-				var obj = $(this);
-
-				if(obj.hasClass('tagged')) {
-					obj.removeClass('tagged');
-				} else {
-					obj.addClass('tagged');
-				}
-			});
-
-			// persist tags
-			tagSave.click(function() {
-				var tags = tagSelection.select2('val');
-				var tagged = [];
-				taggableContainer.find('.tagged').each(function() {
-					tagged.push($(this).data('id'));
-				});
-
-				if(tagged.length < 1) {
-					return;
-				}
-
-				var payload = {
-					data : {
-						tags : tags,
-						model : taggableContainer.data('model'),
-						tagged : tagged
-					}
-				};
-
-				$.ajax({
-					url : env.backendURL + 'tags/add_tags',
-					type : 'POST',
-					cache : false,
-					data : payload,
-					success : function() {
-						tagSelection.select2('val', '');
-						taggableContainer.find('.tagged').removeClass('tagged');
-						tagSave.tooltip({ title : 'Tagging Saved!'}).tooltip('show');
-						setTimeout(function() { tagSave.tooltip('destroy'); }, 2000);
-					},
-					error : function() {
-						tagSave.tooltip({ title : 'Tags could not be saved.'}).tooltip('show');
-						setTimeout(function() { tagSave.tooltip('destroy'); }, 2000);
-					}
-				});
-			});
-		});
-
 	};
 
 })(jQuery, Backstage, AppEnv, document, window);

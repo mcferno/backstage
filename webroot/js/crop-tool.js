@@ -114,4 +114,4 @@ Backstage['CropTool'] = (function($, env, config) {
 		cancel: cancel
 	};
 
-})($, AppEnv, AppEnv['Config']['CropTool']);
+})(jQuery, AppEnv, AppEnv['Config']['CropTool'] || {});

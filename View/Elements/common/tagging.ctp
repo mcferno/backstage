@@ -1,5 +1,10 @@
 <?php
-$this->Html->script('/lib/select2-3.2/select2.min.js', array('inline' => false));
+
+$this->Html->script(array(
+	'/lib/select2-3.2/select2.min.js',
+	'tagging.js?t=' . filemtime(JS . 'tagging.js')
+), array('inline' => false));
+
 $this->Html->css('/lib/select2-3.2/select2.css', null, array('inline' => false));
 
 $this->Form->unlockField('Tagging.tags');
@@ -9,6 +14,8 @@ echo $this->Form->input('Tagging.foreign_id', array('type' => 'hidden', 'value' 
 echo $this->Form->input('Tagging.user_id', array('type' => 'hidden', 'value' => $this->Session->read('Auth.User.id')));
 ?>
 <script type="text/javascript">
-Backstage.selectTags = <?= json_encode($tags); ?>;
-Backstage.taggingMode = <?= json_encode(isset($mode) ? $mode : false); ?>;
+AppEnv['Config']['Tagging'] = <?= json_encode(array(
+	'selectTags' => $tags,
+	'taggingMode' => (isset($mode) ? $mode : false)
+)); ?>
 </script>
