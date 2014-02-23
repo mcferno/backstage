@@ -76,6 +76,8 @@
 	echo $this->fetch('script');
 
 	echo $this->Html->script('backstage.js?t=' . filemtime(JS . 'backstage.js'));
+
+	echo $this->fetch('scriptBlock');
 ?>
 
 </body>

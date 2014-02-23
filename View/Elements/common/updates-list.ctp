@@ -31,6 +31,8 @@
 <?php endforeach; ?>
 </tbody>
 </table>
+
+<?php $this->append('scriptBlock'); ?>
 <script>
 $(document).ready(function() {
 	$('.activity tr[data-target]').click(function(){
@@ -53,3 +55,4 @@ $(document).ready(function() {
 	});
 });
 </script>
+<?php $this->end(); ?>
