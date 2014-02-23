@@ -16,7 +16,7 @@ Backstage['GroupChat'] = {
 	playMentions : null,
 	users : []
 };
-(function($, ns, env) {
+(function($, ns, env, document, window) {
 	"use strict";
 
 	ns.config = env['Config']['GroupChat'] || {};
@@ -269,6 +269,8 @@ Backstage['GroupChat'] = {
 					ns.submitMessage();
 				}
 				break;
+
+			default: break;
 		}
 	};
 
@@ -309,7 +311,7 @@ Backstage['GroupChat'] = {
 		// highlight personal @mentions
 		if(ns.config.self) {
 			var username_regex = new RegExp("user-mention\"\>@(" + ns.config.self + "|all)\<", 'gi');
-			markup = markup.replace(username_regex, 'active-user">@' + ns.config.self + '<')
+			markup = markup.replace(username_regex, 'active-user">@' + ns.config.self + '<');
 		}
 
 		return markup;
@@ -530,7 +532,7 @@ Backstage['GroupChat'] = {
 		// find and load a supported audio file
 		for(var type in config) {
 			if(supportsFormat(config[type]['format'])) {
-				var audio = document.createElement('audio');
+				audio = document.createElement('audio');
 				audio.src = config[type]['file'];
 				audio.load();
 				audio.volume = (typeof volumeLevel !== "undefined") ? volumeLevel : 1.0;
@@ -544,7 +546,7 @@ Backstage['GroupChat'] = {
 				return true;
 			}
 			return false;
-		}
+		};
 	};
 
 	// initializes the bare-bones chat status functionality
@@ -671,4 +673,4 @@ Backstage['GroupChat'] = {
 		ns.sendHeartbeat();
 	});
 
-})(jQuery, Backstage['GroupChat'], AppEnv);
+})(jQuery, Backstage['GroupChat'], AppEnv, document, window);

@@ -317,7 +317,7 @@
 			'Tag' : {
 				'id' : $('#TaggingForeignId').val(),
 				'tags' : $('#TaggingTags').val(),
-				'model' : $('#TaggingModel').val(),
+				'model' : $('#TaggingModel').val()
 			}
 		};
 
@@ -390,7 +390,7 @@
 					error : function() {
 						tagSave.tooltip({ title : 'Tags could not be saved.'}).tooltip('show');
 						setTimeout(function() { tagSave.tooltip('destroy'); }, 2000);
-					},
+					}
 				});
 			});
 		});

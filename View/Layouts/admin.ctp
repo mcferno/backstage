@@ -77,5 +77,6 @@
 
 	echo $this->Html->script('backstage.js?t='.filemtime(JS.'backstage.js'));
 ?>
+
 </body>
 </html>

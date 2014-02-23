@@ -41,12 +41,13 @@ Backstage['MemeGenerator'] = {
 	coords : {}
 };
 
-(function($, ns, env) {
+(function($, ns, env, document, window) {
 	"use strict";
 
-	ns.config = env.Config.MemeGenerator || {};
+	ns.config = env['Config']['MemeGenerator'] || {};
+	var doc = $(document);
 
-	$(document)
+	doc
 		.on('click','.meme-generator button', function(e) {
 			e.preventDefault(); // disable all buttons's defaults
 		})
@@ -549,10 +550,10 @@ Backstage['MemeGenerator'] = {
 
 		var endpoint = env.backendURL + 'assets/find';
 
-		if($.trim(tag) != '') {
+		if($.trim(tag) !== '') {
 			endpoint += '/tag:' + tag;
 		}
-		if($.trim(user) != '') {
+		if($.trim(user) !== '') {
 			endpoint += '/user:' + user;
 		}
 		var filter = tag + '/' + user;
@@ -574,7 +575,7 @@ Backstage['MemeGenerator'] = {
 		$.ajax({
 			url : endpoint,
 			success : ns.showImageChoices
-		})
+		});
 	};
 
 	/**
@@ -609,7 +610,7 @@ Backstage['MemeGenerator'] = {
 		ns.imageChoices.append(images);
 	};
 
-	$(document).ready(function() {
+	doc.ready(function() {
 		// early exit if canvas is not supported
 		if(!isCanvasSupported()) {
 			$('.no-canvas').show().siblings().hide();
@@ -642,4 +643,4 @@ Backstage['MemeGenerator'] = {
 		ns.toggleLiveMode();
 	});
 
-})(jQuery, Backstage['MemeGenerator'], AppEnv);
+})(jQuery, Backstage['MemeGenerator'], AppEnv, document, window);
