@@ -107,7 +107,7 @@ $appRoute("/tags/:action/*", array('controller' => 'tags'));
 $appRoute("/users/:action/*", array('controller' => 'users'));
 $appRoute("/accounts/:action/*", array('controller' => 'accounts'));
 $appRoute("/messages/:action/*", array('controller' => 'messages'));
-$appRoute("/pages/clear_cache", array('controller' => 'pages', 'action' => 'clear_cache'));
+$appRoute("/pages/:action", array('controller' => 'pages'));
 
 // =============================================================================
 

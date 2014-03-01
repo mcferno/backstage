@@ -3,7 +3,6 @@
  * @author Patrick McFern <mcferno AT gmail.com>
  */
 Backstage['GroupChat'] = {
-	dateFormat : 'mmm-dd, h:MM:ss TT',
 	templates : {
 		chatRowTemplate : false
 	},
