@@ -1,0 +1,34 @@
+//
+// Credits to the open source and creative commons content used in Backstage.
+// Thank you for helping make this project possible.
+//
+
+Javascript Libraries
+
+	jQuery (https://github.com/jquery/jquery)
+	Backbone (https://github.com/jashkenas/backbone)
+	Underscore (https://github.com/jashkenas/underscore)
+	Twitter Bootstrap (https://github.com/twbs/bootstrap)
+	Select2 (https://github.com/ivaynberg/select2)
+	Jcrop (http://deepliquid.com/content/Jcrop.html)
+	jQuery cookie (https://github.com/carhartl/jquery-cookie)
+	MediaElement (https://github.com/johndyer/mediaelement)
+
+PHP Libraries
+
+	CakePHP (https://github.com/cakephp/cakephp)
+	WideImage (http://wideimage.sourceforge.net)
+	Facebook PHP SDK (https://github.com/facebook/facebook-php-sdk)
+	Codebird (https://github.com/mynetx/codebird-php.git)
+	GetID3 (https://github.com/JamesHeinrich/getID3)
+	Postable Behavior (https://github.com/mcferno/cakephp-postable-behavior)
+
+Other
+
+	cdnjs.com, CloudFlare, bootstrapcdn and Google for CDN hosting
+	HTML5 Boilerplate (https://github.com/h5bp/html5-boilerplate)
+	Starkness theme (https://github.com/ckalima)
+
+Images
+
+	Subtle Patterns (http://subtlepatterns.com) /img/ui/tactile_noise.png

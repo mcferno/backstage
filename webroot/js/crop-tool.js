@@ -1,5 +1,6 @@
 /**
  * Image cropping module
+ * @author Patrick McFern <mcferno AT gmail.com>
  */
 Backstage['CropTool'] = (function($, env, config) {
 

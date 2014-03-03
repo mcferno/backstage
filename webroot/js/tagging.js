@@ -1,5 +1,6 @@
 /**
  * Content tagging module
+ * @author Patrick McFern <mcferno AT gmail.com>
  */
 Backstage['Tagging'] = (function($, env, config) {
 
