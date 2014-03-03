@@ -45,17 +45,6 @@ class PagesController extends AppController {
 		$this->render(implode('/', $path));
 	}
 
-	public function quote_generator() {
-		$quote = ClassRegistry::init('Quote')->generate();
-		$this->set(compact('quote'));
-
-		if($this->request->is('ajax')) {
-			$this->disableCache(); // expire cache immediately
-			$this->RequestHandler->renderAs($this, 'json');
-			$this->set('_serialize', array('quote'));
-		}
-	}
-
 	/**
 	 * Presents the interface for the js-driven meme generator tool.
 	 */

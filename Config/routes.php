@@ -12,7 +12,6 @@ if(Configure::read('Site.showPublicPages') === true) :
 	Router::connect('/posts/*', array('controller' => 'posts', 'action' => 'index'));
 
 	// Additional features of the site
-	Router::connect('/generator', array('controller' => 'pages', 'action' => 'quote_generator'));
 	Router::connect('/refresh', array('controller' => 'posts', 'action' => 'refresh'));
 
 else: // bring auth section to the front of the site
