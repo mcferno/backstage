@@ -32,3 +32,5 @@ Other
 Images
 
 	Subtle Patterns (http://subtlepatterns.com) /img/ui/tactile_noise.png
+	Fugue Icons (https://github.com/yusukekamiyamane/fugue-icons) /img/ui/icons/*
+	Glyphicons Free (http://glyphicons.com)
