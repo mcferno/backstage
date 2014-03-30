@@ -109,6 +109,7 @@ class VideosController extends AppController {
 
 			// base file path of the eventual new image (missing extension)
 			$new_file = "{$this->Video->thumbnailPath}/{$id}.";
+			$this->Upload->makeDirectoryWritable(dirname(IMAGES . $new_file));
 
 			// file upload
 			if(!empty($this->request->data['Video']['mp4_file']['name']) || !empty($this->request->data['Video']['webm_file']['name'])) {
@@ -126,7 +127,7 @@ class VideosController extends AppController {
 
 				// webm upload
 				$valid_webm = $this->Upload->isValidUpload($this->request->data['Video']['webm_file']);
-				if($valid === true) {
+				if($valid_webm === true) {
 					$webm_file = $new_file . 'webm';
 					$this->Upload->cleanPath(IMAGES . $webm_file);
 					move_uploaded_file($this->request->data['Video']['webm_file']['tmp_name'], IMAGES . $webm_file);
@@ -164,6 +165,7 @@ class VideosController extends AppController {
 
 			// base file path of the eventual new image (missing extension)
 			$new_file = "{$this->Video->thumbnailPath}/full/{$id}.";
+			$this->Upload->makeDirectoryWritable(dirname(IMAGES . $new_file));
 
 			// file upload
 			if(!empty($this->request->data['Video']['image']['name'])) {

@@ -39,26 +39,25 @@
 <?php else: ?>
 
 <div class="row">
-	<div class="col-md-12">
-		<h3>Choose an image to represent this video</h3>
+	<div class="col-md-10 col-md-offset-1">
+		<h3 class="cozy-top">Choose an image to represent this video</h3>
 		<p>If an image already exists, it will be replaced with the one you provide.</p>
 
 		<?php echo $this->Form->create('Video', array('type'=>'file')); ?>
 		<fieldset>
 			<div class="inset">
 				<h4><?= $this->Html->image('ui/icons/computer.png'); ?> Upload an image from your device or computer</h4>
-				<?= $this->Form->input('image', array('type'=>'file','label'=>'')); ?>
+				<?= $this->Form->input('image', array('type'=>'file','label'=> false)); ?>
 				<h4><?= $this->Html->image('ui/icons/network-cloud.png'); ?> Upload an image from a URL</h4>
-				<?= $this->Form->input('url', array('type' => 'text', 'label' =>'', 'class' => 'asset-url', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
-
+				<?= $this->Form->input('url', array('type' => 'text', 'label' => false, 'class' => 'asset-url form-control', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
 
 			<?php
 				echo $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-success'));
 				echo '&nbsp;';
-				echo $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel', array('action' => 'view', $video['Video']['id']), array('class' => 'btn btn-lg', 'escape' => false));
+				echo $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel', array('action' => 'view', $video['Video']['id']), array('class' => 'btn btn-default', 'escape' => false));
 				if($image) {
 					echo '&nbsp;';
-					echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Re-Crop Existing', array('action' => 'image', $video['Video']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info btn-lg', 'escape' => false));
+					echo $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Re-Crop Existing', array('action' => 'image', $video['Video']['id'], 'mode' => 'crop'), array('class' => 'btn btn-info', 'escape' => false));
 				}
 			?>
 			</div>

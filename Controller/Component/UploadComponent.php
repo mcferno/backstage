@@ -38,7 +38,7 @@ class UploadComponent extends Component {
 			curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 			curl_setopt($ch, CURLOPT_FILE, $fileHandle);
-			
+
 			// successful save from url
 			if(curl_exec($ch) !== false) {
 
@@ -65,7 +65,7 @@ class UploadComponent extends Component {
 
 	/**
 	 * Determines whether a file upload is valid
-	 * 
+	 *
 	 * @param {Array} $payload Nested $_FILES content for inspection
 	 * @return {true|String} True if the payload is good, error message otherwise
 	 */
@@ -87,7 +87,7 @@ class UploadComponent extends Component {
 	/**
 	 * Determines whether the provided file URL is valid, and matches allowable
 	 * extensions
-	 * 
+	 *
 	 * @param {String} $payload URL to inspect
 	 * @return {true|String} True if the URL is good, error message otherwise
 	 */
@@ -110,7 +110,7 @@ class UploadComponent extends Component {
 
 	/**
 	 * Obtains the mime-type of the provided file path
-	 * 
+	 *
 	 * @param {String} Server path to the desired file
 	 * @return {String|false} Mime-type detected, or false on error
 	 */
@@ -125,7 +125,7 @@ class UploadComponent extends Component {
 
 	/**
 	 * Obtains the filename extension of a system path or URL
-	 * 
+	 *
 	 * @param {String} $path String to inspect
 	 * @return {String} File extension
 	 */
@@ -147,6 +147,27 @@ class UploadComponent extends Component {
 
 		foreach ($files as $file) {
 			@unlink($file);
+		}
+	}
+
+	/**
+	 * Helper function to create a directory path for writing
+	 *
+	 * @param {String} $filepath Disk path
+	 * @return {Boolean}
+	 */
+	public function makeDirectoryWritable($filepath, $mode = 0777) {
+		// directory does not exist, make it
+		if(!file_exists($filepath)) {
+			return mkdir($filepath, $mode, true);
+
+		// directory exists but is not writeable
+		} elseif(!is_writable($filepath)) {
+			return chmod($filepath, $mode);
+
+		// file exists and is writeable, no actions needed
+		} else {
+			return true;
 		}
 	}
 }
