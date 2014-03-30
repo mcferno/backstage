@@ -21,7 +21,7 @@ $filters = array_intersect_key($this->request->params['named'], array_flip($filt
 			<th><?php echo $this->Paginator->sort('created');?></th>
 			<th><?php echo $this->Paginator->sort('model', 'Model');?></th>
 			<th><?php echo $this->Paginator->sort('user_id', 'User');?></th>
-			<th><?php echo $this->Paginator->sort('text','Text');?></th>
+			<th><?php echo $this->Paginator->sort('text', 'Text');?></th>
 		</tr>
 
 	<?php foreach ($messages as $message): ?>
@@ -39,5 +39,5 @@ $filters = array_intersect_key($this->request->params['named'], array_flip($filt
 	<?php endforeach; ?>
 
 	</table>
-	<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
+	<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 </div>

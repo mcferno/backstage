@@ -26,7 +26,7 @@ class TagsController extends AppController {
 
 	public function beforeScaffold($method) {
 		if(!Access::hasRole('Admin')) {
-			$this->redirect(array('controller'=>'users', 'action' => 'dashboard'));
+			$this->redirect(array('controller' => 'users', 'action' => 'dashboard'));
 		}
 		return parent::beforeScaffold($method);
 	}

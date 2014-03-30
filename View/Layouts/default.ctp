@@ -33,7 +33,7 @@
 		<header id="header">
 			<div class="row">
 				<h1>
-					<span class="title"><?= $this->Html->link('Kenny Quote Machine','/'); ?></span>
+					<span class="title"><?= $this->Html->link('Kenny Quote Machine', '/'); ?></span>
 					<?php
 						foreach($breadcrumbs as $breadcrumb) {
 							echo "<span><a href=\"{$breadcrumb['url']}\">{$breadcrumb['title']}</a></span>";

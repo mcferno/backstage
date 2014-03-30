@@ -28,7 +28,7 @@
 		echo $this->element('ga');
 	?>
 </head>
-<body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action,array('_'=>'-')); ?>">
+<body class="index no-js route-<?= $this->request->controller ?> route-action-<?= strtr($this->request->action, array('_' => '-')); ?>">
 		<?= $this->element('admin/nav-bar'); ?>
 		<div class="container">
 			<div class="content">

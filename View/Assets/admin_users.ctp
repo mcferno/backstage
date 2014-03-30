@@ -1,6 +1,6 @@
 <?php
-	$this->set('contentSpan',10);
-?>	
+	$this->set('contentSpan', 10);
+?>
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
 
@@ -9,8 +9,8 @@
 		<div class="row">
 			<div class="col-xs-6 col-md-12">
 				<ul class="list-unstyled actions">
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape' => false)); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album',array('controller' => 'albums', 'action' => 'save'),array('class'=>'btn btn-default btn-block album-module-btn','escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image', array('action' => 'upload'), array('class' => 'btn btn-success btn-block image-upload-btn', 'escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album', array('controller' => 'albums', 'action' => 'save'), array('class' => 'btn btn-default btn-block album-module-btn', 'escape' => false)); ?></li>
 				</ul>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 			<h3>Contributing Users</h3>
 			<ul class="list-unstyled">
 				<?php foreach($contributingUsers as $user) : ?>
-				<li><strong><?= $this->Html->link($user['User']['username'],array('action'=>'user', $user['User']['id']),array('escape'=>false)); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
+				<li><strong><?= $this->Html->link($user['User']['username'], array('action' => 'user', $user['User']['id']), array('escape' => false)); ?></strong> <span class="glyphicon glyphicon-user"></span></li>
 				<?php endforeach; ?>
 			</ul>
 		</div>
@@ -54,21 +54,21 @@
 
 		<?php if(!empty($tag['Tag'])) : ?>
 		<h3 class="cozy">
-			Viewing Images with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+			Viewing Images with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span>
 			<?= $this->Paginator->link('Clear &times;', array('tag' => false), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
 		<?php endif; //tag ?>
-		
+
 		<?= $this->element('admin/pagination'); ?>
 
 		<div class="image-wall" data-role="taggable" data-model="Asset">
-		<?php 
+		<?php
 			foreach ($images as $image) {
-				echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']),array('action'=>'view',$image['Asset']['id']),array('data-id' => $image['Asset']['id'], 'escape'=>false));
-			} 
+				echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action' => 'view', $image['Asset']['id']), array('data-id' => $image['Asset']['id'], 'escape' => false));
+			}
 		?>
 		</div>
-		
+
 		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>

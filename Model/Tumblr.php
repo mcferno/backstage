@@ -6,13 +6,13 @@ class Tumblr extends AppModel {
 
 	public $useTable = 'tumblr';
 
-	public $actsAs = array('Postable.Postable'=>array(
-		'mapping'=>array(
-			'body'=>'text',
-			'date'=>'timestamp',
-			'permalink'=>'post_url'
+	public $actsAs = array('Postable.Postable' => array(
+		'mapping' => array(
+			'body' => 'text',
+			'date' => 'timestamp',
+			'permalink' => 'post_url'
 		),
-		'inclusionCallback'=>'postableInclusion'
+		'inclusionCallback' => 'postableInclusion'
 	));
 
 	public $uses = array('Account');
@@ -40,7 +40,7 @@ class Tumblr extends AppModel {
 			return false;
 		}
 
-		$accounts = ClassRegistry::init('Account')->find('all',array(
+		$accounts = ClassRegistry::init('Account')->find('all', array(
 			'fields' => array('id', 'handle'),
 			'conditions' => array(
 				'type' => 'Tumblr',
@@ -74,9 +74,9 @@ class Tumblr extends AppModel {
 		foreach($records['response']['posts'] as $post) {
 
 			// check for existing records to update.
-			$existing = $this->find('first',array(
-				'conditions'=>array(
-					'tumblr_id'=>$post['id']
+			$existing = $this->find('first', array(
+				'conditions' => array(
+					'tumblr_id' => $post['id']
 				)
 			));
 
@@ -84,11 +84,11 @@ class Tumblr extends AppModel {
 
 			// base set of fields we are sure will be present
 			$post_data = array(
-				'blog_name'=>$post['blog_name'],
-				'tumblr_id'=>$post['id'],
-				'post_url'=>$post['post_url'],
-				'type'=>$post['type'],
-				'timestamp'=>$post['timestamp'],
+				'blog_name' => $post['blog_name'],
+				'tumblr_id' => $post['id'],
+				'post_url' => $post['post_url'],
+				'type' => $post['type'],
+				'timestamp' => $post['timestamp'],
 			);
 
 			// set the primary key to trigger an update if this record exists

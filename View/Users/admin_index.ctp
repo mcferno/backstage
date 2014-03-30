@@ -29,5 +29,5 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
+	<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 </div>

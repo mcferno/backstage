@@ -13,9 +13,9 @@
 						<div class="dropdown">
 							<a class="dropdown-toggle btn btn-default btn-block" data-toggle="dropdown" href="#" title="Change the order of the Videos list"><span class="glyphicon glyphicon-random"></span> Sort Videos</a>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-									<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape'=>false)); ?></li>
-									<li><?php echo $this->Paginator->sort('title', 'by Video Name <span class="glyphicon glyphicon-comment"></span>', array('escape'=>false)); ?></li>
-									<li><?php echo $this->Paginator->sort('url', 'by URL <span class="glyphicon glyphicon-share-alt"></span>', array('escape'=>false)); ?></li>
+									<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape' => false)); ?></li>
+									<li><?php echo $this->Paginator->sort('title', 'by Video Name <span class="glyphicon glyphicon-comment"></span>', array('escape' => false)); ?></li>
+									<li><?php echo $this->Paginator->sort('url', 'by URL <span class="glyphicon glyphicon-share-alt"></span>', array('escape' => false)); ?></li>
 							</ul>
 						</div>
 					</li>
@@ -28,12 +28,12 @@
 		<h1><?= (!empty($sectionTitle)) ? $sectionTitle : 'Videos'; ?></h1>
 	<?php if(!empty($tag['Tag'])) : ?>
 		<h3 class="cozy">
-			Viewing Videos with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+			Viewing Videos with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span>
 			<?= $this->Html->link('Clear &times;', array('action' => 'index'), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
 	<?php elseif (!empty($user['User'])) : ?>
 		<h3 class="cozy">
-			Viewing Videos submitted by: <?= $user['User']['username']; ?> 
+			Viewing Videos submitted by: <?= $user['User']['username']; ?>
 		</h3>
 	<?php else: ?>
 		<p class="tall">A private collection of member videos for your viewing pleasure.</p>

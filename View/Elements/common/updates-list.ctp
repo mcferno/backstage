@@ -22,7 +22,7 @@
 			}
 			echo $message;
 		?>
-			<div class="time"><?= $this->Time->timeAgoInWords($update['Activity']['created'], array('end' => '+1 year','accuracy' => array('month' => 'month'))); ?></div>
+			<div class="time"><?= $this->Time->timeAgoInWords($update['Activity']['created'], array('end' => '+1 year', 'accuracy' => array('month' => 'month'))); ?></div>
 			<?php if(!empty($update['Activity']['preview'])) : ?>
 			<div class="preview" style="display:none;"><?= $this->Html->image($update['Activity']['preview']); ?></div>
 			<?php endif; ?>

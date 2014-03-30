@@ -203,7 +203,7 @@ class LinksController extends AppController {
 						$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
 						$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
 					} else {
-						$this->Session->setFlash('The URL could not be downloaded, please try again.','messaging/alert-error');
+						$this->Session->setFlash('The URL could not be downloaded, please try again.', 'messaging/alert-error');
 					}
 
 				} else {
@@ -237,7 +237,7 @@ class LinksController extends AppController {
 
 				$status = $this->Link->saveThumbnail($this->data['image_id'], $this->data['coords']);
 				if($status) {
-					$this->Session->setFlash('The image has been cropped and saved.','messaging/alert-success');
+					$this->Session->setFlash('The image has been cropped and saved.', 'messaging/alert-success');
 					$response['status'] = 'success';
 					$response['redirect'] = Router::url(array('controller' => 'links', 'action' => 'view', $this->data['image_id']));
 				}

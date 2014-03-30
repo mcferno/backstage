@@ -12,7 +12,7 @@ class PagesController extends AppController {
 	// admin-only scaffolding
 	public function beforeScaffold($method) {
 		if(!Access::hasRole('Admin')) {
-			$this->redirect(array('controller'=>'users', 'action' => 'dashboard'));
+			$this->redirect(array('controller' => 'users', 'action' => 'dashboard'));
 		}
 		$this->set('schema', $this->Page->schema());
 		return parent::beforeScaffold($method);
@@ -78,7 +78,7 @@ class PagesController extends AppController {
 		if(empty($images)) {
 
 			$this->set('image_tags', $this->Asset->Tag->getListForModel('Asset'));
-			$contributingUsers = $this->Asset->find('all',array(
+			$contributingUsers = $this->Asset->find('all', array(
 				'contain' => array(
 					'User' => array(
 						'fields' => 'id, username'
@@ -112,7 +112,7 @@ class PagesController extends AppController {
 			}
 			$this->Session->setFlash($msg,$type);
 		}
-		$this->redirect($this->referer(array('controller'=>'users','action'=>'dashboard')));
+		$this->redirect($this->referer(array('controller' => 'users', 'action' => 'dashboard')));
 	}
 
 	/**
@@ -126,7 +126,7 @@ class PagesController extends AppController {
 
 		if(!$page) {
 			$this->Session->setFlash('Sorry, the requested page could not be located.', 'messaging/alert-error');
-			$this->redirect(array('controller'=>'users', 'action' => 'dashboard'));
+			$this->redirect(array('controller' => 'users', 'action' => 'dashboard'));
 		}
 		$this->set('page', $page);
 	}

@@ -38,7 +38,7 @@ class UsersController extends AppController {
 				$this->persistSession();
 				$this->redirect($this->Auth->redirectUrl());
 			} else {
-				$this->Session->setFlash('Invalid username or password, try again','messaging/alert-error');
+				$this->Session->setFlash('Invalid username or password, try again', 'messaging/alert-error');
 			}
 		}
 	}
@@ -47,13 +47,13 @@ class UsersController extends AppController {
 	 * User landing page with a number of app content summaries
 	 */
 	public function admin_dashboard() {
-		$users = $this->User->find('all',array(
-			'order'=>'last_seen DESC',
-			'limit'=>7
+		$users = $this->User->find('all', array(
+			'order' => 'last_seen DESC',
+			'limit' => 7
 		));
-		$asset_count = $this->User->Asset->find('count',array(
-			'conditions'=>array(
-				'user_id'=>$this->Auth->user('id')
+		$asset_count = $this->User->Asset->find('count', array(
+			'conditions' => array(
+				'user_id' => $this->Auth->user('id')
 			)
 		));
 		$asset_count_all = $this->User->Asset->find('count');
@@ -162,10 +162,10 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash('The user has been saved','messaging/alert-success');
+				$this->Session->setFlash('The user has been saved', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('The user could not be saved. Please, try again.','messaging/alert-error');
+				$this->Session->setFlash('The user could not be saved. Please, try again.', 'messaging/alert-error');
 			}
 		}
 	}
@@ -217,10 +217,10 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->User->delete()) {
-			$this->Session->setFlash('User deleted','messaging/alert-success');
+			$this->Session->setFlash('User deleted', 'messaging/alert-success');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash('User was not deleted','messaging/alert-error');
+		$this->Session->setFlash('User was not deleted', 'messaging/alert-error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

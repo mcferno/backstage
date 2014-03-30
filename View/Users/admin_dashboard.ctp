@@ -9,49 +9,49 @@
 	<div class="row thumbnails features">
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'pages', 'action' => 'meme_generator')); ?>">
-				<?= $this->Html->image('ui/meme-generator-callout.png',array('alt' => 'Meme Generator')); ?>
+				<?= $this->Html->image('ui/meme-generator-callout.png', array('alt' => 'Meme Generator')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Meme Templates <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>">
-				<?= $this->Html->image('ui/group-chat-callout.jpg',array('alt' => 'Group Chat')); ?>
+				<?= $this->Html->image('ui/group-chat-callout.jpg', array('alt' => 'Group Chat')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'index')); ?>">
-				<?= $this->Html->image('ui/my-images-callout.jpg',array('alt' => 'My Images')); ?>
+				<?= $this->Html->image('ui/my-images-callout.jpg', array('alt' => 'My Images')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id'))); ?>">
-				<?= $this->Html->image('ui/my-albums-callout.jpg',array('alt' => 'My Albums')); ?>
+				<?= $this->Html->image('ui/my-albums-callout.jpg', array('alt' => 'My Albums')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Collections <span class="badge badge-custom"><?= $album_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'videos', 'action' => 'index')); ?>">
-				<?= $this->Html->image('ui/videos-callout.jpg',array('alt' => 'Videos')); ?>
+				<?= $this->Html->image('ui/videos-callout.jpg', array('alt' => 'Videos')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Videos <span class="badge badge-custom"><?= $videos_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'contests', 'action' => 'index')); ?>">
-				<?= $this->Html->image('ui/contest-callout.jpg',array('alt' => 'Caption Battles')); ?>
+				<?= $this->Html->image('ui/contest-callout.jpg', array('alt' => 'Caption Battles')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Battles <span class="badge badge-custom"><?= $contest_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'links', 'action' => 'index')); ?>">
-				<?= $this->Html->image('ui/link-exchange-callout.jpg',array('alt' => 'All Images')); ?>
+				<?= $this->Html->image('ui/link-exchange-callout.jpg', array('alt' => 'All Images')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Links <span class="badge badge-custom"><?= $links_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'posts', 'action' => 'index')); ?>">
-				<?= $this->Html->image('ui/quotes-callout.jpg',array('alt' => 'Quotes')); ?>
+				<?= $this->Html->image('ui/quotes-callout.jpg', array('alt' => 'Quotes')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Quotes <span class="badge badge-custom"><?= $quotes_count; ?></span></h4></div>
 		</div>

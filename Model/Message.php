@@ -44,28 +44,28 @@ class Message extends AppModel {
 
 		return true;
 	}
-	
+
 	/**
 	 * Obtains the number of new messages not seen by the User
 	 */
 	public function countNewMessages($scope, $user_id, $since = false) {
 		if($since === false) {
-			$since = $this->User->field('last_ack',array('id' => $user_id));
-			
+			$since = $this->User->field('last_ack', array('id' => $user_id));
+
 			// since values was not found, or exceeds the max elapsed time.
 			if($since === false || strtotime($since) < $this->minimumSince) {
 				$since = date(MYSQL_DATE_FORMAT, $this->minimumSince);
 			}
-		}	
-		return $this->find('count',array(
-			'conditions'=>array(
+		}
+		return $this->find('count', array(
+			'conditions' => array(
 				'user_id <>' => $user_id,
 				'created >=' => $since,
 				'model' => $scope
 			)
 		));
 	}
-	
+
 	/**
 	 * @param {String} $scope Message container/cluster string
 	 * @param {Mixed} $scopeId Cluster identifier
@@ -84,10 +84,10 @@ class Message extends AppModel {
 			'fields' => array(
 				'id', 'created', 'text'
 			),
-			'conditions'=>array(
+			'conditions' => array(
 				'Message.model' => $scope
 			),
-			'order'=>'Message.created DESC'
+			'order' => 'Message.created DESC'
 		);
 
 		if($scopeId !== false) {
@@ -103,8 +103,8 @@ class Message extends AppModel {
 			$query['conditions']['NOT']['Message.user_id'] = $options['exclude_from'];
 		}
 
-		$results = $this->find('all',$query);
-		
+		$results = $this->find('all', $query);
+
 		foreach ($results as &$result) {
 			$result['Message']['timestamp'] = strtotime($result['Message']['created']);
 		}
@@ -119,9 +119,9 @@ class Message extends AppModel {
 	 * Converts the available Activity model and relationship data to reduce
 	 * it to a human-friendly sentence.
 	 *
-	 * Messages are attached to existing content (Model), so we leverage that 
+	 * Messages are attached to existing content (Model), so we leverage that
 	 * Model's humanization first.
-	 * 
+	 *
 	 * @param {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {

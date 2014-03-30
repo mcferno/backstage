@@ -14,6 +14,6 @@
 			echo $this->Form->input('password', array('class' => 'form-control'));
 		?>
 		</fieldset>
-	<?php echo $this->Form->end(array('label' => 'Log In', 'class'=>'btn btn-primary'));?>
+	<?php echo $this->Form->end(array('label' => 'Log In', 'class' => 'btn btn-primary'));?>
 	</div>
 </div>

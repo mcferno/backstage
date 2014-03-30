@@ -1,15 +1,15 @@
 <?php
-	$this->set('contentSpan',10);
-?>	
+	$this->set('contentSpan', 10);
+?>
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
 		<div class="row">
 			<div class="col-xs-6 col-md-12">
 				<ul class="list-unstyled actions">
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape' => false)); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album',array('controller' => 'albums', 'action' => 'save'),array('class'=>'btn btn-default btn-block album-module-btn','escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image', array('action' => 'upload'), array('class' => 'btn btn-success btn-block image-upload-btn', 'escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album', array('controller' => 'albums', 'action' => 'save'), array('class' => 'btn btn-default btn-block album-module-btn', 'escape' => false)); ?></li>
 					<?php if(isset($album['Album']['id'])) : ?>
-					<li><?= $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span> Delete Album',array('controller' => 'albums', 'action' => 'delete', $album['Album']['id']),array('class'=>'btn btn-block btn-xs btn-danger delete','escape' => false, 'title' => 'Delete this image'), 'Are you sure you wish to delete this album? It will not delete the photos in it.'); ?></li>
+					<li><?= $this->Form->postLink('<span class="glyphicon glyphicon-remove"></span> Delete Album', array('controller' => 'albums', 'action' => 'delete', $album['Album']['id']), array('class' => 'btn btn-block btn-xs btn-danger delete', 'escape' => false, 'title' => 'Delete this image'), 'Are you sure you wish to delete this album? It will not delete the photos in it.'); ?></li>
 					<?php endif; ?>
 				</ul>
 			</div>
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div class="col-md-10">
-	
+
 	<?php if(isset($album)) : ?>
 
 		<?= $this->element('../Albums/_album_overview', array('album' => $album)); ?>
@@ -76,17 +76,17 @@
 	<h3 class="cozy-top">Your Images</h3>
 
 	<?php endif; // recent albums ?>
-		
+
 		<?= $this->element('admin/pagination'); ?>
-		
+
 		<div class="image-wall" data-role="taggable" data-model="Asset">
-		<?php 
+		<?php
 			foreach ($images as $image) {
-				echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action'=>'view',$image['Asset']['id']), array('data-id' => $image['Asset']['id'], 'escape'=>false));
-			} 
+				echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action' => 'view', $image['Asset']['id']), array('data-id' => $image['Asset']['id'], 'escape' => false));
+			}
 		?>
 		</div>
-		
+
 		<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 	</div>
 </div>

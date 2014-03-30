@@ -71,7 +71,7 @@ class User extends AppModel {
 	 */
 	public function setLastLogin($user_id, $timestamp) {
 		return $this->updateAll(
-			array("{$this->alias}.last_login" => '\''.date(MYSQL_DATE_FORMAT,$timestamp).'\''),
+			array("{$this->alias}.last_login" => '\'' . date(MYSQL_DATE_FORMAT, $timestamp) . '\''),
 			array("{$this->alias}.{$this->primaryKey}" => $user_id)
 		);
 	}
@@ -85,7 +85,7 @@ class User extends AppModel {
 	 */
 	public function setLastSeen($user_id, $timestamp) {
 		return $this->updateAll(
-			array("{$this->alias}.last_seen" => '\''.date(MYSQL_DATE_FORMAT,$timestamp).'\''),
+			array("{$this->alias}.last_seen" => '\'' . date(MYSQL_DATE_FORMAT, $timestamp) . '\''),
 			array("{$this->alias}.{$this->primaryKey}" => $user_id)
 		);
 	}
@@ -100,7 +100,7 @@ class User extends AppModel {
 	public function setLastAck($user_id, $timestamp) {
 		$datetime = date(MYSQL_DATE_FORMAT,$timestamp);
 		return $this->updateAll(
-			array("{$this->alias}.last_ack" => '\''.$datetime.'\''),
+			array("{$this->alias}.last_ack" => '\'' . $datetime . '\''),
 			array(
 				"{$this->alias}.{$this->primaryKey}" => $user_id,
 				"{$this->alias}.last_ack <" => $datetime
@@ -118,7 +118,7 @@ class User extends AppModel {
 	public function setLastUpdate($user_id, $timestamp) {
 		$datetime = date(MYSQL_DATE_FORMAT,$timestamp);
 		return $this->updateAll(
-			array("{$this->alias}.last_update" => '\''.$datetime.'\''),
+			array("{$this->alias}.last_update" => '\'' . $datetime . '\''),
 			array(
 				"{$this->alias}.{$this->primaryKey}" => $user_id,
 				"{$this->alias}.last_update <" => $datetime
@@ -138,10 +138,10 @@ class User extends AppModel {
 		// cache-miss
 		if($users === false) {
 			$this->attachTimeDeltas = true;
-			$users = $this->find('all',array(
-				'fields'=>array('username','last_ack'),
-				'conditions'=>array(
-					'last_seen >='=>date(MYSQL_DATE_FORMAT, strtotime('now - 2 minutes'))
+			$users = $this->find('all', array(
+				'fields' => array('username','last_ack'),
+				'conditions' => array(
+					'last_seen >=' => date(MYSQL_DATE_FORMAT, strtotime('now - 2 minutes'))
 				)
 			));
 			$users = Hash::remove($users, '{n}.User.last_ack');

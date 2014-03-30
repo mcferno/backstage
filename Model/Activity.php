@@ -37,14 +37,14 @@ class Activity extends AppModel {
 	public function countNewActivity($user_id, $since = false) {
 		if($since === false) {
 			$since = $this->User->field('last_update', array('id' => $user_id));
-			
+
 			// since values was not found, or exceeds the max elapsed time.
 			if($since === false) {
 				$since = date(MYSQL_DATE_FORMAT, 0);
 			}
-		}	
-		return $this->find('count',array(
-			'conditions'=>array(
+		}
+		return $this->find('count', array(
+			'conditions' => array(
 				'user_id <>' => $user_id,
 				'created >=' => $since
 			)

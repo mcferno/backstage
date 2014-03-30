@@ -4,7 +4,7 @@
 
 			<span class="post-date">
 				<span class="month-and-year"><?php
-					$title = date('F jS, Y',$post['Post']['date']);
+					$title = date('F jS, Y', $post['Post']['date']);
 					if(!empty($post['Post']['permalink']) && $post['Post']['model'] == 'Twitter') {
 						echo $this->Html->link($title,$post['Post']['permalink']);
 					} else {

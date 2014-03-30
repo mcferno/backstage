@@ -13,7 +13,7 @@
 <div class="image-wall" data-role="taggable" data-model="Asset">
 <?php 
 	foreach ($images as $image) {
-		echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action'=>'view',$image['Asset']['id']), array('data-id' => $image['Asset']['id'], 'escape'=>false));
+		echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action' => 'view', $image['Asset']['id']), array('data-id' => $image['Asset']['id'], 'escape' => false));
 	} 
 ?>
 </div>

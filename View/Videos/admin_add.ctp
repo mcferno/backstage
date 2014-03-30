@@ -18,7 +18,7 @@
 		</div>
 		<p class="muted"><br><span class="glyphicon glyphicon-info-sign"></span> Try to re-use existing tags when possible. You may add new tags, but don't make them too specific, the idea is to have many videos per tag.</p>
 
-		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit',array('class'=>'btn btn-primary')); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> Submit', array('class' => 'btn btn-primary')); ?>
 
 	<?php echo $this->Form->end(); ?>
 	</div>

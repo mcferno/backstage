@@ -13,16 +13,16 @@ class Account extends AppModel {
 	public function follow($handle) {
 
 		$params = array(
-			'screen_name'=>$handle,
+			'screen_name' => $handle,
 		);
 
 		$record = ClassRegistry::init('Twitter')->getAPIObject()->users_show($params, true);
 
 		if(!empty($record['id'])) {
 
-			$existing = $this->find('first',array(
-				'conditions'=>array(
-					'user_id'=>$record['id']
+			$existing = $this->find('first', array(
+				'conditions' => array(
+					'user_id' => $record['id']
 				)
 			));
 
@@ -55,7 +55,7 @@ class Account extends AppModel {
 		// create curl resource
 		$ch = curl_init();
 
-		$relative_path = 'profile'.DS.'twitter'.DS.basename($url);
+		$relative_path = 'profile' . DS . 'twitter' . DS . basename($url);
 		$file = fopen(IMAGES . $relative_path, "w");
 
 		// set url

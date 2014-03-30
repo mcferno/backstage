@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> ' . (isset($this->request->data['Album']['id']) ? 'Update' : 'Create'), array('class'=>'btn btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Saving ...")); ?>
+		<?= $this->Form->button('<span class="glyphicon glyphicon-plus-sign"></span> ' . (isset($this->request->data['Album']['id']) ? 'Update' : 'Create'), array('class' => 'btn btn-success btn-upload', 'data-loading-text' => "<span class='glyphicon glyphicon-upload'></span> Saving ...")); ?>
 	</div>
 	<?php echo $this->Form->end(); ?>
 

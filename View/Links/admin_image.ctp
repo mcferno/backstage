@@ -43,16 +43,16 @@
 		<h3 class="cozy-top">Choose an image to represent this link</h3>
 		<p>If an image already exists, it will be replaced with the one you provide.</p>
 
-		<?php echo $this->Form->create('Link', array('type'=>'file')); ?>
+		<?php echo $this->Form->create('Link', array('type' => 'file')); ?>
 		<fieldset>
 			<div class="inset">
 				<h4><?= $this->Html->image('ui/icons/computer.png'); ?> Upload an image from your device or computer</h4>
-				<?= $this->Form->input('image', array('type'=>'file','label'=> false)); ?>
+				<?= $this->Form->input('image', array('type' => 'file', 'label' => false)); ?>
 				<h4><?= $this->Html->image('ui/icons/network-cloud.png'); ?> Upload an image from a URL</h4>
 				<?= $this->Form->input('url', array('type' => 'text', 'label' => false, 'class' => 'asset-url form-control', 'placeholder' => 'http://example.com/path/to/image.jpg')); ?>
 
 			<?php
-				echo $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class'=>'btn btn-success'));
+				echo $this->Form->button('<span class="glyphicon glyphicon-upload"></span> Upload', array('class' => 'btn btn-success'));
 				echo '&nbsp;';
 				echo $this->Html->link('<span class="glyphicon glyphicon-ban-circle"></span> Cancel', array('action' => 'view', $link['Link']['id']), array('class' => 'btn btn-default', 'escape' => false));
 				if($image) {

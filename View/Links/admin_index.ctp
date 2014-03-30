@@ -11,9 +11,9 @@
 						<div class="dropdown">
 							<a class="dropdown-toggle btn btn-default btn-block" data-toggle="dropdown" href="#" title="Change the order of the Links list"><span class="glyphicon glyphicon-random"></span> Sort Links</a>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-									<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape'=>false)); ?></li>
-									<li><?php echo $this->Paginator->sort('title', 'by Link Name <span class="glyphicon glyphicon-comment"></span>', array('escape'=>false)); ?></li>
-									<li><?php echo $this->Paginator->sort('url', 'by URL <span class="glyphicon glyphicon-share-alt"></span>', array('escape'=>false)); ?></li>
+									<li><?php echo $this->Paginator->sort('created', 'by Date Submitted <span class="glyphicon glyphicon-time"></span>', array('direction' => 'desc', 'escape' => false)); ?></li>
+									<li><?php echo $this->Paginator->sort('title', 'by Link Name <span class="glyphicon glyphicon-comment"></span>', array('escape' => false)); ?></li>
+									<li><?php echo $this->Paginator->sort('url', 'by URL <span class="glyphicon glyphicon-share-alt"></span>', array('escape' => false)); ?></li>
 							</ul>
 						</div>
 					</li>

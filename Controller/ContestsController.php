@@ -44,7 +44,7 @@ class ContestsController extends AppController {
 				}
 
 			} else {
-				$this->Session->setFlash('There was an error with your caption battle set up. Please try again.','messaging/alert-error');
+				$this->Session->setFlash('There was an error with your caption battle set up. Please try again.', 'messaging/alert-error');
 			}
 		}
 	}
@@ -88,7 +88,7 @@ class ContestsController extends AppController {
 			}
 
 			try {
-				$res = $fbSDK->api('/'.$this->Session->read('Auth.User.fb_target').'/feed','POST', $fbPost);
+				$res = $fbSDK->api('/' . $this->Session->read('Auth.User.fb_target') . '/feed', 'POST', $fbPost);
 
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
@@ -97,7 +97,7 @@ class ContestsController extends AppController {
 				}
 			} catch (FacebookApiException $e) {}
 
-			$this->Session->setFlash('An error occurred while attempting to post to Facebook.','messaging/alert-error');
+			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
 			$this->redirect($contest_route);
 		}
 
@@ -117,7 +117,7 @@ class ContestsController extends AppController {
 	public function admin_view($id = null) {
 
 		if(empty($id) || !$this->Contest->exists($id)) {
-			$this->Session->setFlash('Sorry, that contest doesn\'t appear to exist', 'messaging/alert-error');
+			$this->Session->setFlash('Sorry, that contest doesn’t appear to exist', 'messaging/alert-error');
 			$this->redirect(array('action' => 'index'));
 		}
 
@@ -265,7 +265,7 @@ class ContestsController extends AppController {
 				}
 			} catch (FacebookApiException $e) {}
 
-			$this->Session->setFlash('An error occurred while attempting to post to Facebook.','messaging/alert-error');
+			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
 			$this->redirect($contest_route);
 		}
 

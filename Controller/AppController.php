@@ -16,7 +16,7 @@ class AppController extends Controller {
 	public $components = array(
 		'RequestHandler', 'Session', 'Cookie',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'users', 'action'=>'dashboard'),
+			'loginRedirect' => array('controller' => 'users', 'action' => 'dashboard'),
 			'authError' => 'You must be logged in to continue',
 			'flash' => array(
 				'element' => 'messaging/alert',
@@ -56,7 +56,7 @@ class AppController extends Controller {
 
 	public function adminBeforeFilter() {
 		$this->layout = 'admin';
-		$this->userHome = array('controller'=>'users', 'action' => 'dashboard');
+		$this->userHome = array('controller' => 'users', 'action' => 'dashboard');
 
 		// restrict certain actions to higher-level roles
 		if(!empty($this->restrictedRoutes) && !Access::hasRole('Admin') && in_array($this->request->params['action'], $this->restrictedRoutes)) {
@@ -89,9 +89,9 @@ class AppController extends Controller {
 
 	public function beforeRender() {
 		if(!$this->request->is('ajax')) {
-			$this->set('breadcrumbs',array());
-			$this->set('contentSpan',8);
-			$this->set('onlineUsers',$this->User->getOnlineUsers());
+			$this->set('breadcrumbs', array());
+			$this->set('contentSpan', 8);
+			$this->set('onlineUsers', $this->User->getOnlineUsers());
 		}
 
 		if(isset($this->request->params['prefix'])

@@ -1,13 +1,13 @@
 <?php $this->set('suppressSubnav', true); ?>
 <div class="posts index">
 	<h2>Quotes</h2>
-	<p class="tall">Aggregated posts from <?= implode(', ',$types); ?></p>
+	<p class="tall">Aggregated posts from <?= implode(', ', $types); ?></p>
 	<?= $this->element('admin/pagination'); ?>
 	<table cellpadding="0" cellspacing="0" class="table table-striped">
 	<tr>
 		<th><?php echo $this->Paginator->sort('date');?></th>
-		<th class="hidden-xs"><?php echo $this->Paginator->sort('model','Source');?></th>
-		<th><?php echo $this->Paginator->sort('body','Text');?></th>
+		<th class="hidden-xs"><?php echo $this->Paginator->sort('model', 'Source');?></th>
+		<th><?php echo $this->Paginator->sort('body', 'Text');?></th>
 	</tr>
 	<?php
 	foreach ($posts as $post):
@@ -18,7 +18,7 @@
 		}
 	?>
 	<tr>
-		<td class="time"><?php echo h(date('Y.m.d',$post['Post']['date'])); ?>&nbsp;</td>
+		<td class="time"><?php echo h(date('Y.m.d', $post['Post']['date'])); ?>&nbsp;</td>
 		<td class="hidden-xs"><?php echo h($post['Post']['model']); ?>&nbsp;</td>
 		<td class="post-body">
 			<?php echo $post['Post']['body']; ?>&nbsp;
@@ -32,5 +32,5 @@
 	</tr>
 <?php endforeach; ?>
 	</table>
-	<?= $this->element('admin/pagination',array('show_summary'=>true)); ?>
+	<?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 </div>

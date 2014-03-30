@@ -6,21 +6,21 @@ class Twitter extends AppModel {
 
 	public $useTable = 'twitter';
 
-	public $actsAs = array('Postable.Postable'=>array(
-		'mapping'=>array(
-			'body'=>'text',
-			'date'=>'created_at',
-			'permalink'=>'source',
-			'source'=>false
+	public $actsAs = array('Postable.Postable' => array(
+		'mapping' => array(
+			'body' => 'text',
+			'date' => 'created_at',
+			'permalink' => 'source',
+			'source' => false
 		),
-		'inclusionCallback'=>'postableInclusion'
+		'inclusionCallback' => 'postableInclusion'
 	));
 
 	/**
 	 * Pull the latest tweets from all Accounts currently tracked by the system
 	 */
 	public function refresh() {
-		$accounts = ClassRegistry::init('Account')->find('all',array(
+		$accounts = ClassRegistry::init('Account')->find('all', array(
 			'fields' => array('id', 'handle', 'user_id'),
 			'conditions' => array(
 				'type' => 'Twitter',
@@ -36,8 +36,8 @@ class Twitter extends AppModel {
 
 			// API tweet search parameters
 			$params = array(
-				'screen_name'=>$account['Account']['handle'],
-				'count'=>'100'
+				'screen_name' => $account['Account']['handle'],
+				'count' => '100'
 			);
 
 			// attempt to find the last available tweet.
@@ -54,17 +54,17 @@ class Twitter extends AppModel {
 
 					// base set of fields we are sure will be present
 					$post_data = array(
-						'id'=>$record['id_str'],
-						'created_at'=>strtotime($record['created_at']),
-						'text'=>$record['text'],
-						'source'=>'https://twitter.com/'.$params['screen_name'].'/status/'.$record['id_str'],
-						'truncated'=>$record['truncated'],
-						'in_reply_to_status_id'=>$record['in_reply_to_status_id_str'],
-						'in_reply_to_user_id'=>$record['in_reply_to_user_id_str'],
-						'in_reply_to_screen_name'=>$record['in_reply_to_screen_name'],
-						'favorited'=>$record['favorited'],
-						'user_id'=>$record['user']['id_str'],
-						'data'=>json_encode($record)
+						'id' => $record['id_str'],
+						'created_at' => strtotime($record['created_at']),
+						'text' => $record['text'],
+						'source' => 'https://twitter.com/'.$params['screen_name'].'/status/'.$record['id_str'],
+						'truncated' => $record['truncated'],
+						'in_reply_to_status_id' => $record['in_reply_to_status_id_str'],
+						'in_reply_to_user_id' => $record['in_reply_to_user_id_str'],
+						'in_reply_to_screen_name' => $record['in_reply_to_screen_name'],
+						'favorited' => $record['favorited'],
+						'user_id' => $record['user']['id_str'],
+						'data' => json_encode($record)
 					);
 
 					$this->save($post_data);

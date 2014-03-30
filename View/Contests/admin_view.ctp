@@ -1,5 +1,5 @@
 <?php
-	$this->set('contentSpan',10);
+	$this->set('contentSpan', 10);
 	$landing_page = (empty($this->request->params['named']['page']));
 ?>
 <div class="row">
@@ -33,7 +33,7 @@
 			$winner_confirm = "Do you wish to choose the current caption by {$assets[0]['User']['username']} as the Caption Battle Champion? This will end the contest and halt any further submissions.";
 		?>
 		<ul class="list-unstyled actions">
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-star"></span> Declare as Winner', array('controller'=>'contests', 'action' => 'set_winner', $contest['Contest']['id'], $assets[0]['Asset']['id']),array('class'=>'btn btn-primary','escape'=>false), $winner_confirm); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-star"></span> Declare as Winner', array('controller' => 'contests', 'action' => 'set_winner', $contest['Contest']['id'], $assets[0]['Asset']['id']), array('class' => 'btn btn-primary', 'escape' => false), $winner_confirm); ?></li>
 		</ul>
 
 		<?php endif; // admin tools for open contest ?>
@@ -42,9 +42,9 @@
 		<h3 class="cozy-top">Actions</h3>
 		<ul class="list-unstyled actions">
 			<?php if(empty($contest['Contest']['winning_asset_id'])) : ?>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']),array('class'=>'btn btn-success','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-pencil"></span> Add Caption', array('controller' => 'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id']), array('class' => 'btn btn-success', 'escape' => false)); ?></li>
 			<?php endif; ?>
-			<li><?= $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> Battles', array('action'=>'index'),array('class'=>'btn btn-default','escape'=>false)); ?></li>
+			<li><?= $this->Html->link('<span class="glyphicon glyphicon-chevron-left"></span> Battles', array('action' => 'index'), array('class' => 'btn btn-default', 'escape' => false)); ?></li>
 		</ul>
 	</div>
 	<div class="col-md-10">
@@ -62,7 +62,7 @@
 
 		<?php if(empty($assets)) : ?>
 
-		<p class="alert alert-info">This caption battle has no entries yet, <?= $this->Html->link('add your own entry!', array('controller'=>'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id'])); ?></p>
+		<p class="alert alert-info">This caption battle has no entries yet, <?= $this->Html->link('add your own entry!', array('controller' => 'pages', 'action' => 'meme_generator', 'contest' => $contest['Contest']['id'])); ?></p>
 
 		<?php else : // contest has entries ?>
 
@@ -77,12 +77,12 @@
 
 			<li class="col-xs-6 col-sm-4 col-md-3 text-center">
 				<div class="thumbnail">
-					<?= $this->Html->link($this->Html->image($asset['Asset']['image-thumb']),array('action'=>'view',$contest['Contest']['id'], 'page'=> $page),array('escape'=>false)); ?>
+					<?= $this->Html->link($this->Html->image($asset['Asset']['image-thumb']), array('action' => 'view', $contest['Contest']['id'], 'page'=> $page), array('escape' => false)); ?>
 					<p>
 						<?php if($winner) { echo $this->Html->image('ui/icons/trophy.png', array('title' => 'Winning Entry!')); } ?>
 						by <strong><?= $asset['User']['username']; ?></strong>
 					</p>
-					<p class="date"><?= date('Y.m.d H:m:s',strtotime($asset['Asset']['created'])); ?></p>
+					<p class="date"><?= date('Y.m.d H:m:s', strtotime($asset['Asset']['created'])); ?></p>
 				</div>
 			</li>
 

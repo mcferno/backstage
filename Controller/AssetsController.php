@@ -125,14 +125,14 @@ class AssetsController extends AppController {
 			$this->redirect('admin_users');
 		}
 		if(Access::isOwner($user_id)) {
-			$this->redirect(array('action'=>'admin_index'));
+			$this->redirect(array('action' => 'admin_index'));
 		}
 		$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_id;
 
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Asset->getTagTally(array('Asset.user_id' => $user_id)));
-		$this->set('user',$this->Asset->User->findById($user_id));
-		$this->set('images',$this->paginate('Asset'));
+		$this->set('user', $this->Asset->User->findById($user_id));
+		$this->set('images', $this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $user_id))));
 	}
 
@@ -156,7 +156,7 @@ class AssetsController extends AppController {
 		}
 
 		$this->paginate['Asset']['contain'][] = 'User';
-		$contributingUsers = $this->Asset->find('all',array(
+		$contributingUsers = $this->Asset->find('all', array(
 			'contain' => 'User',
 			'group' => 'Asset.user_id'
 		));
@@ -168,9 +168,9 @@ class AssetsController extends AppController {
 		unset($tag_conditions['Tagging.tag_id']);
 		$this->set('tag_tally', $this->Asset->getTagTally($tag_conditions));
 
-		$this->set('images',$this->paginate('Asset'));
+		$this->set('images', $this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count'));
-		$this->set('contributingUsers',$contributingUsers);
+		$this->set('contributingUsers', $contributingUsers);
 	}
 
 	/**
@@ -351,7 +351,7 @@ class AssetsController extends AppController {
 							rename($file, $new_file);
 
 							$message = 'The image has been downloaded successfully!';
-							$redirect = array('action'=>'view', $asset_id);
+							$redirect = array('action' => 'view', $asset_id);
 						} else {
 							$message = 'Image processing has failed, please try again.';
 							$error = true;
@@ -385,7 +385,7 @@ class AssetsController extends AppController {
 		}
 
 		$this->Session->setFlash($message, ($error === false) ? 'messaging/alert-success' : 'messaging/alert-error');
-		$redirect = ($redirect) ? $redirect : array('action'=>'index');
+		$redirect = ($redirect) ? $redirect : array('action' => 'index');
 		$this->redirect($redirect);
 	}
 
@@ -404,7 +404,7 @@ class AssetsController extends AppController {
 		));
 
 		if(empty($asset)) {
-			$this->Session->setFlash('Image could not be found.','messaging/alert-error');
+			$this->Session->setFlash('Image could not be found.', 'messaging/alert-error');
 			$this->redirect($this->referer('index'));
 		}
 
@@ -435,7 +435,7 @@ class AssetsController extends AppController {
 
 				$status = $this->Asset->saveImage($image_path, $this->Auth->user('id'), 'Crop', array('crop' => $this->data['coords']));
 				if($status) {
-					$this->Session->setFlash('The image has been cropped and saved.','messaging/alert-success');
+					$this->Session->setFlash('The image has been cropped and saved.', 'messaging/alert-success');
 					$response['status'] = 'success';
 					$response['redirect'] = Router::url(array('controller' => 'assets', 'action' => 'view', $this->Asset->id));
 				}
@@ -478,8 +478,8 @@ class AssetsController extends AppController {
 
 		// only owners of the image and users who are cleared for fb integration can continue
 		if($asset !== true || $this->Session->check('Auth.User.fb_target') === false) {
-			$this->Session->setFlash('Sorry, you can\'t post this image at this time.','messaging/alert-error');
-			$this->redirect($this->referer(array('action'=>'index')));
+			$this->Session->setFlash('Sorry, you can’t post this image at this time.', 'messaging/alert-error');
+			$this->redirect($this->referer(array('action' => 'index')));
 		}
 
 		$fbSDK = $this->User->getFacebookObject();
@@ -497,24 +497,24 @@ class AssetsController extends AppController {
 			try {
 				// post to the api (upload)
 				$fbSDK->setFileUploadSupport(true);
-				$res = $fbSDK->api('/'.$this->Session->read('Auth.User.fb_target').'/photos','POST',$imagePost);
+				$res = $fbSDK->api('/' . $this->Session->read('Auth.User.fb_target') . '/photos', 'POST', $imagePost);
 
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
 					$this->Asset->id = $id;
-					$this->Asset->saveField('fb_id',$res['id']);
+					$this->Asset->saveField('fb_id', $res['id']);
 
-					$this->Session->setFlash('This image has been posted to Facebook.','messaging/alert-success');
-					$this->redirect($this->referer(array('action'=>'view',$id)));
+					$this->Session->setFlash('This image has been posted to Facebook.', 'messaging/alert-success');
+					$this->redirect($this->referer(array('action' => 'view', $id)));
 				}
 			} catch (FacebookApiException $e) {}
 
-			$this->Session->setFlash('An error occurred while attempting to post to Facebook.','messaging/alert-error');
-			$this->redirect($this->referer(array('action'=>'view',$id)));
+			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
+			$this->redirect($this->referer(array('action' => 'view', $id)));
 		}
 
 		$redirectParams = array(
-			'action'=>'post', $id
+			'action' => 'post', $id
 		);
 		if(!empty($this->request->query['message'])) {
 			$redirectParams['?'] = array('message' => $this->request->query['message']);
@@ -547,15 +547,15 @@ class AssetsController extends AppController {
 	 */
 	public function admin_delete($id = null) {
 		if(empty($id) || !$this->Asset->isOwner($this->Auth->user('id'), $id)) {
-			$this->Session->setFlash('Image could not be found.','messaging/alert-error');
+			$this->Session->setFlash('Image could not be found.', 'messaging/alert-error');
 			$this->redirect($this->referer('index'));
 		}
 
 		if($this->Asset->delete($id)) {
-			$this->Session->setFlash('The image has been deleted.','messaging/alert-success');
-			$this->redirect(array('action'=>'index'));
+			$this->Session->setFlash('The image has been deleted.', 'messaging/alert-success');
+			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash('Image could not be deleted.','messaging/alert-error');
+		$this->Session->setFlash('Image could not be deleted.', 'messaging/alert-error');
 		$this->redirect($this->referer('index'));
 	}
 }

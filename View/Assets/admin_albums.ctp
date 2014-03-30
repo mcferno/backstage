@@ -1,13 +1,13 @@
 <?php
-	$this->set('contentSpan',10);
-?>	
+	$this->set('contentSpan', 10);
+?>
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
 		<div class="row">
 			<div class="col-xs-6 col-md-12">
 				<ul class="list-unstyled actions">
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image',array('action'=>'upload'),array('class'=>'btn btn-success btn-block image-upload-btn','escape' => false)); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album',array('controller' => 'albums', 'action' => 'save'),array('class'=>'btn btn-default btn-block album-module-btn','escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Upload Image', array('action' => 'upload'), array('class' => 'btn btn-success btn-block image-upload-btn', 'escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-camera"></span> ' . (isset($album['Album']['id']) ? 'Edit' : 'Create') . ' Album', array('controller' => 'albums', 'action' => 'save'), array('class' => 'btn btn-default btn-block album-module-btn', 'escape' => false)); ?></li>
 				</ul>
 			</div>
 		</div>
