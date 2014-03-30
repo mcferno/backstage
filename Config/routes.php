@@ -106,7 +106,7 @@ $appRoute("/tags/:action/*", array('controller' => 'tags'));
 $appRoute("/users/:action/*", array('controller' => 'users'));
 $appRoute("/accounts/:action/*", array('controller' => 'accounts'));
 $appRoute("/messages/:action/*", array('controller' => 'messages'));
-$appRoute("/pages/:action", array('controller' => 'pages'));
+$appRoute("/pages/:action/*", array('controller' => 'pages'));
 
 // =============================================================================
 
