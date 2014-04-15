@@ -107,6 +107,7 @@ class AppController extends Controller {
 	public function adminBeforeRender() {
 		$this->set('siteName', Configure::read('Site.name'));
 		$this->set('backend', Configure::read('Site.backendUrl'));
+		$this->set('userHome', $this->userHome);
 	}
 
 	/**

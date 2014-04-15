@@ -4,23 +4,38 @@
 	}
 ?>
 <div class="users form">
-<?php echo $this->Form->create('User');?>
+<?php
+	echo $this->Form->create('User');
+	echo $this->Form->input('id');
+?>
 	<fieldset>
 		<legend>
 			<?= (Access::isOwner($this->Form->value('id'))) ? 'Modify your account' : 'Modify user account'; ?>
 		</legend>
+
+		<p>You may change your username or password below. Remember them for the next time you need to log in.</p>
+
+		<div class="row">
+			<div class="col-md-6">
+				<?= $this->Form->input('username', array('class' => 'form-control')); ?>
+				<?php
+					if(Access::hasRole('Admin')) {
+						echo $this->Form->input('role', array('options' => Access::$assignableRoles, 'class' => 'form-control'));
+					}
+				?>
+			</div>
+			<div class="col-md-6">
+				<?= $this->Form->input('password', array('value' => '', 'label' => 'New Password', 'class' => 'form-control', 'required' => false, 'placeholder' => 'Leave blank to keep your current password')); ?>
+			</div>
+		</div>
 	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('username');
-		echo $this->Form->input('password', array('value' => '', 'label' => 'New Password'));
-	?>
-		<div class="alert alert-info">Leave blank to keep current password.</div>
-	<?php
-		if(Access::hasRole('Admin')) {
-			echo $this->Form->input('role', array('options' => Access::$assignableRoles));
-		}
-		echo $this->Form->button('Submit', array('class' => 'btn btn-primary'));
+		echo $this->Form->button('Save Changes', array('class' => 'btn btn-primary'));
 	?>
 	</fieldset>
-<?php echo $this->Form->end();?>
+	<?= $this->Form->end(); ?>
+
+	<p class="cozy">
+		<?= $this->Html->link('<i class="glyphicon glyphicon-chevron-left"></i> Back to My Dashboard', $userHome, array('escape' => false)); ?>
+	</p>
+
 </div>
