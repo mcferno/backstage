@@ -58,6 +58,7 @@ For production-ready sites, I use the following directory layout:
 				index.php
 
 This structure has a number of advantages:
+
 1. CakePHP is decoupled from the application, allowing easy point-release updates (2.4.x) to be deployed
 2. Only static assets (css, js, images) are accessible via the public webroot
 3. This layout equally works in development environments
@@ -71,6 +72,7 @@ This structure has a number of advantages:
 	* tmp/
 4. Execute the SQL queries in Config/Schema/schema.sql in an empty database
 5. Create an empty file Config/bootstrap.env.php, this will hold all your app configurations. Add the following settings:
+
 		Configure::write('debug', 0); // disable debug mode
 		Configure::write('Cache.check', true); // enable view caching
 
@@ -78,8 +80,10 @@ This structure has a number of advantages:
 		Configure::write('Security.salt', 'REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING');
 		Configure::write('Security.cipherSeed', 'REPLACE-WITH-RANDOM-DIGIT-SERIES'); // digits only
 		Configure::write('Cookie.key', 'REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING');
+
 6. Replace the strings aboved marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation.
 7. Add your database credentials to the bootstrap.env.php file, example:
+
 		class DATABASE_CONFIG {
 			public $default = array(
 				'datasource' => 'Database/Mysql',
@@ -91,6 +95,7 @@ This structure has a number of advantages:
 				'encoding' => 'utf8'
 			);
 		}
+
 8. Temporarily add this line to the boostrap.env.php
 		Configure::write('setup', true);
 9. Visit the "/setup" URL for this site in your browser to configure the first administrator user (example.com/setup).
@@ -135,30 +140,48 @@ Backstage supports a limited number of user-configurable options. To override a 
 #### General Settings
 
 * **Site name** : Change the name "Backstage" to anything you want, but best to keep it short.
+
 		Configure::write('Site.name', 'My Hangout');
+
 * **Remember-me Cookie** : Duration of the user remember-me cookie
+
 		Configure::write('Site.rememberMeExpiry', '+3 months');
+
 
 #### Chat Settings
 
 * **Chat Log Expiry** : How long until chat message expire in the group chat (time in seconds)
+
 		Configure::write('Site.Chat.messageExpiry', 14400);
+
 * **Chat Log Limit** : How many messages will appear when viewing the chat log
+
 		Configure::write('Site.Chat.maxHistoryCount', 50);
 
 #### Image Settings
 
 * **Images per Page** : How many images are shown per page for desktop users
+
 		Configure::write('Site.Images.perPage', 60);
+
 * **Images per Page on Mobile**
+
 		Configure::write('Site.Images.perPageMobile', 30);
+
 * **Recent Albums** : How many of the most recent albums are listed
+
 		Configure::write('Site.Images.recentAlbums.', 2);
+
 * **Album Preview** : How many album images to show in the preview card
+
 		Configure::write('Site.Images.albumPreviews', 4);
+
 * **Image Minimum Dimensions** : Minimum images size of user added images in pixel, not including cropped images
+
 		Configure::write('Site.Images.minDimension', 640);
+
 * **Image Maximum Dimensions** : Maximum pixel width or height when images are downscaled
+
 		Configure::write('Site.Images.maxDimension', 1200);
 
 ## Motivation and future of the project
