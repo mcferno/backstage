@@ -137,11 +137,11 @@
 
 	<div class="modal-header">
 		<button class="close" data-dismiss="modal">×</button>
-		<h3 class="fb">Post to Facebook</h3>
+		<h3 class="fb">Post to Facebook Group</h3>
 	</div>
 	<?= $this->Form->create('Asset', array('url' => array('action' => 'post', $asset['Asset']['id']),'type' => 'get')); ?>
 	<div class="modal-body">
-		<h4>Do you wish to upload this image and post it to the TYS group?</h4>
+		<h4>Do you wish to upload this image and post it to the Facebook group?</h4>
 		<p>The post will be private, and only viewable by the members of the group.</p>
 		<?php if(!empty($asset['Asset']['fb_id'])) : ?>
 		<p class="alert alert-warning">This image has been previously posted.</p>
