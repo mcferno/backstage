@@ -13,7 +13,7 @@ class FacebookBehavior extends ModelBehavior {
 	 */
 	public function hasFacebookAccess() {
 		$sdk = $this->getFacebookObject();
-		return $sdk->getUser() !== false;
+		return $sdk->getUser() !== 0;
 	}
 
 	/**
@@ -79,7 +79,7 @@ class FacebookBehavior extends ModelBehavior {
 	 * @param {String} $redirect_url Callback URL once the user authenticates
 	 * @return {String} Facebook URL to authenticate the user
 	 */
-	public function getFacebookLoginUrl($redirect_url) {
+	public function getFacebookLoginUrl(Model $model, $redirect_url) {
 		$sdk = $this->getFacebookObject();
 
 		$login_params = array(
@@ -98,7 +98,7 @@ class FacebookBehavior extends ModelBehavior {
 		$user_id = $sdk->getUser();
 		$groups = array();
 
-		if($user_id !== false) {
+		if($user_id) {
 			try {
 				$result = $sdk->api("/{$user_id}/groups", 'GET');
 				if(!empty($result['data'])) {
