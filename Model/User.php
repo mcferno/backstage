@@ -42,9 +42,14 @@ class User extends AppModel {
 	);
 
 	public function beforeSave($options = array()) {
-	    if (!empty($this->data[$this->alias]['password'])) {
-	        $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
-	    }
+		// hash password
+		if (!empty($this->data[$this->alias]['password'])) {
+			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
+		}
+
+		if (isset($this->data[$this->alias]['fb_target']) && $this->data[$this->alias]['fb_target'] == '') {
+			$this->data[$this->alias]['fb_target'] = null;
+		}
 	    return true;
 	}
 
