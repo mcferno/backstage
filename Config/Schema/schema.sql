@@ -121,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `contests` (
   `user_id` char(36) DEFAULT NULL,
   `asset_id` char(36) DEFAULT NULL,
   `winning_asset_id` char(36) DEFAULT NULL,
+  `fb_id` varchar(50) NULL DEFAULT NULL,
   `message` text,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),

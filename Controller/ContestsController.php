@@ -67,19 +67,15 @@ class ContestsController extends AppController {
 			$this->redirect($contest_route);
 		}
 
-		$fbSDK = $this->User->getFacebookObject();
-
-		// verify active FB user session
-		if($fbSDK->getUser()) {
-
+		if($this->User->hasFacebookAccess()) {
 			$asset_path = $this->Asset->getPath($contest['Contest']['asset_id'], 200);
 
 			$fbPost = array(
 				'link' => Router::url($contest_route, true),
 				'picture' => Router::url('/', true) . IMAGES_URL . $asset_path,
 				'name' => $this->Contest->fbStrings['new_title'],
-				'caption' => $this->Auth->user('username') . ' has declared a new battle.',
-				'description' => $this->Contest->fbStrings['new_desc']
+				'caption' => String::insert($this->Contest->fbStrings['new_caption'], array('user' => $this->Auth->user('username'))),
+				'description' => String::insert($this->Contest->fbStrings['new_desc'], array('site_name' => Configure::read('Site.name')))
 			);
 
 			// attach optional message
@@ -87,27 +83,25 @@ class ContestsController extends AppController {
 				$fbPost['message'] = $contest['Contest']['message'];
 			}
 
-			try {
-				$res = $fbSDK->api('/' . $this->Session->read('Auth.User.fb_target') . '/feed', 'POST', $fbPost);
+			$result = $this->User->facebookApiCall('/' . $this->Session->read('Auth.User.fb_target') . '/feed', 'POST', $fbPost);
 
-				// post was successful, record the id for reference
-				if(!empty($res['id'])) {
-					$this->Session->setFlash('Your caption battle has been announced on Facebook!', 'messaging/alert-success');
-					$this->redirect($contest_route);
-				}
-			} catch (FacebookApiException $e) {}
+			// post was successful, record the id for reference
+			if(!empty($result['id'])) {
+				$this->Contest->id = $id;
+				$this->Contest->saveField('fb_id', $result['id']);
+
+				$this->Session->setFlash('Your caption battle has been announced on Facebook!', 'messaging/alert-success');
+				$this->redirect($contest_route);
+			}
 
 			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
 			$this->redirect($contest_route);
-		}
 
 		// send the user away to authenticate
-		$login_params = array(
-			'scope' => $this->User->getFacebookPermissions(),
-			'redirect_uri' => Router::url(array('action' => 'announce', $id), true)
-		);
-
-		$this->redirect($fbSDK->getLoginUrl($login_params));
+		} else {
+			$redirect_url = $this->User->getFacebookLoginUrl(Router::url(array('controller' => 'contests', 'action' => 'admin_announce', $id), true));
+			$this->redirect($redirect_url);
+		}
 	}
 
 	/**

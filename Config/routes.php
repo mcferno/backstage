@@ -53,6 +53,8 @@ $appRoute = function($uri, $route = array(), $params = array()) use ($app_prefix
 $appRoute((empty($app_prefix) ? '/' : ''), Configure::read('Site.backendUrl'));
 $appRoute("/dashboard", array('controller' => 'users', 'action' => 'dashboard'));
 $appRoute("/dashboard/updates/*", array('controller' => 'users', 'action' => 'updates'));
+$appRoute("/account", array('controller' => 'users', 'action' => 'account'));
+$appRoute("/account/groups", array('controller' => 'users', 'action' => 'fb_groups'));
 $appRoute("/users/heartbeat/*", array('controller' => 'users', 'action' => 'heartbeat'));
 $appRoute("/setup", array('controller' => 'users', 'action' => 'setup'));
 

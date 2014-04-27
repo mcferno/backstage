@@ -29,6 +29,9 @@ class Asset extends AppModel {
 		'Tag' => array(
 			'joinTable' => 'taggings',
 			'foreignKey' => 'foreign_id'
+		),
+		'ContestEntry' => array(
+			'className' => 'Contest'
 		)
 	);
 

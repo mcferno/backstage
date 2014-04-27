@@ -171,6 +171,13 @@ class UsersController extends AppController {
 	}
 
 	/**
+	 * Allows a user to edit their account with a shorter URL
+	 */
+	public function admin_account() {
+		$this->setAction('admin_edit', $this->Auth->user('id'));
+	}
+
+	/**
 	 * User account update.
 	 */
 	public function admin_edit($id = null) {
@@ -193,8 +200,15 @@ class UsersController extends AppController {
 				unset($this->User->validate['password']);
 			}
 			if ($this->User->save($this->request->data)) {
-				$msg = Access::isOwner($id) ? 'Your account has been updated.' : 'The user has been updated.';
-				$this->Session->setFlash($msg,'messaging/alert-success');
+				if(Access::isOwner($id)) {
+					$msg = 'Your account has been updated.';
+					$self = $this->User->findById($id);
+					$this->Auth->login($self['User']);
+
+				} else {
+					$msg = 'The user has been updated.';
+				}
+				$this->Session->setFlash($msg, 'messaging/alert-success');
 				$this->redirect($this->referer($this->userHome));
 			} else {
 				$msg = Access::isOwner($id) ? 'Your account could not be saved. Please, try again.' : 'The user could not be saved. Please, try again.';
@@ -202,6 +216,32 @@ class UsersController extends AppController {
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
+		}
+	}
+
+	/**
+	 * Augments the user edit form with Facebook integration data
+	 */
+	public function admin_fb_groups() {
+		if($this->User->hasFacebookAccess()) {
+
+			$groups = $this->User->getFacebookUserGroups();
+			if(is_array($groups)) {
+				 $group_lookup = Hash::combine($groups, '{n}.id', '{n}.name');
+
+				// restrict the allowable group associations based on app-level whitelists
+				$whitelist = $this->User->getWhitelistedGroups();
+				if(is_array($whitelist)) {
+					$group_lookup = array_intersect_key($group_lookup, array_flip($whitelist));
+				}
+				$this->set('groups', $group_lookup);
+			}
+
+			$this->setAction('admin_edit', $this->Auth->user('id'));
+
+		} else {
+			$redirect_url = $this->User->getFacebookLoginUrl(Router::url(array('controller' => 'users', 'action' => 'fb_groups'), true));
+			$this->redirect($redirect_url);
 		}
 	}
 

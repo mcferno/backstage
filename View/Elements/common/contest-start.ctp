@@ -20,7 +20,7 @@
 				<h4><?= $this->Html->image('ui/icons/sticky-note.png'); ?> Contest Description (optional)</h4>
 				<?= $this->Form->input('message', array('type' => 'textarea', 'label' =>'', 'class' => 'asset-url form-control', 'placeholder' => 'Who can do the best caption with this?', 'spellcheck' => 'true')); ?>
 				<?php $fb_target = $this->Session->read('Auth.User.fb_target'); if(!empty($fb_target)): ?>
-				<p><span class="glyphicon glyphicon-info-sign"></span> This new battle will be annouced automatically on TYS.</p>
+				<p><span class="glyphicon glyphicon-info-sign"></span> This new battle will be annouced automatically in your Facebook Group.</p>
 				<?php endif; ?>
 			</fieldset>
 		</div>

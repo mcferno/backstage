@@ -26,6 +26,10 @@
 			</div>
 			<div class="col-md-6">
 				<?= $this->Form->input('password', array('value' => '', 'label' => 'New Password', 'class' => 'form-control', 'required' => false, 'placeholder' => 'Leave blank to keep your current password')); ?>
+
+				<?php if(!empty($groups)) : ?>
+				<?= $this->Form->input('fb_target', array('options' => $groups, 'class' => 'form-control', 'label' => 'Facebook Group', 'empty' => '-- no group --')); ?>
+				<?php endif; ?>
 			</div>
 		</div>
 	</fieldset>

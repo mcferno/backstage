@@ -93,7 +93,7 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle username-dd" data-toggle="dropdown"><?= $this->Session->read('Auth.User.username');?></a>
 				<ul class="dropdown-menu">
-					<li><?= $this->Html->link('<span class="glyphicon-pencil glyphicon"></span> Edit Account', array('controller' => 'users', 'action' => 'edit', $this->Session->read('Auth.User.id')), array('escape' => false)); ?></li>
+					<li><?= $this->Html->link('<span class="glyphicon-pencil glyphicon"></span> Edit Account', array('controller' => 'users', 'action' => 'account'), array('escape' => false)); ?></li>
 					<li class="divider"></li>
 					<li><?= $this->Html->link('<span class="glyphicon-off glyphicon"></span> Logout', array('controller' => 'users', 'action' => 'logout'), array('escape' => false)); ?></li>
 				</ul>
