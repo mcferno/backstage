@@ -70,35 +70,37 @@ This structure has a number of advantages:
 3. Ensure that the following application directories and subdirectories are writeable by Apache
 	* webroot/img/user/
 	* tmp/
-4. Execute the SQL queries in Config/Schema/schema.sql in an empty database
-5. Create an empty file Config/bootstrap.env.php, this will hold all your app configurations. Add the following settings:
+4. Execute the SQL queries in `Config/Schema/schema.sql` in an empty database
+5. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
+```php
+	Configure::write("debug", 0); // disable debug mode
+	Configure::write("Cache.check", true); // enable view caching
 
-		Configure::write('debug', 0); // disable debug mode
-		Configure::write('Cache.check', true); // enable view caching
-
-		// app security salts, keys
-		Configure::write('Security.salt', 'REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING');
-		Configure::write('Security.cipherSeed', 'REPLACE-WITH-RANDOM-DIGIT-SERIES'); // digits only
-		Configure::write('Cookie.key', 'REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING');
-
+	// app security salts, keys
+	Configure::write("Security.salt", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+	Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
+	Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+```
 6. Replace the strings aboved marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation.
-7. Add your database credentials to the bootstrap.env.php file, example:
-
-		class DATABASE_CONFIG {
-			public $default = array(
-				'datasource' => 'Database/Mysql',
-				'persistent' => false,
-				'host' => 'localhost',
-				'login' => 'USERNAME',
-				'password' => 'PASSWORD',
-				'database' => 'DATABASE_NAME',
-				'encoding' => 'utf8'
-			);
-		}
-
-8. Temporarily add this line to the boostrap.env.php
-		Configure::write('setup', true);
-9. Visit the "/setup" URL for this site in your browser to configure the first administrator user (example.com/setup).
+7. Append your database credentials to the `bootstrap.env.php` file, example:
+```php
+	class DATABASE_CONFIG {
+		public $default = array(
+			"datasource" => "Database/Mysql",
+			"persistent" => false,
+			"host" => "localhost",
+			"login" => "USERNAME",
+			"password" => "PASSWORD",
+			"database" => "DATABASE_NAME",
+			"encoding" => "utf8"
+		);
+	}
+```
+8. Temporarily add this line to the `boostrap.env.php`.
+```php
+	Configure::write("setup", true);
+```
+9. Visit the `/setup` URL for this site in your browser to configure the first administrator user (example.com/setup).
 10. Remove the line added in #8 once your administator account is set up.
 
 If everything is set up correctly, _you're done_!
@@ -108,29 +110,29 @@ If you encounter errors, verify your Apache logs and the application's internal 
 ### Developer-mode set up
 
 If you're looking to touch some code relating to Backstage, or just want to have a look around, here's the steps to organize your dev environment.
+```sh
+	# DIR=/path/to/your/webroot/
 
-		# DIR=/path/to/your/webroot/
-
-		git clone https://github.com/cakephp/cakephp.git CakePHP2.4
-		cd CakePHP2.4
-		git checkout 2.4.7   # or latest 2.4.x
-		cd ..
-		git clone [Backstage Repo URL] backstage
-		cd backstage
-		git submodule init
-		git submodule update
-		chmod 777 -R tmp/ webroot/img/user
-
+	git clone https://github.com/cakephp/cakephp.git CakePHP2.4
+	cd CakePHP2.4
+	git checkout 2.4.7   # or latest 2.4.x
+	cd ..
+	git clone [Backstage Repo URL] backstage
+	cd backstage
+	git submodule init
+	git submodule update
+	chmod 777 -R tmp/ webroot/img/user
+```
 Now continue the installation steps above, starting with step #4 if you haven't done this already.
 
 Once up and running, you can update your local dev copies quickly
+```sh
+	# DIR=/path/to/your/webroot/backstage/
 
-		# DIR=/path/to/your/webroot/backstage/
-
-		git remote update && git rebase origin/master
-		git submodule init
-		git submodule update
-
+	git remote update && git rebase origin/master
+	git submodule init
+	git submodule update
+```
 The `git submodule` commands don't need to be ran constantly, you can skip these when updating frequently.
 
 ## App Configuration
@@ -140,49 +142,51 @@ Backstage supports a limited number of user-configurable options. To override a 
 #### General Settings
 
 * **Site name** : Change the name "Backstage" to anything you want, but best to keep it short.
-
-		Configure::write('Site.name', 'My Hangout');
-
+```php
+	Configure::write("Site.name", 'My Hangout');
+```
 * **Remember-me Cookie** : Duration of the user remember-me cookie
-
-		Configure::write('Site.rememberMeExpiry', '+3 months');
-
+```php
+	Configure::write("Site.rememberMeExpiry", '+3 months');
+```
 
 #### Chat Settings
 
 * **Chat Log Expiry** : How long until chat message expire in the group chat (time in seconds)
-
-		Configure::write('Site.Chat.messageExpiry', 14400);
-
+```php
+	Configure::write("Site.Chat.messageExpiry", 14400);
+```
 * **Chat Log Limit** : How many messages will appear when viewing the chat log
-
-		Configure::write('Site.Chat.maxHistoryCount', 50);
+```php
+	Configure::write("Site.Chat.maxHistoryCount", 50);
+```
 
 #### Image Settings
 
 * **Images per Page** : How many images are shown per page for desktop users
-
-		Configure::write('Site.Images.perPage', 60);
-
+```php
+	Configure::write("Site.Images.perPage", 60);
+```
 * **Images per Page on Mobile**
-
-		Configure::write('Site.Images.perPageMobile', 30);
-
+```php
+	Configure::write("Site.Images.perPageMobile", 30);
+```
 * **Recent Albums** : How many of the most recent albums are listed
-
-		Configure::write('Site.Images.recentAlbums.', 2);
-
+```php
+	Configure::write("Site.Images.recentAlbums", 2);
+```
 * **Album Preview** : How many album images to show in the preview card
-
-		Configure::write('Site.Images.albumPreviews', 4);
-
+```php
+	Configure::write("Site.Images.albumPreviews", 4);
+```
 * **Image Minimum Dimensions** : Minimum images size of user added images in pixel, not including cropped images
-
-		Configure::write('Site.Images.minDimension', 640);
-
+```php
+	Configure::write("Site.Images.minDimension", 640);
+```
 * **Image Maximum Dimensions** : Maximum pixel width or height when images are downscaled
-
-		Configure::write('Site.Images.maxDimension', 1200);
+```php
+	Configure::write("Site.Images.maxDimension", 1200);
+```
 
 ## Motivation and future of the project
 
