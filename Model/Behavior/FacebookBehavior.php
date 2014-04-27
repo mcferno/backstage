@@ -60,6 +60,24 @@ class FacebookBehavior extends ModelBehavior {
 	}
 
 	/**
+	 * Allows API calls through the SDK
+	 *
+	 * @param {String} $endpoint Absolute URI for the desired API call
+	 * @param {String} $type HTTP verbage, ex: GET, POST, PUT
+	 * @param {Array} $params Optional parameters
+	 * @return {Array|false}
+	 */
+	public function facebookApiCall(Model $model, $endpoint, $type = 'GET', $params = array()) {
+		$sdk = $this->getFacebookObject();
+
+		try {
+			return $sdk->api($endpoint, $type, $params);
+		} catch(FacebookApiException $e) {
+			return false;
+		};
+	}
+
+	/**
 	 * Returns the minimum necessary FB user permissions needed to properly
 	 * integrate site features with the service.
 	 *
