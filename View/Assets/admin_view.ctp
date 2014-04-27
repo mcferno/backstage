@@ -20,6 +20,10 @@
 
 					<?php endif; // upload or url download ?>
 
+					<?php if(!empty($asset['ContestEntry'][0]['id'])) : ?>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> View Caption Battle', array('controller' => 'contests', 'action' => 'view', $asset['ContestEntry'][0]['id']), array('class' => 'btn btn-block btn-primary', 'escape' => false, 'title' => 'View the Caption Battle this image belongs to')); ?></li>
+					<?php endif; ?>
+
 					<?php
 						if(!empty($asset['Asset']['album_id'])) :
 							$album_action = (!empty($asset['Asset']['user_id']) && Access::isOwner($asset['Album']['user_id'])) ? 'index' : 'users';

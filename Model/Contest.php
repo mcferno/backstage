@@ -43,6 +43,7 @@ class Contest extends AppModel {
 		'new_title' => 'New Caption Battle Started!',
 		'new_caption' => ':user has declared a new battle.',
 		'new_desc' => 'Submit your entries via :site_name, and a winner will be chosen at the end.',
+		'user_submit' => ':user has saved a new caption.',
 		'winner_title' => 'Caption Battle Winner!',
 		'winner_desc' => 'The caption battle has ended, and this entry was chosen as the winner.',
 	);

@@ -268,15 +268,38 @@ class AssetsController extends AppController {
 			$status = $this->Asset->saveEncodedImage($this->request->data['image'], $this->Auth->user('id'), $type);
 
 			if($status === true) {
+				$asset_id = $this->Asset->id;
 				$response['image_saved'] = true;
-				$response['asset_id'] = $this->Asset->id;
+				$response['asset_id'] = $asset_id;
 
 				// if a Contest entry, set the association
 				if($type == 'Contest' && !empty($this->request->data['contestId'])) {
 					ClassRegistry::init('AssetsContest')->save(array(
-						'asset_id' => $this->Asset->id,
+						'asset_id' => $asset_id,
 						'contest_id' => $this->request->data['contestId']
 					));
+
+					// post this addition to the original thread
+					if($this->Session->check('Auth.User.fb_target') && $this->User->hasFacebookAccess()) {
+						$contest = $this->Asset->Contest->findById($this->request->data['contestId']);
+
+						if(!empty($contest['Contest']['fb_id'])) {
+							$asset_path = $this->Asset->getPath($asset_id);
+
+							$result = $this->User->facebookApiCall(
+								"/{$contest['Contest']['fb_id']}/comments",
+								'POST',
+								array(
+									'attachment_url' =>  Router::url('/', true) . IMAGES_URL . $asset_path
+								)
+							);
+
+							if(!empty($result['id'])) {
+								$this->Asset->id = $asset_id;
+								$this->Asset->saveField('fb_id', $result['id']);
+							}
+						}
+					}
 
 					$response['view_url'] = Router::url(array('controller' => 'contests', 'action' => 'view', $this->request->data['contestId'], 'page' => 1), true);
 				} else {
@@ -397,7 +420,7 @@ class AssetsController extends AppController {
 	public function admin_view($id = null) {
 
 		$asset = $this->Asset->find('first', array(
-			'contain' => array('User', 'Tag', 'Album'),
+			'contain' => array('User', 'Tag', 'Album', 'ContestEntry'),
 			'conditions' => array(
 				'Asset.id' => $id
 			)
