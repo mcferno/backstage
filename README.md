@@ -73,6 +73,8 @@ This structure has a number of advantages:
 4. Execute the SQL queries in `Config/Schema/schema.sql` in an empty database
 5. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
 ```php
+<?php
+
 	Configure::write("debug", 0); // disable debug mode
 	Configure::write("Cache.check", true); // enable view caching
 

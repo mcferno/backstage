@@ -1,17 +1,17 @@
-<?php 
-	$this->set('suppressSubnav', true); 
-	$this->set('contentSpan', 10); 
+<?php
+	$this->set('suppressSubnav', true);
+	$this->set('contentSpan', 10);
 ?>
 <div class="dash">
 	<h1>dashboard</h1>
 	<h4>Welcome <span class="attn"><?= $this->Session->read('Auth.User.username'); ?></span>.</h4>
-	
+
 	<div class="row thumbnails features">
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'pages', 'action' => 'meme_generator')); ?>">
 				<?= $this->Html->image('ui/meme-generator-callout.png', array('alt' => 'Meme Generator')); ?>
 			</a>
-			<div class="caption"><h4 class="text-right">Meme Templates <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
+			<div class="caption"><h4 class="text-right"><span class="extra">Meme</span> Templates <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>">
@@ -23,7 +23,7 @@
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'index')); ?>">
 				<?= $this->Html->image('ui/my-images-callout.jpg', array('alt' => 'My Images')); ?>
 			</a>
-			<div class="caption"><h4 class="text-right">Saved Goodies <span class="badge badge-custom"><?= $asset_count; ?></span></h4></div>
+			<div class="caption"><h4 class="text-right">Saved <span class="extra">Images</span> <span class="badge badge-custom"><?= $asset_count; ?></span></h4></div>
 		</div>
 		<div class="col-xs-6 col-sm-4 col-md-3">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id'))); ?>">
@@ -59,9 +59,9 @@
 </div>
 
 <div class="row">
-<div class="col-md-12">
+<div class="col-md-6">
 
-	
+
 	<h3 class="cozy-lead">
 		<a href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'updates')); ?>">
 			<?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates
@@ -71,11 +71,8 @@
 	<?= $this->element('common/updates-list', array('hideSmallPreview' => true)); ?>
 
 </div>
-</div>
 
-<?php if(Access::hasRole('Admin')): ?>
-<div class="row">
-<div class="col-md-12">
+<div class="col-md-6">
 	<h3 class="cozy-lead"><?= $this->Html->image('ui/icons/clock.png'); ?> Recent Users</h3>
 	<table class="table table-striped activity">
 		<?php foreach($recent_users as $user) : ?>
@@ -89,12 +86,12 @@
 		<?php endforeach; ?>
 	</table>
 </div>
+
 </div>
-<?php endif; ?>
 
 <div class="row">
 <div class="col-md-12">
-	<h3 class="cozy-lead"><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
+	<h3 class="cozy"><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
 	<table class="table table-striped">
 		<tr><td class="short-date">Dec 07</td><td>New Album feature to organize photos into sets.</td></tr>
 		<tr><td class="short-date">Sep 02</td><td>Heavy mobile optimizations. All sections reworked. Overall darker theme.</td></tr>

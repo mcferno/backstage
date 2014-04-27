@@ -28,10 +28,8 @@
 				<?= $this->Form->input('password', array('value' => '', 'label' => 'New Password', 'class' => 'form-control', 'required' => false, 'placeholder' => 'Leave blank to keep your current password')); ?>
 			</div>
 		</div>
-	<?php
-		echo $this->Form->button('Save Changes', array('class' => 'btn btn-primary'));
-	?>
 	</fieldset>
+	<?= $this->Form->button('<i class="glyphicon glyphicon-ok-circle"></i> Save Changes', array('class' => 'btn btn-primary pull-right', 'escape' => false)); ?>
 	<?= $this->Form->end(); ?>
 
 	<p class="cozy">

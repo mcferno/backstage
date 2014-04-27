@@ -8,8 +8,8 @@
 				case ($this->request->controller == 'users'):
 				?>
 					<li class="nav-header"><?= $this->request->controller; ?></li>
-					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('Index', array('action' => 'index')); ?></li>
-					<li <?php if($this->request->action == 'admin_add') { echo 'class="active"'; } ?>><?= $this->Html->link('Add New', array('action' => 'add')); ?></li>
+					<li <?php if($this->request->action == 'admin_index') { echo 'class="active"'; } ?>><?= $this->Html->link('User List', array('action' => 'index')); ?></li>
+					<li <?php if($this->request->action == 'admin_add') { echo 'class="active"'; } ?>><?= $this->Html->link('Add New User', array('action' => 'add')); ?></li>
 				<?php break;
 				case ($this->request->controller == 'posts'):
 				?>

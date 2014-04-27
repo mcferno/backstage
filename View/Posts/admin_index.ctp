@@ -1,4 +1,7 @@
-<?php $this->set('suppressSubnav', true); ?>
+<?php
+	$this->set('suppressSubnav', true);
+	$this->set('contentSpan', 6);
+?>
 <div class="posts index">
 	<h2>Quotes</h2>
 	<p class="tall">Aggregated posts from <?= implode(', ', $types); ?></p>

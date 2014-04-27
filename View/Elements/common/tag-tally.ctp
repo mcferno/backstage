@@ -14,9 +14,9 @@ if(!empty($tag_tally)) :
 		foreach ($tag_tally as $tag) {
 			$options = array();
 			if($tag['Tag']['id'] == $tag_id) {
-				$link_name = "{$tag['Tag']['name']} <span class=\"badge badge-custom\">{$tag[0]['count']}</span>";
+				$link_name = "<i class=\"glyphicon glyphicon-tag\"></i> {$tag['Tag']['name']} <span class=\"badge badge-custom\">{$tag[0]['count']}</span>";
 			} else {
-				$link_name = "{$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>";
+				$link_name = "<i class=\"glyphicon glyphicon-tag\"></i> {$tag['Tag']['name']} <span class=\"badge badge-inverse\">{$tag[0]['count']}</span>";
 			}
 
 

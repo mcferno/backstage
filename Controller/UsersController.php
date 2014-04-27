@@ -49,7 +49,7 @@ class UsersController extends AppController {
 	public function admin_dashboard() {
 		$users = $this->User->find('all', array(
 			'order' => 'last_seen DESC',
-			'limit' => 7
+			'limit' => 5
 		));
 		$asset_count = $this->User->Asset->find('count', array(
 			'conditions' => array(
