@@ -40,23 +40,23 @@ Backstage is a CakePHP application, so it depends on the presence of the PHP fra
 ### Directory Layout
 
 For production-ready sites, I use the following directory layout:
-
-		CakePHP2.4/
-			lib/
-			plugins/
-			vendors/
-		Backstage/
-			Config/
-			Console/
-			...
-			View/
-			webroot/ <-- VirtualHost DocumentRoot
-				css/
-				js/
-				img/
-				.htaccess
-				index.php
-
+```text
+	CakePHP2.4/
+		lib/
+		plugins/
+		vendors/
+	Backstage/
+		Config/
+		Console/
+		...
+		View/
+		webroot/ <-- VirtualHost DocumentRoot
+			css/
+			js/
+			img/
+			.htaccess
+			index.php
+```
 This structure has a number of advantages:
 
 1. CakePHP is decoupled from the application, allowing easy point-release updates (2.4.x) to be deployed
@@ -72,20 +72,17 @@ This structure has a number of advantages:
 	* tmp/
 4. Execute the SQL queries in `Config/Schema/schema.sql` in an empty database
 5. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
-```php
-<?php
+	<?php
 
-	Configure::write("debug", 0); // disable debug mode
-	Configure::write("Cache.check", true); // enable view caching
+		Configure::write("debug", 0); // disable debug mode
+		Configure::write("Cache.check", true); // enable view caching
 
-	// app security salts, keys
-	Configure::write("Security.salt", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
-	Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
-	Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
-```
+		// app security salts, keys
+		Configure::write("Security.salt", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+		Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
+		Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
 6. Replace the strings aboved marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation.
 7. Append your database credentials to the `bootstrap.env.php` file, example:
-```php
 	class DATABASE_CONFIG {
 		public $default = array(
 			"datasource" => "Database/Mysql",
@@ -97,11 +94,8 @@ This structure has a number of advantages:
 			"encoding" => "utf8"
 		);
 	}
-```
 8. Temporarily add this line to the `boostrap.env.php`.
-```php
 	Configure::write("setup", true);
-```
 9. Visit the `/setup` URL for this site in your browser to configure the first administrator user (example.com/setup).
 10. Remove the line added in #8 once your administator account is set up.
 
