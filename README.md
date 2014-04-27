@@ -73,32 +73,32 @@ This structure has a number of advantages:
 4. Execute the SQL queries in `Config/Schema/schema.sql` in an empty database
 5. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
 
-	Configure::write("debug", 0); // disable debug mode
-	Configure::write("Cache.check", true); // enable view caching
+		Configure::write("debug", 0); // disable debug mode
+		Configure::write("Cache.check", true); // enable view caching
 
-	// app security salts, keys
-	Configure::write("Security.salt", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
-	Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
-	Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+		// app security salts, keys
+		Configure::write("Security.salt", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+		Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
+		Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
 
 6. Replace the strings aboved marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation.
 7. Append your database credentials to the `bootstrap.env.php` file, example:
 
-	class DATABASE_CONFIG {
-		public $default = array(
-			"datasource" => "Database/Mysql",
-			"persistent" => false,
-			"host" => "localhost",
-			"login" => "USERNAME",
-			"password" => "PASSWORD",
-			"database" => "DATABASE_NAME",
-			"encoding" => "utf8"
-		);
-	}
+		class DATABASE_CONFIG {
+			public $default = array(
+				"datasource" => "Database/Mysql",
+				"persistent" => false,
+				"host" => "localhost",
+				"login" => "USERNAME",
+				"password" => "PASSWORD",
+				"database" => "DATABASE_NAME",
+				"encoding" => "utf8"
+			);
+		}
 
 8. Temporarily add this line to the `boostrap.env.php`.
 
-	Configure::write("setup", true);
+		Configure::write("setup", true);
 
 9. Visit the `/setup` URL for this site in your browser to configure the first administrator user (example.com/setup).
 10. Remove the line added in #8 once your administator account is set up.
