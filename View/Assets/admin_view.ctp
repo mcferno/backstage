@@ -103,6 +103,67 @@
 
 		<?php if($load_cropper) { echo $this->element('common/image-cropper'); } ?>
 
+<?php if(!empty($album)) : // image belongs to an album
+	$body_offset = 3;
+	$dupe_first = false;
+?>
+
+<div class="cozy">
+
+	<div class="row">
+
+	<?php if(!empty($album_images[0]) && $album_images[0]['Asset']['id'] !== $asset['Asset']['id']) : $body_offset = 0; $dupe_first = true; ?>
+	<div class="col-md-3 visible-md visible-lg">
+	<?php
+		echo $this->Html->link(
+			'<i class="glyphicon glyphicon-chevron-left"></i> ' . $this->Html->image($album_images[0]['Asset']['image-tiny']),
+			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'album'),
+			array('escape' => false, 'title' => 'Previous image in this album')
+		);
+	?>
+	</div>
+	<?php else:
+			$album_images[2] = $album_images[1];
+		endif;
+	?>
+
+	<a name="album" class="visible-xs visible-sm"></a>
+	<h3 class="col-md-6 col-md-offset-<?= $body_offset; ?> text-center">
+		<?= $this->Html->link($album['Album']['title'], array('action' => $album_action, 'album' => $album['Album']['id'])); ?>
+		<br>
+		<small>Photo Album (<?= $album_offset+1; ?> of <?= $album['AssetCount'][0][0]['count']; ?>)</small>
+	</h3>
+
+	<?php if($dupe_first): ?>
+	<div class="col-md-3 col-xs-6 col-sm-6 visible-xs visible-sm">
+	<?php
+		echo $this->Html->link(
+			'<i class="glyphicon glyphicon-chevron-left"></i> ' . $this->Html->image($album_images[0]['Asset']['image-tiny']),
+			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'album'),
+			array('escape' => false, 'title' => 'Previous image in this album')
+		);
+	?>
+	</div>
+	<?php endif; ?>
+
+	<?php if(!empty($album_images[2])) : //next image in album order ?>
+	<div class="col-md-3 col-xs-6 col-sm-6 text-right <?= $dupe_first ? '' : 'col-xs-offset-6 col-sm-offset-6 col-md-offset-0'; ?>">
+	<?php
+		echo $this->Html->link(
+			$this->Html->image($album_images[2]['Asset']['image-tiny']) . ' <i class="glyphicon glyphicon-chevron-right"></i>',
+			array('action' => 'view', $album_images[2]['Asset']['id'], '#' => 'album'),
+			array('escape' => false, 'title' => 'Next image in this album')
+		);
+	?>
+	</div>
+
+<?php endif; ?>
+	</div>
+
+</div>
+
+<?php endif; ?>
+
 		<p class="text-center"><?= $this->Html->image($asset['Asset']['image-full'], array('class' => ($load_cropper) ? 'cropable' : '', 'data-image-id' => $asset['Asset']['id'])); ?></p>
 
 		<p class="image-tags text-right">

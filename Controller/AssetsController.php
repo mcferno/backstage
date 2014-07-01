@@ -113,6 +113,7 @@ class AssetsController extends AppController {
 	public function admin_albums() {
 		$this->defaultPagination();
 		$this->paginate['Album']['contain']['Asset'] = array('limit' => Configure::read('Site.Images.albumPreviews'));
+		$this->paginate['Album']['contain']['Asset']['order'] = 'created DESC';
 		$this->set('albums', $this->paginate('Album'));
 		$this->set('users', $this->Asset->User->find('list'));
 	}
@@ -175,12 +176,15 @@ class AssetsController extends AppController {
 
 	/**
 	 * Generic pagination augmentation based on the existance of specific URL flag
+	 *
+	 * @param {Array} $options Pagination overrides
 	 */
-	protected function defaultPagination() {
+	protected function defaultPagination($options = array()) {
 
-		// tagged asset filtering
-		if(isset($this->request->params['named']['tag'])) {
-			$tag = $this->Asset->Tag->findById($this->request->params['named']['tag']);
+		// images with a specific tag
+		$tag_filter = isset($options['tag']) ? $options['tag'] : (isset($this->request->params['named']['tag']) ? $this->request->params['named']['tag'] : false);
+		if($tag_filter) {
+			$tag = $this->Asset->Tag->findById($tag_filter);
 			$this->set('tag', $tag);
 
 			$this->paginate['Asset']['joins'][] = array(
@@ -196,10 +200,12 @@ class AssetsController extends AppController {
 			$this->paginate['Asset']['conditions']['Tagging.tag_id'] = $tag['Tag']['id'];
 		}
 
-		if(isset($this->request->params['named']['type'])) {
+		// images of a specific type
+		$type_filter = isset($options['type']) ? $options['type'] : (isset($this->request->params['named']['type']) ? $this->request->params['named']['type'] : false);
+		if($type_filter) {
 
 			// special type converted to multiple types
-			if($this->request->params['named']['type'] == 'Meme-Templates') {
+			if($type_filter == 'Meme-Templates') {
 				if(isset($this->paginate['Asset']['conditions'])) {
 					$this->paginate['Asset']['conditions'] = array_merge($this->paginate['Asset']['conditions'], $this->Asset->getCleanImageConditions());
 				} else {
@@ -207,15 +213,17 @@ class AssetsController extends AppController {
 				}
 			// standard single type lookup
 			} else {
-				$this->paginate['Asset']['conditions']['Asset.type'] = $this->request->params['named']['type'];
+				$this->paginate['Asset']['conditions']['Asset.type'] = $type_filter;
 			}
 		}
 
-		if(isset($this->request->params['named']['album'])) {
+		// images belonging to an album
+		$album_filter = isset($options['album']) ? $options['album'] : (isset($this->request->params['named']['album']) ? $this->request->params['named']['album'] : false);
+		if($album_filter) {
 			$album = $this->Asset->Album->find('first', array(
 				'contain' => array('User', 'AssetCount'),
 				'conditions' => array(
-					'Album.id' => $this->request->params['named']['album'],
+					'Album.id' => $album_filter,
 					'OR' => array(
 						'Album.user_id' => $this->Session->read('Auth.User.id'),
 						'Album.shared' => true
@@ -226,13 +234,15 @@ class AssetsController extends AppController {
 				$this->set('album', $album);
 				$this->set('upload_album', $album['Album']);
 				$this->request->data = $album;
-				$this->paginate['Asset']['conditions']['Asset.album_id'] = $this->request->params['named']['album'];
+				$this->paginate['Asset']['conditions']['Asset.album_id'] = $album_filter;
 			}
 		}
 
-		if(isset($this->request->params['named']['user'])) {
-			$this->paginate['Asset']['conditions']['Asset.user_id'] = $this->request->params['named']['user'];
-			$this->paginate['Album']['conditions']['Album.user_id'] = $this->request->params['named']['user'];
+		// images belonging to a specific user
+		$user_filter = isset($options['user']) ? $options['user'] : (isset($this->request->params['named']['user']) ? $this->request->params['named']['user'] : false);
+		if($user_filter) {
+			$this->paginate['Asset']['conditions']['Asset.user_id'] = $user_filter;
+			$this->paginate['Album']['conditions']['Album.user_id'] = $user_filter;
 		}
 	}
 
@@ -420,11 +430,39 @@ class AssetsController extends AppController {
 	public function admin_view($id = null) {
 
 		$asset = $this->Asset->find('first', array(
-			'contain' => array('User', 'Tag', 'Album', 'ContestEntry'),
+			'contain' => array(
+				'User', 'Tag', 'ContestEntry',
+				'Album' => array(
+					'conditions' => array(
+						'OR' => array(
+							'Album.user_id' => $this->Auth->user('id'),
+							'Album.shared' => true
+						)
+					)
+				)
+			),
 			'conditions' => array(
 				'Asset.id' => $id
 			)
 		));
+
+		// photo belongs to an album, fetch related photos
+		if(!empty($asset['Album'])) {
+			$this->paginate['Asset']['limit'] = 3;
+			$this->paginate['Asset']['order'] = 'created DESC';
+
+			$this->defaultPagination(array('album' => $asset['Album']['id']));
+
+			$album_offset = $this->Asset->find('count', array(
+				'conditions' => array(
+					'album_id' => $asset['Album']['id'],
+					'created >' => $asset['Asset']['created']
+				)
+			));
+			$this->paginate['Asset']['offset'] = ($album_offset > 0) ? $album_offset - 1 : $album_offset;
+			$this->set('album_offset', $album_offset);
+			$this->set('album_images', $this->paginate('Asset'));
+		}
 
 		if(empty($asset)) {
 			$this->Session->setFlash('Image could not be found.', 'messaging/alert-error');
