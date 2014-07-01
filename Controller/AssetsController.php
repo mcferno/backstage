@@ -113,7 +113,7 @@ class AssetsController extends AppController {
 	public function admin_albums() {
 		$this->defaultPagination();
 		$this->paginate['Album']['contain']['Asset'] = array('limit' => Configure::read('Site.Images.albumPreviews'));
-		$this->paginate['Album']['contain']['Asset']['order'] = 'created DESC';
+		$this->paginate['Album']['contain']['Asset']['order'] = 'created ASC';
 		$this->set('albums', $this->paginate('Album'));
 		$this->set('users', $this->Asset->User->find('list'));
 	}
@@ -235,6 +235,7 @@ class AssetsController extends AppController {
 				$this->set('upload_album', $album['Album']);
 				$this->request->data = $album;
 				$this->paginate['Asset']['conditions']['Asset.album_id'] = $album_filter;
+				$this->paginate['Asset']['order'] = 'Asset.created ASC';
 			}
 		}
 
@@ -449,14 +450,14 @@ class AssetsController extends AppController {
 		// photo belongs to an album, fetch related photos
 		if(!empty($asset['Album'])) {
 			$this->paginate['Asset']['limit'] = 3;
-			$this->paginate['Asset']['order'] = 'created DESC';
+			$this->paginate['Asset']['order'] = 'created ASC';
 
 			$this->defaultPagination(array('album' => $asset['Album']['id']));
 
 			$album_offset = $this->Asset->find('count', array(
 				'conditions' => array(
 					'album_id' => $asset['Album']['id'],
-					'created >' => $asset['Asset']['created']
+					'created <' => $asset['Asset']['created']
 				)
 			));
 			$this->paginate['Asset']['offset'] = ($album_offset > 0) ? $album_offset - 1 : $album_offset;
