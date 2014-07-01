@@ -103,12 +103,14 @@
 
 		<?php if($load_cropper) { echo $this->element('common/image-cropper'); } ?>
 
+		<a name="image" class="visible-xs visible-sm"></a>
+
 <?php if(!empty($album)) : // image belongs to an album
 	$body_offset = 3;
 	$dupe_first = false;
 ?>
 
-<div class="cozy">
+<div class="cozy-bottom">
 
 	<div class="row">
 
@@ -117,7 +119,7 @@
 	<?php
 		echo $this->Html->link(
 			'<i class="glyphicon glyphicon-chevron-left"></i> ' . $this->Html->image($album_images[0]['Asset']['image-tiny']),
-			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'album'),
+			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'image'),
 			array('escape' => false, 'title' => 'Previous image in this album')
 		);
 	?>
@@ -126,8 +128,6 @@
 			$album_images[2] = $album_images[1];
 		endif;
 	?>
-
-	<a name="album" class="visible-xs visible-sm"></a>
 	<h3 class="col-md-6 col-md-offset-<?= $body_offset; ?> text-center">
 		<?= $this->Html->link($album['Album']['title'], array('action' => $album_action, 'album' => $album['Album']['id'])); ?>
 		<br>
@@ -139,7 +139,7 @@
 	<?php
 		echo $this->Html->link(
 			'<i class="glyphicon glyphicon-chevron-left"></i> ' . $this->Html->image($album_images[0]['Asset']['image-tiny']),
-			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'album'),
+			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'image'),
 			array('escape' => false, 'title' => 'Previous image in this album')
 		);
 	?>
@@ -151,18 +151,18 @@
 	<?php
 		echo $this->Html->link(
 			$this->Html->image($album_images[2]['Asset']['image-tiny']) . ' <i class="glyphicon glyphicon-chevron-right"></i>',
-			array('action' => 'view', $album_images[2]['Asset']['id'], '#' => 'album'),
+			array('action' => 'view', $album_images[2]['Asset']['id'], '#' => 'image'),
 			array('escape' => false, 'title' => 'Next image in this album')
 		);
 	?>
 	</div>
+	<?php endif; ?>
 
-<?php endif; ?>
-	</div>
+	</div><!-- /row -->
 
 </div>
 
-<?php endif; ?>
+<?php endif; // image belongs to an album ?>
 
 		<p class="text-center"><?= $this->Html->image($asset['Asset']['image-full'], array('class' => ($load_cropper) ? 'cropable' : '', 'data-image-id' => $asset['Asset']['id'])); ?></p>
 

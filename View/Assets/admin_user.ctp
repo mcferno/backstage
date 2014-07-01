@@ -3,7 +3,7 @@
 
 <?php if(!empty($tag['Tag'])) : ?>
 <h3 class="cozy">
-	Viewing Images with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+	Viewing Images with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span>
 	<?= $this->Html->link('Clear &times;', array('action' => $this->request->action, $user['User']['id']), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 </h3>
 <?php endif; //tag ?>
@@ -11,10 +11,10 @@
 <?= $this->element('admin/pagination'); ?>
 
 <div class="image-wall" data-role="taggable" data-model="Asset">
-<?php 
+<?php
 	foreach ($images as $image) {
-		echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action' => 'view', $image['Asset']['id']), array('data-id' => $image['Asset']['id'], 'escape' => false));
-	} 
+		echo $this->Html->link($this->Html->image($image['Asset']['image-thumb']), array('action' => 'view', $image['Asset']['id'], '#' => 'image'), array('data-id' => $image['Asset']['id'], 'escape' => false));
+	}
 ?>
 </div>
 

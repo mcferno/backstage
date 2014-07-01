@@ -441,7 +441,7 @@ class Asset extends AppModel {
 				$activity['Activity']['phrase'] = ":user saved a new image.";
 				$activity['Activity']['icon'] = 'image-plus';
 		}
-		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Asset']['id']);
+		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Asset']['id'], '#' => 'image');
 		$activity['Activity']['preview'] = "{$this->folderPathRelative}{$activity['Asset']['user_id']}/200/{$activity['Asset']['filename']}";
 		$activity['Activity']['preview-small'] = "{$this->folderPathRelative}{$activity['Asset']['user_id']}/75/{$activity['Asset']['filename']}";
 	}

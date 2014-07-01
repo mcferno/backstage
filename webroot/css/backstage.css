@@ -441,6 +441,10 @@ img, iframe, embed, object {
 	padding-top: 1em;
 }
 
+.cozy-bottom {
+	padding-bottom: 1em;
+}
+
 .tagged {
 	opacity: 0.4;
 }
@@ -450,8 +454,8 @@ img, iframe, embed, object {
 }
 
 a[name] {
-  padding-top: 80px;
-  margin-top: -80px;
+  padding-top: 60px;
+  margin-top: -60px;
   display: inline-block;
 }
 
