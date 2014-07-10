@@ -440,6 +440,11 @@ class AssetsController extends AppController {
 							'Album.shared' => true
 						)
 					)
+				),
+				'Contest' => array(
+					'conditions' => array(
+						'winning_asset_id IS NULL'
+					)
 				)
 			),
 			'conditions' => array(

@@ -13,15 +13,32 @@
 		<div class="row">
 			<div class="col-xs-6 col-md-12">
 				<ul class="list-unstyled actions">
+
+					<?php
+						$active_contest = false;
+						if(!empty($asset['ContestEntry'][0]['id'])) {
+							$active_contest = $asset['ContestEntry'][0]['id'];
+						} elseif(!empty($asset['Contest'][0]['id'])) {
+							$active_contest = $asset['Contest'][0]['id'];
+						}
+
+						if($active_contest) : // image is involved in a caption contest entry
+					?>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> <strong>Add Caption</strong>', array('controller' => 'pages', 'action' => 'meme_generator', 'contest' => $active_contest), array('class' => 'btn btn-block btn-primary', 'escape' => false, 'title' => 'View the Caption Battle this image belongs to')); ?></li>
+					<?php endif; ?>
+
 					<?php if(in_array($asset['Asset']['type'], array('Upload', 'URLgrab', 'Crop'))) : ?>
 
+					<?php if(!$active_contest) : // avoid new memes when there's an active contest ?>
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-picture"></span> <strong>Meme</strong>', array('controller' => 'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class' => 'btn btn-block btn-primary', 'escape' => false, 'title' => 'Use this image in the Meme Generator')); ?></li>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> Caption Battle', array('controller' => 'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class' => 'btn btn-block btn-primary contest-start', 'escape' => false, 'title' => 'Start a Caption Battle with this image')); ?></li>
+					<?php endif; ?>
+
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> ' . ($active_contest ? 'New Battle' : 'Caption Battle'), array('controller' => 'pages', 'action' => 'meme_generator', 'asset' => $asset['Asset']['id']), array('class' => 'btn btn-block btn-primary contest-start', 'escape' => false, 'title' => 'Start a Caption Battle with this image')); ?></li>
 
 					<?php endif; // upload or url download ?>
 
-					<?php if(!empty($asset['ContestEntry'][0]['id'])) : ?>
-					<li><?= $this->Html->link('<span class="glyphicon glyphicon-play-circle"></span> View Caption Battle', array('controller' => 'contests', 'action' => 'view', $asset['ContestEntry'][0]['id']), array('class' => 'btn btn-block btn-primary', 'escape' => false, 'title' => 'View the Caption Battle this image belongs to')); ?></li>
+					<?php if($active_contest) :  ?>
+					<li><?= $this->Html->link('<span class="glyphicon glyphicon-fire"></span> View Battle', array('controller' => 'contests', 'action' => 'view', $active_contest), array('class' => 'btn btn-block btn-info', 'escape' => false, 'title' => 'View all images that belong to the same album.')); ?></li>
 					<?php endif; ?>
 
 					<?php
