@@ -257,7 +257,10 @@ class ContestsController extends AppController {
 					$this->Session->setFlash('The caption battle winner has been announced on Facebook!', 'messaging/alert-success');
 					$this->redirect($winner_route);
 				}
-			} catch (FacebookApiException $e) {}
+			} catch (FacebookApiException $e) {
+				$this->log($e->getType());
+				$this->log($e->getMessage());
+			}
 
 			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
 			$this->redirect($contest_route);

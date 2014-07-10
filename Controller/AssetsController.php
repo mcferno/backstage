@@ -569,7 +569,10 @@ class AssetsController extends AppController {
 					$this->Session->setFlash('This image has been posted to Facebook.', 'messaging/alert-success');
 					$this->redirect($this->referer(array('action' => 'view', $id)));
 				}
-			} catch (FacebookApiException $e) {}
+			} catch (FacebookApiException $e) {
+				$this->log($e->getType());
+				$this->log($e->getMessage());
+			}
 
 			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
 			$this->redirect($this->referer(array('action' => 'view', $id)));
