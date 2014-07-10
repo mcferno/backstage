@@ -73,6 +73,7 @@ class FacebookBehavior extends ModelBehavior {
 		try {
 			return $sdk->api($endpoint, $type, $params);
 		} catch(FacebookApiException $e) {
+			$this->log("FB API Exception for {$endpoint}");
 			$this->log($e->getType());
 			$this->log($e->getMessage());
 			return false;

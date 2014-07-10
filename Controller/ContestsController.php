@@ -249,8 +249,9 @@ class ContestsController extends AppController {
 				'description' => $this->Contest->fbStrings['winner_desc']
 			);
 
+			$endpoint = '/' . $this->Session->read('Auth.User.fb_target') . '/feed';
 			try {
-				$res = $fbSDK->api('/' . $this->Session->read('Auth.User.fb_target') . '/feed','POST', $fbPost);
+				$res = $fbSDK->api($endpoint, 'POST', $fbPost);
 
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
@@ -258,6 +259,7 @@ class ContestsController extends AppController {
 					$this->redirect($winner_route);
 				}
 			} catch (FacebookApiException $e) {
+				$this->log("FB API contest winnner Exception for {$endpoint}");
 				$this->log($e->getType());
 				$this->log($e->getMessage());
 			}

@@ -301,7 +301,7 @@ class AssetsController extends AppController {
 								"/{$contest['Contest']['fb_id']}/comments",
 								'POST',
 								array(
-									'attachment_url' =>  Router::url('/', true) . IMAGES_URL . $asset_path
+									'message' =>  Router::url('/', true) . IMAGES_URL . $asset_path
 								)
 							);
 
@@ -556,10 +556,11 @@ class AssetsController extends AppController {
 				$imagePost['message'] = $this->request->query['message'];
 			}
 
+			$endpoint = '/' . $this->Session->read('Auth.User.fb_target') . '/photos';
 			try {
 				// post to the api (upload)
 				$fbSDK->setFileUploadSupport(true);
-				$res = $fbSDK->api('/' . $this->Session->read('Auth.User.fb_target') . '/photos', 'POST', $imagePost);
+				$res = $fbSDK->api($endpoint, 'POST', $imagePost);
 
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
@@ -570,6 +571,7 @@ class AssetsController extends AppController {
 					$this->redirect($this->referer(array('action' => 'view', $id)));
 				}
 			} catch (FacebookApiException $e) {
+				$this->log("FB API post image Exception for {$endpoint}");
 				$this->log($e->getType());
 				$this->log($e->getMessage());
 			}
