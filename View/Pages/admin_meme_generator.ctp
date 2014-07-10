@@ -76,6 +76,7 @@
 		</div>
 	</div>
 
+	<?php if(empty($base_images)) : ?>
 	<div class="row" id="backgrounds" style="display:none;">
 		<div class="col-md-12">
 			<h2 class="cozy-top">Choose an image</h2>
@@ -96,6 +97,7 @@
 			<button class="load-more btn btn-primary"><span class="glyphicon glyphicon-retweet"></span> <span class="extra">Load </span>More Images</button>
 		</div>
 	</div>
+	<?php endif; ?>
 
 	<script type="text/template" id="imagePickerTemplate">
 	<img src="<%= thumb_url %>" data-full-image="<%= full_url %>" class="image-option">
@@ -116,13 +118,11 @@
 	</div>
 	<div class="row resize-reset workspace" style="display:none;">
 		<div class="col-md-12">
-			<form>
 			<select name="canvasSize" class="canvasSize input-sm" title="Change the size of this meme when saved">
 				<option data-max="full">Image Size: Full</option>
 				<option data-max="800">Image Size: Large</option>
 				<option data-max="600" selected="selected">Image Size: Regular</option>
 			</select>
-			</form>
 
 			<button class="btn btn-sm btn-danger reset" title="Abandon your work and restart"><span class="glyphicon glyphicon-ban-circle"></span> Start Over</button>
 		</div>
