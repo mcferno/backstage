@@ -37,7 +37,8 @@ class Asset extends AppModel {
 
 	public $actsAs = array(
 		'Postable.Postable' => array(
-			'storageModel' => 'Activity'
+			'storageModel' => 'Activity',
+			'inclusionCallback' => 'notificationInclusion'
 		),
 		'Ownable',
 		'Taggable'
@@ -444,6 +445,26 @@ class Asset extends AppModel {
 		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'view', $activity['Asset']['id'], '#' => 'image');
 		$activity['Activity']['preview'] = "{$this->folderPathRelative}{$activity['Asset']['user_id']}/200/{$activity['Asset']['filename']}";
 		$activity['Activity']['preview-small'] = "{$this->folderPathRelative}{$activity['Asset']['user_id']}/75/{$activity['Asset']['filename']}";
+	}
+
+	/**
+	 * Determines if an image creation should be announced to other users
+	 *
+	 * @param {Array} $data Asset model data
+	 * @return {Boolean} false to suppress the announcement
+	 */
+	public function notificationInclusion($data) {
+		if(!empty($data[$this->alias]['album_id'])) {
+			$album = $this->Album->findById($data[$this->alias]['album_id']);
+
+			if($album) {
+				$album_creation = strtotime($album['Album']['created']);
+
+				// exclude images uploaded within a small window following the album's creation
+				return time() > $album_creation + (1 * DAY);
+			}
+		}
+		return true;
 	}
 
 	/**
