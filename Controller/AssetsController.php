@@ -211,6 +211,8 @@ class AssetsController extends AppController {
 				} else {
 					$this->paginate['Asset']['conditions'] = $this->Asset->getCleanImageConditions();
 				}
+			} elseif($type_filter == 'Meme') {
+				$this->paginate['Asset']['conditions']['Asset.type'] = array('Meme', 'Contest');
 			// standard single type lookup
 			} else {
 				$this->paginate['Asset']['conditions']['Asset.type'] = $type_filter;

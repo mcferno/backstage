@@ -476,7 +476,7 @@ class Asset extends AppModel {
 	public function getCleanImageConditions() {
 		return array(
 			'Asset.type' => array(
-				'Crop', 'Upload', 'URLgrab', 'Contest'
+				'Crop', 'Upload', 'URLgrab'
 			)
 		);
 	}
