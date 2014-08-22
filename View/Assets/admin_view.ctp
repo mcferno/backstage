@@ -59,11 +59,11 @@
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-fullscreen"></span> Crop Image', array('action' => 'view', $asset['Asset']['id'], 'crop' => 'true'), array('class' => 'btn btn-block btn-default', 'escape' => false, 'title' => 'Save a slice of this image')); ?></li>
 					<?php endif; // cropper option ?>
 
-					<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
-
 					<?php if($this->Session->check('Auth.User.fb_target')) : ?>
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-upload"></span> Post to <strong>Facebook</strong>', '#fbPostModal', array('class' => 'btn btn-block btn-success post-to-fb', 'escape' => false, 'data-toggle' => 'modal', 'title' => 'Post this image to Facebook')); ?></li>
 					<?php endif; // image is Facebook shareable ?>
+
+					<?php if(Access::isOwner($asset['Asset']['user_id'])) : ?>
 
 					<li><?= $this->Html->link('<span class="glyphicon glyphicon-remove"></span> Delete Image', array('action' => 'delete', $asset['Asset']['id']), array('class' => 'btn btn-block btn-xs btn-danger delete', 'escape' => false, 'title' => 'Delete this image'), 'Are you sure you wish to permanently delete this image?'); ?></li>
 
