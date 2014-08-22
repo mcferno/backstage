@@ -541,11 +541,10 @@ class AssetsController extends AppController {
 	 */
 	public function admin_post($id = null) {
 		$asset = $this->Asset->hasAny(array(
-			'Asset.id' => $id,
-			'Asset.user_id' => $this->Auth->user('id')
+			'Asset.id' => $id
 		));
 
-		// only owners of the image and users who are cleared for fb integration can continue
+		// only users who are cleared for fb integration can continue
 		if($asset !== true || $this->Session->check('Auth.User.fb_target') === false) {
 			$this->Session->setFlash('Sorry, you can’t post this image at this time.', 'messaging/alert-error');
 			$this->redirect($this->referer(array('action' => 'index')));
