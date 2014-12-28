@@ -41,7 +41,7 @@ Backstage is a CakePHP application, so it depends on the presence of the PHP fra
 
 For production-ready sites, I use the following directory layout:
 ```text
-	CakePHP2.4/
+	CakePHP2.6/
 		lib/
 		plugins/
 		vendors/
@@ -59,13 +59,13 @@ For production-ready sites, I use the following directory layout:
 ```
 This structure has a number of advantages:
 
-1. CakePHP is decoupled from the application, allowing easy point-release updates (2.4.x) to be deployed
+1. CakePHP is decoupled from the application, allowing easy point-release updates (2.6.x) to be deployed
 2. Only static assets (css, js, images) are accessible via the public webroot
 3. This layout equally works in development environments
 
 ### Configuring a new site
 
-1. Download and extract the latest CakePHP 2.4.x
+1. Download and extract the latest CakePHP 2.6.x
 2. Download and extract the latest Backstage application package.
 3. Ensure that the following application directories and subdirectories are writeable by Apache
 	* webroot/img/user/
@@ -113,9 +113,9 @@ If you're looking to touch some code relating to Backstage, or just want to have
 ```sh
 	# DIR=/path/to/your/webroot/
 
-	git clone https://github.com/cakephp/cakephp.git CakePHP2.4
-	cd CakePHP2.4
-	git checkout 2.4.7   # or latest 2.4.x
+	git clone https://github.com/cakephp/cakephp.git CakePHP2.6
+	cd CakePHP2.6
+	git checkout 2.6.0   # or latest 2.6.x
 	cd ..
 	git clone [Backstage Repo URL] backstage
 	cd backstage
