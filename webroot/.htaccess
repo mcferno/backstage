@@ -14,7 +14,8 @@
     # cakephp rewrite
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ index.php [QSA,L]
+    RewriteCond %{REQUEST_FILENAME} !\.(jpg|jpeg|png|gif|og[gv]|mp4|m4v|webm)$
+    RewriteRule ^ index.php [L]
 </IfModule>
 
 Options -Indexes
