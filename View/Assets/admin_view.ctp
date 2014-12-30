@@ -125,6 +125,7 @@
 <?php if(!empty($album)) : // image belongs to an album
 	$body_offset = 3;
 	$dupe_first = false;
+	$this->set('title', htmlentities($album['Album']['title']) . ' - Album');
 ?>
 
 <div class="cozy-bottom">

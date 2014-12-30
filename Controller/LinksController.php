@@ -20,6 +20,11 @@ class LinksController extends AppController {
 		)
 	);
 
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
+		$this->set('title', 'Links');
+	}
+
 	public function admin_index() {
 		// show sticky posts at the top if the order is not manually set
 		if(!isset($this->request->params['named']['sort'])) {
@@ -122,7 +127,7 @@ class LinksController extends AppController {
 				$this->Session->setFlash('Your new link could not be saved. Please, try again.', 'messaging/alert-error');
 			}
 		}
-		
+
 		$this->set('tags', array_values($this->Link->Tag->getListForModel('Link')));
 	}
 
@@ -139,14 +144,14 @@ class LinksController extends AppController {
 				$this->Session->setFlash('The link could not be updated. Please, try again.', 'messaging/alert-error');
 			}
 		} else {
-			
+
 			$this->request->data = $this->Link->find('first', array(
 				'contain' => 'Tag',
 				'conditions' => array(
 					'Link.id' => $id
 				)
 			));
-			
+
 			// compile existing tags
 			if(!empty($this->request->data['Tag'])) {
 				$this->request->data['Tagging']['tags'] = implode(Hash::extract($this->request->data['Tag'], '{n}.name'), ',');
@@ -160,7 +165,7 @@ class LinksController extends AppController {
 	 * Manages the creation of a thumbnail image. Allows the user to upload an
 	 * image, or download one from a URL. Once an image is set, the user may
 	 * choose the proper thumbnail crop from it.
-	 * 
+	 *
 	 * @param {UUID} $id Link to set an image
 	 */
 	public function admin_image($id = null) {
@@ -183,7 +188,7 @@ class LinksController extends AppController {
 					$this->Upload->cleanPath(IMAGES . $new_file . '*'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Link']['image']['name']);
 					move_uploaded_file($this->request->data['Link']['image']['tmp_name'], IMAGES . $new_file);
-					
+
 					$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
 					$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
 				} else {
@@ -193,12 +198,12 @@ class LinksController extends AppController {
 			// URL grab
 			} else {
 				$valid = $this->Upload->isValidURL($this->request->data['Link']['url']);
-				
+
 				if($valid === true) {
 					$this->Upload->cleanPath(IMAGES . $new_file . '*'); // remove existing images
 					$new_file .= $this->Upload->getExtension($this->request->data['Link']['url']);
 					$file = $this->Upload->saveURLtoFile($this->request->data['Link']['url'], IMAGES . $new_file);
-					
+
 					if($file !== false) {
 						$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
 						$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
@@ -231,7 +236,7 @@ class LinksController extends AppController {
 
 			$this->Link->id = $this->data['image_id'];
 			if($this->Link->exists()) {
-				
+
 				// remove existing thumbs before proceeding
 				$this->Upload->cleanPath(IMAGES . "{$this->Link->thumbnailPath}/{$this->data['image_id']}.*");
 

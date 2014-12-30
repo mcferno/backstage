@@ -9,6 +9,7 @@
 	if(!empty($contest)) {
 		$title = 'Caption Battle';
 	}
+	$this->set('title', $title);
 
 	// javascript app configurations
 	$config = array(

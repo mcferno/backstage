@@ -1,4 +1,7 @@
-<?php $this->set('suppressSubnav', true); ?>
+<?php
+$this->set('suppressSubnav', true);
+$this->set('title', 'Chat');
+?>
 <h2>Group Chat.</h2>
 <?= $this->element('common/chat-module'); ?>
 

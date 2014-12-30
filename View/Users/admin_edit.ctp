@@ -7,6 +7,7 @@
 <?php
 	echo $this->Form->create('User');
 	echo $this->Form->input('id');
+	$this->set('title', (Access::isOwner($this->Form->value('id')) ? 'My Profile' : 'User Profile'));
 ?>
 	<fieldset>
 		<legend>

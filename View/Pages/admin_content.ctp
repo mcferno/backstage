@@ -2,7 +2,8 @@
 
 $this->set(array(
 	'contentSpan' => $page['Page']['content_width'],
-	'suppressSubnav' => true
+	'suppressSubnav' => true,
+	'title' => htmlentities($page['Page']['title'])
 ));
 
 echo $page['Page']['content'];

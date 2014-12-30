@@ -1,5 +1,6 @@
 <?php
 	$this->set('contentSpan', 10);
+	$this->set('title', 'My Images');
 ?>
 <div class="row">
 	<div class="col-md-2 text-right action-bar">
@@ -23,7 +24,9 @@
 	</div>
 	<div class="col-md-10">
 
-	<?php if(isset($album)) : ?>
+	<?php if(isset($album)) :
+		$this->set('title', htmlentities($album['Album']['title'] . ' - Album'));
+	?>
 
 		<?= $this->element('../Albums/_album_overview', array('album' => $album)); ?>
 
@@ -33,7 +36,7 @@
 
 	<?php else: ?>
 
-		<h1>Your Images</h1>
+		<h1>My Images</h1>
 
 		<?php if(!empty($images)) : ?>
 		<p class="tall">
@@ -73,7 +76,7 @@
 
 	</ul>
 
-	<h3 class="cozy-top">Your Images</h3>
+	<h3 class="cozy-top">My Images</h3>
 
 	<?php endif; // recent albums ?>
 

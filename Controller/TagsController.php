@@ -31,6 +31,11 @@ class TagsController extends AppController {
 		return parent::beforeScaffold($method);
 	}
 
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
+		$this->set('title', 'Tags');
+	}
+
 	/**
 	 * Admin overview index
 	 */
@@ -81,7 +86,7 @@ class TagsController extends AppController {
 				// UUIDs for existing tags
 				if(strlen($tag) === 36 && substr_count($tag, '-') === 4) {
 					$this->Tagging->addTagToMany($tag, $user_id, $model, $this->request->data['tagged']);
-				
+
 				// string-based Tag to save first.
 				} else {
 

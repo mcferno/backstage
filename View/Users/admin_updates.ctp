@@ -1,4 +1,7 @@
-<?php $this->set('suppressSubnav', true); ?>
+<?php
+$this->set('suppressSubnav', true);
+$this->set('title', 'Updates');
+?>
 <h2><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</h2>
 <p>The latest action from all users.</p>
 

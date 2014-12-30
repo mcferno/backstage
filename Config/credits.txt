@@ -13,6 +13,7 @@ Javascript Libraries
 	Jcrop (http://deepliquid.com/content/Jcrop.html)
 	jQuery cookie (https://github.com/carhartl/jquery-cookie)
 	MediaElement (https://github.com/johndyer/mediaelement)
+	Keymaster (https://github.com/madrobby/keymaster)
 
 PHP Libraries
 

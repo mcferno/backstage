@@ -1,4 +1,5 @@
-<h1><?= $user['User']['username']; ?>'s images</h1>
+<?php $this->set('title', htmlentities("{$user['User']['username']}’s Images")); ?>
+<h1><?= $user['User']['username']; ?>’s Images</h1>
 <p class="tall"><?= $user['User']['username']; ?> has a total of <span class="badge <?= (count($images))?'badge-custom':''; ?>"><?= $image_total; ?></span> images</p>
 
 <?php if(!empty($tag['Tag'])) : ?>

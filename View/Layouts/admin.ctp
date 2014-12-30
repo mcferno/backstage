@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title><?php if(!empty($page_title)) { echo "$page_title - "; } ?><?= $siteName; ?></title>
+	<title><?= $this->get('title', $siteName); ?></title>
 
 	<link rel="dns-prefetch" href="https://netdna.bootstrapcdn.com">
 	<link rel="dns-prefetch" href="https://ajax.googleapis.com">

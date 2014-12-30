@@ -27,6 +27,7 @@
 			}
 
 			echo $this->Html->tag('h1', $title);
+			$this->set('title', htmlentities($title));
 		?>
 
 		<?= $this->element('admin/pagination'); ?>

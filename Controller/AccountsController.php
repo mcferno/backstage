@@ -12,4 +12,9 @@ class AccountsController extends AppController {
 		$this->set('types', array('Tumblr' => 'Tumblr', 'Twitter' => 'Twitter'));
 		return parent::beforeScaffold($method);
 	}
+
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
+		$this->set('title', 'Accounts');
+	}
 }

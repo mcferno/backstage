@@ -79,7 +79,7 @@ class AssetsController extends AppController {
 		}
 
 		$this->defaultPagination();
-		$tag_conditions = array();
+		$tag_conditions = isset($this->paginate['Asset']['conditions']) ? $this->paginate['Asset']['conditions'] : array();
 
 		// pull recent albums if we're not currently viewing one
 		if(!isset($this->request->params['named']['album'])) {

@@ -17,6 +17,11 @@ class ContestsController extends AppController {
 
 	public $uses = array('Contest', 'Asset');
 
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
+		$this->set('title', 'Caption Battles');
+	}
+
 	/**
 	 * Shows any active contests, and the archive of past contests.
 	 */

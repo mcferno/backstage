@@ -1,6 +1,7 @@
 <?php
 	$this->set('suppressSubnav', true);
 	$this->set('contentSpan', 6);
+	$this->set('title', 'Quotes');
 ?>
 <div class="posts index">
 	<h2>Quotes</h2>

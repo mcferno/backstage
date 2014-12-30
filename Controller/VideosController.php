@@ -21,6 +21,11 @@ class VideosController extends AppController {
 		)
 	);
 
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
+		$this->set('title', 'Videos');
+	}
+
 	public function admin_index() {
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Video->getTagTally());

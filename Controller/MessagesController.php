@@ -11,6 +11,11 @@ class MessagesController extends AppController {
 
 	public $restrictedRoutes = array('admin_index', 'admin_delete');
 
+	public function adminBeforeRender() {
+		parent::adminBeforeRender();
+		$this->set('title', 'Message Log');
+	}
+
 	/**
 	 * Saves a new message.
 	 *

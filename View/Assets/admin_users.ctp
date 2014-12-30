@@ -31,21 +31,29 @@
 	</div>
 	<div class="col-md-10">
 
-		<?php if(isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') : ?>
+		<?php if(isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme') :
+			$this->set('title', 'All Memes');
+		?>
 
 		<h1>Memes From All Users</h1>
 		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> memes saved.</p>
 
-		<?php elseif (isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Templates') : ?>
+		<?php elseif (isset($this->request->params['named']['type']) && $this->request->params['named']['type'] == 'Meme-Templates') :
+			$this->set('title', 'Meme Templates');
+		?>
 
 		<h1>Meme Templates <small>(with no text)</small></h1>
 		<p class="tall">We have a total of <span class="badge badge-custom"><?= $this->Paginator->counter('{:count}'); ?></span> images ready for the <?= $this->Html->link('Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator')); ?>.</p>
 
-		<?php elseif(isset($this->request->params['named']['album']) && !empty($album['Album']['id'])) : ?>
+		<?php elseif(isset($this->request->params['named']['album']) && !empty($album['Album']['id'])) :
+			$this->set('title', htmlentities($album['Album']['title'] . ' - Album'));
+		?>
 
 		<?= $this->element('../Albums/_album_overview', array('album' => $album)); ?>
 
-		<?php else : ?>
+		<?php else :
+			$this->set('title', 'All Images');
+		?>
 
 		<h1>Images From All Users</h1>
 		<p class="tall">We have a total of <span class="badge <?= (count($contributingUsers))?'badge-custom':''; ?>"><?= count($contributingUsers); ?></span> users contributing <span class="badge <?= (count($image_total))?'badge-custom':''; ?>"><?= $image_total; ?></span> images.</p>
