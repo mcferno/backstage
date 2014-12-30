@@ -189,13 +189,9 @@
 	Configure::write('Session', array(
 		'defaults' => 'cake',
 		'cookie' => 'KQMsess',
-		'timeout' => 180 // 3 hours in minutes
+		'timeout' => 180, // 3 hours in minutes
+		'checkAgent' => false
 	));
-
-/**
- * The level of CakePHP security.
- */
-	Configure::write('Security.level', 'medium');
 
 /**
  * A random string used in security hashing methods.
