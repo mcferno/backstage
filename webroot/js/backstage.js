@@ -55,6 +55,20 @@
 			ns.Tagging.init();
 		}
 
+		// allow next/prev pagination links to be triggered by keyboard shortcuts
+		key('right', function() {
+			var nextLink = $('a[rel="next"]:first');
+			if(nextLink.length && nextLink.attr('href').length) {
+				window.location.href = nextLink.attr('href');
+			}
+		});
+		key('left', function() {
+			var prevLink = $('a[rel="prev"]:first');
+			if(prevLink.length && prevLink.attr('href').length) {
+				window.location.href = prevLink.attr('href');
+			}
+		});
+
 		if(ns.supportsFileApi()) {
 			doc.on({
 				dragover : function() {

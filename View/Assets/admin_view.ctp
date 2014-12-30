@@ -137,7 +137,7 @@
 		echo $this->Html->link(
 			'<i class="glyphicon glyphicon-chevron-left"></i> ' . $this->Html->image($album_images[0]['Asset']['image-tiny']),
 			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'image'),
-			array('escape' => false, 'title' => 'Previous image in this album')
+			array('escape' => false, 'title' => 'Previous image in this album', 'rel' => 'prev')
 		);
 	?>
 	</div>
@@ -157,7 +157,7 @@
 		echo $this->Html->link(
 			'<i class="glyphicon glyphicon-chevron-left"></i> ' . $this->Html->image($album_images[0]['Asset']['image-tiny']),
 			array('action' => 'view', $album_images[0]['Asset']['id'], '#' => 'image'),
-			array('escape' => false, 'title' => 'Previous image in this album')
+			array('escape' => false, 'title' => 'Previous image in this album', 'rel' => 'prev')
 		);
 	?>
 	</div>
@@ -169,7 +169,7 @@
 		echo $this->Html->link(
 			$this->Html->image($album_images[2]['Asset']['image-tiny']) . ' <i class="glyphicon glyphicon-chevron-right"></i>',
 			array('action' => 'view', $album_images[2]['Asset']['id'], '#' => 'image'),
-			array('escape' => false, 'title' => 'Next image in this album')
+			array('escape' => false, 'title' => 'Next image in this album', 'rel' => 'next')
 		);
 	?>
 	</div>
