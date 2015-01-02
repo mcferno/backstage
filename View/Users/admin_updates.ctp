@@ -3,7 +3,15 @@ $this->set('suppressSubnav', true);
 $this->set('title', 'Updates');
 ?>
 <h2><?= $this->Html->image('ui/icons/system-monitor.png'); ?> Network Updates</h2>
-<p>The latest action from all users.</p>
+<p>
+	The latest action from all users.
+
+<?php
+if(!isset($this->params['named']['view'])) {
+	echo $this->Paginator->link('<i class="glyphicon glyphicon-search"></i> Include My Activity', array('view' => 'all', 'page' => 1), array('class' => 'small', 'escape' => false));
+}
+?>
+</p>
 
 <?php if(empty($updates)) : ?>
 

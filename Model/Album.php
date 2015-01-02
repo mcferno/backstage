@@ -1,7 +1,7 @@
 <?php
 
 class Album extends AppModel {
-	
+
 	public $belongsTo = array(
 		'Cover' => array(
 			'className' => 'Asset',
@@ -79,11 +79,40 @@ class Album extends AppModel {
 	/**
 	 * Converts the available Activity model and relationship data to reduce
 	 * it to a human-friendly sentence.
-	 * 
+	 *
 	 * @param  {ActivityModel} $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
 		$activity['Activity']['phrase'] = ":user started a new album called “{$activity['Album']['title']}”";
+
+		// inject the image count if we have it
+		if(isset($activity['Album']['AssetCount'][0][0]['count']) && $activity['Album']['AssetCount'][0][0]['count']) {
+			$activity['Activity']['phrase'] .= " with {$activity['Album']['AssetCount'][0][0]['count']} photos.";
+		}
+
+		$cover_asset = array();
+
+		// pull the default album cover first
+		if(!empty($activity['Album']['DefaultCover'][0]['id'])) {
+			$cover_asset = $activity['Album']['DefaultCover'][0];
+		}
+
+		// replace with the user-selected album cover
+		if(!empty($activity['Album']['Cover']['id'])) {
+			$cover_asset = $activity['Album']['Cover'];
+		}
+
+		// attach a cover image if we located one
+		if(!empty($cover_asset)) {
+			$this->Asset->addMetaData($cover_asset);
+			if(!empty($cover_asset['image-thumb'])) {
+				$activity['Activity']['preview'] = $cover_asset['image-thumb'];
+			}
+			if(!empty($cover_asset['image-tiny'])) {
+				$activity['Activity']['preview-small'] = $cover_asset['image-tiny'];
+			}
+		}
+
 		$activity['Activity']['icon'] = 'photo-album-icon';
 		$activity['Activity']['link'] = array('controller' => 'assets', 'action' => 'users', 'album' => $activity['Album']['id']);
 	}

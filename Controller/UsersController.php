@@ -8,7 +8,10 @@ class UsersController extends AppController {
 	public $paginate = array(
 		'Activity' => array(
 			'contain' => array(
-				'User', 'Asset', 'Album', 'Link','Video',
+				'User', 'Asset', 'Link', 'Video',
+				'Album' => array(
+					'AssetCount', 'DefaultCover', 'Cover'
+				),
 				'Contest' => 'Asset',
 				'Message' => array('Asset', 'Contest' => 'Asset', 'Link', 'Video')
 			),
