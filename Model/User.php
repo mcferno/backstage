@@ -27,6 +27,21 @@ class User extends AppModel {
 				'message' => 'Sorry, that username is already taken.',
 			),
 		),
+		'email' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Email is required',
+				'required' => true
+			),
+			'formatting' => array(
+				'rule' => '/^\S+@\S+$/',
+				'message' => 'Invalid email provided.',
+			),
+			'isUnique' => array(
+				'rule' => 'isUnique',
+				'message' => 'Sorry, that username is already taken.',
+			),
+		),
 		'password' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
