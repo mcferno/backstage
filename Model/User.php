@@ -212,4 +212,18 @@ class User extends AppModel {
 	public function getBySessionIdentifier($identifier) {
 		return $this->findBySessionKey($identifier);
 	}
+
+	/**
+	 * Retrieve an active user by their email address
+	 *
+	 * @param string $email
+	 * @return array|null
+	 */
+	public function getActiveByEmail($email) {
+		return $this->find('first', array(
+			'conditions' => array(
+				'email' => $email,
+			)
+		));
+	}
 }
