@@ -47,4 +47,18 @@ class Token extends AppModel
 			'type' => $type
 		));
 	}
+
+	/**
+	 * @param $value
+	 * @return array|null
+	 */
+	public function getActiveToken($value)
+	{
+		return $this->find('first', array(
+			'conditions' => array(
+				'expires >= NOW()',
+				'token' => $value
+			)
+		));
+	}
 }

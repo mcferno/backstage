@@ -18,7 +18,7 @@ class User extends AppModel {
 			'foreignKey' => 'foreign_id',
 			'conditions' => array(
 				'PasswordToken.type' => self::TOKEN_PASSWORD_RESET,
-				'PasswordToken.expiry <= NOW()'
+				'PasswordToken.expiry >= NOW()'
 			),
 			'dependent' => true
 		)
@@ -258,5 +258,25 @@ class User extends AppModel {
 			self::TOKEN_EXPIRY,
 			self::TOKEN_PASSWORD_RESET
 		);
+	}
+
+	/**
+	 * Find a User associated by a password reset token
+	 *
+	 * @param $token
+	 * @return self|null
+	 */
+	public function getUserByResetToken($token)
+	{
+		$token = $this->PasswordToken->getActiveToken($token);
+		if(empty($token)) {
+			return null;
+		}
+
+		return $this->find('first', array(
+			'conditions' => array(
+				'id' => $token['PasswordToken']['foreign_id']
+			)
+		));
 	}
 }

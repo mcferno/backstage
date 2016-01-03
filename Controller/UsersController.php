@@ -26,7 +26,7 @@ class UsersController extends AppController {
 
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
-		$this->Auth->allow(array('admin_login', 'admin_setup', 'admin_forgot'));
+		$this->Auth->allow(array('admin_login', 'admin_setup', 'admin_forgot', 'admin_reset'));
 	}
 
 	public function admin_login() {
@@ -313,5 +313,16 @@ class UsersController extends AppController {
 		));
 
 		$email->send();
+	}
+
+	public function admin_reset()
+	{
+		if(empty($this->request->params['token'])) {
+			throw new NotFoundException('Malformed URL');
+		}
+
+		$user = $this->User->getUserByResetToken($this->request->params['token']);
+		debug($user);
+		exit();
 	}
 }
