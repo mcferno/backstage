@@ -280,8 +280,8 @@ class UsersController extends AppController {
 				$user = $this->User->getActiveByEmail($this->request->data('User.email'));
 
 				if(!empty($user)) {
-					$token = '1234567890';
-					$this->sendResetEmail($user, $token);
+					$token = $this->User->generatePasswordResetToken($user['User']['id']);
+					$this->sendResetEmail($user, $token['PasswordToken']['token']);
 					$this->Session->setFlash('A password reset email has been sent!', 'messaging/alert-success');
 				} else {
 					$this->Session->setFlash('User not found', 'messaging/alert-error');

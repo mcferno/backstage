@@ -105,6 +105,7 @@ $appRoute("/chat", array('controller' => 'users', 'action' => 'group_chat'));
 $appRoute("/messages/add/*", array('controller' => 'messages', 'action' => 'add'));
 $appRoute("/quotes/*", array('controller' => 'posts', 'action'=> 'index'));
 $appRoute("/tags/:action/*", array('controller' => 'tags'));
+$appRoute("/users/reset/:token", array('controller' => 'users', 'action' => 'reset'));
 $appRoute("/users/:action/*", array('controller' => 'users'));
 $appRoute("/accounts/:action/*", array('controller' => 'accounts'));
 $appRoute("/messages/:action/*", array('controller' => 'messages'));

@@ -3,10 +3,27 @@ App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
 /**
  * Manages interactions with site user accounts
+ * @property Token $PasswordToken
  */
 class User extends AppModel {
 
 	public $displayField = 'username';
+
+	const TOKEN_PASSWORD_RESET = 'password_reset';
+	const TOKEN_EXPIRY = '+1 day';
+
+	public $hasOne = array(
+		'PasswordToken' => array(
+			'className' => 'Token',
+			'foreignKey' => 'foreign_id',
+			'conditions' => array(
+				'PasswordToken.type' => self::TOKEN_PASSWORD_RESET,
+				'PasswordToken.expiry <= NOW()'
+			),
+			'dependent' => true
+		)
+	);
+
 	public $hasMany = array('Asset', 'Contest');
 	public $attachTimeDeltas = false;
 	public $actsAs = array('Facebook');
@@ -225,5 +242,21 @@ class User extends AppModel {
 				'email' => $email,
 			)
 		));
+	}
+
+	/**
+	 * Makes or resets a 'forgot password' token
+	 *
+	 * @param string $user_id
+	 * @return array
+	 */
+	public function generatePasswordResetToken($user_id)
+	{
+		$this->PasswordToken->removeAllByLookup($user_id, static::TOKEN_PASSWORD_RESET);
+		return $this->PasswordToken->addNewToken(
+			$user_id,
+			self::TOKEN_EXPIRY,
+			self::TOKEN_PASSWORD_RESET
+		);
 	}
 }
