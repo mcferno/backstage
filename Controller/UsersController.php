@@ -274,14 +274,14 @@ class UsersController extends AppController {
 	public function admin_forgot() {
 		if ($this->request->is('post')) {
 			$this->User->set($this->request->data);
-			$this->User->validator()->remove('email', 'isUnique');
+			$this->User->setValidationForResetToken();
 			if($this->User->validates(array('fieldList' => array('email')))) {
 
 				$user = $this->User->getActiveByEmail($this->request->data('User.email'));
 
 				if(!empty($user)) {
 					$token = $this->User->generatePasswordResetToken($user['User']['id']);
-					$this->sendResetEmail($user, $token['PasswordToken']['token']);
+					$this->sendResetEmail($user, $token['Token']['token']);
 					$this->Session->setFlash('A password reset email has been sent!', 'messaging/alert-success');
 				} else {
 					$this->Session->setFlash('User not found', 'messaging/alert-error');
@@ -315,6 +315,9 @@ class UsersController extends AppController {
 		$email->send();
 	}
 
+	/**
+	 * Claim a reset token and reset a user password
+	 */
 	public function admin_reset()
 	{
 		if(empty($this->request->params['token'])) {
@@ -322,7 +325,24 @@ class UsersController extends AppController {
 		}
 
 		$user = $this->User->getUserByResetToken($this->request->params['token']);
-		debug($user);
-		exit();
+		if(empty($user['User']['id'])) {
+			$this->Session->setFlash('Reset process expired, please request a new one.', 'messaging/alert-error');
+			$this->redirect(array('action' => 'forgot'));
+		}
+
+		$this->User->setValidationForPasswordReset();
+
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if($this->User->save($this->request->data)) {
+				$this->User->clearResetToken($this->User->id);
+				$this->Auth->login($user['User']);
+				$this->postLogin();
+
+				$this->Session->setFlash('Your password has been changed. Welcome back!', 'messaging/alert-success');
+				$this->redirect($this->userHome);
+			}
+		} else {
+			$this->request->data = $this->User->read(null, $user['User']['id']);
+		}
 	}
 }

@@ -3,7 +3,6 @@ App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
 /**
  * Manages interactions with site user accounts
- * @property Token $PasswordToken
  */
 class User extends AppModel {
 
@@ -11,18 +10,6 @@ class User extends AppModel {
 
 	const TOKEN_PASSWORD_RESET = 'password_reset';
 	const TOKEN_EXPIRY = '+1 day';
-
-	public $hasOne = array(
-		'PasswordToken' => array(
-			'className' => 'Token',
-			'foreignKey' => 'foreign_id',
-			'conditions' => array(
-				'PasswordToken.type' => self::TOKEN_PASSWORD_RESET,
-				'PasswordToken.expiry >= NOW()'
-			),
-			'dependent' => true
-		)
-	);
 
 	public $hasMany = array('Asset', 'Contest');
 	public $attachTimeDeltas = false;
@@ -252,12 +239,23 @@ class User extends AppModel {
 	 */
 	public function generatePasswordResetToken($user_id)
 	{
-		$this->PasswordToken->removeAllByLookup($user_id, static::TOKEN_PASSWORD_RESET);
-		return $this->PasswordToken->addNewToken(
+		$this->clearResetToken($user_id);
+		return ClassRegistry::init('Token')->addNewToken(
 			$user_id,
 			self::TOKEN_EXPIRY,
 			self::TOKEN_PASSWORD_RESET
 		);
+	}
+
+	/**
+	 * Removes any existing password reset tokens for a user.
+	 *
+	 * @param string $user_id
+	 * @return bool
+	 */
+	public function clearResetToken($user_id)
+	{
+		return ClassRegistry::init('Token')->removeAllByLookup($user_id, static::TOKEN_PASSWORD_RESET);
 	}
 
 	/**
@@ -268,15 +266,39 @@ class User extends AppModel {
 	 */
 	public function getUserByResetToken($token)
 	{
-		$token = $this->PasswordToken->getActiveToken($token);
+		$token = ClassRegistry::init('Token')->getActiveToken($token);
 		if(empty($token)) {
 			return null;
 		}
 
 		return $this->find('first', array(
 			'conditions' => array(
-				'id' => $token['PasswordToken']['foreign_id']
+				'id' => $token['Token']['foreign_id']
 			)
 		));
+	}
+
+	/**
+	 * Modify the Validator rules for password reset pre-conditions
+	 */
+	public function setValidationForPasswordReset()
+	{
+		$rules = $this->validator();
+		foreach($rules as $key => $ruleset) {
+			unset($rules[$key]);
+		}
+
+		$rules->add('password', 'required', array(
+			'rule' => 'notempty',
+			'required' => true
+		));
+	}
+
+	/**
+	 * Modify the Validator rules to request a password reset token
+	 */
+	public function setValidationForResetToken()
+	{
+		$this->validator()->remove('email', 'isUnique');
 	}
 }
