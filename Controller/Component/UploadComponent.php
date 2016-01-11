@@ -6,13 +6,14 @@ App::uses('Validation', 'Utility');
  * Handles the validation and manipulation of uploaded content originating from
  * POSTed data, and URL retrieval.
  */
-class UploadComponent extends Component {
-
+class UploadComponent extends Component
+{
 	public $mimeTypes = false;
 	public $fileExtensions = false;
 	public $Controller = false;
 
-	public function initialize(Controller $controller) {
+	public function initialize(Controller $controller)
+	{
 		parent::initialize($controller);
 		$this->Controller = $controller;
 	}
@@ -24,9 +25,9 @@ class UploadComponent extends Component {
 	 * @param string $destination File path to write into, otherwise a tmp file is used
 	 * @return string|false System path the to downloaded asset
 	 */
-	public function saveURLtoFile($url, $destination = false) {
-
-		$filePath = ($destination) ? $destination : tempnam(TMP , 'urlsave_');
+	public function saveURLtoFile($url, $destination = false)
+	{
+		$filePath = ($destination) ? $destination : tempnam(TMP, 'urlsave_');
 		$fileHandle = fopen($filePath, "w+");
 
 		$result = false;
@@ -69,8 +70,8 @@ class UploadComponent extends Component {
 	 * @param array $payload Nested $_FILES content for inspection
 	 * @return string|true True if the payload is good, error message otherwise
 	 */
-	public function isValidUpload($payload) {
-
+	public function isValidUpload($payload)
+	{
 		// file upload error
 		if($payload['error'] !== 0 || !file_exists($payload['tmp_name'])) {
 			return 'Upload has failed, please try again.';
@@ -91,8 +92,8 @@ class UploadComponent extends Component {
 	 * @param string $payload URL to inspect
 	 * @return string|true True if the URL is good, error message otherwise
 	 */
-	public function isValidURL($payload) {
-
+	public function isValidURL($payload)
+	{
 		if(!Validation::url($payload)) {
 			return 'Invalid URL provided.';
 		}
@@ -114,7 +115,8 @@ class UploadComponent extends Component {
 	 * @param string $filePath Server path to the desired file
 	 * @return string|false Mime-type detected, or false on error
 	 */
-	public function getMimeType($filePath) {
+	public function getMimeType($filePath)
+	{
 		if(!file_exists($filePath)) {
 			return false;
 		}
@@ -129,7 +131,8 @@ class UploadComponent extends Component {
 	 * @param string $path String to inspect
 	 * @return string|false File extension
 	 */
-	public function getExtension($path) {
+	public function getExtension($path)
+	{
 		$matches = array();
 
 		if(preg_match('/\.([a-z0-9]{2,4})$/i', $path, $matches)) {
@@ -143,10 +146,11 @@ class UploadComponent extends Component {
 	 * Helper function to remove files matching a directory or wildcard path
 	 * @param string $path
 	 */
-	public function cleanPath($path) {
+	public function cleanPath($path)
+	{
 		$files = glob($path);
 
-		foreach ($files as $file) {
+		foreach($files as $file) {
 			@unlink($file);
 		}
 	}
@@ -158,7 +162,8 @@ class UploadComponent extends Component {
 	 * @param int $mode permission to apply
 	 * @return boolean
 	 */
-	public function makeDirectoryWritable($filepath, $mode = 0777) {
+	public function makeDirectoryWritable($filepath, $mode = 0777)
+	{
 		// directory does not exist, make it
 		if(!file_exists($filepath)) {
 			return mkdir($filepath, $mode, true);

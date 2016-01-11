@@ -1,11 +1,12 @@
 <?php
 App::uses('AppController', 'Controller');
+
 /**
  * Manages a site's user accounts and authentication
  * @property User $User
  */
-class UsersController extends AppController {
-
+class UsersController extends AppController
+{
 	public $paginate = array(
 		'Activity' => array(
 			'contain' => array(
@@ -24,18 +25,20 @@ class UsersController extends AppController {
 
 	public $restrictedRoutes = array('admin_index', 'admin_add', 'admin_view', 'admin_delete', 'admin_refresh_updates');
 
-	public function adminBeforeFilter() {
+	public function adminBeforeFilter()
+	{
 		parent::adminBeforeFilter();
 		$this->Auth->allow(array('admin_login', 'admin_setup', 'admin_forgot', 'admin_reset'));
 	}
 
-	public function admin_login() {
+	public function admin_login()
+	{
 		if($this->Auth->user('id')) {
 			$this->redirect($this->Auth->redirectUrl());
 		}
 
-		if ($this->request->is('post')) {
-			if ($this->Auth->login()) {
+		if($this->request->is('post')) {
+			if($this->Auth->login()) {
 				$this->User->setLastLogin($this->Auth->user('id'), Configure::read('App.start'));
 				$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
 				$this->User->resetUserCache();
@@ -50,7 +53,8 @@ class UsersController extends AppController {
 	/**
 	 * User landing page with a number of app content summaries
 	 */
-	public function admin_dashboard() {
+	public function admin_dashboard()
+	{
 		$users = $this->User->find('all', array(
 			'order' => 'last_seen DESC',
 			'limit' => 5
@@ -80,7 +84,8 @@ class UsersController extends AppController {
 	/**
 	 * User system updates, the list of user actions across site features.
 	 */
-	public function admin_updates() {
+	public function admin_updates()
+	{
 		$this->User->setLastUpdate($this->Auth->user('id'), Configure::read('App.start'));
 		$view_all = (isset($this->request->params['named']['view']) && $this->request->params['named']['view'] === 'all');
 		if(!$view_all) {
@@ -93,7 +98,8 @@ class UsersController extends AppController {
 	/**
 	 * Admin utility function to re-create the Activity data set.
 	 */
-	public function admin_refresh_updates() {
+	public function admin_refresh_updates()
+	{
 		if(Access::hasRole('Admin')) {
 			ClassRegistry::init('Asset')->refreshPostableIndex();
 			ClassRegistry::init('Contest')->refreshPostableIndex();
@@ -105,7 +111,8 @@ class UsersController extends AppController {
 	/**
 	 * Terminate a user session
 	 */
-	public function admin_logout() {
+	public function admin_logout()
+	{
 		$this->Cookie->delete('persist');
 		$this->redirect($this->Auth->logout());
 	}
@@ -113,7 +120,8 @@ class UsersController extends AppController {
 	/**
 	 * Only called during application setup, in order to create an initial user
 	 **/
-	public function admin_setup() {
+	public function admin_setup()
+	{
 		if(Configure::read('setup') != 1) {
 			$this->redirect('/');
 		}
@@ -123,7 +131,8 @@ class UsersController extends AppController {
 	/**
 	 * Tracks periodic "live" status of the user, returning application state
 	 */
-	public function admin_heartbeat() {
+	public function admin_heartbeat()
+	{
 		$this->cacheAction = false;
 		$this->disableCache(); // expire cache immediately
 		$this->RequestHandler->renderAs($this, 'json');
@@ -137,23 +146,26 @@ class UsersController extends AppController {
 	/**
 	 * Group chat interface
 	 */
-	public function admin_group_chat() {
+	public function admin_group_chat()
+	{
 		$this->User->setLastAck($this->Auth->user('id'), Configure::read('App.start'));
 	}
 
 	/**
 	 * Site administrator view of all User accounts
 	 */
-	public function admin_index() {
+	public function admin_index()
+	{
 		$this->set('users', $this->paginate('User'));
 	}
 
 	/**
 	 * Site administrator review of a single User's account
 	 */
-	public function admin_view($id = null) {
+	public function admin_view($id = null)
+	{
 		$this->User->id = $id;
-		if (!$this->User->exists()) {
+		if(!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		$this->set('user', $this->User->read(null, $id));
@@ -162,10 +174,11 @@ class UsersController extends AppController {
 	/**
 	 * Add a new User account
 	 */
-	public function admin_add() {
-		if ($this->request->is('post')) {
+	public function admin_add()
+	{
+		if($this->request->is('post')) {
 			$this->User->create();
-			if ($this->User->save($this->request->data)) {
+			if($this->User->save($this->request->data)) {
 				$this->Session->setFlash('The user has been saved', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -177,14 +190,16 @@ class UsersController extends AppController {
 	/**
 	 * Allows a user to edit their account with a shorter URL
 	 */
-	public function admin_account() {
+	public function admin_account()
+	{
 		$this->setAction('admin_edit', $this->Auth->user('id'));
 	}
 
 	/**
 	 * User account update.
 	 */
-	public function admin_edit($id = null) {
+	public function admin_edit($id = null)
+	{
 		$this->User->id = $id;
 
 		// non admins can't edit other Users
@@ -192,18 +207,18 @@ class UsersController extends AppController {
 			$this->redirect($this->userHome);
 		}
 
-		if (!$this->User->exists()) {
+		if(!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
 
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if($this->request->is('post') || $this->request->is('put')) {
 
 			// skip password manipulation if left blank
 			if(empty($this->request->data['User']['password'])) {
 				unset($this->request->data['User']['password']);
 				unset($this->User->validate['password']);
 			}
-			if ($this->User->save($this->request->data)) {
+			if($this->User->save($this->request->data)) {
 				if(Access::isOwner($id)) {
 					$msg = 'Your account has been updated.';
 					$self = $this->User->findById($id);
@@ -216,7 +231,7 @@ class UsersController extends AppController {
 				$this->redirect($this->referer($this->userHome));
 			} else {
 				$msg = Access::isOwner($id) ? 'Your account could not be saved. Please, try again.' : 'The user could not be saved. Please, try again.';
-				$this->Session->setFlash($msg,'messaging/alert-error');
+				$this->Session->setFlash($msg, 'messaging/alert-error');
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
@@ -226,12 +241,13 @@ class UsersController extends AppController {
 	/**
 	 * Augments the user edit form with Facebook integration data
 	 */
-	public function admin_fb_groups() {
+	public function admin_fb_groups()
+	{
 		if($this->User->hasFacebookAccess()) {
 
 			$groups = $this->User->getFacebookUserGroups();
 			if(is_array($groups)) {
-				 $group_lookup = Hash::combine($groups, '{n}.id', '{n}.name');
+				$group_lookup = Hash::combine($groups, '{n}.id', '{n}.name');
 
 				// restrict the allowable group associations based on app-level whitelists
 				$whitelist = $this->User->getWhitelistedGroups();
@@ -252,15 +268,16 @@ class UsersController extends AppController {
 	/**
 	 * Terminates a User's account
 	 */
-	public function admin_delete($id = null) {
-		if (!$this->request->is('post')) {
+	public function admin_delete($id = null)
+	{
+		if(!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
 		$this->User->id = $id;
-		if (!$this->User->exists()) {
+		if(!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
-		if ($this->User->delete()) {
+		if($this->User->delete()) {
 			$this->Session->setFlash('User deleted', 'messaging/alert-success');
 			$this->redirect(array('action' => 'index'));
 		}
@@ -271,8 +288,9 @@ class UsersController extends AppController {
 	/**
 	 * Allow a user to send a password reset
 	 */
-	public function admin_forgot() {
-		if ($this->request->is('post')) {
+	public function admin_forgot()
+	{
+		if($this->request->is('post')) {
 			$this->User->set($this->request->data);
 			$this->User->setValidationForResetToken();
 			if($this->User->validates(array('fieldList' => array('email')))) {
@@ -296,7 +314,8 @@ class UsersController extends AppController {
 	 * @param array $user
 	 * @param string $token
 	 */
-	protected function sendResetEmail($user, $token) {
+	protected function sendResetEmail($user, $token)
+	{
 		App::uses('CakeEmail', 'Network/Email');
 		$email = new CakeEmail('default');
 
@@ -332,7 +351,7 @@ class UsersController extends AppController {
 
 		$this->User->setValidationForPasswordReset();
 
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->User->save($this->request->data)) {
 				$this->User->clearResetToken($this->User->id);
 				$this->Auth->login($user['User']);

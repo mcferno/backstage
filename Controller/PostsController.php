@@ -1,8 +1,8 @@
 <?php
 App::uses('AppController', 'Controller');
 
-class PostsController extends AppController {
-
+class PostsController extends AppController
+{
 	public $paginate = array(
 		'order' => 'date DESC',
 		'limit' => 10
@@ -15,7 +15,8 @@ class PostsController extends AppController {
 	/**
 	 * Isolating the homepage for finer-grain cache control
 	 */
-	public function home() {
+	public function home()
+	{
 		$this->cacheAction = '+10 minutes';
 		$this->setAction('index');
 	}
@@ -23,7 +24,8 @@ class PostsController extends AppController {
 	/**
 	 * Primary index of all aggregated posts.
 	 */
-	public function index() {
+	public function index()
+	{
 		$this->set('posts', $this->paginate());
 
 		// pull Twitter accounts to obtain their most recent profile image
@@ -34,16 +36,16 @@ class PostsController extends AppController {
 	/**
 	 * Specific post view page.
 	 */
-	public function view() {
-
+	public function view()
+	{
 		// no UUID provided
 		if(empty($this->request->params['id'])) {
 			$this->redirect($this->referer('/'));
 		}
 
 		$post = $this->Post->find('first', array(
-			'conditions' => array(
-				'id' => $this->request->params['id'])
+				'conditions' => array(
+					'id' => $this->request->params['id'])
 			)
 		);
 
@@ -55,11 +57,12 @@ class PostsController extends AppController {
 		$this->set('post', $post);
 
 		// pull Twitter accounts to obtain their most recent profile image
-		$accounts = ClassRegistry::init('Account')->find('all', array('fields' => array('handle','profile_image')));
+		$accounts = ClassRegistry::init('Account')->find('all', array('fields' => array('handle', 'profile_image')));
 		$this->set('accounts', Set::combine($accounts, '/Account/handle', '/Account/profile_image'));
 	}
 
-	public function admin_index() {
+	public function admin_index()
+	{
 		$this->Post->recursive = 0;
 		$this->paginate['limit'] = 20;
 		$this->set('posts', $this->paginate());

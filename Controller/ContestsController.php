@@ -1,6 +1,7 @@
 <?php
-class ContestsController extends AppController {
 
+class ContestsController extends AppController
+{
 	public $paginate = array(
 		'Contest' => array(
 			'conditions' => array(
@@ -17,7 +18,8 @@ class ContestsController extends AppController {
 
 	public $uses = array('Contest', 'Asset');
 
-	public function adminBeforeRender() {
+	public function adminBeforeRender()
+	{
 		parent::adminBeforeRender();
 		$this->set('title', 'Caption Battles');
 	}
@@ -25,7 +27,8 @@ class ContestsController extends AppController {
 	/**
 	 * Shows any active contests, and the archive of past contests.
 	 */
-	public function admin_index() {
+	public function admin_index()
+	{
 		$this->set('activeContests', $this->Contest->getActiveContests());
 		$this->paginate['Contest']['limit'] = 100;
 		$this->set('contests', $this->paginate());
@@ -34,10 +37,11 @@ class ContestsController extends AppController {
 	/**
 	 * Initialize a new contest
 	 */
-	public function admin_add() {
-		if ($this->request->is('post')) {
+	public function admin_add()
+	{
+		if($this->request->is('post')) {
 			$this->Contest->create();
-			if ($this->Contest->save($this->request->data)) {
+			if($this->Contest->save($this->request->data)) {
 				$this->Session->setFlash('Your caption battle has started!', 'messaging/alert-success');
 
 				// announce contest if FB integration exists
@@ -57,8 +61,8 @@ class ContestsController extends AppController {
 	/**
 	 * Announces a caption battle over Facebook
 	 */
-	public function admin_announce($id = null) {
-
+	public function admin_announce($id = null)
+	{
 		if(!$id || !$this->Session->check('Auth.User.fb_target')) {
 			$this->redirect(array('action' => 'index'));
 		}
@@ -113,8 +117,8 @@ class ContestsController extends AppController {
 	 * View an individual contest, and all of its entries via pagination.
 	 * When a contest has ended (winner chosen), page:1 corresponds to the winning entry
 	 */
-	public function admin_view($id = null) {
-
+	public function admin_view($id = null)
+	{
 		if(empty($id) || !$this->Contest->exists($id)) {
 			$this->Session->setFlash('Sorry, that contest doesn’t appear to exist', 'messaging/alert-error');
 			$this->redirect(array('action' => 'index'));
@@ -167,8 +171,8 @@ class ContestsController extends AppController {
 	 * @param string $contest_id Contest to declare the winner of
 	 * @param string $asset_id Asset chosen as winner
 	 */
-	public function admin_set_winner($contest_id = null, $asset_id = null) {
-
+	public function admin_set_winner($contest_id = null, $asset_id = null)
+	{
 		// sanity check
 		if(empty($contest_id) || empty($asset_id) || !$this->Contest->exists($contest_id) || !$this->Asset->exists($asset_id)) {
 			$this->Session->setFlash('Malformed URL.', 'messaging/alert-error');
@@ -208,10 +212,10 @@ class ContestsController extends AppController {
 	}
 
 	/**
-	 * Annouces a contest winner on Facebook
+	 * Announces a contest winner on Facebook
 	 */
-	public function admin_announce_winner($id = null) {
-
+	public function admin_announce_winner($id = null)
+	{
 		if(!$id || !$this->Session->check('Auth.User.fb_target')) {
 			$this->redirect(array('action' => 'index'));
 		}
@@ -263,7 +267,7 @@ class ContestsController extends AppController {
 					$this->Session->setFlash('The caption battle winner has been announced on Facebook!', 'messaging/alert-success');
 					$this->redirect($winner_route);
 				}
-			} catch (FacebookApiException $e) {
+			} catch(FacebookApiException $e) {
 				$this->log("FB API contest winnner Exception for {$endpoint}");
 				$this->log($e->getType());
 				$this->log($e->getMessage());

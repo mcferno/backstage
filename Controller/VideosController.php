@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Handles all tasks related to manipulation and management a user's site assets
  */
-class VideosController extends AppController {
-
+class VideosController extends AppController
+{
 	public $uses = array('Video', 'Message');
 
 	public $components = array(
@@ -21,17 +22,20 @@ class VideosController extends AppController {
 		)
 	);
 
-	public function adminBeforeRender() {
+	public function adminBeforeRender()
+	{
 		parent::adminBeforeRender();
 		$this->set('title', 'Videos');
 	}
 
-	public function admin_index() {
+	public function admin_index()
+	{
 		$this->defaultPagination();
 		$this->set('tag_tally', $this->Video->getTagTally());
 	}
 
-	public function admin_my_videos() {
+	public function admin_my_videos()
+	{
 		$this->paginate['Video']['conditions']['Video.user_id'] = $this->Auth->user('id');
 		$this->set('sectionTitle', 'My Video');
 		$this->defaultPagination();
@@ -42,7 +46,8 @@ class VideosController extends AppController {
 	/**
 	 * Prepares the necessary data for a paginated index of videos
 	 */
-	protected function defaultPagination() {
+	protected function defaultPagination()
+	{
 		// restrict videos to those by a specific tag
 		if(isset($this->request->params['named']['tag'])) {
 			$tag = $this->Video->Tag->findById($this->request->params['named']['tag']);
@@ -52,7 +57,7 @@ class VideosController extends AppController {
 				'alias' => 'Tagging',
 				'type' => 'INNER',
 				'table' => 'taggings',
-				'conditions'=> array(
+				'conditions' => array(
 					'Video.id = Tagging.foreign_id',
 					'Tagging.model' => 'Video'
 				)
@@ -84,13 +89,14 @@ class VideosController extends AppController {
 		$this->set('thumbnail_path', $this->Video->thumbnailPath);
 	}
 
-	public function admin_add() {
-		if ($this->request->is('post')) {
+	public function admin_add()
+	{
+		if($this->request->is('post')) {
 			$this->Video->create();
 			$this->Video->set('user_id', $this->Auth->user('id'));
 
 			$data = $this->Video->convertDate($this->request->data);
-			if ($this->Video->save($data)) {
+			if($this->Video->save($data)) {
 				if(empty($this->request->data['Video']['url'])) {
 					$this->Session->setFlash('Your video has been added! Please provide a screencap.', 'messaging/alert-success');
 					$this->redirect(array('action' => 'image', $this->Video->id));
@@ -109,7 +115,8 @@ class VideosController extends AppController {
 	/**
 	 * Handles the lengthy video upload process
 	 */
-	public function admin_upload($id = null) {
+	public function admin_upload($id = null)
+	{
 		if($this->request->is('post') || $this->request->is('put')) {
 
 			// base file path of the eventual new image (missing extension)
@@ -160,13 +167,14 @@ class VideosController extends AppController {
 	 *
 	 * @param string $id Link to set an image
 	 */
-	public function admin_image($id = null) {
+	public function admin_image($id = null)
+	{
 		$this->Video->id = $id;
-		if (!$this->Video->exists()) {
+		if(!$this->Video->exists()) {
 			throw new NotFoundException(__('Invalid video'));
 		}
 
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if($this->request->is('post') || $this->request->is('put')) {
 
 			// base file path of the eventual new image (missing extension)
 			$new_file = "{$this->Video->thumbnailPath}/full/{$id}.";
@@ -222,7 +230,8 @@ class VideosController extends AppController {
 		$this->set('thumbnail_path', $this->Video->thumbnailPath);
 	}
 
-	public function admin_crop() {
+	public function admin_crop()
+	{
 		$response = array(
 			'status' => 'failed'
 		);
@@ -233,8 +242,8 @@ class VideosController extends AppController {
 			if($this->Video->exists()) {
 
 				// remove existing thumbs before proceeding
-				$this->Upload->cleanPath(IMAGES .  "{$this->Video->thumbnailPath}/{$this->data['image_id']}.png"); // remove existing images
-				$this->Upload->cleanPath(IMAGES .  "{$this->Video->thumbnailPath}/{$this->data['image_id']}.jpg"); // remove existing images
+				$this->Upload->cleanPath(IMAGES . "{$this->Video->thumbnailPath}/{$this->data['image_id']}.png"); // remove existing images
+				$this->Upload->cleanPath(IMAGES . "{$this->Video->thumbnailPath}/{$this->data['image_id']}.jpg"); // remove existing images
 
 				$status = $this->Video->saveThumbnail($this->data['image_id'], $this->data['coords']);
 				if($status) {
@@ -249,14 +258,15 @@ class VideosController extends AppController {
 		$this->set('_serialize', array_keys($response));
 	}
 
-	public function admin_edit($id = null) {
+	public function admin_edit($id = null)
+	{
 		$this->Video->id = $id;
-		if (!$this->Video->exists()) {
+		if(!$this->Video->exists()) {
 			throw new NotFoundException(__('Invalid video'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if($this->request->is('post') || $this->request->is('put')) {
 			$data = $this->Video->convertDate($this->request->data);
-			if ($this->Video->save($data)) {
+			if($this->Video->save($data)) {
 				$this->Session->setFlash('The video has been updated!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -281,9 +291,10 @@ class VideosController extends AppController {
 		$this->set('tags', array_values($this->Video->Tag->getListForModel('Video')));
 	}
 
-	public function admin_view($id = null) {
+	public function admin_view($id = null)
+	{
 		$this->Video->id = $id;
-		if (!$this->Video->exists()) {
+		if(!$this->Video->exists()) {
 			throw new NotFoundException(__('Invalid video'));
 		}
 		$video = $this->Video->find('first', array(
@@ -309,12 +320,13 @@ class VideosController extends AppController {
 		$this->set('thumbnail_path', $this->Video->thumbnailPath);
 	}
 
-	public function admin_delete($id = null) {
-		if (!$this->request->is('post')) {
+	public function admin_delete($id = null)
+	{
+		if(!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
 		$this->Video->id = $id;
-		if (!$this->Video->exists()) {
+		if(!$this->Video->exists()) {
 			throw new NotFoundException(__('Invalid video'));
 		}
 
@@ -323,7 +335,7 @@ class VideosController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		if ($this->Video->delete()) {
+		if($this->Video->delete()) {
 			$this->Session->setFlash('Your video has been removed!', 'messaging/alert-success');
 			$this->redirect(array('action' => 'index'));
 		}

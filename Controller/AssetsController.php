@@ -1,10 +1,11 @@
 <?php
 App::uses('Folder', 'Utility');
+
 /**
  * Handles all tasks related to manipulation and management a user's site assets
  */
-class AssetsController extends AppController {
-
+class AssetsController extends AppController
+{
 	public $uses = array('Asset', 'Album');
 
 	public $components = array(
@@ -29,8 +30,8 @@ class AssetsController extends AppController {
 		)
 	);
 
-	public function adminBeforeFilter() {
-
+	public function adminBeforeFilter()
+	{
 		if($this->RequestHandler->isMobile()) {
 			$this->paginate['Asset']['limit'] = Configure::read('Site.Images.perPageMobile');
 		} else {
@@ -40,7 +41,8 @@ class AssetsController extends AppController {
 		parent::adminBeforeFilter();
 	}
 
-	public function adminBeforeRender() {
+	public function adminBeforeRender()
+	{
 		parent::adminBeforeRender();
 
 		$model = $this->modelClass;
@@ -61,8 +63,8 @@ class AssetsController extends AppController {
 	/**
 	 * Personalized asset index (for the current user)
 	 */
-	public function admin_index() {
-
+	public function admin_index()
+	{
 		if(isset($this->request->params['named']['album'])) {
 
 			// non existent album
@@ -110,7 +112,8 @@ class AssetsController extends AppController {
 		$this->set('image_total', $this->Asset->find('count', array('conditions' => array('user_id' => $this->Auth->user('id')))));
 	}
 
-	public function admin_albums() {
+	public function admin_albums()
+	{
 		$this->defaultPagination();
 		$this->paginate['Album']['contain']['Asset'] = array('limit' => Configure::read('Site.Images.albumPreviews'));
 		$this->paginate['Album']['contain']['Asset']['order'] = 'created ASC';
@@ -121,7 +124,8 @@ class AssetsController extends AppController {
 	/**
 	 * Personalized asset index (for a specific user)
 	 */
-	public function admin_user($user_id = null) {
+	public function admin_user($user_id = null)
+	{
 		if(empty($user_id)) {
 			$this->redirect('admin_users');
 		}
@@ -140,9 +144,9 @@ class AssetsController extends AppController {
 	/**
 	 * Assets and Albums from all users. Lists images, optionally groups by Album
 	 */
-	public function admin_users() {
-
-		// if  viewing a personal album, send the user to their album page
+	public function admin_users()
+	{
+		// if viewing a personal album, send the user to their album page
 		if(isset($this->request->params['named']['album'])) {
 
 			// non existent album
@@ -179,8 +183,8 @@ class AssetsController extends AppController {
 	 *
 	 * @param array $options Pagination overrides
 	 */
-	protected function defaultPagination($options = array()) {
-
+	protected function defaultPagination($options = array())
+	{
 		// images with a specific tag
 		$tag_filter = isset($options['tag']) ? $options['tag'] : (isset($this->request->params['named']['tag']) ? $this->request->params['named']['tag'] : false);
 		if($tag_filter) {
@@ -191,7 +195,7 @@ class AssetsController extends AppController {
 				'alias' => 'Tagging',
 				'type' => 'INNER',
 				'table' => 'taggings',
-				'conditions'=> array(
+				'conditions' => array(
 					'Asset.id = Tagging.foreign_id',
 					'Tagging.model' => 'Asset'
 				)
@@ -252,7 +256,8 @@ class AssetsController extends AppController {
 	/**
 	 * Obtains Meme Generator-ready images via AJAX.
 	 */
-	public function admin_find() {
+	public function admin_find()
+	{
 		$response = array();
 
 		$this->paginate['Asset']['fields'] = array('id', 'user_id', 'filename');
@@ -270,8 +275,8 @@ class AssetsController extends AppController {
 	/**
 	 * Saves ajax posted image data
 	 */
-	public function admin_save() {
-
+	public function admin_save()
+	{
 		$response = array('image_saved' => false);
 
 		// process upload
@@ -303,7 +308,7 @@ class AssetsController extends AppController {
 								"/{$contest['Contest']['fb_id']}/comments",
 								'POST',
 								array(
-									'message' =>  Router::url('/', true) . IMAGES_URL . $asset_path
+									'message' => Router::url('/', true) . IMAGES_URL . $asset_path
 								)
 							);
 
@@ -328,11 +333,12 @@ class AssetsController extends AppController {
 	/**
 	 * Saves single file uploads
 	 */
-	public function admin_upload() {
+	public function admin_upload()
+	{
 		$redirect = false;
 		$message = false;
 		$error = false;
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if($this->request->is('post') || $this->request->is('put')) {
 
 			// base file path of the eventual new image original
 			$new_file = $this->Asset->getFolderPath($this->Auth->user('id')) . 'full' . DS;
@@ -430,8 +436,8 @@ class AssetsController extends AppController {
 	 *
 	 * @param string $id Primary key of the desired asset
 	 */
-	public function admin_view($id = null) {
-
+	public function admin_view($id = null)
+	{
 		$asset = $this->Asset->find('first', array(
 			'contain' => array(
 				'User', 'Tag', 'ContestEntry',
@@ -490,7 +496,8 @@ class AssetsController extends AppController {
 	 * Crops an existing image, saving it as a new image by the user who initiated
 	 * the crop.
 	 */
-	public function admin_crop() {
+	public function admin_crop()
+	{
 		$response = array(
 			'status' => 'failed'
 		);
@@ -519,11 +526,12 @@ class AssetsController extends AppController {
 	 * Posts an image as a comment to the Group Chat, and visit the Chat.
 	 * Utility shortcut.
 	 */
-	public function admin_chat_post($id = null) {
+	public function admin_chat_post($id = null)
+	{
 		$this->Asset->id = $id;
 
 		if(!empty($id) && $this->Asset->exists()) {
-			$url = Router::url('/'.IMAGES_URL . $this->Asset->getPath($id), true);
+			$url = Router::url('/' . IMAGES_URL . $this->Asset->getPath($id), true);
 			ClassRegistry::init('Message')->save(array(
 				'model' => 'Chat',
 				'user_id' => $this->Auth->user('id'),
@@ -539,7 +547,8 @@ class AssetsController extends AppController {
 	 *
 	 * @param string $id Primary key of the actionable asset
 	 */
-	public function admin_post($id = null) {
+	public function admin_post($id = null)
+	{
 		$asset = $this->Asset->hasAny(array(
 			'Asset.id' => $id
 		));
@@ -576,7 +585,7 @@ class AssetsController extends AppController {
 					$this->Session->setFlash('This image has been posted to Facebook.', 'messaging/alert-success');
 					$this->redirect($this->referer(array('action' => 'view', $id)));
 				}
-			} catch (FacebookApiException $e) {
+			} catch(FacebookApiException $e) {
 				$this->log("FB API post image Exception for {$endpoint}");
 				$this->log($e->getType());
 				$this->log($e->getMessage());
@@ -596,13 +605,14 @@ class AssetsController extends AppController {
 		// send the user away to authenticate
 		$login_params = array(
 			'scope' => $this->User->getFacebookPermissions(),
-			'redirect_uri' => Router::url($redirectParams,true)
+			'redirect_uri' => Router::url($redirectParams, true)
 		);
 
 		$this->redirect($fbSDK->getLoginUrl($login_params));
 	}
 
-	public function admin_edit($id) {
+	public function admin_edit($id)
+	{
 		if(!empty($this->request->data)) {
 			if($this->Asset->save($this->request->data, false)) {
 				$this->Session->setFlash('The image has been updated.', 'messaging/alert-success');
@@ -618,7 +628,8 @@ class AssetsController extends AppController {
 	 *
 	 * @param string $id Primary key of the desired asset
 	 */
-	public function admin_delete($id = null) {
+	public function admin_delete($id = null)
+	{
 		if(empty($id) || !$this->Asset->isOwner($this->Auth->user('id'), $id)) {
 			$this->Session->setFlash('Image could not be found.', 'messaging/alert-error');
 			$this->redirect($this->referer('index'));
