@@ -1,10 +1,11 @@
 <?php
 App::uses('AppModel', 'Model');
+
 /**
  * A user owned URL bookmarking and classification system
  */
-class Link extends AppModel {
-
+class Link extends AppModel
+{
 	public $displayField = 'title';
 	public $order = array('Link.created' => 'DESC');
 
@@ -26,7 +27,8 @@ class Link extends AppModel {
 	public $thumbnailSize = 150;
 	public $thumbnailPath = 'user/links';
 
-	public function afterFind($results, $primary = false) {
+	public function afterFind($results, $primary = false)
+	{
 
 		// singular set
 		if(!empty($results['id'])) {
@@ -47,7 +49,8 @@ class Link extends AppModel {
 	 *
 	 * @param array $link Link object to inspect and attach to
 	 */
-	public function attachImages(&$link) {
+	public function attachImages(&$link)
+	{
 		if(!empty($link['id'])) {
 			$image_path = "{$this->thumbnailPath}/{$link['id']}";
 			if(file_exists(IMAGES_URL . "{$image_path}.jpg")) {
@@ -58,7 +61,8 @@ class Link extends AppModel {
 		}
 	}
 
-	public function humanizeActivity(&$link) {
+	public function humanizeActivity(&$link)
+	{
 		$link['Activity']['phrase'] = ":user added a new link";
 		if(!empty($link['Link']['title'])) {
 			$link['Activity']['phrase'] .= " called \"{$link['Link']['title']}\".";
@@ -75,7 +79,8 @@ class Link extends AppModel {
 	 * Sets an image association with a specific link. Processes uploaded images
 	 * to match the proper sizing.
 	 */
-	public function saveThumbnail($link_id, $crop) {
+	public function saveThumbnail($link_id, $crop)
+	{
 		if(!class_exists('WideImage')) {
 			App::import('Vendor', 'WideImage/WideImage');
 		}
@@ -87,7 +92,7 @@ class Link extends AppModel {
 			$screenshot .= '.jpg';
 			$thumbnail .= '.jpg';
 			$is_jpeg = true;
-		} elseif (file_exists(IMAGES_URL . "{$screenshot}.png")) {
+		} elseif(file_exists(IMAGES_URL . "{$screenshot}.png")) {
 			$screenshot .= '.png';
 			$thumbnail .= '.png';
 			$is_jpeg = false;

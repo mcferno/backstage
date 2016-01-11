@@ -1,10 +1,11 @@
 <?php
 App::uses('CakeSession', 'Model/Datasource');
+
 /**
  * Static User Session detection class
  */
-class Access {
-
+class Access
+{
 	/**
 	 * All recognized user roles, some are inferred by a number of conditions
 	 */
@@ -29,7 +30,8 @@ class Access {
 	/**
 	 * Determines the role of the requesting User
 	 */
-	public static function getRole() {
+	public static function getRole()
+	{
 
 		if(isset(self::$cache['role'])) {
 			return self::$cache['role'];
@@ -60,7 +62,8 @@ class Access {
 	 *
 	 * @return boolean
 	 */
-	public static function isOwner($user_id) {
+	public static function isOwner($user_id)
+	{
 
 		if(!CakeSession::check('Auth.User.id')) {
 			return false;
@@ -78,7 +81,8 @@ class Access {
 	 * @param boolean $strict Exact match on role (true), or allow equal or greater roles (false)
 	 * @return boolean Whether the current User has the required role level
 	 */
-	public static function hasRole($roleName, $strict = false) {
+	public static function hasRole($roleName, $strict = false)
+	{
 
 		// misconfigured request, throw an error
 		if(!isset(self::$roles[$roleName])) {

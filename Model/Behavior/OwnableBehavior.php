@@ -4,8 +4,8 @@
  * Adds utility functions to any Models which have a User association implying
  * content ownership. Example: User owns his/her Profile
  */
-class OwnableBehavior extends ModelBehavior {
-
+class OwnableBehavior extends ModelBehavior
+{
 	/**
 	 * Determines if the current Model instance is owned by the provided UserID
 	 *
@@ -13,7 +13,8 @@ class OwnableBehavior extends ModelBehavior {
 	 * @param string $primary_key Replacement ID to verify ownership for, ignoring Model->id
 	 * @return boolean
 	 */
-	public function isOwner(&$Model, $user_id, $primary_key = false) {
+	public function isOwner(&$Model, $user_id, $primary_key = false)
+	{
 		if(empty($Model->id) && $primary_key === false) {
 			return false;
 		}

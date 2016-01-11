@@ -3,8 +3,8 @@
 /**
  * Represents the association between a Tag and a Model
  */
-class Tagging extends AppModel {
-	
+class Tagging extends AppModel
+{
 	public $belongsTo = array('Tag');
 
 	/**
@@ -12,8 +12,8 @@ class Tagging extends AppModel {
 	 * the addition of new tags, removal of undesired tags, and saves all needed
 	 * associations.
 	 */
-	public function saveTags($data) {
-
+	public function saveTags($data)
+	{
 		// get existing tag associations
 		$taggings = $this->find('all', array(
 			'contain' => array('Tag'),
@@ -36,13 +36,13 @@ class Tagging extends AppModel {
 
 		// get any existing system tags
 		$tags = $this->Tag->find('all', array(
-			'conditions' =>array(
+			'conditions' => array(
 				'name' => array_merge($new_tags, $remove_tags)
 			)
 		));
 
 		$remove_tag_ids = array();
-		$add_tag_ids = array(); 
+		$add_tag_ids = array();
 
 		// assign each existing tag for association, or disassociation
 		foreach($tags as $tag) {
@@ -63,7 +63,7 @@ class Tagging extends AppModel {
 		}
 
 		// process remaining new tags
-		foreach ($new_tags as $tag) {
+		foreach($new_tags as $tag) {
 			$this->Tag->create();
 			$this->Tag->save(array(
 				'user_id' => $data['user_id'],
@@ -95,8 +95,8 @@ class Tagging extends AppModel {
 	/**
 	 * Add a tagging association to many records of the same type.
 	 */
-	public function addTagToMany($tag_id, $user_id, $model, $targets) {
-
+	public function addTagToMany($tag_id, $user_id, $model, $targets)
+	{
 		$existing_tags = $this->find('all', array(
 			'conditions' => array(
 				'tag_id' => $tag_id,
@@ -114,7 +114,7 @@ class Tagging extends AppModel {
 		}
 
 		$add_tags = array();
-		foreach ($to_tag as $foreign_id) {
+		foreach($to_tag as $foreign_id) {
 			$add_tags[] = array(
 				'tag_id' => $tag_id,
 				'model' => $model,

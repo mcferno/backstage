@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Social accounts monitored by the app for content mirroring
  */
-class Account extends AppModel {
-
+class Account extends AppModel
+{
 	/**
 	 * Tracks a Twitter user by storing their latest profile information and
 	 * profile image.
 	 *
 	 * @param string $handle Twitter account name to track
 	 */
-	public function follow($handle) {
+	public function follow($handle)
+	{
 
 		$params = array(
 			'screen_name' => $handle,
@@ -51,7 +53,8 @@ class Account extends AppModel {
 	 * @param string $url URL of the profile image we wish to save.
 	 * @return string Relative path to the stored image.
 	 */
-	public function saveProfileImage($url) {
+	public function saveProfileImage($url)
+	{
 		// create curl resource
 		$ch = curl_init();
 

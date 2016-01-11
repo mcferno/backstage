@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Controls dynamic page content
  */
-class Page extends AppModel {
-	
+class Page extends AppModel
+{
 	public $validate = array(
 		'uri' => array(
 			'isUnique' => array(

@@ -1,8 +1,8 @@
 <?php
 App::uses('AppModel', 'Model');
 
-class Tag extends AppModel {
-
+class Tag extends AppModel
+{
 	public $displayField = 'name';
 	public $order = array('Tag.name' => 'ASC');
 	public $belongsTo = array('User');
@@ -13,7 +13,8 @@ class Tag extends AppModel {
 		)
 	);
 
-	public function getListForModel($model) {
+	public function getListForModel($model)
+	{
 		return $this->find('list', array(
 			'joins' => array(
 				array(
