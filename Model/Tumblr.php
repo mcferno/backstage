@@ -28,13 +28,15 @@ class Tumblr extends AppModel
 			$this->api_key = Configure::read('Tumblr_App.api_key');
 		} catch(ConfigureException $e) {
 			$this->log('Could not load the Tumbler app settings');
-			return false;
+			return;
 		}
 	}
 
 	/**
 	 * Pulls the latest post from the Tumblr source, saving or updating any
 	 * existing records applicable.
+	 *
+	 * @return boolean
 	 */
 	public function refresh()
 	{
@@ -54,6 +56,8 @@ class Tumblr extends AppModel
 		foreach($accounts as $account) {
 			$this->_pullRecentPosts($account['Account']['handle']);
 		}
+
+		return true;
 	}
 
 	protected function _pullRecentPosts($base)

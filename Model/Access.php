@@ -77,13 +77,13 @@ class Access
 	 * this check allows higher roles access as well. Use strict to ensure the
 	 * User has exactly the requested role.
 	 *
+	 * @throws Exception
 	 * @param string $roleName The role used for comparison against the User's role level
 	 * @param boolean $strict Exact match on role (true), or allow equal or greater roles (false)
 	 * @return boolean Whether the current User has the required role level
 	 */
 	public static function hasRole($roleName, $strict = false)
 	{
-
 		// misconfigured request, throw an error
 		if(!isset(self::$roles[$roleName])) {
 			throw new Exception("The requested User role {$roleName} does not exist.");

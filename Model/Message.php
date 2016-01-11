@@ -77,6 +77,7 @@ class Message extends AppModel
 	 *    - since {Timestamp} Minimum message creation date
 	 *    - exclude_from {UUID} Omit messages from a specific User
 	 *    - limit {Integer} Maximum number of Messages to return
+	 * @return array
 	 */
 	public function getNewMessages($scope, $scopeId = false, $options = array())
 	{

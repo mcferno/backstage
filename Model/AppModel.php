@@ -29,6 +29,8 @@ App::uses('Model', 'Model');
  * will inherit them.
  *
  * @package       app.Model
+ * @method boolean hasAny
+ * @method array findById
  */
 class AppModel extends Model
 {

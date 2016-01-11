@@ -9,6 +9,7 @@ class OwnableBehavior extends ModelBehavior
 	/**
 	 * Determines if the current Model instance is owned by the provided UserID
 	 *
+	 * @param AppModel $Model
 	 * @param string $user_id User ID to verify against current Model instance
 	 * @param string $primary_key Replacement ID to verify ownership for, ignoring Model->id
 	 * @return boolean

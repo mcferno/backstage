@@ -139,7 +139,7 @@ class Asset extends AppModel
 	}
 
 	/**
-	 * Determins the server path to a specific asset
+	 * Determines the server path to a specific asset
 	 *
 	 * @param string $asset_id
 	 * @return string Server path, relative to the weboot image folder
@@ -312,6 +312,7 @@ class Asset extends AppModel
 	 * Resizes an image on disk, generating thumbnail versions of the original
 	 *
 	 * @param string $imagePath Path to image to process
+	 * @return boolean
 	 */
 	public function saveThumbs($imagePath)
 	{

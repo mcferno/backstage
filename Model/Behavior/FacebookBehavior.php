@@ -45,7 +45,7 @@ class FacebookBehavior extends ModelBehavior
 	/**
 	 * Obtains the configuration settings for the Facebook SDK
 	 *
-	 * @return {Array | fase} Settings array or false on failure
+	 * @return array|false Settings array or false on failure
 	 */
 	protected function _getFacebookSettings()
 	{
@@ -82,7 +82,7 @@ class FacebookBehavior extends ModelBehavior
 			$this->log($e->getType());
 			$this->log($e->getMessage());
 			return false;
-		};
+		}
 	}
 
 	/**
