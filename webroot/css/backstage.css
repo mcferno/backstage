@@ -44,7 +44,7 @@ legend, label {
 	color: #DDD;
 }
 
-a, .attn, .navbar .navbar-brand {
+a, .attn, .navbar .navbar-brand, a:focus {
 	color: #FC6626;
 }
 
@@ -54,6 +54,10 @@ a, .attn, .navbar .navbar-brand {
 
 a:hover {
 	color: #EEEEEE;
+	text-decoration: none;
+}
+
+a:focus {
 	text-decoration: none;
 }
 
