@@ -10,8 +10,8 @@ class SiteHelper extends AppHelper {
 	 * Inspects the Post Model data to determine the most appropriate profile
 	 * image.
 	 *
-	 * @param {Array} $data Post Model data
-	 * @return {String} Image HTML
+	 * @param array $data Post Model data
+	 * @return string Image HTML
 	 */
 	public function profileImage($data) {
 		if(!empty($data['Post']['model'])) {
@@ -40,8 +40,8 @@ class SiteHelper extends AppHelper {
 	/**
 	 * Produce an SEO-friendly slug from the Post body
 	 *
-	 * @param {Array} $post Post model data
-	 * @return {String} Sluggified, truncated slug
+	 * @param array $post Post model data
+	 * @return string Sluggified, truncated slug
 	 */
 	public function postSlug($post) {
 		// strip out fancy html characters

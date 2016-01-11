@@ -158,7 +158,7 @@ class VideosController extends AppController {
 	 * image, or download one from a URL. Once an image is set, the user may
 	 * choose the proper thumbnail crop from it.
 	 *
-	 * @param {UUID} $id Link to set an image
+	 * @param string $id Link to set an image
 	 */
 	public function admin_image($id = null) {
 		$this->Video->id = $id;

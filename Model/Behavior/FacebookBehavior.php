@@ -9,7 +9,7 @@ class FacebookBehavior extends ModelBehavior {
 	/**
 	 * Verifies if a the SDK has proper User credentials
 	 *
-	 * @return {Boolean}
+	 * @return boolean
 	 */
 	public function hasFacebookAccess() {
 		$sdk = $this->getFacebookObject();
@@ -20,7 +20,7 @@ class FacebookBehavior extends ModelBehavior {
 	 * Obtains the Facebook SDK object, used for User interactions with the
 	 * Facebook service.
 	 *
-	 * @return {Facebook object | false}
+	 * @return \Facebook|false
 	 */
 	public function getFacebookObject() {
 		if($this->facebookObj !== false) {
@@ -62,10 +62,10 @@ class FacebookBehavior extends ModelBehavior {
 	/**
 	 * Allows API calls through the SDK
 	 *
-	 * @param {String} $endpoint Absolute URI for the desired API call
-	 * @param {String} $type HTTP verbage, ex: GET, POST, PUT
-	 * @param {Array} $params Optional parameters
-	 * @return {Array|false}
+	 * @param string $endpoint Absolute URI for the desired API call
+	 * @param string $type HTTP verbage, ex: GET, POST, PUT
+	 * @param array $params Optional parameters
+	 * @return array|false
 	 */
 	public function facebookApiCall(Model $model, $endpoint, $type = 'GET', $params = array()) {
 		$sdk = $this->getFacebookObject();
@@ -86,7 +86,7 @@ class FacebookBehavior extends ModelBehavior {
 	 *
 	 * https://developers.facebook.com/docs/authentication/permissions/
 	 *
-	 * @return {Array} Facebook user permissions
+	 * @return array Facebook user permissions
 	 */
 	public function getFacebookPermissions() {
 		return array(
@@ -97,8 +97,8 @@ class FacebookBehavior extends ModelBehavior {
 	/**
 	 * Generates an OAuth URL which obtains User-level permissions.
 	 *
-	 * @param {String} $redirect_url Callback URL once the user authenticates
-	 * @return {String} Facebook URL to authenticate the user
+	 * @param string $redirect_url Callback URL once the user authenticates
+	 * @return string Facebook URL to authenticate the user
 	 */
 	public function getFacebookLoginUrl(Model $model, $redirect_url) {
 		$sdk = $this->getFacebookObject();

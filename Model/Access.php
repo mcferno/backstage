@@ -58,7 +58,7 @@ class Access {
 	/**
 	 * Determines if the User matches the provided ID
 	 *
-	 * @return {Boolean}
+	 * @return boolean
 	 */
 	public static function isOwner($user_id) {
 
@@ -74,9 +74,9 @@ class Access {
 	 * this check allows higher roles access as well. Use strict to ensure the
 	 * User has exactly the requested role.
 	 *
-	 * @param {String} $roleName The role used for comparison against the User's role level
-	 * @param {Boolean} $strict Exact match on role (true), or allow equal or greater roles (false)
-	 * @return {Boolean} Whether the current User has the required role level
+	 * @param string $roleName The role used for comparison against the User's role level
+	 * @param boolean $strict Exact match on role (true), or allow equal or greater roles (false)
+	 * @return boolean Whether the current User has the required role level
 	 */
 	public static function hasRole($roleName, $strict = false) {
 

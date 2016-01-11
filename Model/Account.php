@@ -8,7 +8,7 @@ class Account extends AppModel {
 	 * Tracks a Twitter user by storing their latest profile information and
 	 * profile image.
 	 *
-	 * @param {String} $handle Twitter account name to track
+	 * @param string $handle Twitter account name to track
 	 */
 	public function follow($handle) {
 
@@ -48,8 +48,8 @@ class Account extends AppModel {
 	/**
 	 * Keep a local copy of the profile image for display purposes
 	 *
-	 * @param {String} $url URL of the profile image we wish to save.
-	 * @return {String} Relative path to the stored image.
+	 * @param string $url URL of the profile image we wish to save.
+	 * @return string Relative path to the stored image.
 	 */
 	public function saveProfileImage($url) {
 		// create curl resource

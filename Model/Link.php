@@ -45,7 +45,7 @@ class Link extends AppModel {
 	/**
 	 * Inspects the webroot for a possible preview image to attach to a Link instance
 	 *
-	 * @param {Link} $link Link object to inspect and attach to
+	 * @param array $link Link object to inspect and attach to
 	 */
 	public function attachImages(&$link) {
 		if(!empty($link['id'])) {

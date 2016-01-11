@@ -51,8 +51,8 @@ class Contest extends AppModel {
 	/**
 	 * Obtains a single active contest
 	 *
-	 * @param {UUID} Primary key of the desired contest
-	 * @return {Asset} Active contest matching $id, or false
+	 * @param string $id Primary key of the desired contest
+	 * @return array Active contest matching $id, or false
 	 */
 	public function getActiveContest($id) {
 
@@ -69,7 +69,7 @@ class Contest extends AppModel {
 	/**
 	 * Obtains the set of all active contests
 	 *
-	 * @return {Asset[]} All active contests
+	 * @return array All active contests
 	 */
 	public function getActiveContests() {
 
@@ -86,9 +86,9 @@ class Contest extends AppModel {
 	/**
 	 * Determines whether the Contest is owned by a specific user.
 	 *
-	 * @param {UUID} $contest_id Contest to determine ownership
-	 * @param {UUID} $user_id User in question
-	 * @return {Boolean} Whether or not the User provided is the Contest owner
+	 * @param string $contest_id Contest to determine ownership
+	 * @param string $user_id User in question
+	 * @return boolean Whether or not the User provided is the Contest owner
 	 */
 	public function isOwner($contest_id, $user_id) {
 		if(empty($contest_id) || empty($user_id)) {
@@ -104,9 +104,9 @@ class Contest extends AppModel {
 	/**
 	 * Determines if a Contest is newer than a specific time period
 	 *
-	 * @param {UUID} $contest_id Contest to determine freshness
-	 * @param {Integer} $duration Length in seconds by which the Contest must be older (default: 24hrs)
-	 * @return {Boolean} Whether or not the contest is considered recent
+	 * @param string $contest_id Contest to determine freshness
+	 * @param integer $duration Length in seconds by which the Contest must be older (default: 24hrs)
+	 * @return boolean Whether or not the contest is considered recent
 	 */
 	public function isRecent($contest_id, $duration = DAY) {
 		$this->id = $contest_id;
@@ -122,10 +122,10 @@ class Contest extends AppModel {
 	/**
 	 * Sets the winning Asset for a specific Contest
 	 *
-	 * @param {UUID} $contest_id Contest to set the winner for
-	 * @param {UUID} $asset_id Asset to set as the winner
-	 * @param {Boolean} $force Whether or not to override an existing winner
-	 * @return {Boolean} Save status
+	 * @param string $contest_id Contest to set the winner for
+	 * @param string $asset_id Asset to set as the winner
+	 * @param boolean $force Whether or not to override an existing winner
+	 * @return boolean Save status
 	 */
 	public function setWinningAsset($contest_id, $asset_id, $force = false) {
 
@@ -143,7 +143,7 @@ class Contest extends AppModel {
 	 * Converts the available Activity model and relationship data to reduce
 	 * it to a human-friendly sentence.
 	 *
-	 * @param {ActivityModel} $activity Activity to convert
+	 * @param array $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
 		$activity['Activity']['phrase'] = ":user started a new Caption Battle.";

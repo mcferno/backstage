@@ -18,7 +18,7 @@ class TaggableBehavior extends ModelBehavior {
 			if($created) {
 				$data['foreign_id'] = $Model->id;
 			}
-			
+
 			$this->joinModel->saveTags($data);
 		}
 	}
@@ -27,8 +27,8 @@ class TaggableBehavior extends ModelBehavior {
 	 * Retrieves a count of all tags, and how many times they've been used for
 	 * a specific Model.
 	 *
-	 * @param {Array} $model_conditions Joins the current Model and applies these optional conditions
-	 * @return {Array} Order Tagging results with count
+	 * @param array $model_conditions Joins the current Model and applies these optional conditions
+	 * @return array Order Tagging results with count
 	 */
 	public function getTagTally(Model $Model, $model_conditions = array()) {
 		$options = array(

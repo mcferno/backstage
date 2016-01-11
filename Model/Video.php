@@ -82,8 +82,8 @@ class Video extends AppModel {
 	/**
 	 * Converts a seconds integer to its duration syntax (HH:MM:SS)
 	 *
-	 * @param {Integer} $integer Seconds to convert to duration, 24 hr limit
-	 * @return {String} Duration string expressed as HH:MM:SS
+	 * @param int $integer Seconds to convert to duration, 24 hr limit
+	 * @return string Duration string expressed as HH:MM:SS
 	 */
 	public function secondsToDuration($integer) {
 		return gmdate("H:i:s", $integer);
@@ -92,7 +92,7 @@ class Video extends AppModel {
 	/**
 	 * Inspects the webroot for a possible preview image to attach to a Video instance
 	 *
-	 * @param {Video} $video Video object to inspect and attach to
+	 * @param array $video Video object to inspect and attach to
 	 */
 	public function attachImages(&$video) {
 		if(!empty($video['id'])) {

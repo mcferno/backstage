@@ -67,9 +67,9 @@ class Message extends AppModel {
 	}
 
 	/**
-	 * @param {String} $scope Message container/cluster string
-	 * @param {Mixed} $scopeId Cluster identifier
-	 * @param {Array} $options Configurable options
+	 * @param string $scope Message container/cluster string
+	 * @param mixed $scopeId Cluster identifier
+	 * @param array $options Configurable options
 	 *	- since {Timestamp} Minimum message creation date
 	 *	- exclude_from {UUID} Omit messages from a specific User
 	 *	- limit {Integer} Maximum number of Messages to return
@@ -122,7 +122,7 @@ class Message extends AppModel {
 	 * Messages are attached to existing content (Model), so we leverage that
 	 * Model's humanization first.
 	 *
-	 * @param {ActivityModel} $activity Activity to convert
+	 * @param array $activity Activity to convert
 	 */
 	public function humanizeActivity(&$activity) {
 
@@ -167,7 +167,7 @@ class Message extends AppModel {
 	 * Obtains a message count for all types of content in a lookup array, similar
 	 * to the output of ->find('list')
 	 *
-	 * @return  {Array} Array indexed by the foreign_id, with its message count as the value
+	 * @return array Array indexed by the foreign_id, with its message count as the value
 	 */
 	public function getTally($conditions = array()) {
 

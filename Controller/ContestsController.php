@@ -164,8 +164,8 @@ class ContestsController extends AppController {
 	 * Declares the winning caption (Asset) for a specific Contest. Only the
 	 * contest owner can declare the winner. The creator can be the winner.
 	 *
-	 * @param {UUID} $contest_id Contest to declare the winner of
-	 * @param {UUID} $asset_id Asset chosen as winner
+	 * @param string $contest_id Contest to declare the winner of
+	 * @param string $asset_id Asset chosen as winner
 	 */
 	public function admin_set_winner($contest_id = null, $asset_id = null) {
 

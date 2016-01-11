@@ -100,8 +100,8 @@ class Twitter extends AppModel {
 	/**
 	 * Obtains the latest tweet from the local DB
 	 *
-	 * @param {ID} $user_id Twitter account number
-	 * @return {Array} Latest tweet record
+	 * @param string|int $user_id Twitter account number
+	 * @return array Latest tweet record
 	 */
 	public function getLatestTweet($user_id) {
 		return $this->find('first', array(
@@ -116,8 +116,8 @@ class Twitter extends AppModel {
 	 * Postable Behavior callback to determine which Twitter messages are included
 	 * in the "Post" index.
 	 *
-	 * @param {Array} $data Model save data
-	 * @return {Boolean} Whether to include this post in the index.
+	 * @param array $data Model save data
+	 * @return boolean Whether to include this post in the index.
 	 */
 	public function postableInclusion($data) {
 		return empty($data[$this->alias]['in_reply_to_user_id']);

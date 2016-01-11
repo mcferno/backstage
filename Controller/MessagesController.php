@@ -18,8 +18,6 @@ class MessagesController extends AppController {
 
 	/**
 	 * Saves a new message.
-	 *
-	 * @return {JSON} Heartbeat payload
 	 */
 	public function admin_add() {
 

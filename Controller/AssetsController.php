@@ -177,7 +177,7 @@ class AssetsController extends AppController {
 	/**
 	 * Generic pagination augmentation based on the existance of specific URL flag
 	 *
-	 * @param {Array} $options Pagination overrides
+	 * @param array $options Pagination overrides
 	 */
 	protected function defaultPagination($options = array()) {
 
@@ -428,7 +428,7 @@ class AssetsController extends AppController {
 	/**
 	 * View an individual asset
 	 *
-	 * @param {UUID} $id Primary key of the desired asset
+	 * @param string $id Primary key of the desired asset
 	 */
 	public function admin_view($id = null) {
 
@@ -537,7 +537,7 @@ class AssetsController extends AppController {
 	/**
 	 * Posts a single image to a specific Facebook group
 	 *
-	 * @param {UUID} $id Primary key of the actionable asset
+	 * @param string $id Primary key of the actionable asset
 	 */
 	public function admin_post($id = null) {
 		$asset = $this->Asset->hasAny(array(
@@ -616,7 +616,7 @@ class AssetsController extends AppController {
 	/**
 	 * Delete a user's image
 	 *
-	 * @param {UUID} $id Primary key of the desired asset
+	 * @param string $id Primary key of the desired asset
 	 */
 	public function admin_delete($id = null) {
 		if(empty($id) || !$this->Asset->isOwner($this->Auth->user('id'), $id)) {

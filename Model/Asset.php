@@ -100,7 +100,7 @@ class Asset extends AppModel {
 	/**
 	 * Adds meta-data information to a single Asset record.
 	 *
-	 * @param {&Asset} Direct Asset reference to attach meta-data
+	 * @param &Asset Direct Asset reference to attach meta-data
 	 */
 	public function addMetaData(&$result) {
 		// add image references
@@ -116,8 +116,8 @@ class Asset extends AppModel {
 	/**
 	 * Retrieve the images within the user's site folder
 	 *
-	 * @param {String} $cluster Folder name or relative path
-	 * @return {Array} Image paths
+	 * @param string $cluster Folder name or relative path
+	 * @return array Image paths
 	 */
 	public function getImages($cluster = false) {
 		return glob($this->getFolderPath($cluster).'*.*');
@@ -134,8 +134,8 @@ class Asset extends AppModel {
 	/**
 	 * Determins the server path to a specific asset
 	 *
-	 * @param {UUID} $asset_id
-	 * @return {String} Server path, relative to the weboot image folder
+	 * @param string $asset_id
+	 * @return string Server path, relative to the weboot image folder
 	 */
 	public function getPath($asset_id, $size = false) {
 
@@ -156,10 +156,10 @@ class Asset extends AppModel {
 	/**
 	 * Saves and processes an base64 encoded image.
 	 *
-	 * @param {String} $data Base64 encoded image data
-	 * @param {UUID} $user_id User ownership
-	 * @param {String} $type String classification
-	 * @return {Boolean}
+	 * @param string $data Base64 encoded image data
+	 * @param string $user_id User ownership
+	 * @param string $type String classification
+	 * @return boolean
 	 */
 	public function saveEncodedImage(&$data, $user_id, $type = 'Image') {
 
@@ -215,10 +215,10 @@ class Asset extends AppModel {
 	/**
 	 * Saves and processes a file upload.
 	 *
-	 * @param {String} $file_path System path to image source
-	 * @param {UUID} $user_id User ownership
-	 * @param {String} $type String classification
-	 * @return {Boolean}
+	 * @param string $file_path System path to image source
+	 * @param string $user_id User ownership
+	 * @param string $type String classification
+	 * @return boolean
 	 */
 	public function saveImage($file_path, $user_id, $type = 'Image', $options = array()) {
 		if(!class_exists('WideImage')) {
@@ -303,7 +303,7 @@ class Asset extends AppModel {
 	/**
 	 * Resizes an image on disk, generating thumbnail versions of the original
 	 *
-	 * @param {String} $imagePath Path to image to process
+	 * @param string $imagePath Path to image to process
 	 */
 	public function saveThumbs($imagePath) {
 		if(!class_exists('WideImage')) {
@@ -341,8 +341,8 @@ class Asset extends AppModel {
 	/**
 	 * Prepare a single asset to post to Facebook
 	 *
-	 * @param {UUID} $asset_id Asset primary key to post
-	 * @return {Array}
+	 * @param string $asset_id Asset primary key to post
+	 * @return array
 	 */
 	public function castToFacebook($asset_id) {
 		$asset = $this->findById($asset_id);
@@ -357,8 +357,8 @@ class Asset extends AppModel {
 	/**
 	 * Clean up files before a record is deleted
 	 *
-	 * @param {Boolean} $cascade
-	 * @return {Boolean}
+	 * @param boolean $cascade
+	 * @return boolean
 	 */
 	public function beforeDelete($cascade = true) {
 		$res = parent::beforeDelete($cascade);
@@ -387,7 +387,7 @@ class Asset extends AppModel {
 	/**
 	 * Obtains the list of Asset types
 	 *
-	 * @return {Array} Set of existing Asset types
+	 * @return array Set of existing Asset types
 	 */
 	public function getTypes() {
 		$types = $this->find('list', array(
@@ -450,8 +450,8 @@ class Asset extends AppModel {
 	/**
 	 * Determines if an image creation should be announced to other users
 	 *
-	 * @param {Array} $data Asset model data
-	 * @return {Boolean} false to suppress the announcement
+	 * @param array $data Asset model data
+	 * @return boolean false to suppress the announcement
 	 */
 	public function notificationInclusion($data) {
 		if(!empty($data[$this->alias]['album_id'])) {
@@ -471,7 +471,7 @@ class Asset extends AppModel {
 	 * Obtains the conditions to find Assets which are ready for the Meme
 	 * Generator. This is typically images without text on them.
 	 *
-	 * @return {Array} Find conditions
+	 * @return array Find conditions
 	 */
 	public function getCleanImageConditions() {
 		return array(

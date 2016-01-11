@@ -31,26 +31,26 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
-	
+
 	public $recursive = -1;
-	
+
 	public $actsAs = array('Containable');
-	
+
 	/**
 	 * Pulls a JSON feed via URL and returns the decoded format. Simple wrapper
 	 * for GET-style API pulls.
 	 *
-	 * @param {String} $url Base URL to retrieve
-	 * @param {Array} $args GET-params
-	 * @return {Array} JSON-decoded results
+	 * @param string $url Base URL to retrieve
+	 * @param array $args GET-params
+	 * @return array JSON-decoded results
 	 */
 	protected function _readJson($url, $args) {
 		$source = $url.'?'.http_build_query($args);
-		
+
 		$json = file_get_contents($source);
 		if($json === false) {
 			return array();
 		}
 		return json_decode($json,true);
-	}	
+	}
 }

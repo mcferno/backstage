@@ -9,9 +9,9 @@ class OwnableBehavior extends ModelBehavior {
 	/**
 	 * Determines if the current Model instance is owned by the provided UserID
 	 *
-	 * @param {UUID} $user_id User ID to verify against current Model instance
-	 * @param {UUID} $primary_key Replacement ID to verify ownership for, ignoring Model->id
-	 * @return {Boolean}
+	 * @param string $user_id User ID to verify against current Model instance
+	 * @param string $primary_key Replacement ID to verify ownership for, ignoring Model->id
+	 * @return boolean
 	 */
 	public function isOwner(&$Model, $user_id, $primary_key = false) {
 		if(empty($Model->id) && $primary_key === false) {

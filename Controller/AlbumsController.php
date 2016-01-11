@@ -7,7 +7,7 @@ class AlbumsController extends AppController {
 	/**
 	 * Create or update Album meta-data
 	 *
-	 * @param {UUID} Album to modify
+	 * @param string $id Album to modify
 	 */
 	public function admin_save($id = null) {
 
@@ -42,8 +42,8 @@ class AlbumsController extends AppController {
 	/**
 	 * Set the Asset (image) to use as the Album cover
 	 *
-	 * @param {UUID} $album_id Album to affect
-	 * @param {UUID} $asset_id Asset to associate as the Album's cover
+	 * @param string $album_id Album to affect
+	 * @param string $asset_id Asset to associate as the Album's cover
 	 */
 	public function admin_set_cover($album_id = null, $asset_id) {
 		$this->Album->id = $album_id;
@@ -59,7 +59,7 @@ class AlbumsController extends AppController {
 	/**
 	 * Remove an Album, detaching its Asset associations
 	 *
-	 * @param {UUID} Album to remove
+	 * @param string $id Album to remove
 	 */
 	public function admin_delete($id = null) {
 		$this->Album->id = $id;
