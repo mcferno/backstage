@@ -4,6 +4,7 @@ App::uses('AuthComponent', 'Controller/Component');
 
 /**
  * Manages interactions with site user accounts
+ * @method array findBySessionKey
  */
 class User extends AppModel
 {

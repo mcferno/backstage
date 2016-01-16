@@ -77,6 +77,7 @@ class Twitter extends AppModel
 
 	/**
 	 * Loads the CodeBird library and initializes the basic auth settings.
+	 * @return \CodeBird
 	 */
 	public function getAPIObject()
 	{
