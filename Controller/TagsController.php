@@ -1,7 +1,7 @@
 <?php
 
-class TagsController extends AppController {
-
+class TagsController extends AppController
+{
 	public $uses = array('Tag', 'Tagging');
 	public $paginate = array(
 		'Tag' => array(
@@ -12,7 +12,7 @@ class TagsController extends AppController {
 					'alias' => 'Tagging',
 					'type' => 'LEFT',
 					'table' => 'taggings',
-					'conditions'=> array(
+					'conditions' => array(
 						"Tagging.tag_id = Tag.id",
 					)
 				)
@@ -24,14 +24,16 @@ class TagsController extends AppController {
 
 	public $restrictedRoutes = array('admin_index');
 
-	public function beforeScaffold($method) {
+	public function beforeScaffold($method)
+	{
 		if(!Access::hasRole('Admin')) {
 			$this->redirect(array('controller' => 'users', 'action' => 'dashboard'));
 		}
 		return parent::beforeScaffold($method);
 	}
 
-	public function adminBeforeRender() {
+	public function adminBeforeRender()
+	{
 		parent::adminBeforeRender();
 		$this->set('title', 'Tags');
 	}
@@ -39,7 +41,8 @@ class TagsController extends AppController {
 	/**
 	 * Admin overview index
 	 */
-	public function admin_index() {
+	public function admin_index()
+	{
 		$this->Tag->virtualFields['count'] = 'COUNT(*)';
 
 		if(!empty($this->request->params['named']['user'])) {
@@ -56,7 +59,8 @@ class TagsController extends AppController {
 	/**
 	 * AJAX-driven tag updates. Requires all tags to be sent for a single item.
 	 */
-	public function admin_update() {
+	public function admin_update()
+	{
 		if($this->request->is('ajax') && ($this->request->is('post') || $this->request->is('put'))) {
 
 			$data = array(
@@ -75,7 +79,8 @@ class TagsController extends AppController {
 	 * AJAX-driven tagging additions. Allows multiple tags (existing and new) to
 	 * be associated to a set of images.
 	 */
-	public function admin_add_tags() {
+	public function admin_add_tags()
+	{
 		if($this->request->is('ajax') && ($this->request->is('post') || $this->request->is('put'))) {
 
 			$user_id = $this->Auth->user('id');
@@ -105,7 +110,8 @@ class TagsController extends AppController {
 	/**
 	 * Obtains the current full set of Tags in the system
 	 */
-	public function admin_list() {
+	public function admin_list()
+	{
 		if($this->request->is('ajax')) {
 
 			// pull tags in a Select2 compatible format

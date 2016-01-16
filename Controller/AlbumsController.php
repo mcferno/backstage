@@ -1,19 +1,20 @@
 <?php
+
 /**
  * Manages the creation and modification of Albums (groupings of images)
  */
-class AlbumsController extends AppController {
-
+class AlbumsController extends AppController
+{
 	/**
 	 * Create or update Album meta-data
 	 *
-	 * @param {UUID} Album to modify
+	 * @param string $id Album to modify
 	 */
-	public function admin_save($id = null) {
-
+	public function admin_save($id = null)
+	{
 		$redirect = $this->referer(array('action' => 'index'));
 
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if($this->request->is('post') || $this->request->is('put')) {
 			if(!empty($this->request->data['Album']['id'])) {
 				$status = 'updated';
 			} else {
@@ -25,7 +26,7 @@ class AlbumsController extends AppController {
 					$this->request->data['Album']['title'] = 'Untitled Album';
 				}
 			}
-			if ($this->Album->save($this->request->data)) {
+			if($this->Album->save($this->request->data)) {
 				if($status == 'created') {
 					// view new album
 					$redirect = array('controller' => 'assets', 'action' => 'index', 'album' => $this->Album->id);
@@ -42,10 +43,11 @@ class AlbumsController extends AppController {
 	/**
 	 * Set the Asset (image) to use as the Album cover
 	 *
-	 * @param {UUID} $album_id Album to affect
-	 * @param {UUID} $asset_id Asset to associate as the Album's cover
+	 * @param string $album_id Album to affect
+	 * @param string $asset_id Asset to associate as the Album's cover
 	 */
-	public function admin_set_cover($album_id = null, $asset_id) {
+	public function admin_set_cover($album_id = null, $asset_id)
+	{
 		$this->Album->id = $album_id;
 		$this->Album->Asset->id = $asset_id;
 		if($this->request->is('post') && $this->Album->exists() && $this->Album->Asset->exists()) {
@@ -59,9 +61,10 @@ class AlbumsController extends AppController {
 	/**
 	 * Remove an Album, detaching its Asset associations
 	 *
-	 * @param {UUID} Album to remove
+	 * @param string $id Album to remove
 	 */
-	public function admin_delete($id = null) {
+	public function admin_delete($id = null)
+	{
 		$this->Album->id = $id;
 		if($this->Album->exists() && $this->Album->isOwner($this->Auth->user('id')) && $this->request->is('post')) {
 			$this->Album->delete($id);

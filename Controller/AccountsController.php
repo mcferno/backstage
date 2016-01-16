@@ -1,10 +1,12 @@
 <?php
 
-class AccountsController extends AppController {
+class AccountsController extends AppController
+{
 	public $scaffold = 'admin';
 
 	// admin-only scaffolding
-	public function beforeScaffold($method) {
+	public function beforeScaffold($method)
+	{
 		if(!Access::hasRole('Admin')) {
 			$this->redirect(array('controller' => 'users', 'action' => 'dashboard'));
 		}
@@ -13,7 +15,8 @@ class AccountsController extends AppController {
 		return parent::beforeScaffold($method);
 	}
 
-	public function adminBeforeRender() {
+	public function adminBeforeRender()
+	{
 		parent::adminBeforeRender();
 		$this->set('title', 'Accounts');
 	}

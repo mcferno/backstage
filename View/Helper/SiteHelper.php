@@ -2,21 +2,22 @@
 
 App::uses('Helper', 'AppHelper');
 
-class SiteHelper extends AppHelper {
-
+class SiteHelper extends AppHelper
+{
 	public $helpers = array('Html', 'Text');
 
 	/**
 	 * Inspects the Post Model data to determine the most appropriate profile
 	 * image.
 	 *
-	 * @param {Array} $data Post Model data
-	 * @return {String} Image HTML
+	 * @param array $data Post Model data
+	 * @return string Image HTML
 	 */
-	public function profileImage($data) {
+	public function profileImage($data)
+	{
 		if(!empty($data['Post']['model'])) {
 			if($data['Post']['model'] == 'Tumblr') {
-				if(stripos($data['Post']['source'],'guest') !== false) {
+				if(stripos($data['Post']['source'], 'guest') !== false) {
 					return $this->Html->image('profile/guest-profile96.jpg', array('alt' => 'Guest', 'title' => 'Guest'));
 				} else {
 					return $this->Html->image('profile/kqm-profile96.jpg', array('alt' => 'The Man Himself', 'title' => 'The Man Himself'));
@@ -40,10 +41,11 @@ class SiteHelper extends AppHelper {
 	/**
 	 * Produce an SEO-friendly slug from the Post body
 	 *
-	 * @param {Array} $post Post model data
-	 * @return {String} Sluggified, truncated slug
+	 * @param array $post Post model data
+	 * @return string Sluggified, truncated slug
 	 */
-	public function postSlug($post) {
+	public function postSlug($post)
+	{
 		// strip out fancy html characters
 		$text = strtr($post['Post']['body'], array(
 			'&#8217;' => '\'',
@@ -64,13 +66,15 @@ class SiteHelper extends AppHelper {
 	/**
 	 * Collects various visitor details for feature detection and UX
 	 */
-	public function userDetails() {
+	public function userDetails()
+	{
 		return array(
 			'isMobile' => $this->request->is('mobile')
 		);
 	}
 
-	public function jsBasePath($str) {
+	public function jsBasePath($str)
+	{
 		if(substr($str, -1) !== '/') {
 			$str .= '/';
 		}

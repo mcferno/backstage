@@ -1,7 +1,7 @@
 <?php
 
-class Album extends AppModel {
-
+class Album extends AppModel
+{
 	public $belongsTo = array(
 		'Cover' => array(
 			'className' => 'Asset',
@@ -41,7 +41,8 @@ class Album extends AppModel {
 		)
 	);
 
-	public function beforeDelete($cascade = true) {
+	public function beforeDelete($cascade = true)
+	{
 		parent::beforeDelete($cascade);
 
 		if($this->id) {
@@ -55,13 +56,15 @@ class Album extends AppModel {
 		return true;
 	}
 
-	public function getAlbumCount($user = null) {
+	public function getAlbumCount($user = null)
+	{
 		return $this->find('count', array(
 			'user_id' => $user
 		));
 	}
 
-	public function getUserList($for_user) {
+	public function getUserList($for_user)
+	{
 		$albums = $this->find('all', array(
 			'fields' => 'Album.id, Album.title, Album.user_id, User.username',
 			'contain' => 'User',
@@ -82,7 +85,8 @@ class Album extends AppModel {
 	 *
 	 * @param  {ActivityModel} $activity Activity to convert
 	 */
-	public function humanizeActivity(&$activity) {
+	public function humanizeActivity(&$activity)
+	{
 		$activity['Activity']['phrase'] = ":user started a new album called “{$activity['Album']['title']}”";
 
 		// inject the image count if we have it

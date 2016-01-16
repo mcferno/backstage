@@ -6,13 +6,14 @@ App::uses('Validation', 'Utility');
  * Handles the validation and manipulation of uploaded content originating from
  * POSTed data, and URL retrieval.
  */
-class UploadComponent extends Component {
-
+class UploadComponent extends Component
+{
 	public $mimeTypes = false;
 	public $fileExtensions = false;
 	public $Controller = false;
 
-	public function initialize(Controller $controller) {
+	public function initialize(Controller $controller)
+	{
 		parent::initialize($controller);
 		$this->Controller = $controller;
 	}
@@ -20,13 +21,13 @@ class UploadComponent extends Component {
 	/**
 	 * Captures a URL, saving the contents to a file
 	 *
-	 * @param {String} $url HTTP/s url to capture
-	 * @param {String} $destination File path to write into, otherwise a tmp file is used
-	 * @return {String | false} System path the to downloaded asset
+	 * @param string $url HTTP/s url to capture
+	 * @param string $destination File path to write into, otherwise a tmp file is used
+	 * @return string|false System path the to downloaded asset
 	 */
-	public function saveURLtoFile($url, $destination = false) {
-
-		$filePath = ($destination) ? $destination : tempnam(TMP , 'urlsave_');
+	public function saveURLtoFile($url, $destination = false)
+	{
+		$filePath = ($destination) ? $destination : tempnam(TMP, 'urlsave_');
 		$fileHandle = fopen($filePath, "w+");
 
 		$result = false;
@@ -66,11 +67,11 @@ class UploadComponent extends Component {
 	/**
 	 * Determines whether a file upload is valid
 	 *
-	 * @param {Array} $payload Nested $_FILES content for inspection
-	 * @return {true|String} True if the payload is good, error message otherwise
+	 * @param array $payload Nested $_FILES content for inspection
+	 * @return string|true True if the payload is good, error message otherwise
 	 */
-	public function isValidUpload($payload) {
-
+	public function isValidUpload($payload)
+	{
 		// file upload error
 		if($payload['error'] !== 0 || !file_exists($payload['tmp_name'])) {
 			return 'Upload has failed, please try again.';
@@ -88,11 +89,11 @@ class UploadComponent extends Component {
 	 * Determines whether the provided file URL is valid, and matches allowable
 	 * extensions
 	 *
-	 * @param {String} $payload URL to inspect
-	 * @return {true|String} True if the URL is good, error message otherwise
+	 * @param string $payload URL to inspect
+	 * @return string|true True if the URL is good, error message otherwise
 	 */
-	public function isValidURL($payload) {
-
+	public function isValidURL($payload)
+	{
 		if(!Validation::url($payload)) {
 			return 'Invalid URL provided.';
 		}
@@ -111,10 +112,11 @@ class UploadComponent extends Component {
 	/**
 	 * Obtains the mime-type of the provided file path
 	 *
-	 * @param {String} Server path to the desired file
-	 * @return {String|false} Mime-type detected, or false on error
+	 * @param string $filePath Server path to the desired file
+	 * @return string|false Mime-type detected, or false on error
 	 */
-	public function getMimeType($filePath) {
+	public function getMimeType($filePath)
+	{
 		if(!file_exists($filePath)) {
 			return false;
 		}
@@ -126,10 +128,11 @@ class UploadComponent extends Component {
 	/**
 	 * Obtains the filename extension of a system path or URL
 	 *
-	 * @param {String} $path String to inspect
-	 * @return {String} File extension
+	 * @param string $path String to inspect
+	 * @return string|false File extension
 	 */
-	public function getExtension($path) {
+	public function getExtension($path)
+	{
 		$matches = array();
 
 		if(preg_match('/\.([a-z0-9]{2,4})$/i', $path, $matches)) {
@@ -141,11 +144,13 @@ class UploadComponent extends Component {
 
 	/**
 	 * Helper function to remove files matching a directory or wildcard path
+	 * @param string $path
 	 */
-	public function cleanPath($path) {
+	public function cleanPath($path)
+	{
 		$files = glob($path);
 
-		foreach ($files as $file) {
+		foreach($files as $file) {
 			@unlink($file);
 		}
 	}
@@ -153,10 +158,12 @@ class UploadComponent extends Component {
 	/**
 	 * Helper function to create a directory path for writing
 	 *
-	 * @param {String} $filepath Disk path
-	 * @return {Boolean}
+	 * @param string $filepath Disk path
+	 * @param int $mode permission to apply
+	 * @return boolean
 	 */
-	public function makeDirectoryWritable($filepath, $mode = 0777) {
+	public function makeDirectoryWritable($filepath, $mode = 0777)
+	{
 		// directory does not exist, make it
 		if(!file_exists($filepath)) {
 			return mkdir($filepath, $mode, true);

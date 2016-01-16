@@ -3,8 +3,8 @@ App::uses('Controller', 'Controller');
 App::uses('CakeNumber', 'Utility');
 App::uses('Access', 'Model');
 
-class AppController extends Controller {
-
+class AppController extends Controller
+{
 	public $uses = array('User');
 
 	public $helpers = array(
@@ -34,12 +34,14 @@ class AppController extends Controller {
 	// routes reserved for high-level roles only
 	public $restrictedRoutes = array();
 
-	public function beforeFilter() {
+	public function beforeFilter()
+	{
 		$this->setSecurity();
 
 		if(isset($this->request->params['prefix'])
-		&& $this->request->params['prefix'] == 'admin'
-		&& $this->request->params['admin'] == '1') {
+			&& $this->request->params['prefix'] == 'admin'
+			&& $this->request->params['admin'] == '1'
+		) {
 			$this->adminBeforeFilter();
 		} else {
 			$this->siteBeforeFilter();
@@ -47,14 +49,16 @@ class AppController extends Controller {
 		parent::beforeFilter();
 	}
 
-	public function siteBeforeFilter() {
+	public function siteBeforeFilter()
+	{
 		$this->Auth->allow();
 
 		// compress all output
 		$this->response->compress();
 	}
 
-	public function adminBeforeFilter() {
+	public function adminBeforeFilter()
+	{
 		$this->layout = 'admin';
 		$this->userHome = array('controller' => 'users', 'action' => 'dashboard');
 
@@ -84,7 +88,8 @@ class AppController extends Controller {
 		$this->detectAjax();
 	}
 
-	public function beforeRender() {
+	public function beforeRender()
+	{
 		if(!$this->request->is('ajax')) {
 			$this->set('breadcrumbs', array());
 			$this->set('contentSpan', 8);
@@ -92,8 +97,9 @@ class AppController extends Controller {
 		}
 
 		if(isset($this->request->params['prefix'])
-		&& $this->request->params['prefix'] == 'admin'
-		&& $this->request->params['admin'] == '1') {
+			&& $this->request->params['prefix'] == 'admin'
+			&& $this->request->params['admin'] == '1'
+		) {
 			$this->adminBeforeRender();
 		}
 	}
@@ -101,7 +107,8 @@ class AppController extends Controller {
 	/**
 	 * Pre-view generation processing for authenticated users
 	 */
-	public function adminBeforeRender() {
+	public function adminBeforeRender()
+	{
 		$this->set('siteName', Configure::read('Site.name'));
 		$this->set('backend', Configure::read('Site.backendUrl'));
 		$this->set('userHome', $this->userHome);
@@ -110,7 +117,8 @@ class AppController extends Controller {
 	/**
 	 * Post-processing which is not specific to the generated response
 	 */
-	public function afterFilter() {
+	public function afterFilter()
+	{
 		if($this->Auth->loggedIn()) {
 
 			// track the time of the last activity from a specific user
@@ -121,7 +129,8 @@ class AppController extends Controller {
 	/**
 	 * Configures settings relating to overall app security
 	 */
-	protected function setSecurity() {
+	protected function setSecurity()
+	{
 		Security::setHash('sha256');
 		$this->Cookie->name = 'KQM';
 		$this->Cookie->type('rijndael');
@@ -136,7 +145,8 @@ class AppController extends Controller {
 	 * This packet of information should remain lightweight as it is drawn
 	 * frequently to give live-like response times.
 	 */
-	protected function _getHeartbeatData() {
+	protected function _getHeartbeatData()
+	{
 		$MessageModel = ClassRegistry::init('Message');
 		$currentUser = $this->Auth->user('id');
 
@@ -184,7 +194,8 @@ class AppController extends Controller {
 	/**
 	 * Persists a user's session after login for repeat visits.
 	 */
-	protected function persistSession() {
+	protected function persistSession()
+	{
 
 		$identifier = $this->User->getSessionIdentifier($this->Auth->user('id'));
 
@@ -197,7 +208,8 @@ class AppController extends Controller {
 	/**
 	 * Post login routine to maintain user & system state
 	 */
-	protected function postLogin() {
+	protected function postLogin()
+	{
 		$this->User->setLastLogin($this->Auth->user('id'), Configure::read('App.start'));
 		$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
 		$this->User->resetUserCache();
@@ -207,7 +219,8 @@ class AppController extends Controller {
 	/**
 	 * Detects if an AJAX request is in progress, allowing it to pass
 	 */
-	protected function detectAjax() {
+	protected function detectAjax()
+	{
 		if($this->Auth->loggedIn() && $this->request->is('ajax')) {
 			$this->disableCache(); // expire cache immediately
 			$this->RequestHandler->renderAs($this, 'json');
@@ -221,7 +234,8 @@ class AppController extends Controller {
 	 * Postable behavior. This can serve as a maintenance function for admin
 	 * users.
 	 */
-	public function admin_refresh_model() {
+	public function admin_refresh_model()
+	{
 		if(Access::hasRole('Admin') && $this->{$this->modelClass}->Behaviors->attached('Postable')) {
 			$this->{$this->modelClass}->refreshPostableIndex();
 		}

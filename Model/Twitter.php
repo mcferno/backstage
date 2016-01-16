@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Simple Twitter Model/Datasource. Assists in content scraping and local mirroring
  */
-class Twitter extends AppModel {
-
+class Twitter extends AppModel
+{
 	public $useTable = 'twitter';
 
 	public $actsAs = array('Postable.Postable' => array(
@@ -19,7 +20,8 @@ class Twitter extends AppModel {
 	/**
 	 * Pull the latest tweets from all Accounts currently tracked by the system
 	 */
-	public function refresh() {
+	public function refresh()
+	{
 		$accounts = ClassRegistry::init('Account')->find('all', array(
 			'fields' => array('id', 'handle', 'user_id'),
 			'conditions' => array(
@@ -57,7 +59,7 @@ class Twitter extends AppModel {
 						'id' => $record['id_str'],
 						'created_at' => strtotime($record['created_at']),
 						'text' => $record['text'],
-						'source' => 'https://twitter.com/'.$params['screen_name'].'/status/'.$record['id_str'],
+						'source' => 'https://twitter.com/' . $params['screen_name'] . '/status/' . $record['id_str'],
 						'truncated' => $record['truncated'],
 						'in_reply_to_status_id' => $record['in_reply_to_status_id_str'],
 						'in_reply_to_user_id' => $record['in_reply_to_user_id_str'],
@@ -75,11 +77,13 @@ class Twitter extends AppModel {
 
 	/**
 	 * Loads the CodeBird library and initializes the basic auth settings.
+	 * @return \CodeBird
 	 */
-	public function getAPIObject() {
+	public function getAPIObject()
+	{
 		try {
 			Configure::load('twitter');
-		} catch (ConfigureException $e) {
+		} catch(ConfigureException $e) {
 			$this->log('Could not load the Twitter app settings');
 			return false;
 		}
@@ -100,10 +104,11 @@ class Twitter extends AppModel {
 	/**
 	 * Obtains the latest tweet from the local DB
 	 *
-	 * @param {ID} $user_id Twitter account number
-	 * @return {Array} Latest tweet record
+	 * @param string|int $user_id Twitter account number
+	 * @return array Latest tweet record
 	 */
-	public function getLatestTweet($user_id) {
+	public function getLatestTweet($user_id)
+	{
 		return $this->find('first', array(
 			'conditions' => array(
 				'user_id' => $user_id
@@ -116,10 +121,11 @@ class Twitter extends AppModel {
 	 * Postable Behavior callback to determine which Twitter messages are included
 	 * in the "Post" index.
 	 *
-	 * @param {Array} $data Model save data
-	 * @return {Boolean} Whether to include this post in the index.
+	 * @param array $data Model save data
+	 * @return boolean Whether to include this post in the index.
 	 */
-	public function postableInclusion($data) {
+	public function postableInclusion($data)
+	{
 		return empty($data[$this->alias]['in_reply_to_user_id']);
 	}
 }

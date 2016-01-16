@@ -1,8 +1,8 @@
 <?php
 App::uses('AppController', 'Controller');
 
-class LinksController extends AppController {
-
+class LinksController extends AppController
+{
 	public $uses = array('Link', 'Message');
 
 	public $components = array(
@@ -20,12 +20,14 @@ class LinksController extends AppController {
 		)
 	);
 
-	public function adminBeforeRender() {
+	public function adminBeforeRender()
+	{
 		parent::adminBeforeRender();
 		$this->set('title', 'Links');
 	}
 
-	public function admin_index() {
+	public function admin_index()
+	{
 		// show sticky posts at the top if the order is not manually set
 		if(!isset($this->request->params['named']['sort'])) {
 			$this->paginate['Link']['order'] = 'Link.sticky DESC, Link.created DESC';
@@ -34,7 +36,8 @@ class LinksController extends AppController {
 		$this->set('tag_tally', $this->Link->getTagTally());
 	}
 
-	public function admin_my_links() {
+	public function admin_my_links()
+	{
 		$this->paginate['Link']['conditions']['Link.user_id'] = $this->Auth->user('id');
 		$this->set('sectionTitle', 'My Links');
 		$this->defaultPagination();
@@ -45,7 +48,8 @@ class LinksController extends AppController {
 	/**
 	 * Prepares the necessary data for a paginated index of links
 	 */
-	protected function defaultPagination() {
+	protected function defaultPagination()
+	{
 		// restrict links to those by a specific tag
 		if(isset($this->request->params['named']['tag'])) {
 			$tag = $this->Link->Tag->findById($this->request->params['named']['tag']);
@@ -55,7 +59,7 @@ class LinksController extends AppController {
 				'alias' => 'Tagging',
 				'type' => 'INNER',
 				'table' => 'taggings',
-				'conditions'=> array(
+				'conditions' => array(
 					'Link.id = Tagging.foreign_id',
 					'Tagging.model' => 'Link'
 				)
@@ -87,9 +91,10 @@ class LinksController extends AppController {
 		$this->set('thumbnail_path', $this->Link->thumbnailPath);
 	}
 
-	public function admin_view($id = null) {
+	public function admin_view($id = null)
+	{
 		$this->Link->id = $id;
-		if (!$this->Link->exists()) {
+		if(!$this->Link->exists()) {
 			throw new NotFoundException(__('Invalid link'));
 		}
 		$link = $this->Link->find('first', array(
@@ -115,12 +120,13 @@ class LinksController extends AppController {
 		$this->set('thumbnail_path', $this->Link->thumbnailPath);
 	}
 
-	public function admin_add() {
-		if ($this->request->is('post')) {
+	public function admin_add()
+	{
+		if($this->request->is('post')) {
 			$this->Link->create();
 			$this->Link->set('user_id', $this->Auth->user('id'));
 
-			if ($this->Link->save($this->request->data)) {
+			if($this->Link->save($this->request->data)) {
 				$this->Session->setFlash('Your new link has been added!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -131,13 +137,14 @@ class LinksController extends AppController {
 		$this->set('tags', array_values($this->Link->Tag->getListForModel('Link')));
 	}
 
-	public function admin_edit($id = null) {
+	public function admin_edit($id = null)
+	{
 		$this->Link->id = $id;
-		if (!$this->Link->exists()) {
+		if(!$this->Link->exists()) {
 			throw new NotFoundException(__('Invalid link'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Link->save($this->request->data)) {
+		if($this->request->is('post') || $this->request->is('put')) {
+			if($this->Link->save($this->request->data)) {
 				$this->Session->setFlash('The link has been updated!', 'messaging/alert-success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -166,15 +173,16 @@ class LinksController extends AppController {
 	 * image, or download one from a URL. Once an image is set, the user may
 	 * choose the proper thumbnail crop from it.
 	 *
-	 * @param {UUID} $id Link to set an image
+	 * @param string $id Link to set an image
 	 */
-	public function admin_image($id = null) {
+	public function admin_image($id = null)
+	{
 		$this->Link->id = $id;
-		if (!$this->Link->exists()) {
+		if(!$this->Link->exists()) {
 			throw new NotFoundException(__('Invalid link'));
 		}
 
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if($this->request->is('post') || $this->request->is('put')) {
 
 			// base file path of the eventual new image (missing extension)
 			$new_file = "{$this->Link->thumbnailPath}/full/{$id}.";
@@ -227,7 +235,8 @@ class LinksController extends AppController {
 		$this->set('thumbnail_path', $this->Link->thumbnailPath);
 	}
 
-	public function admin_crop() {
+	public function admin_crop()
+	{
 		$response = array(
 			'status' => 'failed'
 		);
@@ -253,12 +262,13 @@ class LinksController extends AppController {
 		$this->set('_serialize', array_keys($response));
 	}
 
-	public function admin_delete($id = null) {
-		if (!$this->request->is('post')) {
+	public function admin_delete($id = null)
+	{
+		if(!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
 		$this->Link->id = $id;
-		if (!$this->Link->exists()) {
+		if(!$this->Link->exists()) {
 			throw new NotFoundException(__('Invalid link'));
 		}
 
@@ -267,7 +277,7 @@ class LinksController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		if ($this->Link->delete()) {
+		if($this->Link->delete()) {
 			$this->Session->setFlash('Your link has been removed!', 'messaging/alert-success');
 			$this->redirect(array('action' => 'index'));
 		}

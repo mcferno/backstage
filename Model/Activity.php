@@ -1,10 +1,11 @@
 <?php
+
 /**
  * Activity :: represents user and system driven updates across all relevant
  * model types. Serves as the base for all user notifications.
  */
-class Activity extends AppModel {
-
+class Activity extends AppModel
+{
 	public $order = 'Activity.created DESC';
 
 	public $belongsTo = array(
@@ -21,11 +22,12 @@ class Activity extends AppModel {
 		'Video' => array('foreignKey' => 'foreign_key')
 	);
 
-	public function afterFind($results, $primary = false) {
+	public function afterFind($results, $primary = false)
+	{
 		$results = parent::afterFind($results, $primary);
 
 		// inject human friendly strings
-		foreach ($results as &$result) {
+		foreach($results as &$result) {
 			if(isset($result['Activity']['model']) && isset($result[$result['Activity']['model']])) {
 				$this->{$result['Activity']['model']}->humanizeActivity($result);
 			}
@@ -34,7 +36,8 @@ class Activity extends AppModel {
 		return $results;
 	}
 
-	public function countNewActivity($user_id, $since = false) {
+	public function countNewActivity($user_id, $since = false)
+	{
 		if($since === false) {
 			$since = $this->User->field('last_update', array('id' => $user_id));
 

@@ -1,11 +1,13 @@
 <?php
 App::uses('AppModel', 'Model');
 App::uses('AuthComponent', 'Controller/Component');
+
 /**
  * Manages interactions with site user accounts
+ * @method array findBySessionKey
  */
-class User extends AppModel {
-
+class User extends AppModel
+{
 	public $displayField = 'username';
 
 	const TOKEN_PASSWORD_RESET = 'password_reset';
@@ -60,19 +62,21 @@ class User extends AppModel {
 		),
 	);
 
-	public function beforeSave($options = array()) {
+	public function beforeSave($options = array())
+	{
 		// hash password
-		if (!empty($this->data[$this->alias]['password'])) {
+		if(!empty($this->data[$this->alias]['password'])) {
 			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
 		}
 
-		if (isset($this->data[$this->alias]['fb_target']) && $this->data[$this->alias]['fb_target'] == '') {
+		if(isset($this->data[$this->alias]['fb_target']) && $this->data[$this->alias]['fb_target'] == '') {
 			$this->data[$this->alias]['fb_target'] = null;
 		}
-	    return true;
+		return true;
 	}
 
-	public function afterFind($results, $primary = false) {
+	public function afterFind($results, $primary = false)
+	{
 		if($this->attachTimeDeltas) {
 			$now = Configure::read('App.start');
 			foreach($results as &$result) {
@@ -88,11 +92,12 @@ class User extends AppModel {
 	/**
 	 * Tracks the last time the user authenticated with the server.
 	 *
-	 * @param {UUID} $user_id User to update
-	 * @param {Integer} $timestamp Unix timestamp of the visit
-	 * @return {Boolean} Update status
+	 * @param string $user_id User to update
+	 * @param int $timestamp Unix timestamp of the visit
+	 * @return boolean Update status
 	 */
-	public function setLastLogin($user_id, $timestamp) {
+	public function setLastLogin($user_id, $timestamp)
+	{
 		return $this->updateAll(
 			array("{$this->alias}.last_login" => '\'' . date(MYSQL_DATE_FORMAT, $timestamp) . '\''),
 			array("{$this->alias}.{$this->primaryKey}" => $user_id)
@@ -102,11 +107,12 @@ class User extends AppModel {
 	/**
 	 * Tracks the last time the user made any activity with the server.
 	 *
-	 * @param {UUID} $user_id User to update
-	 * @param {Integer} $timestamp Unix timestamp of the visit
-	 * @return {Boolean} Update status
+	 * @param string $user_id User to update
+	 * @param int $timestamp Unix timestamp of the visit
+	 * @return boolean Update status
 	 */
-	public function setLastSeen($user_id, $timestamp) {
+	public function setLastSeen($user_id, $timestamp)
+	{
 		return $this->updateAll(
 			array("{$this->alias}.last_seen" => '\'' . date(MYSQL_DATE_FORMAT, $timestamp) . '\''),
 			array("{$this->alias}.{$this->primaryKey}" => $user_id)
@@ -116,12 +122,13 @@ class User extends AppModel {
 	/**
 	 * Tracks the last time the user made any activity with the server.
 	 *
-	 * @param {UUID} $user_id User to update
-	 * @param {Integer} $timestamp Unix timestamp of the visit
-	 * @return {Boolean} Update status
+	 * @param string $user_id User to update
+	 * @param int $timestamp Unix timestamp of the visit
+	 * @return boolean Update status
 	 */
-	public function setLastAck($user_id, $timestamp) {
-		$datetime = date(MYSQL_DATE_FORMAT,$timestamp);
+	public function setLastAck($user_id, $timestamp)
+	{
+		$datetime = date(MYSQL_DATE_FORMAT, $timestamp);
 		return $this->updateAll(
 			array("{$this->alias}.last_ack" => '\'' . $datetime . '\''),
 			array(
@@ -134,12 +141,13 @@ class User extends AppModel {
 	/**
 	 * Tracks the last time the user viewed system notifications.
 	 *
-	 * @param {UUID} $user_id User to update
-	 * @param {Integer} $timestamp Unix timestamp of the visit
-	 * @return {Boolean} Update status
+	 * @param string $user_id User to update
+	 * @param int $timestamp Unix timestamp of the visit
+	 * @return boolean Update status
 	 */
-	public function setLastUpdate($user_id, $timestamp) {
-		$datetime = date(MYSQL_DATE_FORMAT,$timestamp);
+	public function setLastUpdate($user_id, $timestamp)
+	{
+		$datetime = date(MYSQL_DATE_FORMAT, $timestamp);
 		return $this->updateAll(
 			array("{$this->alias}.last_update" => '\'' . $datetime . '\''),
 			array(
@@ -153,16 +161,17 @@ class User extends AppModel {
 	 * The users currently logged in (based on the last activity). Results are
 	 * cached as this is often requested, yet infrequently changes.
 	 *
-	 * @return {Array} User model data of active users
+	 * @return array User model data of active users
 	 */
-	public function getOnlineUsers() {
-		$users = Cache::read('onlineUsers','online_status');
+	public function getOnlineUsers()
+	{
+		$users = Cache::read('onlineUsers', 'online_status');
 
 		// cache-miss
 		if($users === false) {
 			$this->attachTimeDeltas = true;
 			$users = $this->find('all', array(
-				'fields' => array('username','last_ack'),
+				'fields' => array('username', 'last_ack'),
 				'conditions' => array(
 					'last_seen >=' => date(MYSQL_DATE_FORMAT, strtotime('now - 2 minutes'))
 				)
@@ -178,7 +187,8 @@ class User extends AppModel {
 	 * Clears cache related to active user state. Should be ran after new logins
 	 * logouts, etc so the user stats are as accurate as possible.
 	 */
-	public function resetUserCache() {
+	public function resetUserCache()
+	{
 		Cache::delete('onlineUsers', 'online_status');
 		Cache::gc('online_status');
 	}
@@ -186,10 +196,11 @@ class User extends AppModel {
 	/**
 	 * Obtains the key used in session persistence for this specific user
 	 *
-	 * @param {UUID} $user_id User primary key
-	 * @return {String|false} Identifier key or false on error
+	 * @param string $user_id User primary key
+	 * @return string|false Identifier key or false on error
 	 */
-	public function getSessionIdentifier($user_id) {
+	public function getSessionIdentifier($user_id)
+	{
 
 		if(!$this->exists($user_id)) {
 			return false;
@@ -210,10 +221,11 @@ class User extends AppModel {
 	/**
 	 * Obtains a user record from a session identifier
 	 *
-	 * @param {String} $identifier Unique user session identifier
-	 * @return {User} Matching user record
+	 * @param string $identifier Unique user session identifier
+	 * @return array User Matching user record
 	 */
-	public function getBySessionIdentifier($identifier) {
+	public function getBySessionIdentifier($identifier)
+	{
 		return $this->findBySessionKey($identifier);
 	}
 
@@ -223,7 +235,8 @@ class User extends AppModel {
 	 * @param string $email
 	 * @return array|null
 	 */
-	public function getActiveByEmail($email) {
+	public function getActiveByEmail($email)
+	{
 		return $this->find('first', array(
 			'conditions' => array(
 				'email' => $email,
@@ -261,7 +274,7 @@ class User extends AppModel {
 	/**
 	 * Find a User associated by a password reset token
 	 *
-	 * @param $token
+	 * @param array $token
 	 * @return self|null
 	 */
 	public function getUserByResetToken($token)

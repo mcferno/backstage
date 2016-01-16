@@ -1,13 +1,14 @@
 <?php
 App::uses('AppModel', 'Model');
 App::uses('Sanitize', 'Utility');
+
 /**
  * Message Model
  *
  * @property User $User
  */
-class Message extends AppModel {
-
+class Message extends AppModel
+{
 	// rollover time, based on the current timestamp (computed at runtime)
 	public $minimumSince = -1;
 
@@ -28,14 +29,16 @@ class Message extends AppModel {
 		'inclusionCallback' => 'activityFeedInclusion'
 	));
 
-	public function __construct($id = false, $table = null, $ds = null) {
+	public function __construct($id = false, $table = null, $ds = null)
+	{
 		parent::__construct($id, $table, $ds);
 
 		// compute the utility value timestamp
 		$this->minimumSince = time() - Configure::read('Site.Chat.messageExpiry');
 	}
 
-	public function beforeSave($options = array()) {
+	public function beforeSave($options = array())
+	{
 
 		// sanitize for possible xss
 		if(empty($this->data[$this->alias]['id']) && !empty($this->data[$this->alias]['text'])) {
@@ -48,7 +51,8 @@ class Message extends AppModel {
 	/**
 	 * Obtains the number of new messages not seen by the User
 	 */
-	public function countNewMessages($scope, $user_id, $since = false) {
+	public function countNewMessages($scope, $user_id, $since = false)
+	{
 		if($since === false) {
 			$since = $this->User->field('last_ack', array('id' => $user_id));
 
@@ -67,16 +71,18 @@ class Message extends AppModel {
 	}
 
 	/**
-	 * @param {String} $scope Message container/cluster string
-	 * @param {Mixed} $scopeId Cluster identifier
-	 * @param {Array} $options Configurable options
-	 *	- since {Timestamp} Minimum message creation date
-	 *	- exclude_from {UUID} Omit messages from a specific User
-	 *	- limit {Integer} Maximum number of Messages to return
+	 * @param string $scope Message container/cluster string
+	 * @param mixed $scopeId Cluster identifier
+	 * @param array $options Configurable options
+	 *    - since {Timestamp} Minimum message creation date
+	 *    - exclude_from {UUID} Omit messages from a specific User
+	 *    - limit {Integer} Maximum number of Messages to return
+	 * @return array
 	 */
-	public function getNewMessages($scope, $scopeId = false, $options = array()) {
+	public function getNewMessages($scope, $scopeId = false, $options = array())
+	{
 		$query = array(
-			'contain'=> array(
+			'contain' => array(
 				'User' => array(
 					'fields' => array('username')
 				)
@@ -105,13 +111,14 @@ class Message extends AppModel {
 
 		$results = $this->find('all', $query);
 
-		foreach ($results as &$result) {
+		foreach($results as &$result) {
 			$result['Message']['timestamp'] = strtotime($result['Message']['created']);
 		}
 		return array_reverse($results);
 	}
 
-	public function activityFeedInclusion($data) {
+	public function activityFeedInclusion($data)
+	{
 		return ($data['Message']['model'] !== 'Chat');
 	}
 
@@ -122,9 +129,10 @@ class Message extends AppModel {
 	 * Messages are attached to existing content (Model), so we leverage that
 	 * Model's humanization first.
 	 *
-	 * @param {ActivityModel} $activity Activity to convert
+	 * @param array $activity Activity to convert
 	 */
-	public function humanizeActivity(&$activity) {
+	public function humanizeActivity(&$activity)
+	{
 
 		// remap the inner-model to leverage its humanization
 		if(!empty($activity['Message'][$activity['Message']['model']]['id'])) {
@@ -167,9 +175,10 @@ class Message extends AppModel {
 	 * Obtains a message count for all types of content in a lookup array, similar
 	 * to the output of ->find('list')
 	 *
-	 * @return  {Array} Array indexed by the foreign_id, with its message count as the value
+	 * @return array Array indexed by the foreign_id, with its message count as the value
 	 */
-	public function getTally($conditions = array()) {
+	public function getTally($conditions = array())
+	{
 
 		$tally = $this->find('all', array(
 			'fields' => array('COUNT(*) as count', 'foreign_id'),

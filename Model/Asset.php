@@ -4,8 +4,9 @@
  * or media scraped from the web.
  */
 App::uses('Folder', 'Utility');
-class Asset extends AppModel {
 
+class Asset extends AppModel
+{
 	public $displayField = 'filename';
 	public $belongsTo = array(
 		// owner of the image, video or etc.
@@ -19,7 +20,8 @@ class Asset extends AppModel {
 		'ContestWin' => array(
 			'className' => 'Contest',
 			'foreignKey' => 'winning_asset_id'
-	));
+		)
+	);
 	public $hasMany = array(
 		// Asset is the subject of one or more caption Contests
 		'Contest'
@@ -59,7 +61,8 @@ class Asset extends AppModel {
 	// default quality (out of 100) for image transformations
 	public $jpegQuality = 90;
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		$this->folderPathRelative = 'user' . DS;
 		$this->folderPath = WWW_ROOT . 'img' . DS . $this->folderPathRelative;
@@ -71,8 +74,8 @@ class Asset extends AppModel {
 	/**
 	 * Attach useful meta-data after retrieval
 	 */
-	public function afterFind($results, $primary = false) {
-
+	public function afterFind($results, $primary = false)
+	{
 		// multi-array format
 		if(isset($results[0]['Asset'])) {
 			foreach($results as &$result) {
@@ -94,15 +97,17 @@ class Asset extends AppModel {
 				$this->addMetaData($result);
 			}
 		}
+
 		return $results;
 	}
 
 	/**
 	 * Adds meta-data information to a single Asset record.
 	 *
-	 * @param {&Asset} Direct Asset reference to attach meta-data
+	 * @param &Asset Direct Asset reference to attach meta-data
 	 */
-	public function addMetaData(&$result) {
+	public function addMetaData(&$result)
+	{
 		// add image references
 		if(!empty($result['filename']) && !empty($result['user_id'])) {
 			$base = "{$this->folderPathRelative}{$result['user_id']}";
@@ -116,14 +121,16 @@ class Asset extends AppModel {
 	/**
 	 * Retrieve the images within the user's site folder
 	 *
-	 * @param {String} $cluster Folder name or relative path
-	 * @return {Array} Image paths
+	 * @param string $cluster Folder name or relative path
+	 * @return array Image paths
 	 */
-	public function getImages($cluster = false) {
-		return glob($this->getFolderPath($cluster).'*.*');
+	public function getImages($cluster = false)
+	{
+		return glob($this->getFolderPath($cluster) . '*.*');
 	}
 
-	public function getFolderPath($cluster = false) {
+	public function getFolderPath($cluster = false)
+	{
 		$path = $this->folderPath;
 		if($cluster !== false) {
 			$path .= $cluster . DS;
@@ -132,13 +139,13 @@ class Asset extends AppModel {
 	}
 
 	/**
-	 * Determins the server path to a specific asset
+	 * Determines the server path to a specific asset
 	 *
-	 * @param {UUID} $asset_id
-	 * @return {String} Server path, relative to the weboot image folder
+	 * @param string $asset_id
+	 * @return string Server path, relative to the weboot image folder
 	 */
-	public function getPath($asset_id, $size = false) {
-
+	public function getPath($asset_id, $size = false)
+	{
 		$asset = $this->findById($asset_id);
 
 		if(!empty($asset['Asset']['filename'])) {
@@ -156,33 +163,33 @@ class Asset extends AppModel {
 	/**
 	 * Saves and processes an base64 encoded image.
 	 *
-	 * @param {String} $data Base64 encoded image data
-	 * @param {UUID} $user_id User ownership
-	 * @param {String} $type String classification
-	 * @return {Boolean}
+	 * @param string $data Base64 encoded image data
+	 * @param string $user_id User ownership
+	 * @param string $type String classification
+	 * @return boolean
 	 */
-	public function saveEncodedImage(&$data, $user_id, $type = 'Image') {
-
+	public function saveEncodedImage(&$data, $user_id, $type = 'Image')
+	{
 		// skim the header data to avoid searching over large data strings
-		$header = substr($data,0,30);
+		$header = substr($data, 0, 30);
 
-		if(stripos($header,$this->headers['jpg']) !== false) {
+		if(stripos($header, $this->headers['jpg']) !== false) {
 
-			$image_name = String::uuid().'.jpg';
+			$image_name = String::uuid() . '.jpg';
 			$folder = $this->folderPath . $user_id . DS;
 			if(!file_exists($folder)) {
 				$dir = new Folder($folder, true, 0755);
 			}
-			$new_path =  $folder . $image_name;
+			$new_path = $folder . $image_name;
 
-			$new_image = fopen($new_path,'w');
+			$new_image = fopen($new_path, 'w');
 			if($new_image === false) {
 				$this->log("Can't open {$new_path} for writing.");
 				return false;
 			}
 
-			$image_data = base64_decode(substr($data,strlen($this->headers['jpg'])));
-			$write_status = fwrite($new_image,$image_data);
+			$image_data = base64_decode(substr($data, strlen($this->headers['jpg'])));
+			$write_status = fwrite($new_image, $image_data);
 			fclose($new_image);
 			if($write_status === false) {
 				$this->log("Can't write image data into {$new_path}.");
@@ -215,12 +222,13 @@ class Asset extends AppModel {
 	/**
 	 * Saves and processes a file upload.
 	 *
-	 * @param {String} $file_path System path to image source
-	 * @param {UUID} $user_id User ownership
-	 * @param {String} $type String classification
-	 * @return {Boolean}
+	 * @param string $file_path System path to image source
+	 * @param string $user_id User ownership
+	 * @param string $type String classification
+	 * @return boolean
 	 */
-	public function saveImage($file_path, $user_id, $type = 'Image', $options = array()) {
+	public function saveImage($file_path, $user_id, $type = 'Image', $options = array())
+	{
 		if(!class_exists('WideImage')) {
 			App::import('Vendor', 'WideImage/WideImage');
 		}
@@ -232,12 +240,12 @@ class Asset extends AppModel {
 			return false;
 		}
 
-		$image_name = String::uuid().'.jpg';
+		$image_name = String::uuid() . '.jpg';
 		$folder = $this->folderPath . $user_id . DS;
 		if(!file_exists($folder)) {
 			$dir = new Folder($folder, true, 0755);
 		}
-		$new_path =  $folder . $image_name;
+		$new_path = $folder . $image_name;
 
 		if(!empty($options['crop'])) {
 			$cropped = $image->crop($options['crop']['x1'], $options['crop']['y1'], $options['crop']['w'], $options['crop']['h']);
@@ -267,7 +275,7 @@ class Asset extends AppModel {
 				$cropped = $cropped->rotate(90);
 
 			// 90 deg
-			} elseif ($exif['Orientation'] === 8) {
+			} elseif($exif['Orientation'] === 8) {
 				$cropped = $cropped->rotate(-90);
 			}
 		}
@@ -303,9 +311,11 @@ class Asset extends AppModel {
 	/**
 	 * Resizes an image on disk, generating thumbnail versions of the original
 	 *
-	 * @param {String} $imagePath Path to image to process
+	 * @param string $imagePath Path to image to process
+	 * @return boolean
 	 */
-	public function saveThumbs($imagePath) {
+	public function saveThumbs($imagePath)
+	{
 		if(!class_exists('WideImage')) {
 			App::import('Vendor', 'WideImage/WideImage');
 		}
@@ -317,11 +327,11 @@ class Asset extends AppModel {
 			return false;
 		}
 
-		$base_path = dirname($imagePath).DS;
-		$filename = substr($imagePath,strlen($base_path));
+		$base_path = dirname($imagePath) . DS;
+		$filename = substr($imagePath, strlen($base_path));
 
 		foreach($this->imageThumbs as $width) {
-			$cropped = $image->resize($width,$width);
+			$cropped = $image->resize($width, $width);
 
 			$folder = $base_path . DS . $width . DS;
 			if(!file_exists($folder)) {
@@ -341,10 +351,11 @@ class Asset extends AppModel {
 	/**
 	 * Prepare a single asset to post to Facebook
 	 *
-	 * @param {UUID} $asset_id Asset primary key to post
-	 * @return {Array}
+	 * @param string $asset_id Asset primary key to post
+	 * @return array
 	 */
-	public function castToFacebook($asset_id) {
+	public function castToFacebook($asset_id)
+	{
 		$asset = $this->findById($asset_id);
 		if(!empty($asset)) {
 			return array(
@@ -357,10 +368,11 @@ class Asset extends AppModel {
 	/**
 	 * Clean up files before a record is deleted
 	 *
-	 * @param {Boolean} $cascade
-	 * @return {Boolean}
+	 * @param boolean $cascade
+	 * @return boolean
 	 */
-	public function beforeDelete($cascade = true) {
+	public function beforeDelete($cascade = true)
+	{
 		$res = parent::beforeDelete($cascade);
 		if($res) {
 			$record = $this->findById($this->id);
@@ -387,9 +399,10 @@ class Asset extends AppModel {
 	/**
 	 * Obtains the list of Asset types
 	 *
-	 * @return {Array} Set of existing Asset types
+	 * @return array Set of existing Asset types
 	 */
-	public function getTypes() {
+	public function getTypes()
+	{
 		$types = $this->find('list', array(
 			'fields' => 'type',
 			'group' => "{$this->alias}.type",
@@ -405,7 +418,8 @@ class Asset extends AppModel {
 	 *
 	 * @param  {ActivityModel} $activity Activity to convert
 	 */
-	public function humanizeActivity(&$activity) {
+	public function humanizeActivity(&$activity)
+	{
 		switch($activity['Asset']['type']) {
 			case 'Contest':
 				$activity['Activity']['phrase'] = ":user saved a Caption Battle entry.";
@@ -450,10 +464,11 @@ class Asset extends AppModel {
 	/**
 	 * Determines if an image creation should be announced to other users
 	 *
-	 * @param {Array} $data Asset model data
-	 * @return {Boolean} false to suppress the announcement
+	 * @param array $data Asset model data
+	 * @return boolean false to suppress the announcement
 	 */
-	public function notificationInclusion($data) {
+	public function notificationInclusion($data)
+	{
 		if(!empty($data[$this->alias]['album_id'])) {
 			$album = $this->Album->findById($data[$this->alias]['album_id']);
 
@@ -471,9 +486,10 @@ class Asset extends AppModel {
 	 * Obtains the conditions to find Assets which are ready for the Meme
 	 * Generator. This is typically images without text on them.
 	 *
-	 * @return {Array} Find conditions
+	 * @return array Find conditions
 	 */
-	public function getCleanImageConditions() {
+	public function getCleanImageConditions()
+	{
 		return array(
 			'Asset.type' => array(
 				'Crop', 'Upload', 'URLgrab'
@@ -484,7 +500,8 @@ class Asset extends AppModel {
 	/**
 	 * Count-wrapper for getCleanImageConditions
 	 */
-	public function getCleanImageCount() {
+	public function getCleanImageCount()
+	{
 		return $this->find('count', array(
 			'conditions' => $this->getCleanImageConditions()
 		));

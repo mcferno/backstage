@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Simple Tumblr Model/Datasource. Assists in content scraping and local mirroring
  */
-class Tumblr extends AppModel {
-
+class Tumblr extends AppModel
+{
 	public $useTable = 'tumblr';
 
 	public $actsAs = array('Postable.Postable' => array(
@@ -19,22 +20,26 @@ class Tumblr extends AppModel {
 
 	protected $api_key = null;
 
-	public function __construct($id = false, $table = null, $ds = null) {
+	public function __construct($id = false, $table = null, $ds = null)
+	{
 		parent::__construct($id, $table, $ds);
 		try {
 			Configure::load('tumblr');
 			$this->api_key = Configure::read('Tumblr_App.api_key');
-		} catch (ConfigureException $e) {
+		} catch(ConfigureException $e) {
 			$this->log('Could not load the Tumbler app settings');
-			return false;
+			return;
 		}
 	}
 
 	/**
 	 * Pulls the latest post from the Tumblr source, saving or updating any
 	 * existing records applicable.
+	 *
+	 * @return boolean
 	 */
-	public function refresh() {
+	public function refresh()
+	{
 		if(is_null($this->api_key)) {
 			$this->log('Cant refresh accounts without api keys');
 			return false;
@@ -51,9 +56,12 @@ class Tumblr extends AppModel {
 		foreach($accounts as $account) {
 			$this->_pullRecentPosts($account['Account']['handle']);
 		}
+
+		return true;
 	}
 
-	protected function _pullRecentPosts($base) {
+	protected function _pullRecentPosts($base)
+	{
 
 		/**
 		 * Build up the request for new posts
@@ -65,7 +73,7 @@ class Tumblr extends AppModel {
 			'format' => 'text'
 		);
 
-		$records = $this->_readJson("{$base_url}/posts",$params);
+		$records = $this->_readJson("{$base_url}/posts", $params);
 
 		if(empty($records['response']['posts'])) {
 			return;
@@ -117,7 +125,8 @@ class Tumblr extends AppModel {
 		}
 	}
 
-	public function postableInclusion($data) {
+	public function postableInclusion($data)
+	{
 		return ($data[$this->alias]['type'] != 'photo');
 	}
 }

@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Static content controller
  */
-class PagesController extends AppController {
-
+class PagesController extends AppController
+{
 	public $name = 'Pages';
 	public $helpers = array('Html');
 	public $uses = array('Page', 'Tumblr', 'Contest', 'Asset');
 	public $scaffold = 'admin';
 
 	// admin-only scaffolding
-	public function beforeScaffold($method) {
+	public function beforeScaffold($method)
+	{
 		if(!Access::hasRole('Admin')) {
 			$this->redirect(array('controller' => 'users', 'action' => 'dashboard'));
 		}
@@ -23,22 +25,23 @@ class PagesController extends AppController {
 	 *
 	 * @param mixed What page to display
 	 */
-	public function display() {
+	public function display()
+	{
 		$path = func_get_args();
 
 		$count = count($path);
-		if (!$count) {
+		if(!$count) {
 			$this->redirect('/');
 		}
 		$page = $subpage = $title_for_layout = null;
 
-		if (!empty($path[0])) {
+		if(!empty($path[0])) {
 			$page = $path[0];
 		}
-		if (!empty($path[1])) {
+		if(!empty($path[1])) {
 			$subpage = $path[1];
 		}
-		if (!empty($path[$count - 1])) {
+		if(!empty($path[$count - 1])) {
 			$title_for_layout = Inflector::humanize($path[$count - 1]);
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
@@ -48,8 +51,8 @@ class PagesController extends AppController {
 	/**
 	 * Presents the interface for the js-driven meme generator tool.
 	 */
-	public function admin_meme_generator() {
-
+	public function admin_meme_generator()
+	{
 		$images = array();
 
 		// meme of a specific user-uploaded image
@@ -93,15 +96,16 @@ class PagesController extends AppController {
 
 		}
 
-		$this->set('first_line', (!empty($this->request->query['first-line'])) ? $this->request->query['first-line'] : '' );
-		$this->set('last_line', (!empty($this->request->query['last-line'])) ? $this->request->query['last-line'] : '' );
+		$this->set('first_line', (!empty($this->request->query['first-line'])) ? $this->request->query['first-line'] : '');
+		$this->set('last_line', (!empty($this->request->query['last-line'])) ? $this->request->query['last-line'] : '');
 		$this->set('base_images', $images);
 	}
 
 	/**
 	 * Clears the view cache.
 	 */
-	public function admin_clear_cache() {
+	public function admin_clear_cache()
+	{
 		if(Access::hasRole('Admin')) {
 			if(clearCache() === true) {
 				$msg = 'View cache has been cleared successfully!';
@@ -110,7 +114,7 @@ class PagesController extends AppController {
 				$msg = 'View cache could not be cleared!';
 				$type = 'messaging/alert-error';
 			}
-			$this->Session->setFlash($msg,$type);
+			$this->Session->setFlash($msg, $type);
 		}
 		$this->redirect($this->referer(array('controller' => 'users', 'action' => 'dashboard')));
 	}
@@ -118,7 +122,8 @@ class PagesController extends AppController {
 	/**
 	 * Displays database driven pages
 	 */
-	public function admin_content() {
+	public function admin_content()
+	{
 		$page = false;
 		if(!empty($this->request->params['uri'])) {
 			$page = $this->Page->findByUri($this->request->params['uri']);
