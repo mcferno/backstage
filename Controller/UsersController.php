@@ -2,6 +2,7 @@
 App::uses('AppController', 'Controller');
 /**
  * Manages a site's user accounts and authentication
+ * @property User $User
  */
 class UsersController extends AppController {
 
@@ -25,7 +26,7 @@ class UsersController extends AppController {
 
 	public function adminBeforeFilter() {
 		parent::adminBeforeFilter();
-		$this->Auth->allow(array('admin_login', 'admin_setup'));
+		$this->Auth->allow(array('admin_login', 'admin_setup', 'admin_forgot', 'admin_reset'));
 	}
 
 	public function admin_login() {
@@ -265,5 +266,83 @@ class UsersController extends AppController {
 		}
 		$this->Session->setFlash('User was not deleted', 'messaging/alert-error');
 		$this->redirect(array('action' => 'index'));
+	}
+
+	/**
+	 * Allow a user to send a password reset
+	 */
+	public function admin_forgot() {
+		if ($this->request->is('post')) {
+			$this->User->set($this->request->data);
+			$this->User->setValidationForResetToken();
+			if($this->User->validates(array('fieldList' => array('email')))) {
+
+				$user = $this->User->getActiveByEmail($this->request->data('User.email'));
+
+				if(!empty($user)) {
+					$token = $this->User->generatePasswordResetToken($user['User']['id']);
+					$this->sendResetEmail($user, $token['Token']['token']);
+					$this->Session->setFlash('A password reset email has been sent!', 'messaging/alert-success');
+				} else {
+					$this->Session->setFlash('User not found', 'messaging/alert-error');
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sends a password reset email
+	 *
+	 * @param array $user
+	 * @param string $token
+	 */
+	protected function sendResetEmail($user, $token) {
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail('default');
+
+		$site_name = Configure::read('Site.name');
+
+		$email->template('password_reset', 'default');
+		$email->emailFormat('html');
+		$email->to($user['User']['email']);
+		$email->subject('Password reset for ' . $site_name);
+		$email->viewVars(array(
+			'title_for_layout' => $email->subject(),
+			'site_name' => $site_name,
+			'reset_url' => Router::url(array('controller' => 'users', 'action' => 'reset', 'token' => $token), true)
+		));
+
+		$email->send();
+	}
+
+	/**
+	 * Claim a reset token and reset a user password
+	 */
+	public function admin_reset()
+	{
+		if(empty($this->request->params['token'])) {
+			throw new NotFoundException('Malformed URL');
+		}
+
+		$user = $this->User->getUserByResetToken($this->request->params['token']);
+		if(empty($user['User']['id'])) {
+			$this->Session->setFlash('Reset process expired, please request a new one.', 'messaging/alert-error');
+			$this->redirect(array('action' => 'forgot'));
+		}
+
+		$this->User->setValidationForPasswordReset();
+
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if($this->User->save($this->request->data)) {
+				$this->User->clearResetToken($this->User->id);
+				$this->Auth->login($user['User']);
+				$this->postLogin();
+
+				$this->Session->setFlash('Your password has been changed. Welcome back!', 'messaging/alert-success');
+				$this->redirect($this->userHome);
+			}
+		} else {
+			$this->request->data = $this->User->read(null, $user['User']['id']);
+		}
 	}
 }

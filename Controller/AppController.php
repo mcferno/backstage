@@ -76,10 +76,7 @@ class AppController extends Controller {
 
 				// re-authentication succeeds
 				} else {
-					$this->User->setLastLogin($this->Auth->user('id'), Configure::read('App.start'));
-					$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
-					$this->User->resetUserCache();
-					$this->persistSession();
+					$this->postLogin();
 				}
 			}
 		}
@@ -195,6 +192,16 @@ class AppController extends Controller {
 			// store user information in an encrypted cookie
 			$this->Cookie->write('persist', $identifier, true, Configure::read('Site.rememberMeExpiry'));
 		}
+	}
+
+	/**
+	 * Post login routine to maintain user & system state
+	 */
+	protected function postLogin() {
+		$this->User->setLastLogin($this->Auth->user('id'), Configure::read('App.start'));
+		$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
+		$this->User->resetUserCache();
+		$this->persistSession();
 	}
 
 	/**

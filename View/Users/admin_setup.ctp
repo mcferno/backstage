@@ -9,6 +9,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<?= $this->Form->input('username', array('class' => 'form-control')); ?>
+				<?= $this->Form->input('email', array('class' => 'form-control')); ?>
 			</div>
 			<div class="col-md-6">
 				<?= $this->Form->input('password', array('class' => 'form-control'));?>

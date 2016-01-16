@@ -14,6 +14,7 @@
 			echo $this->Form->input('password', array('class' => 'form-control'));
 		?>
 		</fieldset>
-	<?php echo $this->Form->end(array('label' => 'Log In', 'class' => 'btn btn-primary'));?>
+	<?php echo $this->Form->end(array('label' => 'Log In', 'class' => 'btn btn-primary pull-left'));?>
+	<?= $this->Html->link('Forgot my password', array('action' => 'forgot'), array('class' => 'pull-right')); ?>
 	</div>
 </div>

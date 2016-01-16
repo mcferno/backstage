@@ -7,6 +7,10 @@ App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel {
 
 	public $displayField = 'username';
+
+	const TOKEN_PASSWORD_RESET = 'password_reset';
+	const TOKEN_EXPIRY = '+1 day';
+
 	public $hasMany = array('Asset', 'Contest');
 	public $attachTimeDeltas = false;
 	public $actsAs = array('Facebook');
@@ -21,6 +25,21 @@ class User extends AppModel {
 			'formatting' => array(
 				'rule' => '/^[a-zA-Z0-9-_]{1,20}$/',
 				'message' => 'Uppercase, lowercase, numbers, underscores, and dashes only.',
+			),
+			'isUnique' => array(
+				'rule' => 'isUnique',
+				'message' => 'Sorry, that username is already taken.',
+			),
+		),
+		'email' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Email is required',
+				'required' => true
+			),
+			'formatting' => array(
+				'rule' => '/^\S+@\S+$/',
+				'message' => 'Invalid email provided.',
 			),
 			'isUnique' => array(
 				'rule' => 'isUnique',
@@ -196,5 +215,90 @@ class User extends AppModel {
 	 */
 	public function getBySessionIdentifier($identifier) {
 		return $this->findBySessionKey($identifier);
+	}
+
+	/**
+	 * Retrieve an active user by their email address
+	 *
+	 * @param string $email
+	 * @return array|null
+	 */
+	public function getActiveByEmail($email) {
+		return $this->find('first', array(
+			'conditions' => array(
+				'email' => $email,
+			)
+		));
+	}
+
+	/**
+	 * Makes or resets a 'forgot password' token
+	 *
+	 * @param string $user_id
+	 * @return array
+	 */
+	public function generatePasswordResetToken($user_id)
+	{
+		$this->clearResetToken($user_id);
+		return ClassRegistry::init('Token')->addNewToken(
+			$user_id,
+			self::TOKEN_EXPIRY,
+			self::TOKEN_PASSWORD_RESET
+		);
+	}
+
+	/**
+	 * Removes any existing password reset tokens for a user.
+	 *
+	 * @param string $user_id
+	 * @return bool
+	 */
+	public function clearResetToken($user_id)
+	{
+		return ClassRegistry::init('Token')->removeAllByLookup($user_id, static::TOKEN_PASSWORD_RESET);
+	}
+
+	/**
+	 * Find a User associated by a password reset token
+	 *
+	 * @param $token
+	 * @return self|null
+	 */
+	public function getUserByResetToken($token)
+	{
+		$token = ClassRegistry::init('Token')->getActiveToken($token);
+		if(empty($token)) {
+			return null;
+		}
+
+		return $this->find('first', array(
+			'conditions' => array(
+				'id' => $token['Token']['foreign_id']
+			)
+		));
+	}
+
+	/**
+	 * Modify the Validator rules for password reset pre-conditions
+	 */
+	public function setValidationForPasswordReset()
+	{
+		$rules = $this->validator();
+		foreach($rules as $key => $ruleset) {
+			unset($rules[$key]);
+		}
+
+		$rules->add('password', 'required', array(
+			'rule' => 'notempty',
+			'required' => true
+		));
+	}
+
+	/**
+	 * Modify the Validator rules to request a password reset token
+	 */
+	public function setValidationForResetToken()
+	{
+		$this->validator()->remove('email', 'isUnique');
 	}
 }
