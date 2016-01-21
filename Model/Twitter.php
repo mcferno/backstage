@@ -1,5 +1,7 @@
 <?php
 
+use Codebird\Codebird;
+
 /**
  * Simple Twitter Model/Datasource. Assists in content scraping and local mirroring
  */
@@ -87,8 +89,6 @@ class Twitter extends AppModel
 			$this->log('Could not load the Twitter app settings');
 			return false;
 		}
-
-		require_once(APP . 'Vendor' . DS . 'codebird-php' . DS . 'src' . DS . 'codebird.php');
 
 		$cb = Codebird::getInstance();
 		$cb->setConsumerKey(

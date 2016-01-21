@@ -1,6 +1,3 @@
 [submodule "Plugin/Postable"]
 	path = Plugin/Postable
 	url = https://github.com/mcferno/cakephp-postable-behavior.git
-[submodule "Vendor/codebird-php"]
-	path = Vendor/codebird-php
-	url = https://github.com/mynetx/codebird-php.git
