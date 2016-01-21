@@ -4,6 +4,3 @@
 [submodule "Vendor/codebird-php"]
 	path = Vendor/codebird-php
 	url = https://github.com/mynetx/codebird-php.git
-[submodule "Vendor/getID3"]
-	path = Vendor/getID3
-	url = https://github.com/JamesHeinrich/getID3.git

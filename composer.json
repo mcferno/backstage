@@ -13,6 +13,7 @@
 	},
     "require": {
         "cakephp/cakephp": "2.6.*",
-        "facebook/php-sdk": "^3.2"
+        "facebook/php-sdk": "^3.2",
+        "james-heinrich/getid3": "^1.9"
     }
 }

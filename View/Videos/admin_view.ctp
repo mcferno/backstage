@@ -35,8 +35,7 @@
 					'id' => 'video-player'
 				);
 
-				App::import('Vendor', 'getID3/getid3/getid3');
-				$getID3 = new getID3;
+				$getID3 = new getID3();
 				$videoInfo = $getID3->analyze(IMAGES . "{$video_path}.mp4");
 
 				$video_tag['width'] = $videoInfo['video']['resolution_x'];
