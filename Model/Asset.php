@@ -1,10 +1,11 @@
 <?php
+App::uses('Folder', 'Utility');
+use WideImage\WideImage;
+
 /**
  * User-generated media, primarily in the form of images. Can be uploaded content
  * or media scraped from the web.
  */
-App::uses('Folder', 'Utility');
-
 class Asset extends AppModel
 {
 	public $displayField = 'filename';
@@ -229,10 +230,6 @@ class Asset extends AppModel
 	 */
 	public function saveImage($file_path, $user_id, $type = 'Image', $options = array())
 	{
-		if(!class_exists('WideImage')) {
-			App::import('Vendor', 'WideImage/WideImage');
-		}
-
 		$image = WideImage::load($file_path);
 
 		if($image === false) {
@@ -263,7 +260,7 @@ class Asset extends AppModel
 		}
 
 		// detect if the image needs rotation based on available EXIF data
-		$exif = exif_read_data($file_path);
+		$exif = @exif_read_data($file_path);
 		if(isset($exif['Orientation']) && is_numeric($exif['Orientation'])) {
 
 			// 180 deg flip (upside-down)
@@ -316,10 +313,6 @@ class Asset extends AppModel
 	 */
 	public function saveThumbs($imagePath)
 	{
-		if(!class_exists('WideImage')) {
-			App::import('Vendor', 'WideImage/WideImage');
-		}
-
 		$image = WideImage::load($imagePath);
 
 		if($image === false) {

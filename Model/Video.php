@@ -1,5 +1,7 @@
 <?php
 
+use WideImage\WideImage;
+
 /**
  * Video Model : video content represented by URL for streaming videos, or an
  * uploaded video file.
@@ -118,10 +120,6 @@ class Video extends AppModel
 	 */
 	public function saveThumbnail($video_id, $crop)
 	{
-		if(!class_exists('WideImage')) {
-			App::import('Vendor', 'WideImage/WideImage');
-		}
-
 		$screenshot = $this->thumbnailPath . DS . 'full' . DS . $video_id;
 		$thumbnail = $this->thumbnailPath . DS . $video_id;
 

@@ -1,6 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
-
+use WideImage\WideImage;
 /**
  * A user owned URL bookmarking and classification system
  */
@@ -81,10 +81,6 @@ class Link extends AppModel
 	 */
 	public function saveThumbnail($link_id, $crop)
 	{
-		if(!class_exists('WideImage')) {
-			App::import('Vendor', 'WideImage/WideImage');
-		}
-
 		$screenshot = $this->thumbnailPath . DS . 'full' . DS . $link_id;
 		$thumbnail = $this->thumbnailPath . DS . $link_id;
 
