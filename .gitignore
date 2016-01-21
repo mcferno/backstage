@@ -2,6 +2,7 @@
 /Config/twitter.php
 /Config/tumblr.php
 /Config/bootstrap.env.php
+/Vendor/
 /tmp/
 /webroot/img/profile/twitter/
 /webroot/img/base-meme/
