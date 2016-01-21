@@ -30,6 +30,8 @@ You should already know how to configure and maintain a basic PHP-based website
 * PHP v5.3+ (latest 5.4.x is supported & recommended)
 * SQL database with read & write-access
 * GD image module
+* Shell access
+* [Composer][ComposerInstallation]
 
 Database support is based on what [CakePHP supports][CakePHPDataSources], so you can use: MySQL, Postgres, SQLite or SQLServer
 
@@ -45,12 +47,12 @@ For production-ready sites, I use the following directory layout:
 		lib/
 		plugins/
 		vendors/
-	Backstage/
+	Backstage/   <-- The root of this repository
 		Config/
 		Console/
 		...
 		View/
-		webroot/ <-- VirtualHost DocumentRoot
+		webroot/ <-- DocumentRoot for the website
 			css/
 			js/
 			img/
@@ -59,15 +61,14 @@ For production-ready sites, I use the following directory layout:
 ```
 This structure has a number of advantages:
 
-1. CakePHP is decoupled from the application, allowing easy point-release updates (2.6.x) to be deployed
-2. Only static assets (css, js, images) are accessible via the public webroot
-3. This layout equally works in development environments
+1. Only static assets (css, js, images) are accessible via the public webroot
+2. This layout equally works in development environments
 
 ### Configuring a new site
 
-1. Download and extract the latest CakePHP 2.6.x
+1. Ensure that all the software requirements are installed (above).
 2. Download and extract the latest Backstage application package.
-3. Ensure that the following application directories and subdirectories are writeable by Apache
+3. Ensure that the following application directories and subdirectories are writable by Apache
 	* webroot/img/user/
 	* tmp/
 4. Execute the SQL queries in `Config/Schema/schema.sql` in an empty database
@@ -100,40 +101,13 @@ This structure has a number of advantages:
 
 		Configure::write("setup", true);
 
-9. Visit the `/setup` URL for this site in your browser to configure the first administrator user (example.com/setup).
-10. Remove the line added in #8 once your administator account is set up.
+9. Run `composer install` from the root directory of the Backstage project to install application dependencies.
+10. Visit the `/setup` URL for this site in your browser to configure the first administrator user (example.com/setup).
+11. Remove the line added in #8 once your administator account is set up.
 
 If everything is set up correctly, _you're done_!
 
 If you encounter errors, verify your Apache logs and the application's internal logs via `tmp/log/debug.log` and `tmp/log/error.log`
-
-### Developer-mode set up
-
-If you're looking to touch some code relating to Backstage, or just want to have a look around, here's the steps to organize your dev environment.
-```sh
-	# DIR=/path/to/your/webroot/
-
-	git clone https://github.com/cakephp/cakephp.git CakePHP2.6
-	cd CakePHP2.6
-	git checkout 2.6.0   # or latest 2.6.x
-	cd ..
-	git clone [Backstage Repo URL] backstage
-	cd backstage
-	git submodule init
-	git submodule update
-	chmod 777 -R tmp/ webroot/img/user
-```
-Now continue the installation steps above, starting with step #4 if you haven't done this already.
-
-Once up and running, you can update your local dev copies quickly
-```sh
-	# DIR=/path/to/your/webroot/backstage/
-
-	git remote update && git rebase origin/master
-	git submodule init
-	git submodule update
-```
-The `git submodule` commands don't need to be ran constantly, you can skip these when updating frequently.
 
 ## App Configuration
 
@@ -200,3 +174,4 @@ The current set of features are generally stable so you shouldn't have troubles 
 [CakePHPDataSources]: http://book.cakephp.org/2.0/en/models/datasources.html
 [RandomStrings]: https://api.wordpress.org/secret-key/1.1/salt/
 [RandomDigits]: https://www.random.org/strings/?num=20&len=20&digits=on&unique=on&format=plain
+[ComposerInstallation]: https://getcomposer.org/doc/00-intro.md
