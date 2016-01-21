@@ -41,13 +41,9 @@ Backstage is a CakePHP application, so it depends on the presence of the PHP fra
 
 ### Directory Layout
 
-For production-ready sites, I use the following directory layout:
+For development and production-ready sites, I use the following directory layout:
 ```text
-	CakePHP2.6/
-		lib/
-		plugins/
-		vendors/
-	Backstage/   <-- The root of this repository
+	Backstage/   <-- The root of this Git repository
 		Config/
 		Console/
 		...
@@ -66,11 +62,11 @@ This structure has a number of advantages:
 
 ### Configuring a new site
 
-1. Ensure that all the software requirements are installed (above).
+1. Ensure that all the server software requirements are installed (above).
 2. Download and extract the latest Backstage application package.
 3. Ensure that the following application directories and subdirectories are writable by Apache
-	* webroot/img/user/
-	* tmp/
+	* `webroot/img/user/`
+	* `tmp/`
 4. Execute the SQL queries in `Config/Schema/schema.sql` in an empty database
 5. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
 
