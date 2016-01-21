@@ -1,0 +1,17 @@
+{
+    "name": "mcferno/backstage",
+	"description": "User portal web-application offering social-network-like features geared towards a small to medium group of friends.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick McFern",
+            "email": "mcferno@gmail.com"
+        }
+    ],
+	"config": {
+		"vendor-dir": "Vendor/"
+	},
+    "require": {
+        "cakephp/cakephp": "2.6.*"
+    }
+}
