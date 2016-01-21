@@ -12,6 +12,7 @@
 		"vendor-dir": "Vendor/"
 	},
     "require": {
-        "cakephp/cakephp": "2.6.*"
+        "cakephp/cakephp": "2.6.*",
+        "facebook/php-sdk": "^3.2"
     }
 }

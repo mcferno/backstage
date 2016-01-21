@@ -30,7 +30,6 @@ class FacebookBehavior extends ModelBehavior
 			return $this->facebookObj;
 		}
 
-		App::import('Vendor', 'Facebook-PHP-SDK/src/facebook');
 		$settings = $this->_getFacebookSettings();
 
 		if(!class_exists('Facebook') || $settings === false) {
