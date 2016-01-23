@@ -3,6 +3,10 @@ App::uses('Folder', 'Utility');
 
 /**
  * Handles all tasks related to manipulation and management a user's site assets
+ *
+ * @property Asset $Asset
+ * @property Album $Album
+ * @property User $User
  */
 class AssetsController extends AppController
 {
@@ -161,11 +165,6 @@ class AssetsController extends AppController
 		}
 
 		$this->paginate['Asset']['contain'][] = 'User';
-		$contributingUsers = $this->Asset->find('all', array(
-			'contain' => 'User',
-			'group' => 'Asset.user_id'
-		));
-
 		$this->defaultPagination();
 
 		// filter tags by the existing pagination filters, except tags themselves
@@ -175,11 +174,11 @@ class AssetsController extends AppController
 
 		$this->set('images', $this->paginate('Asset'));
 		$this->set('image_total', $this->Asset->find('count'));
-		$this->set('contributingUsers', $contributingUsers);
+		$this->set('contributingUsers', $this->Asset->getContributingUsers());
 	}
 
 	/**
-	 * Generic pagination augmentation based on the existance of specific URL flag
+	 * Generic pagination augmentation based on the existence of specific URL flag
 	 *
 	 * @param array $options Pagination overrides
 	 */

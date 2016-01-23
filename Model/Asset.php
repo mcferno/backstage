@@ -499,4 +499,26 @@ class Asset extends AppModel
 			'conditions' => $this->getCleanImageConditions()
 		));
 	}
+
+	/**
+	 * Get the list of Users who have at least one image contribution
+	 * @return array
+	 */
+	public function getContributingUsers()
+	{
+		return $this->User->find('all', array(
+			'joins' => array(
+				array(
+					'table' => $this->table,
+					'alias' => $this->alias,
+					'type' => 'inner',
+					'conditions' => array(
+						"{$this->alias}.user_id = {$this->User->alias}.{$this->User->primaryKey}"
+					)
+				)
+			),
+			'group' => 'User.id',
+			'order' => 'COUNT(*) DESC'
+		));
+	}
 }
