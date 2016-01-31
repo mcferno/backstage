@@ -67,8 +67,7 @@ This structure has a number of advantages:
 3. Ensure that the following application directories and subdirectories are writable by Apache
 	* `webroot/img/user/`
 	* `tmp/`
-4. Execute the SQL queries in `Config/Schema/schema.sql` in an empty database
-5. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
+4. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
 
 		Configure::write("debug", 0); // disable debug mode
 		Configure::write("Cache.check", true); // enable view caching
@@ -78,8 +77,8 @@ This structure has a number of advantages:
 		Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
 		Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
 
-6. Replace the strings aboved marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation.
-7. Append your database credentials to the `bootstrap.env.php` file, example:
+5. Replace the strings above marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation.
+6. Append your database credentials to the `bootstrap.env.php` file, example:
 
 		class DATABASE_CONFIG {
 			public $default = array(
@@ -93,8 +92,8 @@ This structure has a number of advantages:
 			);
 		}
 
-8. Run `composer install` from the root directory of the Backstage project to install application dependencies.
-9. Run `./Vendor/bin/cake Migrations.migration run up` to install the database and create your first administrator account.
+7. Run `composer install` from the root directory of the Backstage project to install application dependencies.
+8. Run `./Vendor/bin/cake Migrations.migration run up` to install the database and create your first administrator account.
 
 If everything is set up correctly, _you're done_!
 
