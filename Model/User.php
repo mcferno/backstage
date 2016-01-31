@@ -66,6 +66,7 @@ class User extends AppModel
 	{
 		// hash password
 		if(!empty($this->data[$this->alias]['password'])) {
+			Security::setHash('sha256');
 			$this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
 		}
 
@@ -313,5 +314,39 @@ class User extends AppModel
 	public function setValidationForResetToken()
 	{
 		$this->validator()->remove('email', 'isUnique');
+	}
+
+	/**
+	 * Determines the current number of admin users
+	 *
+	 * @return integer
+	 */
+	public function countAdminUsers()
+	{
+		return $this->find('count', array(
+			'conditions' => array(
+				'role' => 1
+			)
+		));
+	}
+
+	/**
+	 * Create a new administrator account
+	 *
+	 * @param string $username
+	 * @param string $password
+	 * @param string $email
+	 * @return mixed
+	 * @throws Exception
+	 */
+	public function createAdminAccount($username, $password, $email)
+	{
+		$this->create();
+		return $this->save(array(
+			'username' => $username,
+			'password' => $password,
+			'email' => $email,
+			'role' => 1
+		), true);
 	}
 }

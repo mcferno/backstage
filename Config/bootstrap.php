@@ -61,7 +61,10 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-CakePlugin::load(array('Postable'));
+CakePlugin::load(array(
+	'Postable',
+	'Migrations'
+));
 
 Configure::write('Dispatcher.filters', array(
 	'CacheDispatcher'
