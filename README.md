@@ -93,13 +93,8 @@ This structure has a number of advantages:
 			);
 		}
 
-8. Temporarily add this line to the `boostrap.env.php`.
-
-		Configure::write("setup", true);
-
-9. Run `composer install` from the root directory of the Backstage project to install application dependencies.
-10. Visit the `/setup` URL for this site in your browser to configure the first administrator user (example.com/setup).
-11. Remove the line added in #8 once your administator account is set up.
+8. Run `composer install` from the root directory of the Backstage project to install application dependencies.
+9. Run `./Vendor/bin/cake Migrations.migration run up` to install the database and create your first administrator account.
 
 If everything is set up correctly, _you're done_!
 
