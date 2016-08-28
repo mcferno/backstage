@@ -112,6 +112,8 @@ class AppController extends Controller
 		$this->set('siteName', Configure::read('Site.name'));
 		$this->set('backend', Configure::read('Site.backendUrl'));
 		$this->set('userHome', $this->userHome);
+
+		$this->helpers[] = 'Snippet';
 	}
 
 	/**

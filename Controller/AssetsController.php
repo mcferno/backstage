@@ -55,7 +55,15 @@ class AssetsController extends AppController
 			$model = reset($models);
 		}
 
-		$page_limits = array($this->paginate[$model]['limit'], $this->paginate[$model]['limit'] * 2, $this->paginate[$model]['limit'] * 4);
+		$page_limits = array(
+			$this->paginate[$model]['limit'],
+			$this->paginate[$model]['limit'] * 2,
+			$this->paginate[$model]['limit'] * 4,
+		);
+
+		if ($model === 'Asset') {
+			$page_limits[] = $this->paginate[$model]['maxLimit'];
+		}
 
 		if($this->RequestHandler->isMobile()) {
 			$page_limits = array($this->paginate[$model]['limit'], $this->paginate[$model]['limit'] * 2, $this->paginate[$model]['limit'] * 3);
