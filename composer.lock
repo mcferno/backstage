@@ -47,16 +47,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "2.6.12",
+            "version": "2.6.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "64c8f8b28fc4147e5de7a1478107ebbafce0fb71"
+                "reference": "e079f577aea9f70f3fd19371c9e40fbcd08b5a59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/64c8f8b28fc4147e5de7a1478107ebbafce0fb71",
-                "reference": "64c8f8b28fc4147e5de7a1478107ebbafce0fb71",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/e079f577aea9f70f3fd19371c9e40fbcd08b5a59",
+                "reference": "e079f577aea9f70f3fd19371c9e40fbcd08b5a59",
                 "shasum": ""
             },
             "require": {
@@ -86,24 +86,24 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-11-06 03:26:10"
+            "time": "2016-03-14 02:54:40"
         },
         {
             "name": "composer/installers",
-            "version": "v1.0.22",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "bd9b14f094c89c8b5804a4e41edeb7853bb85046"
+                "reference": "a3595c5272a6f247228abb20076ed27321e4aae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/bd9b14f094c89c8b5804a4e41edeb7853bb85046",
-                "reference": "bd9b14f094c89c8b5804a4e41edeb7853bb85046",
+                "url": "https://api.github.com/repos/composer/installers/zipball/a3595c5272a6f247228abb20076ed27321e4aae9",
+                "reference": "a3595c5272a6f247228abb20076ed27321e4aae9",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "1.0.0"
+                "composer-plugin-api": "^1.0"
             },
             "replace": {
                 "roundcube/plugin-installer": "*",
@@ -121,8 +121,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Composer\\Installers\\": "src/"
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -137,13 +137,16 @@
                 }
             ],
             "description": "A multi-framework Composer library installer",
-            "homepage": "http://composer.github.com/installers/",
+            "homepage": "https://composer.github.io/installers/",
             "keywords": [
                 "Craft",
                 "Dolibarr",
                 "Hurad",
+                "ImageCMS",
                 "MODX Evo",
+                "Mautic",
                 "OXID",
+                "RadPHP",
                 "SMF",
                 "Thelia",
                 "WolfCMS",
@@ -159,6 +162,7 @@
                 "dokuwiki",
                 "drupal",
                 "elgg",
+                "expressionengine",
                 "fuelphp",
                 "grav",
                 "installer",
@@ -184,7 +188,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2015-10-29 23:28:48"
+            "time": "2016-07-05 06:18:20"
         },
         {
             "name": "facebook/php-sdk",
@@ -230,21 +234,21 @@
                 "facebook",
                 "sdk"
             ],
-            "abandoned": "facebook/php-sdk-v4",
+            "abandoned": "facebook/graph-sdk",
             "time": "2013-11-19 23:11:14"
         },
         {
             "name": "james-heinrich/getid3",
-            "version": "v1.9.11",
+            "version": "v1.9.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JamesHeinrich/getID3.git",
-                "reference": "da7c657f2bcc865ef1bef53cf90c2638f344469b"
+                "reference": "41c05612d532d30f07680cad3a4a6efbec7fc7f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/da7c657f2bcc865ef1bef53cf90c2638f344469b",
-                "reference": "da7c657f2bcc865ef1bef53cf90c2638f344469b",
+                "url": "https://api.github.com/repos/JamesHeinrich/getID3/zipball/41c05612d532d30f07680cad3a4a6efbec7fc7f5",
+                "reference": "41c05612d532d30f07680cad3a4a6efbec7fc7f5",
                 "shasum": ""
             },
             "require": {
@@ -267,7 +271,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2015-12-24 10:50:02"
+            "time": "2016-03-02 13:13:30"
         },
         {
             "name": "jublonet/codebird-php",
@@ -324,20 +328,23 @@
         },
         {
             "name": "smottt/wideimage",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smottt/WideImage.git",
-                "reference": "6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b"
+                "reference": "9235ee96b5cdbc83a4c3ab7b51ce2fdd82c561ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smottt/WideImage/zipball/6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b",
-                "reference": "6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b",
+                "url": "https://api.github.com/repos/smottt/WideImage/zipball/9235ee96b5cdbc83a4c3ab7b51ce2fdd82c561ca",
+                "reference": "9235ee96b5cdbc83a4c3ab7b51ce2fdd82c561ca",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
             },
             "type": "library",
             "autoload": {
@@ -352,7 +359,7 @@
             ],
             "description": "An open-source PHP library for image manipulation. (With namespaces, PHP 5.3+)",
             "homepage": "http://wideimage.sourceforge.net",
-            "time": "2015-10-05 20:32:34"
+            "time": "2016-05-16 20:00:28"
         }
     ],
     "packages-dev": [],
