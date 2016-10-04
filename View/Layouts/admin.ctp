@@ -44,6 +44,7 @@
 						if($contentSpan <= 8 || ($contentSpan <= 10 && $hideSidebar)) {
 							$contentClasses[] = 'col-md-offset-' . intval((12 - $contentSpan) / 2);
 						}
+						$contentClasses[] = 'clearfix';
 					?>
 					<div class="<?= implode(' ', $contentClasses); ?>">
 						<?= $this->Session->flash(); ?>
