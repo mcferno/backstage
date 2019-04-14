@@ -107,10 +107,6 @@ class AppController extends Controller
 		) {
 			$this->adminBeforeRender();
 		}
-		$this->Flash->success('Sucess message');
-		$this->Flash->error('Error message');
-		$this->Flash->set('Normal message');
-		$this->Flash->info('Info message');
 	}
 
 	/**

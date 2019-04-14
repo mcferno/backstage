@@ -108,13 +108,10 @@ class PagesController extends AppController
 	{
 		if(Access::hasRole('Admin')) {
 			if(clearCache() === true) {
-				$msg = 'View cache has been cleared successfully!';
-				$type = 'messaging/alert-success';
+				$this->Flash->success('View cache has been cleared successfully!');
 			} else {
-				$msg = 'View cache could not be cleared!';
-				$type = 'messaging/alert-error';
+				$this->Flash->error('View cache could not be cleared!');
 			}
-			$this->Session->setFlash($msg, $type);
 		}
 		$this->redirect($this->referer(array('controller' => 'users', 'action' => 'dashboard')));
 	}
