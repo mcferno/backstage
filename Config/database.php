@@ -8,9 +8,9 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'kennysays',
-		'password' => 'jPyCFwyF346caBFb',
-		'database' => 'kennyquotemachine',
+		'login' => 'username',
+		'password' => 'password',
+		'database' => 'database',
 		'encoding' => 'utf8'
 	);
 

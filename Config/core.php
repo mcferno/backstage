@@ -179,7 +179,7 @@
  */
 	Configure::write('Session', array(
 		'defaults' => 'cake',
-		'cookie' => 'KQMsess',
+		'cookie' => 'sess',
 		'timeout' => 180, // 3 hours in minutes
 		'checkAgent' => false
 	));
@@ -196,6 +196,11 @@
  * Cookie encryption key, used by rijndael
  */
 	Configure::write('Cookie.key', 'c665EchA*w6MeswabAMuW_e7axET5$?Ha2ra!esW5p*JaT*&');
+
+/**
+ * Cookie container name
+ */
+	Configure::write('Cookie.name', 'backstage');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
@@ -234,7 +239,7 @@
  * If you are on PHP 5.3 uncomment this line and correct your server timezone
  * to fix the date & time related errors.
  */
-	date_default_timezone_set('America/Montreal');
+	//date_default_timezone_set('UTC');
 
 /**
  *

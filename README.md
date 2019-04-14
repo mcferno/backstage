@@ -27,7 +27,7 @@ Modern mobile web browsers are also supported.
 You should already know how to configure and maintain a basic PHP-based website
 
 * Apache webserver v2.0+ (2.2+ is recommended) with mod_rewrite enabled
-* PHP v5.3+ (latest 5.4.x is supported & recommended)
+* PHP v5.6+ (latest 7.x is supported & recommended)
 * SQL database with read & write-access
 * GD image module
 * Shell access
@@ -69,6 +69,8 @@ This structure has a number of advantages:
 	* `tmp/`
 4. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
 
+		date_default_timezone_set('America/New_York'); // choose the most appropriate value for your installation
+
 		Configure::write("debug", 0); // disable debug mode
 		Configure::write("Cache.check", true); // enable view caching
 
@@ -77,7 +79,7 @@ This structure has a number of advantages:
 		Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
 		Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
 
-5. Replace the strings above marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation.
+5. Replace the strings above marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation. If your server PHP timezone is not already set, choose the most appropriate [timezone][PHPTimezones] value.
 6. Append your database credentials to the `bootstrap.env.php` file, example:
 
 		class DATABASE_CONFIG {
@@ -165,3 +167,4 @@ The current set of features are generally stable so you shouldn't have troubles 
 [RandomStrings]: https://api.wordpress.org/secret-key/1.1/salt/
 [RandomDigits]: https://www.random.org/strings/?num=20&len=20&digits=on&unique=on&format=plain
 [ComposerInstallation]: https://getcomposer.org/doc/00-intro.md
+[PHPTimezones]: https://www.php.net/manual/en/timezones.php

@@ -88,7 +88,7 @@ if (Configure::read('debug') >= 1) {
 
 Configure::write('App.cache_engine', $engine);
 Configure::write('App.cache_duration_default', $duration);
-Configure::write('App.cache_prefix', 'kqm_');
+Configure::write('App.cache_prefix', 'backstage_');
 
 /**
  * Load any environment-specific configurations

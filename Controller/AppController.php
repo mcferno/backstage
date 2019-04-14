@@ -134,7 +134,7 @@ class AppController extends Controller
 	protected function setSecurity()
 	{
 		Security::setHash('sha256');
-		$this->Cookie->name = 'KQM';
+		$this->Cookie->name = Configure::read('Cookie.name');
 		$this->Cookie->type('rijndael');
 		$this->Cookie->key = Configure::read('Cookie.key');
 		$this->Cookie->httpOnly = true;
