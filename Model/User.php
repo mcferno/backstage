@@ -20,7 +20,7 @@ class User extends AppModel
 	public $validate = array(
 		'username' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Username is required',
 				'required' => true
 			),
@@ -35,7 +35,7 @@ class User extends AppModel
 		),
 		'email' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Email is required',
 				'required' => true
 			),
@@ -50,7 +50,7 @@ class User extends AppModel
 		),
 		'password' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Password is required'
 			),
 		),
@@ -303,7 +303,7 @@ class User extends AppModel
 		}
 
 		$rules->add('password', 'required', array(
-			'rule' => 'notempty',
+			'rule' => 'notBlank',
 			'required' => true
 		));
 	}
