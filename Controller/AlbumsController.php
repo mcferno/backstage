@@ -31,9 +31,9 @@ class AlbumsController extends AppController
 					// view new album
 					$redirect = array('controller' => 'assets', 'action' => 'index', 'album' => $this->Album->id);
 				}
-				$this->Session->setFlash('The Album has been ' . $status, 'messaging/alert-success');
+				$this->Flash->success('The Album has been ' . $status);
 			} else {
-				$this->Session->setFlash("The album could not be {$status}. Please, try again.", 'messaging/alert-error');
+				$this->Flash->error("The album could not be {$status}. Please, try again.");
 			}
 		}
 
@@ -52,7 +52,7 @@ class AlbumsController extends AppController
 		$this->Album->Asset->id = $asset_id;
 		if($this->request->is('post') && $this->Album->exists() && $this->Album->Asset->exists()) {
 			$this->Album->saveField('cover_id', $asset_id);
-			$this->Session->setFlash('The image has been set as the album cover.', 'messaging/alert-success');
+			$this->Flash->success('The image has been set as the album cover.');
 		}
 
 		$this->redirect($this->referer(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id'))));
@@ -68,7 +68,7 @@ class AlbumsController extends AppController
 		$this->Album->id = $id;
 		if($this->Album->exists() && $this->Album->isOwner($this->Auth->user('id')) && $this->request->is('post')) {
 			$this->Album->delete($id);
-			$this->Session->setFlash('The album has been deleted.', 'messaging/alert-success');
+			$this->Flash->success('The album has been deleted.');
 		}
 		$this->redirect($this->referer(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Auth->user('id'))));
 	}

@@ -45,7 +45,7 @@ class UsersController extends AppController
 				$this->persistSession();
 				$this->redirect($this->Auth->redirectUrl());
 			} else {
-				$this->Session->setFlash('Invalid username or password, try again', 'messaging/alert-error');
+				$this->Flash->error('Invalid username or password, try again');
 			}
 		}
 	}
@@ -168,10 +168,10 @@ class UsersController extends AppController
 		if($this->request->is('post')) {
 			$this->User->create();
 			if($this->User->save($this->request->data)) {
-				$this->Session->setFlash('The user has been saved', 'messaging/alert-success');
+				$this->Flash->success('The user has been saved');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('The user could not be saved. Please, try again.', 'messaging/alert-error');
+				$this->Flash->error('The user could not be saved. Please, try again.');
 			}
 		}
 	}
@@ -216,11 +216,11 @@ class UsersController extends AppController
 				} else {
 					$msg = 'The user has been updated.';
 				}
-				$this->Session->setFlash($msg, 'messaging/alert-success');
+				$this->Flash->success($msg);
 				$this->redirect($this->referer($this->userHome));
 			} else {
 				$msg = Access::isOwner($id) ? 'Your account could not be saved. Please, try again.' : 'The user could not be saved. Please, try again.';
-				$this->Session->setFlash($msg, 'messaging/alert-error');
+				$this->Flash->error($msg);
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
@@ -267,10 +267,10 @@ class UsersController extends AppController
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if($this->User->delete()) {
-			$this->Session->setFlash('User deleted', 'messaging/alert-success');
+			$this->Flash->success('User deleted');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash('User was not deleted', 'messaging/alert-error');
+		$this->Flash->error('User was not deleted');
 		$this->redirect(array('action' => 'index'));
 	}
 
@@ -289,9 +289,9 @@ class UsersController extends AppController
 				if(!empty($user)) {
 					$token = $this->User->generatePasswordResetToken($user['User']['id']);
 					$this->sendResetEmail($user, $token['Token']['token']);
-					$this->Session->setFlash('A password reset email has been sent!', 'messaging/alert-success');
+					$this->Flash->success('A password reset email has been sent!');
 				} else {
-					$this->Session->setFlash('User not found', 'messaging/alert-error');
+					$this->Flash->error('User not found');
 				}
 			}
 		}
@@ -334,7 +334,7 @@ class UsersController extends AppController
 
 		$user = $this->User->getUserByResetToken($this->request->params['token']);
 		if(empty($user['User']['id'])) {
-			$this->Session->setFlash('Reset process expired, please request a new one.', 'messaging/alert-error');
+			$this->Flash->error('Reset process expired, please request a new one.');
 			$this->redirect(array('action' => 'forgot'));
 		}
 
@@ -346,7 +346,7 @@ class UsersController extends AppController
 				$this->Auth->login($user['User']);
 				$this->postLogin();
 
-				$this->Session->setFlash('Your password has been changed. Welcome back!', 'messaging/alert-success');
+				$this->Flash->success('Your password has been changed. Welcome back!');
 				$this->redirect($this->userHome);
 			}
 		} else {

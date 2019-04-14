@@ -428,12 +428,16 @@ class AssetsController extends AppController
 
 			// JS redirect will reveal this message
 			if($error === false) {
-				$this->Session->setFlash($message, 'messaging/alert-success');
+				$this->Flash->success($message);
 			}
 			return;
 		}
 
-		$this->Session->setFlash($message, ($error === false) ? 'messaging/alert-success' : 'messaging/alert-error');
+		if ($error === false) {
+			$this->Flash->success($message);
+		} else {
+			$this->Flash->error($message);
+		}
 		$redirect = ($redirect) ? $redirect : array('action' => 'index');
 		$this->redirect($redirect);
 	}
@@ -486,7 +490,7 @@ class AssetsController extends AppController
 		}
 
 		if(empty($asset)) {
-			$this->Session->setFlash('Image could not be found.', 'messaging/alert-error');
+			$this->Flash->error('Image could not be found.');
 			$this->redirect($this->referer('index'));
 		}
 
@@ -518,7 +522,7 @@ class AssetsController extends AppController
 
 				$status = $this->Asset->saveImage($image_path, $this->Auth->user('id'), 'Crop', array('crop' => $this->data['coords']));
 				if($status) {
-					$this->Session->setFlash('The image has been cropped and saved.', 'messaging/alert-success');
+					$this->Flash->success('The image has been cropped and saved.');
 					$response['status'] = 'success';
 					$response['redirect'] = Router::url(array('controller' => 'assets', 'action' => 'view', $this->Asset->id));
 				}
@@ -562,7 +566,7 @@ class AssetsController extends AppController
 
 		// only users who are cleared for fb integration can continue
 		if($asset !== true || $this->Session->check('Auth.User.fb_target') === false) {
-			$this->Session->setFlash('Sorry, you can’t post this image at this time.', 'messaging/alert-error');
+			$this->Flash->error('Sorry, you can’t post this image at this time.');
 			$this->redirect($this->referer(array('action' => 'index')));
 		}
 
@@ -589,7 +593,7 @@ class AssetsController extends AppController
 					$this->Asset->id = $id;
 					$this->Asset->saveField('fb_id', $res['id']);
 
-					$this->Session->setFlash('This image has been posted to Facebook.', 'messaging/alert-success');
+					$this->Flash->success('This image has been posted to Facebook.');
 					$this->redirect($this->referer(array('action' => 'view', $id)));
 				}
 			} catch(FacebookApiException $e) {
@@ -598,7 +602,7 @@ class AssetsController extends AppController
 				$this->log($e->getMessage());
 			}
 
-			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
+			$this->Flash->error('An error occurred while attempting to post to Facebook.');
 			$this->redirect($this->referer(array('action' => 'view', $id)));
 		}
 
@@ -622,9 +626,9 @@ class AssetsController extends AppController
 	{
 		if(!empty($this->request->data)) {
 			if($this->Asset->save($this->request->data, false)) {
-				$this->Session->setFlash('The image has been updated.', 'messaging/alert-success');
+				$this->Flash->success('The image has been updated.');
 			} else {
-				$this->Session->setFlash('An error occured while saving. Please try again.', 'messaging/alert-error');
+				$this->Flash->error('An error occured while saving. Please try again.');
 			}
 		}
 		$this->redirect($this->referer(array('action' => 'admin_view', $id)));
@@ -638,15 +642,15 @@ class AssetsController extends AppController
 	public function admin_delete($id = null)
 	{
 		if(empty($id) || !$this->Asset->isOwner($this->Auth->user('id'), $id)) {
-			$this->Session->setFlash('Image could not be found.', 'messaging/alert-error');
+			$this->Flash->error('Image could not be found.');
 			$this->redirect($this->referer('index'));
 		}
 
 		if($this->Asset->delete($id)) {
-			$this->Session->setFlash('The image has been deleted.', 'messaging/alert-success');
+			$this->Flash->success('The image has been deleted.');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash('Image could not be deleted.', 'messaging/alert-error');
+		$this->Flash->error('Image could not be deleted.');
 		$this->redirect($this->referer('index'));
 	}
 }

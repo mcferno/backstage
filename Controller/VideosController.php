@@ -98,14 +98,14 @@ class VideosController extends AppController
 			$data = $this->Video->convertDate($this->request->data);
 			if($this->Video->save($data)) {
 				if(empty($this->request->data['Video']['url'])) {
-					$this->Session->setFlash('Your video has been added! Please provide a screencap.', 'messaging/alert-success');
+					$this->Flash->success('Your video has been added! Please provide a screencap.');
 					$this->redirect(array('action' => 'image', $this->Video->id));
 				} else {
-					$this->Session->setFlash('Your video details has been saved. Please upload the video content.', 'messaging/alert-success');
+					$this->Flash->success('Your video details has been saved. Please upload the video content.');
 					$this->redirect(array('action' => 'image', $this->Video->id));
 				}
 			} else {
-				$this->Session->setFlash('Your new video could not be saved. Please, try again.', 'messaging/alert-error');
+				$this->Flash->error('Your new video could not be saved. Please, try again.');
 			}
 		}
 
@@ -149,10 +149,10 @@ class VideosController extends AppController
 				}
 
 				if($valid_mp4 === true || $valid_webm === true) {
-					$this->Session->setFlash('Video(s) saved!', 'messaging/alert-success');
+					$this->Flash->success('Video(s) saved!');
 					$this->redirect(array('action' => 'view', $id));
 				} else {
-					$this->Session->setFlash($valid_mp4, 'messaging/alert-error');
+					$this->Flash->error($valid_mp4);
 				}
 			}
 		}
@@ -191,10 +191,10 @@ class VideosController extends AppController
 					$new_file .= $this->Upload->getExtension($this->request->data['Video']['image']['name']);
 					move_uploaded_file($this->request->data['Video']['image']['tmp_name'], IMAGES . $new_file);
 
-					$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
+					$this->Flash->success('Image saved! Please crop the image below to complete the process.');
 					$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
 				} else {
-					$this->Session->setFlash($valid, 'messaging/alert-error');
+					$this->Flash->error($valid);
 				}
 
 			// URL grab
@@ -208,14 +208,14 @@ class VideosController extends AppController
 					$file = $this->Upload->saveURLtoFile($this->request->data['Video']['url'], IMAGES . $new_file);
 
 					if($file !== false) {
-						$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
+						$this->Flash->success('Image saved! Please crop the image below to complete the process.');
 						$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
 					} else {
-						$this->Session->setFlash('The URL could not be downloaded, please try again.', 'messaging/alert-error');
+						$this->Flash->error('The URL could not be downloaded, please try again.');
 					}
 
 				} else {
-					$this->Session->setFlash($valid, 'messaging/alert-error');
+					$this->Flash->error($valid);
 				}
 			}
 		}
@@ -247,7 +247,7 @@ class VideosController extends AppController
 
 				$status = $this->Video->saveThumbnail($this->data['image_id'], $this->data['coords']);
 				if($status) {
-					$this->Session->setFlash('The image has been cropped and saved.', 'messaging/alert-success');
+					$this->Flash->success('The image has been cropped and saved.');
 					$response['status'] = 'success';
 					$response['redirect'] = Router::url(array('controller' => 'videos', 'action' => 'view', $this->data['image_id']));
 				}
@@ -267,10 +267,10 @@ class VideosController extends AppController
 		if($this->request->is('post') || $this->request->is('put')) {
 			$data = $this->Video->convertDate($this->request->data);
 			if($this->Video->save($data)) {
-				$this->Session->setFlash('The video has been updated!', 'messaging/alert-success');
+				$this->Flash->success('The video has been updated!');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('The video could not be updated. Please, try again.', 'messaging/alert-error');
+				$this->Flash->error('The video could not be updated. Please, try again.');
 			}
 		} else {
 
@@ -331,15 +331,15 @@ class VideosController extends AppController
 		}
 
 		if(!Access::hasRole('Admin') && !$this->Video->isOwner($this->Auth->user('id'))) {
-			$this->Session->setFlash('Sorry, only the owner of this video can delete it!', 'messaging/alert-error');
+			$this->Flash->error('Sorry, only the owner of this video can delete it!');
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if($this->Video->delete()) {
-			$this->Session->setFlash('Your video has been removed!', 'messaging/alert-success');
+			$this->Flash->success('Your video has been removed!');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash('Your video could not be deleted. Please, try again.', 'messaging/alert-error');
+		$this->Flash->error('Your video could not be deleted. Please, try again.');
 		$this->redirect(array('action' => 'index'));
 	}
 

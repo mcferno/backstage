@@ -127,10 +127,10 @@ class LinksController extends AppController
 			$this->Link->set('user_id', $this->Auth->user('id'));
 
 			if($this->Link->save($this->request->data)) {
-				$this->Session->setFlash('Your new link has been added!', 'messaging/alert-success');
+				$this->Flash->success('Your new link has been added!');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('Your new link could not be saved. Please, try again.', 'messaging/alert-error');
+				$this->Flash->error('Your new link could not be saved. Please, try again.');
 			}
 		}
 
@@ -145,10 +145,10 @@ class LinksController extends AppController
 		}
 		if($this->request->is('post') || $this->request->is('put')) {
 			if($this->Link->save($this->request->data)) {
-				$this->Session->setFlash('The link has been updated!', 'messaging/alert-success');
+				$this->Flash->success('The link has been updated!');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash('The link could not be updated. Please, try again.', 'messaging/alert-error');
+				$this->Flash->error('The link could not be updated. Please, try again.');
 			}
 		} else {
 
@@ -203,10 +203,10 @@ class LinksController extends AppController
 					$new_file .= $this->Upload->getExtension($this->request->data['Link']['image']['name']);
 					move_uploaded_file($this->request->data['Link']['image']['tmp_name'], IMAGES . $new_file);
 
-					$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
+					$this->Flash->success('Image saved! Please crop the image below to complete the process.');
 					$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
 				} else {
-					$this->Session->setFlash($valid, 'messaging/alert-error');
+					$this->Flash->error($valid);
 				}
 
 			// URL grab
@@ -219,14 +219,14 @@ class LinksController extends AppController
 					$file = $this->Upload->saveURLtoFile($this->request->data['Link']['url'], IMAGES . $new_file);
 
 					if($file !== false) {
-						$this->Session->setFlash('Image saved! Please crop the image below to complete the process.', 'messaging/alert-success');
+						$this->Flash->success('Image saved! Please crop the image below to complete the process.');
 						$this->redirect(array('action' => 'image', $id, 'mode' => 'crop'));
 					} else {
-						$this->Session->setFlash('The URL could not be downloaded, please try again.', 'messaging/alert-error');
+						$this->Flash->error('The URL could not be downloaded, please try again.');
 					}
 
 				} else {
-					$this->Session->setFlash($valid, 'messaging/alert-error');
+					$this->Flash->error($valid);
 				}
 			}
 		}
@@ -257,7 +257,7 @@ class LinksController extends AppController
 
 				$status = $this->Link->saveThumbnail($this->data['image_id'], $this->data['coords']);
 				if($status) {
-					$this->Session->setFlash('The image has been cropped and saved.', 'messaging/alert-success');
+					$this->Flash->success('The image has been cropped and saved.');
 					$response['status'] = 'success';
 					$response['redirect'] = Router::url(array('controller' => 'links', 'action' => 'view', $this->data['image_id']));
 				}
@@ -279,15 +279,15 @@ class LinksController extends AppController
 		}
 
 		if(!Access::hasRole('Admin') && !$this->Link->isOwner($this->Auth->user('id'))) {
-			$this->Session->setFlash('Sorry, only the owner of this link can delete it!', 'messaging/alert-error');
+			$this->Flash->error('Sorry, only the owner of this link can delete it!');
 			$this->redirect(array('action' => 'index'));
 		}
 
 		if($this->Link->delete()) {
-			$this->Session->setFlash('Your link has been removed!', 'messaging/alert-success');
+			$this->Flash->success('Your link has been removed!');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash('Your link could not be deleted. Please, try again.', 'messaging/alert-error');
+		$this->Flash->error('Your link could not be deleted. Please, try again.');
 		$this->redirect(array('action' => 'index'));
 	}
 }

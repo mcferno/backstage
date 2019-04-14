@@ -42,7 +42,7 @@ class ContestsController extends AppController
 		if($this->request->is('post')) {
 			$this->Contest->create();
 			if($this->Contest->save($this->request->data)) {
-				$this->Session->setFlash('Your caption battle has started!', 'messaging/alert-success');
+				$this->Flash->success('Your caption battle has started!');
 
 				// announce contest if FB integration exists
 				if($this->Session->check('Auth.User.fb_target')) {
@@ -53,7 +53,7 @@ class ContestsController extends AppController
 				}
 
 			} else {
-				$this->Session->setFlash('There was an error with your caption battle set up. Please try again.', 'messaging/alert-error');
+				$this->Flash->error('There was an error with your caption battle set up. Please try again.');
 			}
 		}
 	}
@@ -72,7 +72,7 @@ class ContestsController extends AppController
 
 		// contest not found, or user is not the contest owner
 		if(!$contest || !Access::isOwner($contest['Contest']['user_id'])) {
-			$this->Session->setFlash('Caption battle could not be found. Please try again.', 'messaging/alert-error');
+			$this->Flash->error('Caption battle could not be found. Please try again.');
 			$this->redirect($contest_route);
 		}
 
@@ -99,11 +99,11 @@ class ContestsController extends AppController
 				$this->Contest->id = $id;
 				$this->Contest->saveField('fb_id', $result['id']);
 
-				$this->Session->setFlash('Your caption battle has been announced on Facebook!', 'messaging/alert-success');
+				$this->Flash->success('Your caption battle has been announced on Facebook!');
 				$this->redirect($contest_route);
 			}
 
-			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
+			$this->Flash->error('An error occurred while attempting to post to Facebook.');
 			$this->redirect($contest_route);
 
 		// send the user away to authenticate
@@ -120,7 +120,7 @@ class ContestsController extends AppController
 	public function admin_view($id = null)
 	{
 		if(empty($id) || !$this->Contest->exists($id)) {
-			$this->Session->setFlash('Sorry, that contest doesn’t appear to exist', 'messaging/alert-error');
+			$this->Flash->error('Sorry, that contest doesn’t appear to exist');
 			$this->redirect(array('action' => 'index'));
 		}
 
@@ -175,7 +175,7 @@ class ContestsController extends AppController
 	{
 		// sanity check
 		if(empty($contest_id) || empty($asset_id) || !$this->Contest->exists($contest_id) || !$this->Asset->exists($asset_id)) {
-			$this->Session->setFlash('Malformed URL.', 'messaging/alert-error');
+			$this->Flash->error('Malformed URL.');
 			$this->redirect($this->referer(array('action' => 'index')));
 		}
 
@@ -188,19 +188,19 @@ class ContestsController extends AppController
 
 		// enforce ownership of the contest
 		if(!$this->Contest->isOwner($contest_id, $this->Auth->user('id'))) {
-			$this->Session->setFlash('Sorry, only the Caption Battle creator can declare the winner.', 'messaging/alert-error');
+			$this->Flash->error('Sorry, only the Caption Battle creator can declare the winner.');
 			$this->redirect($this->referer(array('action' => 'view', $contest_id)));
 		}
 
 		// enforce that a Contest not be closed too quickly
 		if($this->Contest->isRecent($contest_id, 12 * HOUR)) {
-			$this->Session->setFlash('Sorry, the Caption Battle is too new, please allow 12 hrs or more for everyone to have a chance to submit entries.', 'messaging/alert-error');
+			$this->Flash->error('Sorry, the Caption Battle is too new, please allow 12 hrs or more for everyone to have a chance to submit entries.');
 			$this->redirect($this->referer(array('action' => 'view', $contest_id)));
 		}
 
 		// set the winner
 		if($this->Contest->setWinningAsset($contest_id, $asset_id)) {
-			$this->Session->setFlash('The Caption Battle has ended, the winner is now set.', 'messaging/alert-success');
+			$this->Flash->success('The Caption Battle has ended, the winner is now set.');
 
 			// announce winner if FB integration exists
 			if($this->Session->check('Auth.User.fb_target')) {
@@ -232,7 +232,7 @@ class ContestsController extends AppController
 
 		// contest not found, or user is not the contest owner
 		if(!$contest || !Access::isOwner($contest['Contest']['user_id'])) {
-			$this->Session->setFlash('Caption battle could not be found. Please try again.', 'messaging/alert-error');
+			$this->Flash->error('Caption battle could not be found. Please try again.');
 			$this->redirect($contest_route);
 		}
 
@@ -264,7 +264,7 @@ class ContestsController extends AppController
 
 				// post was successful, record the id for reference
 				if(!empty($res['id'])) {
-					$this->Session->setFlash('The caption battle winner has been announced on Facebook!', 'messaging/alert-success');
+					$this->Flash->success('The caption battle winner has been announced on Facebook!');
 					$this->redirect($winner_route);
 				}
 			} catch(FacebookApiException $e) {
@@ -273,7 +273,7 @@ class ContestsController extends AppController
 				$this->log($e->getMessage());
 			}
 
-			$this->Session->setFlash('An error occurred while attempting to post to Facebook.', 'messaging/alert-error');
+			$this->Flash->error('An error occurred while attempting to post to Facebook.');
 			$this->redirect($contest_route);
 		}
 

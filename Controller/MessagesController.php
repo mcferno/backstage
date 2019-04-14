@@ -78,10 +78,10 @@ class MessagesController extends AppController
 		}
 
 		if($this->Message->delete()) {
-			$this->Session->setFlash('The message has been removed!', 'messaging/alert-success');
+			$this->Flash->success('The message has been removed!');
 			$this->redirect($this->referer(array('action' => 'index')));
 		}
-		$this->Session->setFlash('The message could not be deleted. Please, try again.', 'messaging/alert-error');
+		$this->Flash->error('The message could not be deleted. Please, try again.');
 		$this->redirect($this->referer(array('action' => 'index')));
 	}
 }

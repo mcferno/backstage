@@ -14,18 +14,23 @@ class AppController extends Controller
 	);
 
 	public $components = array(
-		'RequestHandler', 'Session', 'Cookie',
+		'RequestHandler',
+		'Session',
+		'Cookie',
 		'Auth' => array(
 			'loginRedirect' => array('controller' => 'users', 'action' => 'dashboard'),
 			'authError' => 'You must be logged in to continue',
 			'flash' => array(
-				'element' => 'messaging/alert',
+				'element' => 'alert',
 				'key' => 'auth',
 				'params' => array()
 			)
 		),
 		'Security' => array(
 			'csrfCheck' => false
+		),
+		'Flash' => array(
+			'element' => 'alert',
 		)
 	);
 
@@ -102,6 +107,10 @@ class AppController extends Controller
 		) {
 			$this->adminBeforeRender();
 		}
+		$this->Flash->success('Sucess message');
+		$this->Flash->error('Error message');
+		$this->Flash->set('Normal message');
+		$this->Flash->info('Info message');
 	}
 
 	/**

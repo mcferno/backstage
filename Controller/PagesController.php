@@ -68,7 +68,7 @@ class PagesController extends AppController
 			$contest = $this->Contest->getActiveContest($this->request->params['named']['contest']);
 
 			if($contest === false) {
-				$this->Session->setFlash('Sorry, the contest is either done, or could not be found.', 'messaging/alert-error');
+				$this->Flash->error('Sorry, the contest is either done, or could not be found.');
 				$this->redirect(array('controller' => 'contests', 'action' => 'index'));
 			}
 
@@ -130,7 +130,7 @@ class PagesController extends AppController
 		}
 
 		if(!$page) {
-			$this->Session->setFlash('Sorry, the requested page could not be located.', 'messaging/alert-error');
+			$this->Flash->error('Sorry, the requested page could not be located.');
 			$this->redirect(array('controller' => 'users', 'action' => 'dashboard'));
 		}
 		$this->set('page', $page);
