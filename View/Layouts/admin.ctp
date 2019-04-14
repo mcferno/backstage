@@ -47,7 +47,7 @@
 						$contentClasses[] = 'clearfix';
 					?>
 					<div class="<?= implode(' ', $contentClasses); ?>">
-						<?= $this->Session->flash(); ?>
+						<?= $this->Flash->render(); ?>
 						<?php echo $this->fetch('content'); ?>
 					</div>
 

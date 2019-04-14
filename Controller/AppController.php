@@ -8,9 +8,11 @@ class AppController extends Controller
 	public $uses = array('User');
 
 	public $helpers = array(
-		'Site', 'Cache',
+		'Site',
+		'Cache',
 		'Form' => array('className' => 'AppForm'),
-		'Html' => array('className' => 'AppHtml')
+		'Html' => array('className' => 'AppHtml'),
+		'Flash',
 	);
 
 	public $components = array(
@@ -31,7 +33,7 @@ class AppController extends Controller
 		),
 		'Flash' => array(
 			'element' => 'alert',
-		)
+		),
 	);
 
 	public $userHome = '/';

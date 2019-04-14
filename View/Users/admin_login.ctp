@@ -3,8 +3,8 @@
 ?>
 <div class="col-sm-8 col-sm-offset-2 login">
 	<h1>Login</h1>
-	<?= $this->Session->flash(); ?>
-	<?= $this->Session->flash('auth'); ?>
+	<?= $this->Flash->render(); ?>
+	<?= $this->Flash->render('auth'); ?>
 	<div class="users form">
 	<?php echo $this->Form->create('User');?>
 		<fieldset>

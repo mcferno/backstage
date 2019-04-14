@@ -4,7 +4,7 @@ $this->set('suppressSubnav', true);
 <div class="col-sm-8 col-sm-offset-2 login">
 	<h1>Forgot my password</h1>
 	<p>Provide the email address matching your account and we'll send you a password reset.</p>
-	<?= $this->Session->flash(); ?>
+	<?= $this->Flash->render(); ?>
 	<div class="users form">
 		<?php echo $this->Form->create('User');?>
 		<fieldset>

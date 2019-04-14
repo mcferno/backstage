@@ -45,7 +45,7 @@
 
 	<div class="container">
 		<div class="content">
-			<?= $this->Session->flash(); ?>
+			<?= $this->Flash->render(); ?>
 	    	<?php echo $this->fetch('content'); ?>
 		</div>
 		<hr>
