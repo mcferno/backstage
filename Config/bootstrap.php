@@ -15,6 +15,9 @@ Configure::write('Site', array(
 	// whether to present the authed back-end at the base URL
 	'showPublicPages' => false,
 
+	// keep areas still in development from being shown
+	'showIncompleteSections' => false,
+
 	'Chat' => array(
 		// expiry of messages in live chat (time in seconds)
 		'messageExpiry' => 14400,

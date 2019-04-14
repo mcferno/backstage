@@ -1,3 +1,15 @@
+<?php
+
+$userIsLoggedIn = $this->Session->check('Auth.User') === true;
+$showIncompleteSections = Configure::read('Site.showIncompleteSections') === true;
+
+$imageSectionIsActive = $this->request->controller == 'assets';
+$appsSectionIsActive = ($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator')
+	|| $this->request->controller == 'contests'
+	|| (!$showIncompleteSections && $this->request->controller == 'links');
+$otherSectionIsActive = in_array($this->request->controller, array('links', 'posts', 'videos'));
+
+?>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -7,7 +19,7 @@
 		</button>
 		<?= $this->Html->link($siteName, array('controller' => 'users', 'action' => 'dashboard'), array('class' => 'navbar-brand')); ?>
 
-		<?php if($this->Session->check('Auth.User')) : ?>
+		<?php if($userIsLoggedIn) : ?>
 		<div class="status navbar-left">
 			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-off updates-count">0</span></a></div>
 			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-off message-count">0</span></a></div>
@@ -19,9 +31,9 @@
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
 
-			<?php if($this->Session->check('Auth.User')) : ?>
+			<?php if($userIsLoggedIn) : ?>
 
-			<li <?= ($this->request->controller == 'assets') ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
+			<li <?= $imageSectionIsActive ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon-picture glyphicon"></span> Images <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><?= $this->Html->link('<span class="glyphicon-picture glyphicon"></span> <strong>My Images</strong>', array('controller' => 'assets', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -40,15 +52,19 @@
 				</ul>
 			</li>
 
-			<li <?= (($this->request->controller == 'pages' && $this->request->action == 'admin_meme_generator') || $this->request->controller == 'contests') ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
+			<li <?= $appsSectionIsActive ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon-bookmark glyphicon"></span> Apps <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><?= $this->Html->link('<span class="glyphicon-edit glyphicon"></span> Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator'), array('escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-fire glyphicon"></span> Caption Battles', array('controller' => 'contests', 'action' => 'index'), array('escape' => false)); ?></li>
+					<?php if(!$showIncompleteSections) : ?>
+					<li><?= $this->Html->link('<span class="glyphicon-star glyphicon"></span> Links', array('controller' => 'links', 'action' => 'index'), array('escape' => false)); ?></li>
+					<?php endif; ?>
 				</ul>
 			</li>
 
-			<li class="dropdown">
+			<?php if($showIncompleteSections) : ?>
+			<li class="dropdown <?= $otherSectionIsActive ? 'active' : ''; ?>">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="View other site features"><span class="glyphicon glyphicon-folder-open"></span>&nbsp; Other <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><?= $this->Html->link('<span class="glyphicon-star glyphicon"></span> Links', array('controller' => 'links', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -56,6 +72,7 @@
 					<li><?= $this->Html->link('<span class="glyphicon-facetime-video glyphicon"></span> Videos', array('controller' => 'videos', 'action' => 'index'), array('escape' => false)); ?></li>
 				</ul>
 			</li>
+			<?php endif; ?>
 
 			<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-list glyphicon"></span> Chat ', array('controller' => 'users', 'action' => 'group_chat'), array('escape' => false,'class' => 'chat-link', 'title' => 'Chat with online users')); ?></li>
 
@@ -69,7 +86,7 @@
 			<?php endif; ?>
 		</ul>
 
-		<?php if($this->Session->check('Auth.User')) : ?>
+		<?php if($userIsLoggedIn) : ?>
 
 		<ul class="nav navbar-nav navbar-right">
 
@@ -99,7 +116,7 @@
 		<?php endif; // authenticated ?>
 	</div><!--/.navbar-collapse -->
 
-<?php if($this->Session->check('Auth.User')) : ?>
+<?php if($userIsLoggedIn) : ?>
 <div class="slideout" style="display:none;">
 	<span class="title">Online Users</span><span class="glyphicon glyphicon-user"></span><span class="names"></span>
 </div>
