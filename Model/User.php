@@ -134,7 +134,10 @@ class User extends AppModel
 			array("{$this->alias}.last_ack" => '\'' . $datetime . '\''),
 			array(
 				"{$this->alias}.{$this->primaryKey}" => $user_id,
-				"{$this->alias}.last_ack <" => $datetime
+				'OR' => array(
+					"{$this->alias}.last_ack" => null,
+					"{$this->alias}.last_ack <" => $datetime
+				)
 			)
 		);
 	}
@@ -153,7 +156,10 @@ class User extends AppModel
 			array("{$this->alias}.last_update" => '\'' . $datetime . '\''),
 			array(
 				"{$this->alias}.{$this->primaryKey}" => $user_id,
-				"{$this->alias}.last_update <" => $datetime
+				'OR' => array(
+					"{$this->alias}.last_update" => null,
+					"{$this->alias}.last_update <" => $datetime
+				),
 			)
 		);
 	}
