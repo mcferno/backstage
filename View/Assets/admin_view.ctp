@@ -84,7 +84,6 @@
 
 
 					<?php if(Access::hasRole('Admin')) : ?>
-
 					<li>
 					<p>Change Type <span class="glyphicon glyphicon-question-sign"></span></p>
 					<?php
@@ -95,6 +94,7 @@
 						echo $this->Form->end();
 					?>
 					</li>
+					<?php endif; ?>
 
 					<?php if(!empty($albums)) : ?>
 					<li class="cozy-top">
@@ -106,8 +106,6 @@
 						echo $this->Form->end();
 					?>
 					</li>
-					<?php endif; ?>
-
 					<?php endif; ?>
 				</ul>
 			</div>
