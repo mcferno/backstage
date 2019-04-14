@@ -1,5 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('Folder', 'Utility');
 
 class LinksController extends AppController
 {
@@ -186,6 +186,12 @@ class LinksController extends AppController
 
 			// base file path of the eventual new image (missing extension)
 			$new_file = "{$this->Link->thumbnailPath}/full/{$id}.";
+			$baseDir = IMAGES . dirname($new_file);
+
+			// ensure the base directory exists
+			if(!file_exists($baseDir)) {
+				$dir = new Folder($baseDir, true, 0755);
+			}
 
 			// file upload
 			if(!empty($this->request->data['Link']['image']['name'])) {

@@ -27,7 +27,7 @@ class Token extends AppModel
 	 */
 	public static function generateTokenValue()
 	{
-		return String::uuid() . '-' . String::uuid();
+		return CakeText::uuid() . '-' . CakeText::uuid();
 	}
 
 	/**

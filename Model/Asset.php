@@ -176,7 +176,7 @@ class Asset extends AppModel
 
 		if(stripos($header, $this->headers['jpg']) !== false) {
 
-			$image_name = String::uuid() . '.jpg';
+			$image_name = CakeText::uuid() . '.jpg';
 			$folder = $this->folderPath . $user_id . DS;
 			if(!file_exists($folder)) {
 				$dir = new Folder($folder, true, 0755);
@@ -237,7 +237,7 @@ class Asset extends AppModel
 			return false;
 		}
 
-		$image_name = String::uuid() . '.jpg';
+		$image_name = CakeText::uuid() . '.jpg';
 		$folder = $this->folderPath . $user_id . DS;
 		if(!file_exists($folder)) {
 			$dir = new Folder($folder, true, 0755);

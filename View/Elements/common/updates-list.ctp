@@ -18,7 +18,7 @@
 				$message = $this->Html->link($message, $update['Activity']['link']);
 			}
 			if($update['User']['username']) {
-				$message = String::insert($message, array('user' => $this->Html->tag('strong', $update['User']['username'])));
+				$message = CakeText::insert($message, array('user' => $this->Html->tag('strong', $update['User']['username'])));
 			}
 			echo $message;
 		?>

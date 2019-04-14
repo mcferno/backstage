@@ -20,7 +20,7 @@ class User extends AppModel
 	public $validate = array(
 		'username' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Username is required',
 				'required' => true
 			),
@@ -35,7 +35,7 @@ class User extends AppModel
 		),
 		'email' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Email is required',
 				'required' => true
 			),
@@ -50,7 +50,7 @@ class User extends AppModel
 		),
 		'password' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Password is required'
 			),
 		),
@@ -134,7 +134,10 @@ class User extends AppModel
 			array("{$this->alias}.last_ack" => '\'' . $datetime . '\''),
 			array(
 				"{$this->alias}.{$this->primaryKey}" => $user_id,
-				"{$this->alias}.last_ack <" => $datetime
+				'OR' => array(
+					"{$this->alias}.last_ack" => null,
+					"{$this->alias}.last_ack <" => $datetime
+				)
 			)
 		);
 	}
@@ -153,7 +156,10 @@ class User extends AppModel
 			array("{$this->alias}.last_update" => '\'' . $datetime . '\''),
 			array(
 				"{$this->alias}.{$this->primaryKey}" => $user_id,
-				"{$this->alias}.last_update <" => $datetime
+				'OR' => array(
+					"{$this->alias}.last_update" => null,
+					"{$this->alias}.last_update <" => $datetime
+				),
 			)
 		);
 	}
@@ -212,7 +218,7 @@ class User extends AppModel
 
 		// set a new key if one does not exist
 		if(empty($key)) {
-			$key = String::uuid();
+			$key = CakeText::uuid();
 			$this->saveField('session_key', $key);
 		}
 
@@ -303,7 +309,7 @@ class User extends AppModel
 		}
 
 		$rules->add('password', 'required', array(
-			'rule' => 'notempty',
+			'rule' => 'notBlank',
 			'required' => true
 		));
 	}
