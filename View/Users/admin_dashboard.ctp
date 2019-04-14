@@ -89,6 +89,7 @@
 
 </div>
 
+<?php /*
 <div class="row">
 <div class="col-md-12">
 	<h3 class="cozy"><?= $this->Html->image('ui/icons/newspaper.png'); ?> Site News</h3>
@@ -98,7 +99,6 @@
 		<tr><td class="short-date">Apr 04</td><td>Many improvements made to the organization of images on the site.</td></tr>
 		<tr><td class="short-date">Mar 03</td><td>Meme Generator font has been improved for Android and iOS users</td></tr>
 		<tr><td class="short-date">Feb 24</td><td>Group Chat has optional notification sounds for new messages and @mentions.</td></tr>
-<?php /*
 		<tr><td class="short-date">Feb 02</td><td>Video section launched!</td></tr>
 		<tr><td class="short-date">Dec 16</td><td>Link Exchange has easier to navigate tag lists, and allows thumbnail images for each link.</td></tr>
 		<tr><td class="short-date">Nov 20</td><td>New Link Exchange section allows you to save links and tag them.</td></tr>
@@ -121,7 +121,7 @@
 		<tr><td>2012.04.04</td><td>Meme generator now active! No custom backgrounds yet.</td></tr>
 		<tr><td>2012.04.01</td><td>Fixing UI issues. Loosening username restrictions.</td></tr>
 		<tr><td>2012.03.31</td><td>Admin panel launched. Meme generator being worked on.</td></tr>
-*/ ?>
 	</table>
 </div>
 </div>
+*/ ?>
