@@ -83,8 +83,8 @@ class ContestsController extends AppController
 				'link' => Router::url($contest_route, true),
 				'picture' => Router::url('/', true) . IMAGES_URL . $asset_path,
 				'name' => $this->Contest->fbStrings['new_title'],
-				'caption' => String::insert($this->Contest->fbStrings['new_caption'], array('user' => $this->Auth->user('username'))),
-				'description' => String::insert($this->Contest->fbStrings['new_desc'], array('site_name' => Configure::read('Site.name')))
+				'caption' => CakeText::insert($this->Contest->fbStrings['new_caption'], array('user' => $this->Auth->user('username'))),
+				'description' => CakeText::insert($this->Contest->fbStrings['new_desc'], array('site_name' => Configure::read('Site.name')))
 			);
 
 			// attach optional message

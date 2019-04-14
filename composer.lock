@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "01f9ba4a0d59029ff41fa6f6314ad20f",
-    "content-hash": "5cf3926764501b0cc5f8dfe0383efd7f",
+    "content-hash": "55c5d57828bdf422df4734d832061aca",
     "packages": [
         {
             "name": "cakedc/migrations",
@@ -43,28 +42,28 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2015-12-18 10:32:40"
+            "time": "2015-12-18T10:32:40+00:00"
         },
         {
             "name": "cakephp/cakephp",
-            "version": "2.6.13",
+            "version": "2.8.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "e079f577aea9f70f3fd19371c9e40fbcd08b5a59"
+                "reference": "73dcbf2aa33b79512373baa63b39adf3fb838608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/e079f577aea9f70f3fd19371c9e40fbcd08b5a59",
-                "reference": "e079f577aea9f70f3fd19371c9e40fbcd08b5a59",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/73dcbf2aa33b79512373baa63b39adf3fb838608",
+                "reference": "73dcbf2aa33b79512373baa63b39adf3fb838608",
                 "shasum": ""
             },
             "require": {
                 "ext-mcrypt": "*",
-                "php": ">=5.2.8"
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "cakephp/debug_kit": "2.2.*",
+                "cakephp/cakephp-codesniffer": "^1.0.0",
                 "phpunit/phpunit": "3.7.*"
             },
             "bin": [
@@ -86,7 +85,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-03-14 02:54:40"
+            "time": "2016-09-19T02:18:18+00:00"
         },
         {
             "name": "composer/installers",
@@ -188,7 +187,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-07-05 06:18:20"
+            "time": "2016-07-05T06:18:20+00:00"
         },
         {
             "name": "facebook/php-sdk",
@@ -235,7 +234,7 @@
                 "sdk"
             ],
             "abandoned": "facebook/graph-sdk",
-            "time": "2013-11-19 23:11:14"
+            "time": "2013-11-19T23:11:14+00:00"
         },
         {
             "name": "james-heinrich/getid3",
@@ -271,7 +270,7 @@
                 "php",
                 "tags"
             ],
-            "time": "2016-03-02 13:13:30"
+            "time": "2016-03-02T13:13:30+00:00"
         },
         {
             "name": "jublonet/codebird-php",
@@ -324,7 +323,7 @@
                 "networking",
                 "twitter"
             ],
-            "time": "2015-09-23 12:27:47"
+            "time": "2015-09-23T12:27:47+00:00"
         },
         {
             "name": "smottt/wideimage",
@@ -359,7 +358,7 @@
             ],
             "description": "An open-source PHP library for image manipulation. (With namespaces, PHP 5.3+)",
             "homepage": "http://wideimage.sourceforge.net",
-            "time": "2016-05-16 20:00:28"
+            "time": "2016-05-16T20:00:28+00:00"
         }
     ],
     "packages-dev": [],

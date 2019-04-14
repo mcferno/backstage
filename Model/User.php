@@ -212,7 +212,7 @@ class User extends AppModel
 
 		// set a new key if one does not exist
 		if(empty($key)) {
-			$key = String::uuid();
+			$key = CakeText::uuid();
 			$this->saveField('session_key', $key);
 		}
 

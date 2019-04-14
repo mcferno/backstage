@@ -12,7 +12,7 @@
 		"vendor-dir": "Vendor/"
 	},
     "require": {
-        "cakephp/cakephp": "2.6.*",
+        "cakephp/cakephp": "2.8.*",
         "facebook/php-sdk": "^3.2",
         "james-heinrich/getid3": "^1.9",
         "smottt/wideimage": "^1.1",
