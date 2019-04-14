@@ -4,25 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54a4351aa5808fa20bcc82ecf472f97a",
+    "content-hash": "d36062b0874b3ebd3d1970edc73905f6",
     "packages": [
         {
             "name": "cakedc/migrations",
-            "version": "2.4.1",
+            "version": "2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CakeDC/migrations.git",
-                "reference": "a8b53d8c5dba53fc48ae3f263f2d008b6787973f"
+                "reference": "b1180762ebc6402b67b9ccae13f1f9ce6ccecf65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CakeDC/migrations/zipball/a8b53d8c5dba53fc48ae3f263f2d008b6787973f",
-                "reference": "a8b53d8c5dba53fc48ae3f263f2d008b6787973f",
+                "url": "https://api.github.com/repos/CakeDC/migrations/zipball/b1180762ebc6402b67b9ccae13f1f9ce6ccecf65",
+                "reference": "b1180762ebc6402b67b9ccae13f1f9ce6ccecf65",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "*",
-                "php": ">=5.2.8"
+                "php": ">=5.3.0"
             },
             "type": "cakephp-plugin",
             "notification-url": "https://packagist.org/downloads/",
@@ -42,7 +42,7 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2015-12-18T10:32:40+00:00"
+            "time": "2017-03-22T18:18:22+00:00"
         },
         {
             "name": "cakephp/cakephp",
