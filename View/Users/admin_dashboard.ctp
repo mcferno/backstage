@@ -1,60 +1,77 @@
 <?php
-	$this->set('suppressSubnav', true);
-	$this->set('contentSpan', 10);
+
+$this->set('suppressSubnav', true);
+$this->set('contentSpan', 10);
+
+$showIncompleteSections = Configure::read('Site.showIncompleteSections') === true;
+$columnSizes = array(
+	'xs' => 6,
+	'sm' => 4,
+	'md' => $showIncompleteSections ? 3 : 4,
+);
+
+foreach ($columnSizes as $type => $width) {
+	$columnClasses[] = "col-{$type}-{$width}";
+}
+
 ?>
 <div class="dash">
 	<h1>dashboard</h1>
 	<h4>Welcome <span class="attn"><?= $this->Session->read('Auth.User.username'); ?></span>.</h4>
 
 	<div class="row thumbnails features">
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'pages', 'action' => 'meme_generator')); ?>">
 				<?= $this->Html->image('ui/meme-generator-callout.png', array('alt' => 'Meme Generator')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right"><span class="extra">Meme</span> Templates <span class="badge badge-custom"><?= $meme_count; ?></span></h4></div>
 		</div>
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>">
 				<?= $this->Html->image('ui/group-chat-callout.jpg', array('alt' => 'Group Chat')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"></span></h4></div>
 		</div>
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'index')); ?>">
 				<?= $this->Html->image('ui/my-images-callout.jpg', array('alt' => 'My Images')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Saved <span class="extra">Images</span> <span class="badge badge-custom"><?= $asset_count; ?></span></h4></div>
 		</div>
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id'))); ?>">
 				<?= $this->Html->image('ui/my-albums-callout.jpg', array('alt' => 'My Albums')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Collections <span class="badge badge-custom"><?= $album_count; ?></span></h4></div>
 		</div>
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<?php if ($showIncompleteSections) : ?>
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'videos', 'action' => 'index')); ?>">
 				<?= $this->Html->image('ui/videos-callout.jpg', array('alt' => 'Videos')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Videos <span class="badge badge-custom"><?= $videos_count; ?></span></h4></div>
 		</div>
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<?php endif; ?>
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'contests', 'action' => 'index')); ?>">
 				<?= $this->Html->image('ui/contest-callout.jpg', array('alt' => 'Caption Battles')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Battles <span class="badge badge-custom"><?= $contest_count; ?></span></h4></div>
 		</div>
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'links', 'action' => 'index')); ?>">
 				<?= $this->Html->image('ui/link-exchange-callout.jpg', array('alt' => 'All Images')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Links <span class="badge badge-custom"><?= $links_count; ?></span></h4></div>
 		</div>
-		<div class="col-xs-6 col-sm-4 col-md-3">
+		<?php if ($showIncompleteSections) : ?>
+		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'posts', 'action' => 'index')); ?>">
 				<?= $this->Html->image('ui/quotes-callout.jpg', array('alt' => 'Quotes')); ?>
 			</a>
 			<div class="caption"><h4 class="text-right">Quotes <span class="badge badge-custom"><?= $quotes_count; ?></span></h4></div>
 		</div>
+		<?php endif; ?>
 	</div>
 </div>
 
