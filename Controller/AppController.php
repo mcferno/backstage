@@ -43,12 +43,10 @@ class AppController extends Controller
 
 	public function beforeFilter()
 	{
+		$this->addRequestDetector();
 		$this->setSecurity();
 
-		if(isset($this->request->params['prefix'])
-			&& $this->request->params['prefix'] == 'admin'
-			&& $this->request->params['admin'] == '1'
-		) {
+		if($this->request->is('backend')) {
 			$this->adminBeforeFilter();
 		} else {
 			$this->siteBeforeFilter();
@@ -103,10 +101,7 @@ class AppController extends Controller
 			$this->set('onlineUsers', $this->User->getOnlineUsers());
 		}
 
-		if(isset($this->request->params['prefix'])
-			&& $this->request->params['prefix'] == 'admin'
-			&& $this->request->params['admin'] == '1'
-		) {
+		if($this->request->is('backend')) {
 			$this->adminBeforeRender();
 		}
 	}
@@ -145,6 +140,21 @@ class AppController extends Controller
 		$this->Cookie->type('rijndael');
 		$this->Cookie->key = Configure::read('Cookie.key');
 		$this->Cookie->httpOnly = true;
+	}
+
+	/**
+	 * Add custom request detections specific to the app
+	 */
+	protected function addRequestDetector()
+	{
+		// allow easy detection of the user portal pages
+		$this->request->addDetector('backend', array(
+			'callback' => function ($request) {
+				return !empty($request->params['prefix'])
+					&& $this->request->params['prefix'] == 'admin'
+					&& $this->request->params['admin'] == '1';
+			}
+		));
 	}
 
 	/**
