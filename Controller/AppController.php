@@ -72,24 +72,7 @@ class AppController extends Controller
 			$this->redirect($this->userHome);
 		}
 
-		// attempt a "remember me"
-		if(!$this->request->isPost() && !$this->Auth->loggedIn() && $this->Cookie->read('persist')) {
-
-			$user_key = $this->Cookie->read('persist');
-			if(!empty($user_key)) {
-				$user = $this->User->getBySessionIdentifier($user_key);
-
-				// re-authentication failed
-				if(!$user || !$this->Auth->login($user['User'])) {
-					$this->Cookie->delete('persist');
-
-				// re-authentication succeeds
-				} else {
-					$this->postLogin();
-				}
-			}
-		}
-
+		$this->handleAutoLogin();
 		$this->detectAjax();
 	}
 
@@ -158,6 +141,39 @@ class AppController extends Controller
 	}
 
 	/**
+	 * Detect returning users and log them in
+	 */
+	protected function handleAutoLogin()
+	{
+		// feature must be enabled
+		if(Configure::read('Site.Tracking.RememberMe.enabled') !== true) {
+			return;
+		}
+
+		// can't already be logged in, or executing a POST
+		if($this->Auth->loggedIn() || $this->request->isPost()) {
+			return;
+		}
+
+		// Cookie value must exist
+		$user_key = $this->Cookie->read('persist');
+		if(empty($user_key)) {
+			return;
+		}
+
+		$user = $this->User->getBySessionIdentifier($user_key);
+
+		// re-authentication failed
+		if(!$user || !$this->Auth->login($user['User'])) {
+			$this->Cookie->delete('persist');
+
+		// re-authentication succeeds
+		} else {
+			$this->postLogin();
+		}
+	}
+
+	/**
 	 * Compiles the app-state packet used by the front-end to alert the user to
 	 * any unseen activity, and overall app statistics.
 	 *
@@ -215,12 +231,14 @@ class AppController extends Controller
 	 */
 	protected function persistSession()
 	{
+		if(Configure::read('Site.Tracking.RememberMe.enabled') !== true) {
+			return;
+		}
 
 		$identifier = $this->User->getSessionIdentifier($this->Auth->user('id'));
-
 		if($identifier !== false) {
 			// store user information in an encrypted cookie
-			$this->Cookie->write('persist', $identifier, true, Configure::read('Site.rememberMeExpiry'));
+			$this->Cookie->write('persist', $identifier, true, Configure::read('Site.Tracking.RememberMe.expiry'));
 		}
 	}
 

@@ -14,7 +14,7 @@
 App::uses('Access', 'Model');
 
 // determine if we are on the live domain
-$isTrackingEnabled = Configure::read('Site.Tracking.GoogleAnalytics.enabled');
+$isTrackingEnabled = Configure::read('Site.Tracking.GoogleAnalytics.enabled') === true;
 
 // determine if a admin-user session is active
 $isAdminUser = Access::hasRole('Admin');

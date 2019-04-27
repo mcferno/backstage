@@ -111,11 +111,12 @@ Backstage supports a limited number of user-configurable options. To override a 
 ```php
 	Configure::write("Site.name", 'My Hangout');
 ```
-* **Remember-me Cookie** : Duration of the user remember-me cookie
+* **Remember-me Cookie** (optional, default: enabled): Allow an auto-login of returning users
 ```php
-	Configure::write("Site.rememberMeExpiry", '+3 months');
+	Configure::write("Site.Tracking.RememberMe.enabled", true);
+	Configure::write("Site.Tracking.RememberMe.expiry", '+3 months'); // validity period since the last login
 ```
-* **Google Analytics User Tracking** (optional) : Gather visitor traffic stats via Google Analytics
+* **Google Analytics User Tracking** (optional, default: disabled) : Gather visitor traffic stats via Google Analytics
 ```php
 	Configure::write("Site.Tracking.GoogleAnalytics.enabled", true);
 	Configure::write("Site.Tracking.GoogleAnalytics.portalAccountID", "UA-XXXXXXXXX-1");

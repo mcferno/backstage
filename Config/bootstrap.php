@@ -9,8 +9,7 @@ Configure::write('Site', array(
 	// choose the site title
 	'name' => 'Backstage',
 
-	// expiry of the remember-me login cookie (strtotime format)
-	'rememberMeExpiry' => '+1 month',
+
 
 	// whether to present the authed back-end at the base URL
 	'showPublicPages' => false,
@@ -47,6 +46,15 @@ Configure::write('Site', array(
 	),
 
 	'Tracking' => array(
+
+		// Auto-login returning users via cookie
+		'RememberMe' => array(
+
+			'enabled' => true,
+
+			// expiry of the remember-me login cookie (strtotime format)
+			'expiry' => '+1 month',
+		),
 
 		// Google Analytics end-user traffic monitoring
 		'GoogleAnalytics' => array(
