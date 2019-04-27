@@ -44,6 +44,20 @@ Configure::write('Site', array(
 
 		// maximum image size in pixels
 		'maxDimension' => 1200
+	),
+
+	'Tracking' => array(
+
+		// Google Analytics end-user traffic monitoring
+		'GoogleAnalytics' => array(
+
+			// set to true to enable the feature
+			'enabled' => false,
+
+			// Tracking Account ID
+			'portalAccountID' => '',
+		)
+
 	)
 ));
 

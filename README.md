@@ -115,6 +115,11 @@ Backstage supports a limited number of user-configurable options. To override a 
 ```php
 	Configure::write("Site.rememberMeExpiry", '+3 months');
 ```
+* **Google Analytics User Tracking** (optional) : Gather visitor traffic stats via Google Analytics
+```php
+	Configure::write("Site.Tracking.GoogleAnalytics.enabled", true);
+	Configure::write("Site.Tracking.GoogleAnalytics.portalAccountID", "UA-XXXXXXXXX-1");
+```
 
 #### Chat Settings
 

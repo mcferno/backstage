@@ -1,10 +1,10 @@
 <?php
 /**
  * Determines which Google Analytics tracker to use, if any.
- * 
+ *
  * Some effort is made to avoid tracking site administrators as this heavily
  * skews the reporting data (due to testing, site upkeep).
- * 
+ *
  * This element should not be cached, but is cache friendly due to the use of
  * no-cache tags and sessions data-only (available even in cache)
  */
@@ -14,20 +14,23 @@
 App::uses('Access', 'Model');
 
 // determine if we are on the live domain
-$isLiveDomain = (stripos(env('HTTP_HOST'),'kennyquotemachine.com') !== false);
+$isTrackingEnabled = Configure::read('Site.Tracking.GoogleAnalytics.enabled');
 
 // determine if a admin-user session is active
 $isAdminUser = Access::hasRole('Admin');
 
-// determine which tracker to use.
-$isBackend = (isset($this->request->params['prefix']) && ($this->request->params['prefix'] == 'admin'));
+// track non-admin users, if enabled
+if($isTrackingEnabled && !$isAdminUser) :
 
-// only use Analytics if both conditions are met
-if($isLiveDomain && !$isAdminUser) : 
+	$trackingId = $this->request->is('backend')
+		? Configure::read('Site.Tracking.GoogleAnalytics.portalAccountID')
+		: Configure::read('Site.Tracking.GoogleAnalytics.publicAccountID');
+
+	if (!empty($trackingId)) :
 ?>
 <script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '<?= ($isBackend)?'UA-23502634-2':'UA-23502634-1'; ?>']);
+  _gaq.push(['_setAccount', <?= json_encode($trackingId); ?>]);
   _gaq.push(['_trackPageview']);
 
   (function() {
@@ -40,5 +43,6 @@ if($isLiveDomain && !$isAdminUser) :
 <script type="text/javascript">
 	var _gaq = [];
 </script>
-<?php endif; ?>
+<?php endif; // have valid tracking ID ?>
+<?php endif; // tracking is enabled ?>
 <!--/nocache-->
