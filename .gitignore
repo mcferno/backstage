@@ -2,6 +2,8 @@
 /Config/twitter.php
 /Config/tumblr.php
 /Config/bootstrap.env.php
+/Plugin/Migrations/
+/Plugin/Postable/
 /Vendor/
 /tmp/
 /webroot/img/profile/twitter/
@@ -9,3 +11,4 @@
 /webroot/img/user/
 ._*
 .DS_Store
+.idea/
