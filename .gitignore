@@ -2,6 +2,7 @@
 /Config/twitter.php
 /Config/tumblr.php
 /Config/bootstrap.env.php
+/Plugin/Front/
 /Plugin/Migrations/
 /Plugin/Postable/
 /Vendor/
