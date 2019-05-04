@@ -6,13 +6,7 @@
  */
 if(Configure::read('Site.showPublicPages') === true) :
 
-	// Isolate the homepage
-	Router::connect('/', array('controller' => 'posts', 'action' => 'home', 'page' => 1));
-	Router::connect('/', array('controller' => 'posts', 'action' => 'index', 'page' => 1)); // reverse-routing only (dupped)
-	Router::connect('/posts/*', array('controller' => 'posts', 'action' => 'index'));
-
-	// Additional features of the site
-	Router::connect('/refresh', array('controller' => 'posts', 'action' => 'refresh'));
+	CakePlugin::routes('Front');
 
 else: // bring auth section to the front of the site
 

@@ -49,17 +49,9 @@ class AppController extends Controller
 		if($this->request->is('backend')) {
 			$this->adminBeforeFilter();
 		} else {
-			$this->siteBeforeFilter();
+			$this->Auth->allow();
 		}
 		parent::beforeFilter();
-	}
-
-	public function siteBeforeFilter()
-	{
-		$this->Auth->allow();
-
-		// compress all output
-		$this->response->compress();
 	}
 
 	public function adminBeforeFilter()

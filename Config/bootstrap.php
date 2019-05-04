@@ -9,8 +9,6 @@ Configure::write('Site', array(
 	// choose the site title
 	'name' => 'Backstage',
 
-
-
 	// whether to present the authed back-end at the base URL
 	'showPublicPages' => false,
 
@@ -122,6 +120,10 @@ Configure::write('App.cache_prefix', 'backstage_');
 $bootstrap_environment = APP . 'Config' . DS . 'bootstrap.env.php';
 if(file_exists($bootstrap_environment)) {
 	include($bootstrap_environment);
+}
+
+if (Configure::read("Site.showPublicPages") === true) {
+	CakePlugin::load('Front', array('routes' => true));
 }
 
 /**
