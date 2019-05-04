@@ -43,17 +43,17 @@ Backstage is a CakePHP application, so it depends on the presence of the PHP fra
 
 For development and production-ready sites, I use the following directory layout:
 ```text
-	Backstage/   <-- The root of this Git repository
-		Config/
-		Console/
-		...
-		View/
-		webroot/ <-- DocumentRoot for the website
-			css/
-			js/
-			img/
-			.htaccess
-			index.php
+Backstage/   <-- The root of this Git repository
+	Config/
+	Console/
+	...
+	View/
+	webroot/ <-- DocumentRoot for the website
+		css/
+		js/
+		img/
+		.htaccess
+		index.php
 ```
 This structure has a number of advantages:
 
@@ -68,33 +68,35 @@ This structure has a number of advantages:
 	* `webroot/img/user/`
 	* `tmp/`
 4. Create an empty file `Config/bootstrap.env.php`, this will hold all your app configurations. Add the following settings:
+```php
+date_default_timezone_set('America/New_York'); // choose the most appropriate value for your installation
 
-		date_default_timezone_set('America/New_York'); // choose the most appropriate value for your installation
+Configure::write("debug", 0); // disable debug mode
+Configure::write("Cache.check", true); // enable view caching
 
-		Configure::write("debug", 0); // disable debug mode
-		Configure::write("Cache.check", true); // enable view caching
-
-		// app security salts, keys
-		Configure::write("Security.salt", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
-		Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
-		Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+// app security salts, keys
+Configure::write("Security.salt", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+Configure::write("Security.cipherSeed", "REPLACE-WITH-RANDOM-DIGIT-SERIES"); // digits only
+Configure::write("Cookie.key", "REPLACE-WITH-LONG-UNIQUE-RANDOM-STRING");
+```
 
 5. Replace the strings above marked as "REPLACE" with unique [string][RandomStrings] and [digit][RandomDigits] sequences to secure your installation. If your server PHP timezone is not already set, choose the most appropriate [timezone][PHPTimezones] value.
 6. Append your database credentials to the `bootstrap.env.php` file, example:
-
-		class DATABASE_CONFIG {
-			public $default = array(
-				"datasource" => "Database/Mysql",
-				"persistent" => false,
-				"host" => "localhost",
-				"login" => "USERNAME",
-				"password" => "PASSWORD",
-				"database" => "DATABASE_NAME",
-				"encoding" => "utf8"
-			);
-		}
-
-7. Run `composer install` from the root directory of the Backstage project to install application dependencies.
+```php
+class DATABASE_CONFIG
+{
+	public $default = array(
+		"datasource" => "Database/Mysql",
+		"persistent" => false,
+		"host" => "localhost",
+		"login" => "USERNAME",
+		"password" => "PASSWORD",
+		"database" => "DATABASE_NAME",
+		"encoding" => "utf8"
+	);
+}
+```
+7. Run `composer install --no-dev` from the root directory of the Backstage project to install application dependencies.
 8. Run `./Vendor/bin/cake Migrations.migration run up` to install the database and create your first administrator account.
 
 If everything is set up correctly, _you're done_!
@@ -109,55 +111,55 @@ Backstage supports a limited number of user-configurable options. To override a 
 
 * **Site name** : Change the name "Backstage" to anything you want, but best to keep it short.
 ```php
-	Configure::write("Site.name", 'My Hangout');
+Configure::write("Site.name", 'My Hangout');
 ```
 * **Remember-me Cookie** (optional, default: enabled): Allow an auto-login of returning users
 ```php
-	Configure::write("Site.Tracking.RememberMe.enabled", true);
-	Configure::write("Site.Tracking.RememberMe.expiry", '+3 months'); // validity period since the last login
+Configure::write("Site.Tracking.RememberMe.enabled", true);
+Configure::write("Site.Tracking.RememberMe.expiry", '+3 months'); // validity period since the last login
 ```
 * **Google Analytics User Tracking** (optional, default: disabled) : Gather visitor traffic stats via Google Analytics
 ```php
-	Configure::write("Site.Tracking.GoogleAnalytics.enabled", true);
-	Configure::write("Site.Tracking.GoogleAnalytics.portalAccountID", "UA-XXXXXXXXX-1");
+Configure::write("Site.Tracking.GoogleAnalytics.enabled", true);
+Configure::write("Site.Tracking.GoogleAnalytics.portalAccountID", "UA-XXXXXXXXX-1");
 ```
 
 #### Chat Settings
 
 * **Chat Log Expiry** : How long until chat message expire in the group chat (time in seconds)
 ```php
-	Configure::write("Site.Chat.messageExpiry", 14400);
+Configure::write("Site.Chat.messageExpiry", 14400);
 ```
 * **Chat Log Limit** : How many messages will appear when viewing the chat log
 ```php
-	Configure::write("Site.Chat.maxHistoryCount", 50);
+Configure::write("Site.Chat.maxHistoryCount", 50);
 ```
 
 #### Image Settings
 
 * **Images per Page** : How many images are shown per page for desktop users
 ```php
-	Configure::write("Site.Images.perPage", 60);
+Configure::write("Site.Images.perPage", 60);
 ```
 * **Images per Page on Mobile**
 ```php
-	Configure::write("Site.Images.perPageMobile", 30);
+Configure::write("Site.Images.perPageMobile", 30);
 ```
 * **Recent Albums** : How many of the most recent albums are listed
 ```php
-	Configure::write("Site.Images.recentAlbums", 2);
+Configure::write("Site.Images.recentAlbums", 2);
 ```
 * **Album Preview** : How many album images to show in the preview card
 ```php
-	Configure::write("Site.Images.albumPreviews", 4);
+Configure::write("Site.Images.albumPreviews", 4);
 ```
 * **Image Minimum Dimensions** : Minimum images size of user added images in pixel, not including cropped images
 ```php
-	Configure::write("Site.Images.minDimension", 640);
+Configure::write("Site.Images.minDimension", 640);
 ```
 * **Image Maximum Dimensions** : Maximum pixel width or height when images are downscaled
 ```php
-	Configure::write("Site.Images.maxDimension", 1200);
+Configure::write("Site.Images.maxDimension", 1200);
 ```
 
 ## Motivation and future of the project
