@@ -1,9 +1,6 @@
 <?php
 
-/**
- * Public-facing URLs. Disabled by default, may be removed in the future.
- * =============================================================================
- */
+// unpublished front-end website
 if(Configure::read('Site.showPublicPages') === true) :
 
 	CakePlugin::routes('Front');

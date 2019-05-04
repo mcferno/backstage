@@ -48,8 +48,6 @@ class AppController extends Controller
 
 		if($this->request->is('backend')) {
 			$this->adminBeforeFilter();
-		} else {
-			$this->Auth->allow();
 		}
 		parent::beforeFilter();
 	}
@@ -71,7 +69,6 @@ class AppController extends Controller
 	public function beforeRender()
 	{
 		if(!$this->request->is('ajax')) {
-			$this->set('breadcrumbs', array());
 			$this->set('contentSpan', 8);
 			$this->set('onlineUsers', $this->User->getOnlineUsers());
 		}
