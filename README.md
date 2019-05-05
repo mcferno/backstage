@@ -2,18 +2,27 @@
 
 Backstage is a user portal web-application offering social-network-like features geared towards a small to medium group of friends.
 
+![Dashboard Screenshot](https://mcferno.com/content/media/backstage-social-network.jpg "Dashboard Screenshot")
+
 ## Features
 * Live group chat with notification system and media integration
+  * YouTube & Vimeo video player embedding
+  * Image embedding (post via web hotlink, or from saved images)
 * Drag-and-drop image uploading, with optional cropping tool
+  * Upload an image from a URL
 * Image sharing and album creation
-* Meme generator: image-captioning tool
-* Link sharing and cataloging system
+* Meme generator: seamless image-captioning tool
+  * Caption contest for a chosen base image
 * Activity log to track user content and interactions
+  * Notifies all users of new content, comments, or unread chat messages
+  * List users who most recently logged in
+  * Active or idle status for online chat users
+* Link sharing and cataloging system
 * Commenting and tagging system for most content
 
 ## Browser support
 
-Backstage was created using some modern browser capabilities, so it may run on older browsers, but the best experience will be with one of the following:
+Backstage was created to leverage modern browser capabilities, so it may run on older browsers, but the best experience will be with one of the following:
 
 * Google Chrome (latest)
 * Mozilla Firefox (latest)
