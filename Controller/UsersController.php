@@ -55,17 +55,13 @@ class UsersController extends AppController
 	 */
 	public function admin_dashboard()
 	{
-		$users = $this->User->find('all', array(
-			'order' => 'last_seen DESC',
-			'limit' => 5
-		));
 		$asset_count = $this->User->Asset->find('count', array(
 			'conditions' => array(
 				'user_id' => $this->Auth->user('id')
 			)
 		));
 		$asset_count_all = $this->User->Asset->find('count');
-		$this->set('recent_users', $users);
+		$this->set('recent_users', $this->User->getLastSeen(Configure::read('Site.Tracking.User.recentUserLimit')));
 		$this->set('meme_count', $this->User->Asset->getCleanImageCount());
 		$this->set('contest_count', ClassRegistry::init('Contest')->find('count'));
 		$this->set('quotes_count', ClassRegistry::init('Post')->find('count'));

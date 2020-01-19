@@ -355,4 +355,24 @@ class User extends AppModel
 			'role' => 1
 		), true);
 	}
+
+	/**
+	 * Obtains users who have recently interacted with the site, up to an optional cut-off of idle time
+	 *
+	 * @param string $since Time ago in words, cutoff for recent users
+	 * @return User[]
+	 */
+	public function getLastSeen($since = null)
+	{
+		$conditions = array();
+		if (!empty($since)) {
+			$conditions['last_seen >'] = date(MYSQL_DATE_FORMAT, strtotime('now - ' . $since));
+		}
+
+		return $this->find('all', array(
+			'order' => 'last_seen DESC',
+			'limit' => 5,
+			'conditions' => $conditions
+		));
+	}
 }

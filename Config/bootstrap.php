@@ -39,6 +39,12 @@ Configure::write('Site', array(
 
 	'Tracking' => array(
 
+		'User' => array(
+
+			// suppress long idle users in activity logs
+			'recentUserLimit' => '3 months'
+		),
+
 		// Auto-login returning users via cookie
 		'RememberMe' => array(
 
