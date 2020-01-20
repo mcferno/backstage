@@ -2,7 +2,7 @@
 <tbody>
 <?php foreach($updates as $update) : ?>
 	<tr <?php if(isset($update['Activity']['link'])) { echo 'data-target="' . $this->Html->url($update['Activity']['link']) . '" '; echo 'class="linked"'; } ?>>
-		<td class="time extra"><?= date('M d h:i A', strtotime($update['Activity']['created'])); ?></td>
+		<td class="time extra"><?= date('M j g:i A', strtotime($update['Activity']['created'])); ?></td>
 		<td class="type"><?php
 			if(isset($update['Activity']['icon'])) {
 				echo $this->Html->image("ui/icons/{$update['Activity']['icon']}.png");

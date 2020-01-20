@@ -70,7 +70,6 @@ class AppController extends Controller
 	{
 		if(!$this->request->is('ajax')) {
 			$this->set('contentSpan', 8);
-			$this->set('onlineUsers', $this->User->getOnlineUsers());
 		}
 
 		if($this->request->is('backend')) {
@@ -88,6 +87,11 @@ class AppController extends Controller
 		$this->set('userHome', $this->userHome);
 
 		$this->helpers[] = 'Snippet';
+
+		if ($this->Auth->loggedIn()) {
+			$this->set('onlineUsers', $this->User->getOnlineUsers());
+			$this->set('state', $this->_getHeartbeatData());
+		}
 	}
 
 	/**

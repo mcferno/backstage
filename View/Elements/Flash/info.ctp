@@ -2,4 +2,9 @@
 /**
  * Wrapper for alert with a specific informative class
  */
-echo $this->element('Flash/alert', array('alert_class' => 'alert-info', 'message' => $message));
+$alertClass[] = 'alert-info';
+
+if (!empty($class)) {
+	$alertClass[] = $class;
+}
+echo $this->element('Flash/alert', array('alert_class' => implode(' ', $alertClass), 'message' => $message));

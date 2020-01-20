@@ -435,15 +435,19 @@ Backstage['GroupChat'] = {
 		ns.msgNotifier.text(data.new_messages);
 
 		if(data.new_messages === 0) {
-			ns.msgNotifier.addClass('badge-off');
+			ns.msgNotifierBadge.addClass('badge-off');
+			ns.msgNotifierBubble.hide();
 		} else {
-			ns.msgNotifier.removeClass('badge-off');
+			ns.msgNotifierBadge.removeClass('badge-off');
+			ns.msgNotifierBubble.show();
 		}
 
 		if(data.new_updates === 0) {
-			ns.updateNotifier.addClass('badge-off');
+			ns.updateNotifierBadge.addClass('badge-off');
+			ns.updateNotifierBubble.hide();
 		} else {
-			ns.updateNotifier.removeClass('badge-off');
+			ns.updateNotifierBadge.removeClass('badge-off');
+			ns.updateNotifierBubble.show();
 		}
 
 		if(notificationCount !== 0) {
@@ -550,8 +554,12 @@ Backstage['GroupChat'] = {
 
 	// initializes the bare-bones chat status functionality
 	ns.init = function() {
-		ns.msgNotifier = $('.navbar .message-count');
-		ns.updateNotifier = $('.navbar .updates-count');
+		ns.msgNotifier = $('.message-count');
+		ns.msgNotifierBadge = $('.navbar .message-count');
+		ns.msgNotifierBubble = $('.new-message-bubble');
+		ns.updateNotifier = $('.updates-count');
+		ns.updateNotifierBadge = $('.navbar .updates-count');
+		ns.updateNotifierBubble = $('.new-update-bubble');
 		ns.userCount = $('.online-count');
 		ns.activeList = $('.online-users');
 		ns.activeCount = $('.active-count');

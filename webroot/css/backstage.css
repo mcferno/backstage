@@ -364,8 +364,12 @@ body {
 	}
 }
 
+.navbar-avatar {
+	background-color: #090909;
+}
+
 .navbar .username-dd {
-	padding-right: 25px;
+	padding-right: 30px;
 	background: url('../img/emblem.png') no-repeat right center;
 	margin-right: 5px;
 }
@@ -588,7 +592,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dash .thumbnail, .thumbnail {
-	border: 5px solid #666;
+	border: 5px solid #333;
 	-webkit-border-radius: 7px;
 	-moz-border-radius: 7px;
 	border-radius: 7px;
@@ -598,10 +602,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dash .thumbnail {
-	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#000), to(#666));
-	background: -webkit-radial-gradient(circle, #000, #666);
-	background: -moz-radial-gradient(circle, #000, #666);
-	background: -ms-radial-gradient(circle, #000, #666);
+	background: -webkit-gradient(radial, center center, 0, center center, 460, from(#000), to(#333));
+	background: -webkit-radial-gradient(circle, #000, #333);
+	background: -moz-radial-gradient(circle, #000, #333);
+	background: -ms-radial-gradient(circle, #000, #333);
 }
 
 .dash .caption h4, .dash .caption h5 {

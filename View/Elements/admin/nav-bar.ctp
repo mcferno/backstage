@@ -21,8 +21,8 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 
 		<?php if($userIsLoggedIn) : ?>
 		<div class="status navbar-left">
-			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-off updates-count">0</span></a></div>
-			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-off message-count">0</span></a></div>
+			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-<?= empty($state['new_updates']) ? 'off' : 'on'; ?> updates-count"><?= empty($state['new_updates']) ? 0 : $state['new_updates']; ?></span></a></div>
+			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-<?= empty($state['new_messages']) ? 'off' : 'on'; ?> message-count"><?= empty($state['new_messages']) ? 0 : $state['new_messages']; ?></span></a></div>
 			<div><span class="glyphicon-user glyphicon" title="Online Users"></span><span class="badge badge-info online-count" title="Online Users"><?= count($onlineUsers); ?></span></div>
 		</div>
 		<?php endif; // authenticated ?>
@@ -88,7 +88,7 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 
 		<?php if($userIsLoggedIn) : ?>
 
-		<ul class="nav navbar-nav navbar-right">
+		<ul class="nav navbar-nav navbar-right navbar-avatar">
 
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle username-dd" data-toggle="dropdown"><?= $this->Session->read('Auth.User.username');?></a>

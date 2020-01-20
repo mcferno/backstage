@@ -16,8 +16,32 @@ foreach ($columnSizes as $type => $width) {
 
 ?>
 <div class="dash">
-	<h1>dashboard</h1>
-	<h4>Welcome <span class="attn"><?= $this->Session->read('Auth.User.username'); ?></span>.</h4>
+	<div class="row">
+		<div class="col-sm-8">
+			<h1>dashboard</h1>
+			<h4>Welcome <span class="attn"><?= $this->Session->read('Auth.User.username'); ?></span>.</h4>
+		</div>
+		<div class="col-sm-4">
+			<?= $this->element('Flash/success', array(
+					'message' => $this->Html->link('<span class="glyphicon glyphicon-flag"></span> <strong class="updates-count">'
+							. $state['new_updates'] . '</strong> new user updates!',
+						array('controller' => 'users', 'action' => 'updates'),
+						array('escape' => false)
+					),
+					'class' => 'new-update-bubble ' . (empty($state['new_updates']) ? 'hide' : '')
+				));
+			?>
+			<?= $this->element('Flash/info', array(
+					'message' => $this->Html->link('<span class="glyphicon glyphicon-envelope"></span> <strong class="message-count">'
+						. $state['new_messages'] . '</strong> unread messages!',
+						array('controller' => 'users', 'action' => 'group_chat'),
+						array('escape' => false)
+					),
+					'class' => 'new-message-bubble ' . (empty($state['new_messages']) ? 'hide' : '')
+				));
+			?>
+		</div>
+	</div>
 
 	<div class="row thumbnails features">
 		<div class="<?= implode(' ', $columnClasses); ?>">
