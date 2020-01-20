@@ -21,7 +21,7 @@ if(!isset($this->params['named']['view'])) {
 
 <?= $this->element('admin/pagination'); ?>
 
-<?= $this->element('common/updates-list'); ?>
+<?= $this->element('common/updates-list-expanded'); ?>
 
 <?= $this->element('admin/pagination', array('show_summary' => true)); ?>
 

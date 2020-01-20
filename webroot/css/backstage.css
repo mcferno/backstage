@@ -135,7 +135,7 @@ hr {
 .table-striped tbody > tr:nth-child(odd) > th,
 .table-striped-inverse tr:nth-last-child(2n + 1),
 .table-striped-inverse tr:nth-last-child(2n + 1) td {
-	background-color: #333;
+	background-color: #2b2b2b;
 }
 
 .table a:hover {
@@ -516,6 +516,59 @@ h1, h2, h3, h4, h5, h6 {
 	max-height: 36px;
 }
 
+.icon-row {
+	width: 16px;
+	height: 55px;
+
+	background-repeat: repeat space;
+}
+
+.activity-expanded .specs {
+	vertical-align: middle;
+}
+
+.activity-expanded .preview {
+	padding: 0 2em 0 0;
+}
+
+.activity-expanded .specs {
+	padding-left: 2em;
+}
+
+.activity-expanded .preview-small img {
+	max-height: 120px;
+}
+
+@media all and (min-width: 768px) {
+
+	.activity-expanded .preview-small img {
+		max-height: initial;
+	}
+}
+
+@media all and (max-width: 768px) {
+
+	.activity-expanded .preview {
+		padding-right: 1em;
+	}
+
+	.activity-expanded .specs {
+		padding-left: 1em;
+	}
+
+}
+
+@media all and (max-width: 480px) {
+
+	.activity-expanded .preview, .activity-expanded .specs {
+		padding: 0;
+	}
+
+	.icon-row {
+		display: none;
+	}
+}
+
 .activity .linked {
 	cursor: pointer;
 }
@@ -670,7 +723,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .striped > div:nth-child(odd),
 .striped-inverse > div:nth-last-child(2n + 1) {
-	background-color: #333;
+	background-color: #2b2b2b;
 }
 
 .chat-window .striped {
@@ -854,7 +907,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hr {
-	border-bottom: 2px solid #333;
+	border-bottom: 2px solid #2b2b2b;
 	margin: 1em 0;
 }
 

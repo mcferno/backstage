@@ -60,7 +60,6 @@ class UsersController extends AppController
 				'user_id' => $this->Auth->user('id')
 			)
 		));
-		$asset_count_all = $this->User->Asset->find('count');
 		$this->set('recent_users', $this->User->getLastSeen(Configure::read('Site.Tracking.User.recentUserLimit')));
 		$this->set('meme_count', $this->User->Asset->getCleanImageCount());
 		$this->set('contest_count', ClassRegistry::init('Contest')->find('count'));
@@ -69,7 +68,7 @@ class UsersController extends AppController
 		$this->set('videos_count', ClassRegistry::init('Video')->find('count', array('conditions' => array('mp4' => 1))));
 		$this->set('album_count', ClassRegistry::init('Album')->getAlbumCount($this->Auth->user('id')));
 		$this->set('asset_count', $asset_count);
-		$this->set('asset_count_all', $asset_count_all);
+		$this->set('asset_count_all', $this->User->Asset->find('count'));
 
 		// obtain a subset of the latest updates
 		$this->paginate['Activity']['conditions']['Activity.user_id <>'] = $this->Auth->user('id');
