@@ -76,8 +76,8 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 
 			<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-list glyphicon"></span> Chat ', array('controller' => 'users', 'action' => 'group_chat'), array('escape' => false,'class' => 'chat-link', 'title' => 'Chat with online users')); ?></li>
 
-			<li class="visible-xs visible-sm"><a href="" class="image-upload-btn" title="Upload an image"><span class="glyphicon glyphicon-cloud-upload"></span> Upload Image</a></li>
-			<li class="visible-md visible-lg"><a href="" class="image-upload-btn" title="Upload an image"><span class="glyphicon glyphicon-cloud-upload"></span></a></li>
+			<li class="visible-xs"><a href="" class="image-upload-btn" title="Upload an image"><span class="glyphicon glyphicon-cloud-upload"></span> Upload Image</a></li>
+			<li class="visible-sm visible-md visible-lg"><a href="" class="image-upload-btn" title="Upload an image"><span class="glyphicon glyphicon-cloud-upload"></span></a></li>
 
 			<?php else: // non-authenticated ?>
 
