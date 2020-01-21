@@ -712,14 +712,15 @@ h1, h2, h3, h4, h5, h6 {
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 	margin-top: 0;
-	font-size: 1.2em;
-	padding: 0.5em;
+	font-size: 1.1em;
+	padding: 11px 0px 0px 10px;
 	width: 100%;
+	height: 3em;
 }
 
 .chat-bar button {
 	margin-top: 2px;
-	padding: 0.6em 1em;
+	padding: 0.75em 1.2em;
 	position: absolute;
 	right: 0.5em;
 	top:  0.5em;
@@ -736,6 +737,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .chat-window .striped-inverse {
 	margin-top: 5px;
+	margin-bottom: 1em;
 }
 
 .chat-window .time {
@@ -974,6 +976,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .subnav {
 	padding-top: 40px;
+}
+
+.route-action-admin-group-chat .subnav {
+	padding-top: 20px;
 }
 
 .subnav a .glyphicon {
