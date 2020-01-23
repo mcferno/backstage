@@ -435,6 +435,11 @@ img, iframe, embed, object {
 	padding: 1em;
 }
 
+.tight {
+	padding: 0;
+	margin: 0;
+}
+
 .cozy {
 	padding-top: 1em;
 	padding-bottom: 1em;
@@ -442,7 +447,6 @@ img, iframe, embed, object {
 
 .cozy-lead {
 	padding-top: 2em;
-	padding-bottom: 1em;
 }
 
 .cozy-top {
@@ -616,6 +620,13 @@ h1, h2, h3, h4, h5, h6 {
 
 .dash .caption {
 	max-height: 1em;
+}
+
+.boxed-table {
+	border-collapse: separate;
+	border: solid #333 5px;
+	border-radius: 7px;
+	-moz-border-radius: 7px;
 }
 
 /* @end user dashboard ===================================================== */

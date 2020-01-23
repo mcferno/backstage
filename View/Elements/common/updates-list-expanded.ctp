@@ -1,4 +1,4 @@
-<table class="table table-striped activity activity-expanded">
+<table class="table table-striped activity activity-expanded boxed-table">
 	<tbody>
 	<?php foreach($updates as $update) : ?>
 		<tr <?php if(isset($update['Activity']['link'])) { echo 'data-target="' . $this->Html->url($update['Activity']['link']) . '" '; echo 'class="linked"'; } ?>>

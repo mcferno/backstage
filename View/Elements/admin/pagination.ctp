@@ -2,13 +2,7 @@
 
 // accept page_limit options, or use default set
 $page_limits = (isset($page_limits)) ? $page_limits : array(16, 48, 96);
-
-if(isset($show_summary) && $show_summary) :
 ?>
-<div class="paging-summary">
-	<p><?= $this->Paginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total.'))); ?></p>
-</div>
-<?php endif; // summary ?>
 
 <div class="paging">
 	<ul class="pager">
@@ -33,3 +27,10 @@ if(isset($show_summary) && $show_summary) :
 		<li class=""><?= $this->Paginator->next('next <i class="glyphicon glyphicon-chevron-right"></i>', array('escape' => false, 'class' => ''), null, array('escape' => false, 'class' => 'next disabled')); ?></li>
 	</ul>
 </div>
+
+<?php if(isset($show_summary) && $show_summary) :
+	?>
+	<div class="paging-summary">
+		<p><?= $this->Paginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total.'))); ?></p>
+	</div>
+<?php endif; // summary

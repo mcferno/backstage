@@ -115,7 +115,7 @@ foreach ($columnSizes as $type => $width) {
 
 <div class="col-md-6">
 	<h3 class="cozy-lead"><?= $this->Html->image('ui/icons/clock.png'); ?> Recent Users</h3>
-	<table class="table table-striped activity">
+	<table class="table table-striped activity boxed-table">
 		<?php foreach($recent_users as $user) : ?>
 		<tr>
 			<td class="time extra"><?= date('M d h:i A', strtotime($user['User']['last_seen'])); ?></td>
