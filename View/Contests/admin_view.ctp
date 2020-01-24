@@ -96,8 +96,6 @@
 
 		<?php else : // single-entry viewing page ?>
 
-		<?= $this->element('admin/pagination'); ?>
-
 		<p class="text-center">
 		<?php if($contest['Contest']['winning_asset_id'] === $assets[0]['Asset']['id']) {
 			echo $this->Html->image('ui/icons/trophy.png') . " <strong>Winning</strong> ";

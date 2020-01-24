@@ -39,8 +39,6 @@
 		<p class="tall">A private collection of member videos for your viewing pleasure.</p>
 	<?php endif; ?>
 
-		<?= $this->element('admin/pagination'); ?>
-
 		<?php if(!empty($videos)) : ?>
 		<ul class="link-exchange media-list">
 		<?php foreach ($videos as $video): ?>

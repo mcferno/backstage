@@ -14,7 +14,6 @@ $filters = array_intersect_key($this->request->params['named'], array_flip($filt
 	</h5>
 	<?php endif; ?>
 	<br>
-	<?= $this->element('admin/pagination'); ?>
 	<table cellpadding="0" cellspacing="0" class="table table-striped">
 
 		<tr>

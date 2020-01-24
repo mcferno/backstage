@@ -26,18 +26,16 @@
 		<h1><?= (!empty($sectionTitle)) ? $sectionTitle : 'Link Exchange'; ?></h1>
 	<?php if(!empty($tag['Tag'])) : ?>
 		<h3 class="cozy">
-			Viewing Links with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span> 
+			Viewing Links with the Tag: <span class="badge badge-info active-tag"><?= $tag['Tag']['name']; ?></span>
 			<?= $this->Html->link('Clear &times;', array('action' => 'index'), array('class' => 'badge badge-muted', 'escape' => false)); ?>
 		</h3>
 	<?php elseif (!empty($user['User'])) : ?>
 		<h3 class="cozy">
-			Viewing Links submitted by: <?= $user['User']['username']; ?> 
+			Viewing Links submitted by: <?= $user['User']['username']; ?>
 		</h3>
 	<?php else: ?>
 		<p class="tall">Got some links others need to know about? Just want to browse a collection of the best content? This is the place.</p>
 	<?php endif; ?>
-
-		<?= $this->element('admin/pagination'); ?>
 
 		<ul class="link-exchange media-list">
 		<?php foreach ($links as $link): ?>

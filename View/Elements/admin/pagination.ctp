@@ -31,6 +31,6 @@ $page_limits = (isset($page_limits)) ? $page_limits : array(16, 48, 96);
 <?php if(isset($show_summary) && $show_summary) :
 	?>
 	<div class="paging-summary">
-		<p><?= $this->Paginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total.'))); ?></p>
+		<p class="small"><?= $this->Paginator->counter(array('format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total.'))); ?></p>
 	</div>
 <?php endif; // summary

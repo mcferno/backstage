@@ -30,8 +30,6 @@
 			$this->set('title', htmlentities($title));
 		?>
 
-		<?= $this->element('admin/pagination'); ?>
-
 			<ul class="media-list link-exchange">
 
 			<?php foreach ($albums as $album) : ?>

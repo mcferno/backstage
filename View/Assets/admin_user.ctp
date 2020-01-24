@@ -9,8 +9,6 @@
 </h3>
 <?php endif; //tag ?>
 
-<?= $this->element('admin/pagination'); ?>
-
 <div class="image-wall" data-role="taggable" data-model="Asset">
 <?php
 	foreach ($images as $image) {
