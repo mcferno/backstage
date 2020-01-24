@@ -4,6 +4,7 @@
  *
  * Color Scheme
  *   #FC6626 > branding and accent
+ *   #D95821 > darker brand color
  *   #DDDDDD > feature unit background-color
  *   #DDDDDD > default body color
  *   #EEEEEE > active links
@@ -79,7 +80,7 @@ hr {
 }
 
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-	background-color: #FC6626;
+	background-color: #d95821;
 }
 
 .nav > li > a:hover {
@@ -143,11 +144,12 @@ hr {
 }
 
 .badge-custom {
-	background-color: #FC6626;
+	background-color: #d95821;
 }
 
 .badge-custom:hover {
-	background-color: #d95821;
+	background-color: #FC6626;
+	color: #fff;
 }
 
 .badge-muted {
@@ -293,6 +295,7 @@ hr {
 
 span.badge-off {
 	background-color: #666;
+	color: #111;
 }
 
 .slideout {
@@ -610,6 +613,8 @@ h1, h2, h3, h4, h5, h6 {
 	background: -webkit-radial-gradient(circle, #000, #333);
 	background: -moz-radial-gradient(circle, #000, #333);
 	background: -ms-radial-gradient(circle, #000, #333);
+
+	transition: none;
 }
 
 .dash .caption h4, .dash .caption h5 {
