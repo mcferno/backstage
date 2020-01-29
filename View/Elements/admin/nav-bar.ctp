@@ -34,7 +34,7 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 			<?php if($userIsLoggedIn) : ?>
 
 			<li <?= $imageSectionIsActive ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon-picture glyphicon"></span> Images <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Images <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><?= $this->Html->link('<span class="glyphicon-picture glyphicon"></span> <strong>My Images</strong>', array('controller' => 'assets', 'action' => 'index'), array('escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-text-width glyphicon"></span> Meme Templates', array('controller' => 'assets', 'action' => 'users', 'type' => 'Meme-Templates'), array('escape' => false, 'title' => 'Images without any text')); ?></li>
@@ -53,7 +53,7 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 			</li>
 
 			<li <?= $appsSectionIsActive ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon-bookmark glyphicon"></span> Apps <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><?= $this->Html->link('<span class="glyphicon-edit glyphicon"></span> Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator'), array('escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-fire glyphicon"></span> Caption Battles', array('controller' => 'contests', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -65,7 +65,7 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 
 			<?php if($showIncompleteSections) : ?>
 			<li class="dropdown <?= $otherSectionIsActive ? 'active' : ''; ?>">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="View other site features"><span class="glyphicon glyphicon-folder-open"></span>&nbsp; Other <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="View other site features">Other <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><?= $this->Html->link('<span class="glyphicon-star glyphicon"></span> Links', array('controller' => 'links', 'action' => 'index'), array('escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-comment glyphicon"></span> Quotes', array('controller' => 'posts', 'action' => 'index'), array('escape' => false)); ?></li>
@@ -74,7 +74,7 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 			</li>
 			<?php endif; ?>
 
-			<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('<span class="glyphicon-list glyphicon"></span> Chat ', array('controller' => 'users', 'action' => 'group_chat'), array('escape' => false,'class' => 'chat-link', 'title' => 'Chat with online users')); ?></li>
+			<li <?php if($this->request->controller == 'users' && $this->request->action == 'admin_group_chat') { echo 'class="active"'; } ?>><?= $this->Html->link('Chat ', array('controller' => 'users', 'action' => 'group_chat'), array('escape' => false,'class' => 'chat-link', 'title' => 'Chat with online users')); ?></li>
 
 			<li class="visible-xs"><a href="" class="image-upload-btn" title="Upload an image"><span class="glyphicon glyphicon-cloud-upload"></span> Upload Image</a></li>
 			<li class="visible-sm visible-md visible-lg"><a href="" class="image-upload-btn" title="Upload an image"><span class="glyphicon glyphicon-cloud-upload"></span></a></li>

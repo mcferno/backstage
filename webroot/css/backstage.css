@@ -430,6 +430,10 @@ body {
 	background-color: #090909;
 }
 
+.navbar-header {
+	padding-right: 15px;
+}
+
 .navbar .username-dd {
 	padding-right: 30px;
 	background: url('../img/emblem.png') no-repeat right center;
@@ -442,6 +446,16 @@ body {
 
 .navbar-brand {
 	text-transform: lowercase;
+}
+
+.navbar-nav > li > a {
+	padding-right: 20px;
+	font-size: 1.1em;
+	font-weight: 500;
+}
+
+.navbar-nav > li:first-of-type {
+	border-left: 5px solid #333;
 }
 
 .status > div {
@@ -1081,6 +1095,13 @@ h1, h2, h3, h4, h5, h6 {
 
 	.video-item .screenshot img {
 		max-width: 160px;
+	}
+}
+
+@media all and (max-width: 768px) {
+
+	.navbar-nav > li:first-of-type {
+		border-left: none;
 	}
 }
 
