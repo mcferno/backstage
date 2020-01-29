@@ -40,7 +40,9 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 					<li><?= $this->Html->link('<span class="glyphicon-text-width glyphicon"></span> Meme Templates', array('controller' => 'assets', 'action' => 'users', 'type' => 'Meme-Templates'), array('escape' => false, 'title' => 'Images without any text')); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-th glyphicon"></span> All User Images', array('controller' => 'assets', 'action' => 'admin_users'), array('escape' => false, 'title' => 'Images from all users')); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-th-large glyphicon"></span> All Memes', array('controller' => 'assets', 'action' => 'users', 'type' => 'Meme'), array('escape' => false, 'title' => 'Images with text already applied')); ?></li>
-
+					<?php if($showIncompleteSections) : ?>
+					<li><?= $this->Html->link('<span class="glyphicon-fire glyphicon"></span> Caption Battles', array('controller' => 'contests', 'action' => 'index'), array('escape' => false)); ?></li>
+					<?php endif; ?>
 					<li class="divider extra"></li>
 					<li><?= $this->Html->link('<span class="glyphicon-camera glyphicon"></span> <strong>My Albums</strong>', array('controller' => 'assets', 'action' => 'albums', 'user' => $this->Session->read('Auth.User.id')), array('escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-book glyphicon"></span> All User Albums', array('controller' => 'assets', 'action' => 'albums'), array('escape' => false)); ?></li>
@@ -52,18 +54,18 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 				</ul>
 			</li>
 
+			<li><?= $this->Html->link('Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator'), array('escape' => false)); ?></li>
+
+			<?php if(!$showIncompleteSections) : ?>
 			<li <?= $appsSectionIsActive ? 'class="active dropdown"' : 'class="dropdown"'; ?>>
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><?= $this->Html->link('<span class="glyphicon-edit glyphicon"></span> Meme Generator', array('controller' => 'pages', 'action' => 'meme_generator'), array('escape' => false)); ?></li>
 					<li><?= $this->Html->link('<span class="glyphicon-fire glyphicon"></span> Caption Battles', array('controller' => 'contests', 'action' => 'index'), array('escape' => false)); ?></li>
-					<?php if(!$showIncompleteSections) : ?>
 					<li><?= $this->Html->link('<span class="glyphicon-star glyphicon"></span> Links', array('controller' => 'links', 'action' => 'index'), array('escape' => false)); ?></li>
-					<?php endif; ?>
 				</ul>
 			</li>
 
-			<?php if($showIncompleteSections) : ?>
+			<?php else : ?>
 			<li class="dropdown <?= $otherSectionIsActive ? 'active' : ''; ?>">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" title="View other site features">Other <b class="caret"></b></a>
 				<ul class="dropdown-menu">

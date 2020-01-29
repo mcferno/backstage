@@ -440,6 +440,11 @@ body {
 	margin-right: 5px;
 }
 
+.navbar .dropdown-menu a .glyphicon {
+	margin-right: 4px;
+	font-size: 1.3em;
+}
+
 .nav-header {
 	font-weight: bold;
 }
@@ -1078,8 +1083,8 @@ h1, h2, h3, h4, h5, h6 {
 
 @media all and (min-width: 768px) and (max-width: 850px) {
 	.nav > li > a {
-		padding-right: 8px;
-		padding-right: 8px;
+		padding-right: 5px;
+		font-size: 1em;
 	}
 }
 
