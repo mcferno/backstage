@@ -128,7 +128,7 @@ hr {
 
 .dropdown-menu .divider {
 	background-color: #888;
-	border-bottom: 1px solid #888;
+	border-bottom: 3px solid #444;
 }
 
 /* table-striped-inverse */
@@ -445,6 +445,11 @@ body {
 	font-size: 1.3em;
 }
 
+.navbar .dropdown-menu a strong,
+.navbar .dropdown-menu a span:last-of-type {
+	vertical-align: top;
+}
+
 .nav-header {
 	font-weight: bold;
 }
@@ -460,7 +465,7 @@ body {
 }
 
 .navbar-nav > li:first-of-type {
-	border-left: 5px solid #333;
+	border-left: 5px solid #222;
 }
 
 .status > div {
