@@ -924,6 +924,10 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 1em;
 }
 
+.navbar .row {
+	margin-bottom: 0;
+}
+
 .meme-generator .output {
 	margin-top: 0.5em;
 	margin-bottom: 1em;

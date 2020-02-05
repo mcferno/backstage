@@ -47,14 +47,14 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<div class="row workspace" style="display:none;">
 		<div class="col-md-8 col-md-offset-2">
 			<input type="text" name="first-line" id="first-line" class="form-control input-lg" value="<?= $first_line; ?>" placeholder="First line of text" spellcheck="true" autofocus="true">
 			<input type="text" name="last-line" id="last-line" class="form-control input-lg" value="<?= $last_line; ?>" placeholder="Last line of text" spellcheck="true">
 		</div>
 	</div>
 
-	<div class="row actions">
+	<div class="row actions hidden-lg">
 		<div class="col-md-12">
 			<div class="btn-group">
 				<button class="btn btn-huge btn-primary save-image" title="Refreshes the text on top of the image below"><span class="glyphicon glyphicon-refresh"></span> Refresh<span class="extra"> Image</span></button>
@@ -104,7 +104,45 @@
 	<img src="<%= thumb_url %>" data-full-image="<%= full_url %>" class="image-option">
 	</script>
 
-	<div class="row workspace" style="display:none;">
+	<div class="visible-lg">
+	<nav class="navbar navbar-inverse navbar-fixed-bottom workspace" style="display: none;">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+
+					<button class="btn navbar-btn btn-info choose-background" data-loading-text='<span class="glyphicon glyphicon-refresh"></span><span class="extra"> Change Image</span>'>
+						<span class="glyphicon glyphicon-picture"></span><span class="extra"> Change Image</span>
+					</button>
+
+					<div class="btn-group">
+						<?php if (!empty($contest['Contest']['id'])) : ?>
+							<button class="btn navbar-btn btn-success save" data-loading-text='<span class="glyphicon glyphicon-download-alt"></span> Saving ...' title="Save this entry, and stay in the Meme Generator"><span class="glyphicon glyphicon-download"></span> Save Entry<span class="extra"> &amp; Continue</span></button>
+						<?php else : ?>
+							<button class="btn navbar-btn btn-success save" data-loading-text='<span class="glyphicon glyphicon-download-alt"></span> Saving ...' title="Save this image, and stay in the Meme Generator"><span class="glyphicon glyphicon-download"></span> Save<span class="extra"> &amp; Continue</span></button>
+						<?php endif; ?>
+						<button class="btn navbar-btn btn-default save-jump" data-loading-text='<span class="glyphicon glyphicon-download-alt"></span> Saving ...' title="Save Image and Jump to View Page"><span class="glyphicon glyphicon-eye-open"></span> Save &amp; View</button>
+					</div>
+
+					<a href="#" style="display:none;" class="btn navbar-btn btn-info view-last" title="View the last image you saved"><span class="glyphicon glyphicon-search"></span> View Last Saved</a>
+<?php /*
+					<div class="btn-group dropup">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Image Size <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li data-max="full"><a href="">Full</a></li>
+							<li data-max="800"><a href="">Large</a></li>
+							<li data-max="600"><a href="">Regular</a></li>
+						</ul>
+					</div>
+*/ ?>
+				</div>
+			</div>
+		</div>
+	</nav>
+	</div>
+
+	<div class="row workspace hidden-lg" style="display:none;">
 		<div class="col-md-12">
 			<div class="btn-group">
 				<?php if(!empty($contest['Contest']['id'])) : ?>
@@ -117,7 +155,7 @@
 			<a href="#" style="display:none;" class="btn btn-huge btn-info view-last" title="View the last image you saved"><span class="glyphicon glyphicon-search"></span> View Last Saved</a>
 		</div>
 	</div>
-	<div class="row resize-reset workspace" style="display:none;">
+	<div class="row resize-reset workspace hidden-lg" style="display:none;">
 		<div class="col-md-12">
 			<select name="canvasSize" class="canvasSize input-sm" title="Change the size of this meme when saved">
 				<option data-max="full">Image Size: Full</option>
@@ -128,7 +166,7 @@
 			<button class="btn btn-sm btn-danger reset" title="Abandon your work and restart"><span class="glyphicon glyphicon-ban-circle"></span> Start Over</button>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row hidden-lg">
 		<div class="col-md-12">
 			<ul class="list-unstyled tips">
 				<li>If you "<strong>Save on Server</strong>", it will automatically appear in "<strong>My Images</strong>" afterwards.</li>
