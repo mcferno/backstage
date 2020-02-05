@@ -36,7 +36,7 @@
 
 		<?php else : ?>
 
-		<h3 class="alert alert-info">There are no active battles. To start one, pick an image from <?= $this->Html->link('Your Images', array('controller' => 'assets', 'action' => 'index'), array('escape' => false)); ?>.</h3>
+		<h4 class="alert alert-info">There are no active battles. To start one, pick an image from <?= $this->Html->link('Your Images', array('controller' => 'assets', 'action' => 'index'), array('escape' => false)); ?>.</h4>
 
 		<?php endif; ?>
 

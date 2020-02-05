@@ -558,7 +558,7 @@ a[name] {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-weight: 800;
+	font-weight: 500;
 	margin-top: 0px;
 
 }
@@ -703,7 +703,6 @@ h1, h2, h3, h4, h5, h6 {
 .dash .caption h4, .dash .caption h5 {
 	padding-right: 0.5em;
 	font-size: 1.1em;
-	font-weight: bold;
 }
 
 .dash .caption {
@@ -1075,6 +1074,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .subnav {
 	padding-top: 40px;
+	font-size: 1.05em;
+	font-weight: 500;
 }
 
 .route-action-admin-group-chat .subnav {
