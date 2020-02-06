@@ -946,10 +946,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #rendered {
-	border: 5px solid #666;
+	border: 5px solid #333;
 	-webkit-border-radius: 7px;
 	-moz-border-radius: 7px;
 	border-radius: 7px;
+}
+
+.workspace-actions > button, .workspace-actions > .btn-group {
+	margin-right: 1em;
+}
+
+.workspace-actions .btn-inverse {
+	color: #fff;
+}
+
+.btn-inverse .caret {
+	border-bottom-color: #999;
+}
+
+.btn-group .active {
+	color: #888;
 }
 
 .tips {

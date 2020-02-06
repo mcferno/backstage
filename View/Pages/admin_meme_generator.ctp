@@ -108,7 +108,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-bottom workspace" style="display: none;">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
+				<div class="col-lg-8 col-lg-offset-2 workspace-actions">
 
 					<button class="btn navbar-btn btn-info choose-background" data-loading-text='<span class="glyphicon glyphicon-refresh"></span><span class="extra"> Change Image</span>'>
 						<span class="glyphicon glyphicon-picture"></span><span class="extra"> Change Image</span>
@@ -124,18 +124,18 @@
 					</div>
 
 					<a href="#" style="display:none;" class="btn navbar-btn btn-info view-last" title="View the last image you saved"><span class="glyphicon glyphicon-search"></span> View Last Saved</a>
-<?php /*
-					<div class="btn-group dropup">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+					<div class="btn-group dropup image-size-btn">
+						<button type="button" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Image Size <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu">
-							<li data-max="full"><a href="">Full</a></li>
-							<li data-max="800"><a href="">Large</a></li>
-							<li data-max="600"><a href="">Regular</a></li>
+							<li data-max="full"><a href="">Original size</a></li>
+							<li data-max="800"><a href="" class="active">Large (800px)</a></li>
+							<li data-max="600"><a href="">Regular (600px)</a></li>
 						</ul>
 					</div>
-*/ ?>
+
 				</div>
 			</div>
 		</div>

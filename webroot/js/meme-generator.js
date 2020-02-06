@@ -91,6 +91,14 @@ Backstage['MemeGenerator'] = {
 		.on('click','.meme-generator .save-jump',function() {
 			$(this).button('loading');
 			ns.sendImageToServer(ns.config.type, true);
+		})
+		.on('click', '.image-size-btn a', function(e) {
+			e.preventDefault();
+			setWorkspaceImageSizing($(this).closest('li').data('max'));
+			$(this).closest('.dropdown-menu').find('a').removeClass('active');
+			$(this).addClass('active');
+			ns.render();
+			ns.canvasToImage();
 		});
 
 
@@ -140,6 +148,34 @@ Backstage['MemeGenerator'] = {
 	};
 
 	/**
+	 * Sets the image pixel dimensions and aspect ratio, affecting the rendered and exported image templates sizing.
+	 * @param newSizeString
+	 */
+	var setWorkspaceImageSizing = function(newSizeString) {
+		var desiredWidth, desiredHeight;
+
+		// keep the image in its original form
+		if(newSizeString == 'full') {
+			desiredWidth = ns.currentImage.width;
+			desiredHeight = ns.currentImage.height;
+		} else if(ns.currentImage.width > ns.currentImage.height) {
+			desiredWidth = newSizeString;
+			desiredHeight = parseInt(newSizeString / ns.currentImage.width * ns.currentImage.height, 10);
+		} else {
+			desiredHeight = newSizeString;
+			desiredWidth = parseInt(newSizeString / ns.currentImage.height * ns.currentImage.width, 10);
+		}
+
+		// verify that the canvas size matches the selected option
+		if(ns.canvas.height != desiredHeight || ns.canvas.width != desiredWidth) {
+			ns.canvas.height = desiredHeight;
+			ns.canvas.width = desiredWidth;
+
+			ns.adaptToScale();
+		}
+	};
+
+	/**
 	 * Selects the Image Size dropdown which matches the orientation of the
 	 * current image.
 	 */
@@ -147,28 +183,7 @@ Backstage['MemeGenerator'] = {
 		var sizing = $('.canvasSize option:selected');
 
 		if(ns.currentImage.height !== 0 && ns.currentImage.width !== 0) {
-			var max = sizing.data('max');
-			var desiredWidth, desiredHeight;
-
-			// keep the image in its original form
-			if(max == 'full') {
-				desiredWidth = ns.currentImage.width;
-				desiredHeight = ns.currentImage.height;
-			} else if(ns.currentImage.width > ns.currentImage.height) {
-				desiredWidth = max;
-				desiredHeight = parseInt(max / ns.currentImage.width * ns.currentImage.height, 10);
-			} else {
-				desiredHeight = max;
-				desiredWidth = parseInt(max / ns.currentImage.height * ns.currentImage.width, 10);
-			}
-
-			// verify that the canvas size matches the selected option
-			if(ns.canvas.height != desiredHeight || ns.canvas.width != desiredWidth) {
-				ns.canvas.height = desiredHeight;
-				ns.canvas.width = desiredWidth;
-
-				ns.adaptToScale();
-			}
+			setWorkspaceImageSizing(sizing.data('max'));
 		}
 	};
 
