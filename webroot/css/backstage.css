@@ -952,7 +952,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: 7px;
 }
 
-.workspace-actions > button, .workspace-actions > .btn-group {
+.workspace-actions > button, .workspace-actions > .btn-group, .workspace-actions > a.btn {
 	margin-right: 1em;
 }
 
