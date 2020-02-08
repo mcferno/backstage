@@ -6,7 +6,7 @@ $this->set('title', 'Chat');
 
 <?php $this->start('sidebar-top'); ?>
 
-<h4 class="active-label">Active <span class="badge badge-info active-count"><?= count($onlineUsers); ?></span></h4>
+<h4 class="active-label">Active <span class="badge badge-info active-count"><?= count($state['online']); ?></span></h4>
 <ul class="online-users list-unstyled list-indented"></ul>
 
 <h5 class="idle-label">Away from Chat <span class="badge idle-count">0</span></h5>

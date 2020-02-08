@@ -54,7 +54,7 @@ foreach ($columnSizes as $type => $width) {
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>">
 				<?= $this->Html->image('ui/group-chat-callout.jpg', array('alt' => 'Group Chat')); ?>
 			</a>
-			<div class="caption"><h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"><?= count($onlineUsers); ?></span></h4></div>
+			<div class="caption"><h4 class="text-right">Users online <span class="badge badge-custom online-count" title="Online Users"><?= count($state['online']); ?></span></h4></div>
 		</div>
 		<div class="<?= implode(' ', $columnClasses); ?>">
 			<a class="thumbnail" href="<?= $this->Html->url(array('controller' => 'assets', 'action' => 'index')); ?>">

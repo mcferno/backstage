@@ -89,20 +89,8 @@ class AppController extends Controller
 		$this->helpers[] = 'Snippet';
 
 		if ($this->Auth->loggedIn()) {
-			$this->set('onlineUsers', $this->User->getOnlineUsers());
-			$this->set('state', $this->_getHeartbeatData());
-		}
-	}
-
-	/**
-	 * Post-processing which is not specific to the generated response
-	 */
-	public function afterFilter()
-	{
-		if($this->Auth->loggedIn()) {
-
-			// track the time of the last activity from a specific user
 			$this->User->setLastSeen($this->Auth->user('id'), Configure::read('App.start'));
+			$this->set('state', $this->_getHeartbeatData());
 		}
 	}
 

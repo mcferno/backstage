@@ -23,7 +23,7 @@ $otherSectionIsActive = in_array($this->request->controller, array('links', 'pos
 		<div class="status navbar-left">
 			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'updates')); ?>" title="Unread Network Updates"><span class="glyphicon-flag glyphicon"></span><span class="badge badge-custom badge-<?= empty($state['new_updates']) ? 'off' : 'on'; ?> updates-count"><?= empty($state['new_updates']) ? 0 : $state['new_updates']; ?></span></a></div>
 			<div><a class="navbar-link" href="<?= $this->Html->url(array('controller' => 'users', 'action' => 'group_chat')); ?>" title="Unread Chat Messages"><span class="glyphicon-envelope glyphicon"></span><span class="badge badge-custom badge-<?= empty($state['new_messages']) ? 'off' : 'on'; ?> message-count"><?= empty($state['new_messages']) ? 0 : $state['new_messages']; ?></span></a></div>
-			<div><span class="glyphicon-user glyphicon" title="Online Users"></span><span class="badge badge-info online-count" title="Online Users"><?= count($onlineUsers); ?></span></div>
+			<div><span class="glyphicon-user glyphicon" title="Online Users"></span><span class="badge badge-info online-count" title="Online Users"><?= count($state['online']); ?></span></div>
 		</div>
 		<?php endif; // authenticated ?>
 	</div>
