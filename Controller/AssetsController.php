@@ -345,6 +345,7 @@ class AssetsController extends AppController
 		$redirect = false;
 		$message = false;
 		$error = false;
+		$batch = false;
 		if($this->request->is('post') || $this->request->is('put')) {
 
 			// base file path of the eventual new image original
@@ -357,6 +358,9 @@ class AssetsController extends AppController
 			if(!empty($this->request->data['Asset']['album_id'])) {
 				$options['album_id'] = $this->request->data['Asset']['album_id'];
 			}
+
+			$batch = !empty($this->request->data['batchSize'])
+				&& intval($this->request->data['batchSize']) > 1;
 
 			// file upload
 			if(!empty($this->request->data['Asset']['image']['name'])) {
@@ -427,7 +431,7 @@ class AssetsController extends AppController
 			$this->set('_serialize', array_keys($response));
 
 			// JS redirect will reveal this message
-			if($error === false) {
+			if($error === false && !$batch) {
 				$this->Flash->success($message);
 			}
 			return;

@@ -99,62 +99,11 @@
 					event.preventDefault();
 					$('#dropzone').fadeOut(200);
 
-					// halt if the dropped content is not an image
-					if(typeof event.originalEvent.dataTransfer.files[0] == 'undefined' ||
-						event.originalEvent.dataTransfer.files[0].type.indexOf('image') === -1
-					) {
-						return false;
+					for (var i = 0; i < event.originalEvent.dataTransfer.files.length; i++) {
+						ns.dragUpload.addImage(event.originalEvent.dataTransfer.files[i]);
 					}
 
-					var data = new FormData();
-					var submitForm = $('.asset-upload-popin form');
-					var formData = submitForm.serializeArray();
-					$.each(formData, function() {
-						data.append(this.name, this.value);
-					});
-					data.append(submitForm.find('input[type=file]').attr('name'), event.originalEvent.dataTransfer.files[0]);
-
-					var uploadStatus = $('#dropzone-upload');
-					var info = uploadStatus.find('.info');
-					info.text('Uploading ...');
-					uploadStatus.modal('show');
-
-					var progressBar = uploadStatus.find('.bar');
-					progressBar.css('width', '0');
-
-					$.ajax({
-						url : submitForm.attr('action'),
-						data: data,
-						cache: false,
-						contentType: false,
-						processData: false,
-						type: 'POST',
-						error: function(request, status, error) {
-							info.text('Error during file upload! Please try again');
-						},
-						xhr: function(){
-							var xhr = new window.XMLHttpRequest();
-							xhr.upload.addEventListener("progress", function(e) {
-								if (e.lengthComputable) {
-									var percent = Math.round(e.loaded / e.total * 100);
-									progressBar.css('width', percent + '%');
-								}
-							}, false);
-							return xhr;
-						},
-						success: function(response) {
-							if(response.error === false && response.redirect) {
-								info.text('Upload Complete! Redirecting ...');
-								window.location = response.redirect;
-							} else {
-								if(response.message) {
-									info.text(response.message);
-								} else {
-									info.text('Error during upload! Please try again');
-								}
-							}
-						}
-					});
+					ns.dragUpload.run();
 				}
 			});
 
@@ -165,6 +114,127 @@
 	ns.supportsFileApi = function() {
 		return $("<input type='file'/>").get(0).files !== undefined && window.FormData !== undefined;
 	};
+
+	/**
+	 * Module controlling file upload UI components
+	 */
+	ns.dragUpload = (function () {
+		var uploadStatus,
+			info,
+			progressBar,
+			submitForm,
+			images = [];
+
+		var showProgressBar = function() {
+			uploadStatus = $('#dropzone-upload');
+			info = uploadStatus.find('.info');
+			info.text('Uploading ...');
+			uploadStatus.modal('show');
+
+			progressBar = uploadStatus.find('.bar');
+			progressBar.css('width', '0');
+		};
+
+		var setProgressBarState = function(percentage) {
+			var progressBar = $('#dropzone-upload .bar');
+			progressBar.css('width', percentage + '%');
+		};
+
+		var showNotice = function(newwText) {
+			info.text(newwText);
+		};
+
+		var addImage = function(newImage) {
+			// halt if the dropped content is not an image
+			if(typeof newImage == 'undefined' ||
+				newImage.type.indexOf('image') === -1
+			) {
+				return false;
+			}
+			images.push(newImage);
+		};
+
+		/**
+		 * @param file File
+		 */
+		var prepareImageUploadFormData = function (file) {
+			var data = new FormData();
+			var formData = submitForm.serializeArray();
+			$.each(formData, function() {
+				data.append(this.name, this.value);
+			});
+			data.append(submitForm.find('input[type=file]').attr('name'), file);
+			return data;
+		};
+
+		var runBatch = function() {
+			if (images.length == 0) {
+				return;
+			}
+
+			ns.dragUpload.showProgressBar();
+			submitForm = $('.asset-upload-popin form');
+			var total = images.length;
+
+			while (images.length > 0) {
+				var data = prepareImageUploadFormData(images.shift());
+				data.append('batchSize', total);
+
+				$.ajax({
+					url : submitForm.attr('action'),
+					data: data,
+					cache: false,
+					contentType: false,
+					processData: false,
+					type: 'POST',
+					beforeSend: function() {
+						var text = 'Processing image';
+						if (total > 1) {
+							text += ' (' + (total - images.length) + ' of ' + total + ')';
+						}
+						ns.dragUpload.showNotice(text);
+					},
+					error: function(request, status, error) {
+						if (error.length) {
+							ns.dragUpload.showNotice('Error during file upload! Please try again');
+						}
+					},
+					xhr: function() {
+						var xhr = new window.XMLHttpRequest();
+						xhr.upload.addEventListener("progress", function(e) {
+							if (e.lengthComputable) {
+								ns.dragUpload.setProgressBarState(Math.round(e.loaded / e.total * 100));
+							}
+						}, false);
+						return xhr;
+					},
+					success: function(response) {
+						if(response.error === false && response.redirect) {
+							var text = 'Upload Complete!';
+							if (images.length == 0) {
+								text += ' Redirecting ..';
+							}
+							ns.dragUpload.showNotice(text);
+							window.location = response.redirect;
+						} else {
+							if(response.message) {
+								ns.dragUpload.showNotice(response.message);
+							}
+						}
+					}
+				});
+			}
+		};
+
+		return {
+			'showProgressBar' : showProgressBar,
+			'setProgressBarState' : setProgressBarState,
+			'showNotice' : showNotice,
+			'addImage' : addImage,
+			'run' : runBatch
+		};
+
+	})();
 
 	ns.ajaxFileUpload = function(e) {
 		var obj = $(this);
