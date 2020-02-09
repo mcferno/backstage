@@ -187,13 +187,6 @@
 					contentType: false,
 					processData: false,
 					type: 'POST',
-					beforeSend: function() {
-						var text = 'Processing image';
-						if (total > 1) {
-							text += ' (' + (total - images.length) + ' of ' + total + ')';
-						}
-						ns.dragUpload.showNotice(text);
-					},
 					error: function(request, status, error) {
 						if (error.length) {
 							ns.dragUpload.showNotice('Error during file upload! Please try again');
