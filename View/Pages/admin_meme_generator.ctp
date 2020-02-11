@@ -54,7 +54,7 @@
 		</div>
 	</div>
 
-	<div class="row actions hidden-lg hidden-md">
+	<div class="row actions visible-xs">
 		<div class="col-md-12">
 			<div class="btn-group">
 				<button class="btn btn-huge btn-primary save-image" title="Refreshes the text on top of the image below"><span class="glyphicon glyphicon-refresh"></span> Refresh<span class="extra"> Image</span></button>
@@ -104,7 +104,7 @@
 	<img src="<%= thumb_url %>" data-full-image="<%= full_url %>" class="image-option">
 	</script>
 
-	<div class="visible-lg visible-md">
+	<div class="hidden-xs">
 	<nav class="navbar navbar-inverse navbar-fixed-bottom workspace" style="display: none;">
 		<div class="container-fluid">
 			<div class="row">
@@ -142,7 +142,7 @@
 	</nav>
 	</div>
 
-	<div class="row workspace hidden-lg hidden-md" style="display:none;">
+	<div class="row workspace visible-xs" style="display:none;">
 		<div class="col-md-12">
 			<div class="btn-group">
 				<?php if(!empty($contest['Contest']['id'])) : ?>
@@ -155,7 +155,7 @@
 			<a href="#" style="display:none;" class="btn btn-huge btn-info view-last" title="View the last image you saved"><span class="glyphicon glyphicon-search"></span> View Last Saved</a>
 		</div>
 	</div>
-	<div class="row resize-reset workspace hidden-lg hidden-md" style="display:none;">
+	<div class="row resize-reset workspace visible-xs" style="display:none;">
 		<div class="col-md-12">
 			<select name="canvasSize" class="canvasSize input-sm" title="Change the size of this meme when saved">
 				<option data-max="full">Image Size: Full</option>
@@ -166,7 +166,7 @@
 			<button class="btn btn-sm btn-danger reset" title="Abandon your work and restart"><span class="glyphicon glyphicon-ban-circle"></span> Start Over</button>
 		</div>
 	</div>
-	<div class="row hidden-lg hidden-md">
+	<div class="row visible-xs">
 		<div class="col-md-12">
 			<ul class="list-unstyled tips">
 				<li>If you "<strong>Save on Server</strong>", it will automatically appear in "<strong>My Images</strong>" afterwards.</li>
